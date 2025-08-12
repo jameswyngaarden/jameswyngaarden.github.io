@@ -37,11 +37,8 @@
             border: 1px solid rgba(255, 255, 255, 0.3);
             display: flex;
             align-items: center;
+            justify-content: space-between;
             gap: 30px;
-        }
-
-        .header-left {
-            flex-shrink: 0;
         }
 
         .header-center {
@@ -165,6 +162,29 @@
             max-width: 800px;
             margin: 0 auto;
             color: #34495e;
+        }
+
+        .about-intro {
+            display: flex;
+            align-items: flex-start;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .about-text {
+            flex: 1;
+        }
+
+        .about-profile-img {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background-image: url('stimuli/SRNDNA_pilot-grant_Headshot_bw.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            flex-shrink: 0;
         }
 
         .about-content p {
@@ -369,6 +389,18 @@
                 margin-bottom: 5px;
                 margin-right: 0;
             }
+
+            .about-intro {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+
+            .about-profile-img {
+                width: 150px;
+                height: 150px;
+                margin-bottom: 20px;
+            }
         }
 
         .floating-shapes {
@@ -409,7 +441,7 @@
     <div class="container">
         <header>
             <div class="header-left">
-                <div class="profile-img"></div>
+                <!-- Profile image removed -->
             </div>
             <div class="header-center">
                 <h1>James B. Wyngaarden III</h1>
@@ -430,7 +462,12 @@
                 <h2>About Me</h2>
             </div>
             <div class="about-content">
-                <p>I'm a neuroscientist and PhD candidate investigating how the aging brain makes decisions—research with broad applications for healthcare, technology, and policy.</p>
+                <div class="about-intro">
+                    <div class="about-text">
+                        <p>I'm a neuroscientist and PhD candidate investigating how the aging brain makes decisions—research with broad applications for healthcare, technology, and policy.</p>
+                    </div>
+                    <div class="about-profile-img"></div>
+                </div>
                 
                 <p><strong>What I do:</strong></p>
                 <ul style="margin-left: 20px; margin-bottom: 20px;">
