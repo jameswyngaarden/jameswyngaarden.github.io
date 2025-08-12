@@ -1,6 +1,6 @@
 # Personal Academic Website
 
-A modern, responsive personal website for academic professionals featuring parallax effects and clean design.
+Use these instructions to create a modern, responsive personal website, geared towards academic professionals & featuring parallax effects and clean design.
 
 ## Features
 
@@ -15,8 +15,8 @@ A modern, responsive personal website for academic professionals featuring paral
 ```
 ├── index.html          # Main website file
 └── stimuli/
-    ├── SRNDNA_pilot-grant_Headshot_bw.jpg    # Profile photo
-    └── schuylkill_river_trail.jpg            # Parallax background
+    ├── Headshot.jpg    # Profile photo (need to edit index.html file)
+    └── background_image.jpg            # Parallax background (need to edit index.html file)
 ```
 
 ## Setup
