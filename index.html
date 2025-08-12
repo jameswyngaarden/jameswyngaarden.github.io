@@ -40,14 +40,13 @@
             width: 150px;
             height: 150px;
             border-radius: 50%;
-            background: linear-gradient(45deg, #34495e, #7f8c8d);
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            background-image: url('/Users/jameswyngaarden/Desktop/projects/personal-website/SRNDNA_pilot-grant_Headshot_bw.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
             margin: 0 auto 30px;
-            font-size: 60px;
-            color: white;
-            font-weight: bold;
+            border: 4px solid #34495e;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
         }
 
         h1 {
@@ -165,86 +164,90 @@
             margin-bottom: 8px;
         }
 
+        .publication-list {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
         .publication-item {
-            background: white;
-            padding: 25px;
-            border-radius: 12px;
-            margin-bottom: 20px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.06);
-            border-left: 4px solid #7f8c8d;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background: none;
+            padding: 20px 0;
+            border-radius: 0;
+            margin-bottom: 25px;
+            box-shadow: none;
+            border-left: none;
+            border-bottom: 1px solid #e0e0e0;
+            transition: none;
         }
 
         .publication-item:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transform: none;
+            box-shadow: none;
         }
 
-        .publication-title {
+        .publication-item:last-child {
+            border-bottom: none;
+        }
+
+        .publication-citation {
             color: #2c3e50;
-            font-size: 1.2rem;
-            font-weight: 600;
+            line-height: 1.6;
+            font-size: 1rem;
             margin-bottom: 8px;
-            line-height: 1.4;
         }
 
-        .publication-authors {
-            color: #5d6d7e;
-            margin-bottom: 5px;
-            font-style: italic;
-        }
-
-        .publication-journal {
+        .publication-citation a {
             color: #34495e;
-            font-weight: 500;
-            margin-bottom: 5px;
+            text-decoration: none;
+            border-bottom: 1px solid #bdc3c7;
+            transition: all 0.3s ease;
         }
 
-        .publication-year {
+        .publication-citation a:hover {
+            color: #2c3e50;
+            border-bottom-color: #34495e;
+        }
+
+        .publication-status {
             color: #7f8c8d;
+            font-style: italic;
             font-size: 0.9rem;
         }
 
-        .contact-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-            margin-top: 30px;
+        .contact-list {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px 0;
         }
 
-        .contact-item {
-            text-align: center;
-            padding: 30px;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
-            transition: transform 0.3s ease;
-        }
-
-        .contact-item:hover {
-            transform: translateY(-5px);
-        }
-
-        .contact-icon {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: linear-gradient(45deg, #34495e, #2c3e50);
+        .contact-list-item {
+            padding: 15px 0;
+            border-bottom: 1px solid #e0e0e0;
             display: flex;
             align-items: center;
-            justify-content: center;
-            margin: 0 auto 20px;
-            font-size: 24px;
-            color: white;
-        }
-
-        .contact-item h3 {
             color: #2c3e50;
-            margin-bottom: 10px;
+            font-size: 1.1rem;
         }
 
-        .contact-item p {
-            color: #5d6d7e;
+        .contact-list-item:last-child {
+            border-bottom: none;
+        }
+
+        .contact-list-item strong {
+            min-width: 120px;
+            color: #34495e;
+        }
+
+        .contact-list-item a {
+            color: #2c3e50;
+            text-decoration: none;
+            border-bottom: 1px solid #bdc3c7;
+            transition: all 0.3s ease;
+        }
+
+        .contact-list-item a:hover {
+            color: #34495e;
+            border-bottom-color: #34495e;
         }
 
         @media (max-width: 768px) {
@@ -308,7 +311,7 @@
 
     <div class="container">
         <header>
-            <div class="profile-img">JW</div>
+            <div class="profile-img"></div>
             <h1>James B. Wyngaarden III</h1>
             <p class="subtitle">Neuroscientist | PhD Candidate | Decision-Making Researcher</p>
             
@@ -372,64 +375,55 @@
 
         <section id="publications" class="section">
             <h2>Publications</h2>
-            <p style="text-align: center; margin-bottom: 30px; color: #5d6d7e;">
-                Peer-reviewed publications and manuscripts in preparation
-            </p>
             
-            <div class="publication-item">
-                <div class="publication-title">Trait reward sensitivity and motivation shape connectivity between the default mode network and the striatum during reward anticipation</div>
-                <div class="publication-authors">Wyngaarden III, J.B.*, Nambiar, A.*, Dennison, J.B., Alloy, L.B., Fareri, D.S., Jarcho, J.M., & Smith, D.V.</div>
-                <div class="publication-journal">Under review at NeuroImage</div>
-                <div class="publication-year">2025</div>
-            </div>
-            
-            <div class="publication-item">
-                <div class="publication-title">Maladaptive decision making in older adults: Confirmation bias and financial exploitation</div>
-                <div class="publication-authors">Wyngaarden III, J.B., Giovannetti, T., Krekelberg, B., & Smith, D.V.</div>
-                <div class="publication-journal">Under review at Psychology and Aging</div>
-                <div class="publication-year">2025</div>
-            </div>
-            
-            <div class="publication-item">
-                <div class="publication-title">A dataset of risky and ambiguous decisions using a novel linked colored lottery task across two datasets</div>
-                <div class="publication-authors">Wyngaarden III, J.B.*, Yang, Y.*, Dennison, J.B.*, Smith, D.V.</div>
-                <div class="publication-journal">Data in Brief</div>
-                <div class="publication-year">2025</div>
-            </div>
-            
-            <div class="publication-item">
-                <div class="publication-title">Social reward and nonsocial reward processing across the adult lifespan: An interim multi-echo fMRI and diffusion dataset</div>
-                <div class="publication-authors">Smith, D.V., Wyngaarden III, J.B., Sharp, C.J., Sazhin, D., Zaff, O., Fareri, D., Jarcho, J.M.</div>
-                <div class="publication-journal">Data in Brief</div>
-                <div class="publication-year">2024</div>
-            </div>
-            
-            <div class="publication-item">
-                <div class="publication-title">Corticostriatal responses to social reward are linked to trait reward sensitivity and subclinical substance use in young adults</div>
-                <div class="publication-authors">Wyngaarden III, J.B.*, Johnston, C.R.*, Sazhin, D., Dennison, J.B., Zaff, O., Fareri, D., McCloskey, M., Alloy, L.B., Smith, D.V., & Jarcho, J.M.</div>
-                <div class="publication-journal">Social Cognitive and Affective Neuroscience</div>
-                <div class="publication-year">2024</div>
-            </div>
-            
-            <div class="publication-item">
-                <div class="publication-title">Trait reward sensitivity modulates connectivity with the temporoparietal junction and anterior insula during strategic decision making</div>
-                <div class="publication-authors">Sazhin, D., Wyngaarden III, J.B., Dennison, J.B., Zaff, O., Fareri, D., McCloskey, M.S., Alloy, L.B., Jarcho, J.M., & Smith, D.V.</div>
-                <div class="publication-journal">Biological Psychology</div>
-                <div class="publication-year">2024</div>
-            </div>
-            
-            <div class="publication-item">
-                <div class="publication-title">Substance abuse in emerging adults: The role of neuromelanin and ventral striatal response to social and monetary rewards</div>
-                <div class="publication-authors">Jarcho, J.M., Wyngaarden III, J.B., Johnston, C.J., Quarmley, M., Smith, D.V., & Cassidy, C.M.</div>
-                <div class="publication-journal">Brain Sciences</div>
-                <div class="publication-year">2022</div>
-            </div>
-            
-            <div class="publication-item">
-                <div class="publication-title">"They should have followed the rules": Trade-offs between fairness and authority values predict judgments of social justice protests</div>
-                <div class="publication-authors">Monroe, A.E., Wyngaarden III, J.B., & Plant, A.E.</div>
-                <div class="publication-journal">Social Psychological and Personality Science</div>
-                <div class="publication-year">2021</div>
+            <div class="publication-list">
+                <div class="publication-item">
+                    <div class="publication-citation">
+                        <strong>Wyngaarden III, J.B.*</strong>, Nambiar, A.*, Dennison, J.B., Alloy, L.B., Fareri, D.S., Jarcho, J.M., & Smith, D.V. (2025). Trait reward sensitivity and motivation shape connectivity between the default mode network and the striatum during reward anticipation. <em>Under review at NeuroImage.</em> <a href="https://www.biorxiv.org/content/10.1101/2025.04.17.649386v2" target="_blank">Preprint available</a>.
+                    </div>
+                </div>
+                
+                <div class="publication-item">
+                    <div class="publication-citation">
+                        <strong>Wyngaarden III, J.B.</strong>, Giovannetti, T., Krekelberg, B., & Smith, D.V. (2025). Maladaptive decision making in older adults: Confirmation bias and financial exploitation. <em>Under review at Psychology and Aging.</em> <a href="https://osf.io/preprints/psyarxiv/abnyd_v2" target="_blank">Preprint available</a>.
+                    </div>
+                </div>
+                
+                <div class="publication-item">
+                    <div class="publication-citation">
+                        <strong>Wyngaarden III, J.B.*</strong>, Yang, Y.*, Dennison, J.B.*, Smith, D.V. (2025). A dataset of risky and ambiguous decisions using a novel linked colored lottery task across two datasets. <em>Data in Brief.</em> <a href="https://doi.org/10.1016/j.dib.2025.111844" target="_blank">https://doi.org/10.1016/j.dib.2025.111844</a>.
+                    </div>
+                </div>
+                
+                <div class="publication-item">
+                    <div class="publication-citation">
+                        Smith, D.V., <strong>Wyngaarden III, J.B.</strong>, Sharp, C.J., Sazhin, D., Zaff, O., Fareri, D., Jarcho, J.M. (2024). Social reward and nonsocial reward processing across the adult lifespan: An interim multi-echo fMRI and diffusion dataset. <em>Data in Brief.</em> <a href="https://doi.org/10.1016/j.dib.2024.110810" target="_blank">https://doi.org/10.1016/j.dib.2024.110810</a>.
+                    </div>
+                </div>
+                
+                <div class="publication-item">
+                    <div class="publication-citation">
+                        <strong>Wyngaarden III, J.B.*</strong>, Johnston, C.R.*, Sazhin, D., Dennison, J.B., Zaff, O., Fareri, D., McCloskey, M., Alloy, L.B., Smith, D.V., & Jarcho, J.M. (2024). Corticostriatal responses to social reward are linked to trait reward sensitivity and subclinical substance use in young adults. <em>Social Cognitive and Affective Neuroscience.</em> <a href="https://doi.org/10.1093/scan/nsae033" target="_blank">https://doi.org/10.1093/scan/nsae033</a>.
+                    </div>
+                </div>
+                
+                <div class="publication-item">
+                    <div class="publication-citation">
+                        Sazhin, D., <strong>Wyngaarden III, J.B.</strong>, Dennison, J.B., Zaff, O., Fareri, D., McCloskey, M.S., Alloy, L.B., Jarcho, J.M., & Smith, D.V. (2024). Trait reward sensitivity modulates connectivity with the temporoparietal junction and anterior insula during strategic decision making. <em>Biological Psychology, 192</em>, 108857. <a href="https://doi.org/10.1016/j.biopsycho.2024.108857" target="_blank">https://doi.org/10.1016/j.biopsycho.2024.108857</a>.
+                    </div>
+                </div>
+                
+                <div class="publication-item">
+                    <div class="publication-citation">
+                        Jarcho, J.M., <strong>Wyngaarden III, J.B.</strong>, Johnston, C.J., Quarmley, M., Smith, D.V., & Cassidy, C.M. (2022). Substance abuse in emerging adults: The role of neuromelanin and ventral striatal response to social and monetary rewards. <em>Brain Sciences, 12</em>, 352. <a href="https://doi.org/10.3390/brainsci12030352" target="_blank">https://doi.org/10.3390/brainsci12030352</a>.
+                    </div>
+                </div>
+                
+                <div class="publication-item">
+                    <div class="publication-citation">
+                        Monroe, A.E., <strong>Wyngaarden III, J.B.</strong>, & Plant, A.E. (2021). "They should have followed the rules": Trade-offs between fairness and authority values predict judgments of social justice protests. <em>Social Psychological and Personality Science, 12</em>(4), 471-478. <a href="https://doi.org/10.1177/1948550620923854" target="_blank">https://doi.org/10.1177/1948550620923854</a>.
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -439,41 +433,35 @@
                 I welcome collaborations, discussions, and opportunities to share research.
             </p>
             
-            <div class="contact-grid">
-                <div class="contact-item">
-                    <div class="contact-icon">📧</div>
-                    <h3>Email</h3>
-                    <p>james.wyngaarden@temple.edu</p>
+            <div class="contact-list">
+                <div class="contact-list-item">
+                    <strong>Email:</strong>
+                    <a href="mailto:james.wyngaarden@temple.edu">james.wyngaarden@temple.edu</a>
                 </div>
                 
-                <div class="contact-item">
-                    <div class="contact-icon">🏛️</div>
-                    <h3>Institution</h3>
-                    <p>Temple University<br>Department of Psychology</p>
+                <div class="contact-list-item">
+                    <strong>Phone:</strong>
+                    <a href="tel:+19194506766">919-450-6766</a>
                 </div>
                 
-                <div class="contact-item">
-                    <div class="contact-icon">💼</div>
-                    <h3>LinkedIn</h3>
-                    <p>Connect for professional updates</p>
+                <div class="contact-list-item">
+                    <strong>Institution:</strong>
+                    Temple University, Department of Psychology
                 </div>
                 
-                <div class="contact-item">
-                    <div class="contact-icon">🔬</div>
-                    <h3>Lab Website</h3>
-                    <p>sdnlaboratory.com</p>
+                <div class="contact-list-item">
+                    <strong>Lab Website:</strong>
+                    <a href="http://www.sdnlaboratory.com/" target="_blank">sdnlaboratory.com</a>
                 </div>
                 
-                <div class="contact-item">
-                    <div class="contact-icon">📊</div>
-                    <h3>Research</h3>
-                    <p>sites.temple.edu/neurocon-lab/</p>
+                <div class="contact-list-item">
+                    <strong>Research:</strong>
+                    <a href="https://sites.temple.edu/neurocon-lab/" target="_blank">sites.temple.edu/neurocon-lab/</a>
                 </div>
                 
-                <div class="contact-item">
-                    <div class="contact-icon">📞</div>
-                    <h3>Phone</h3>
-                    <p>919-450-6766</p>
+                <div class="contact-list-item">
+                    <strong>LinkedIn:</strong>
+                    <a href="https://linkedin.com/in/jameswyngaarden" target="_blank">Connect for professional updates</a>
                 </div>
             </div>
         </section>
