@@ -29,29 +29,42 @@
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
             border-radius: 20px;
-            padding: 40px;
+            padding: 30px 40px;
             margin-bottom: 30px;
-            text-align: center;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
             border: 1px solid rgba(255, 255, 255, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .header-left {
+            flex-shrink: 0;
+        }
+
+        .header-center {
+            flex-grow: 1;
+        }
+
+        .header-right {
+            flex-shrink: 0;
         }
 
         .profile-img {
-            width: 150px;
-            height: 150px;
+            width: 120px;
+            height: 120px;
             border-radius: 50%;
             background-image: url('stimuli/SRNDNA_pilot-grant_Headshot_bw.jpg');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            margin: 0 auto 30px;
             border: 4px solid #34495e;
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
         }
 
         h1 {
-            font-size: 3rem;
-            margin-bottom: 10px;
+            font-size: 2.2rem;
+            margin-bottom: 8px;
             background: linear-gradient(45deg, #2c3e50, #34495e);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -59,17 +72,17 @@
         }
 
         .subtitle {
-            font-size: 1.3rem;
+            font-size: 1.1rem;
             color: #5d6d7e;
-            margin-bottom: 30px;
+            margin-bottom: 0;
             font-weight: 300;
         }
 
         .nav {
             display: flex;
-            justify-content: center;
-            gap: 30px;
-            margin-top: 30px;
+            justify-content: flex-end;
+            gap: 20px;
+            flex-wrap: wrap;
         }
 
         .nav-btn {
@@ -117,6 +130,7 @@
             text-align: center;
             letter-spacing: 2px;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            opacity: 0.85;
         }
 
         .section {
@@ -266,8 +280,15 @@
         }
 
         @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                text-align: center;
+                gap: 20px;
+                padding: 20px;
+            }
+
             .nav {
-                flex-wrap: wrap;
+                justify-content: center;
                 gap: 15px;
             }
             
@@ -277,14 +298,18 @@
             }
             
             h1 {
-                font-size: 2rem;
+                font-size: 1.8rem;
+            }
+
+            .subtitle {
+                font-size: 1rem;
             }
             
             .container {
                 padding: 10px;
             }
             
-            header, .section {
+            .section {
                 padding: 20px;
             }
 
@@ -335,16 +360,21 @@
 
     <div class="container">
         <header>
-            <div class="profile-img"></div>
-            <h1>James B. Wyngaarden III</h1>
-            <p class="subtitle">Neuroscientist | PhD Candidate | Decision-Making Researcher</p>
-            
-            <nav class="nav">
-                <a href="#" class="nav-btn active" onclick="showSection('about', this)">About</a>
-                <a href="#" class="nav-btn" onclick="showSection('research', this)">Research</a>
-                <a href="#" class="nav-btn" onclick="showSection('publications', this)">Publications</a>
-                <a href="#" class="nav-btn" onclick="showSection('contact', this)">Contact</a>
-            </nav>
+            <div class="header-left">
+                <div class="profile-img"></div>
+            </div>
+            <div class="header-center">
+                <h1>James B. Wyngaarden III</h1>
+                <p class="subtitle">Neuroscientist | PhD Candidate | Decision-Making Researcher</p>
+            </div>
+            <div class="header-right">
+                <nav class="nav">
+                    <a href="#" class="nav-btn active" onclick="showSection('about', this)">About</a>
+                    <a href="#" class="nav-btn" onclick="showSection('research', this)">Research</a>
+                    <a href="#" class="nav-btn" onclick="showSection('publications', this)">Publications</a>
+                    <a href="#" class="nav-btn" onclick="showSection('contact', this)">Contact</a>
+                </nav>
+            </div>
         </header>
 
         <section id="about" class="section active">
