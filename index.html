@@ -62,13 +62,14 @@
 
         h1 {
             font-family: 'Work Sans', sans-serif;
-            font-size: 2.2rem;
+            font-size: 2rem;
             margin-bottom: 8px;
             background: linear-gradient(45deg, #2c3e50, #34495e);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             font-weight: 500;
+            white-space: nowrap;
         }
 
         .subtitle {
@@ -168,7 +169,7 @@
             display: flex;
             align-items: flex-start;
             gap: 30px;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
         }
 
         .about-text {
@@ -176,8 +177,8 @@
         }
 
         .about-profile-img {
-            width: 200px;
-            height: 200px;
+            width: 160px;
+            height: 160px;
             border-radius: 50%;
             background-image: url('stimuli/SRNDNA_pilot-grant_Headshot_bw.jpg');
             background-size: cover;
@@ -185,6 +186,7 @@
             background-repeat: no-repeat;
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
             flex-shrink: 0;
+            order: -1;
         }
 
         .about-content p {
@@ -356,7 +358,8 @@
             }
             
             h1 {
-                font-size: 1.8rem;
+                font-size: 1.6rem;
+                white-space: normal;
             }
 
             .subtitle {
@@ -397,8 +400,8 @@
             }
 
             .about-profile-img {
-                width: 150px;
-                height: 150px;
+                width: 120px;
+                height: 120px;
                 margin-bottom: 20px;
             }
         }
