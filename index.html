@@ -200,6 +200,37 @@
             margin-bottom: 8px;
         }
 
+        /* Grants Section Styling */
+        .grants-list {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .grant-item {
+            display: flex;
+            align-items: flex-start;
+            padding: 15px 0;
+            border-bottom: 1px solid #e0e0e0;
+            color: #2c3e50;
+        }
+
+        .grant-item:last-child {
+            border-bottom: none;
+        }
+
+        .grant-year {
+            min-width: 60px;
+            font-weight: 600;
+            color: #34495e;
+            margin-right: 20px;
+            flex-shrink: 0;
+        }
+
+        .grant-description {
+            flex-grow: 1;
+            line-height: 1.6;
+        }
+
         .publication-list {
             max-width: 900px;
             margin: 0 auto;
@@ -328,6 +359,16 @@
             .section-header h2 {
                 font-size: 2rem;
             }
+
+            .grant-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .grant-year {
+                margin-bottom: 5px;
+                margin-right: 0;
+            }
         }
 
         .floating-shapes {
@@ -435,6 +476,39 @@
                 
                 <h3>Research Vision</h3>
                 <p>My long-term research goal is to develop personalized, neuroscience-based interventions that preserve cognitive independence and protect decision-making capacity throughout the lifespan. I aim to create practical solutions that can be implemented in healthcare settings to protect vulnerable older adults from financial exploitation and other forms of manipulation.</p>
+            </div>
+        </section>
+
+        <section id="grants" class="section">
+            <div class="section-header">
+                <h2>Grants, Honors, & Awards</h2>
+            </div>
+            
+            <div class="grants-list">
+                <div class="grant-item">
+                    <div class="grant-year">2025</div>
+                    <div class="grant-description">Scientific Research Network on Decision Neuroscience and Aging (SRNDNA) Pilot Grant, NIH R24-AG076847-04, "Modulating reward-based learning in older adults using transcranial alternating current stimulation" ($24,000)</div>
+                </div>
+                
+                <div class="grant-item">
+                    <div class="grant-year">2024</div>
+                    <div class="grant-description">Ruth L. Kirschstein National Research Service Award (NRSA) Predoctoral Fellowship, National Institute on Aging (NIA), F31-AG085934, "Characterizing the role of confirmation bias in financial exploitation of older adults" (3 years, $106,980)</div>
+                </div>
+                
+                <div class="grant-item">
+                    <div class="grant-year">2019</div>
+                    <div class="grant-description">Three Minute Thesis (3MT) Competition—Appalachian State University, 1st Place ($600)</div>
+                </div>
+                
+                <div class="grant-item">
+                    <div class="grant-year">2019</div>
+                    <div class="grant-description">Wiley F. Smith Endowment (WiSE) Research Award ($300)</div>
+                </div>
+                
+                <div class="grant-item">
+                    <div class="grant-year">2019</div>
+                    <div class="grant-description">Student and Faculty Excellence (SAFE) Fund Research Grant ($1,000)</div>
+                </div>
             </div>
         </section>
 
