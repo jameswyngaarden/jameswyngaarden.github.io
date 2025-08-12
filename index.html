@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Name - Professional Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 30px;
+            font-size: 60px;
+            color: white;
+            font-weight: bold;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 1.3rem;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .nav {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .nav-btn {
+            padding: 12px 25px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.5);
+        }
+
+        .section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            color: #333;
+            text-align: center;
+        }
+
+        .about-content {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .skill-item {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .skill-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .project-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            border-left: 5px solid #667eea;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .project-card h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+
+        .experience-item {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            border-left: 5px solid #764ba2;
+        }
+
+        .experience-item h3 {
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .experience-item .company {
+            color: #667eea;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .experience-item .date {
+            color: #666;
+            font-style: italic;
+            margin-bottom: 15px;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .contact-item {
+            text-align: center;
+            padding: 30px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .contact-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .contact-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 24px;
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .nav {
+                flex-wrap: wrap;
+                gap: 15px;
+            }
+            
+            .nav-btn {
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .container {
+                padding: 10px;
+            }
+            
+            header, .section {
+                padding: 20px;
+            }
+        }
+
+        .floating-shapes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .shape {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: float 20s infinite linear;
+        }
+
+        .shape:nth-child(1) { width: 80px; height: 80px; top: 20%; left: 10%; animation-delay: 0s; }
+        .shape:nth-child(2) { width: 60px; height: 60px; top: 60%; left: 80%; animation-delay: 5s; }
+        .shape:nth-child(3) { width: 100px; height: 100px; top: 80%; left: 20%; animation-delay: 10s; }
+
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); opacity: 1; }
+            50% { transform: translateY(-100px) rotate(180deg); opacity: 0.5; }
+            100% { transform: translateY(0px) rotate(360deg); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-shapes">
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+
+    <div class="container">
+        <header>
+            <div class="profile-img">YN</div>
+            <h1>Your Name</h1>
+            <p class="subtitle">Software Developer | Problem Solver | Innovation Enthusiast</p>
+            
+            <nav class="nav">
+                <a href="#" class="nav-btn" onclick="showSection('about')">About</a>
+                <a href="#" class="nav-btn" onclick="showSection('projects')">Projects</a>
+                <a href="#" class="nav-btn" onclick="showSection('experience')">Experience</a>
+                <a href="#" class="nav-btn" onclick="showSection('contact')">Contact</a>
+            </nav>
+        </header>
+
+        <section id="about" class="section active">
+            <h2>About Me</h2>
+            <div class="about-content">
+                <p>Welcome! I'm a passionate software developer with a love for creating innovative solutions and beautiful user experiences. With expertise in modern web technologies and a keen eye for design, I bring ideas to life through clean, efficient code.</p>
+                
+                <p>When I'm not coding, you can find me exploring new technologies, contributing to open source projects, or enjoying the great outdoors. I believe in continuous learning and am always excited to take on new challenges.</p>
+            </div>
+
+            <div class="skills-grid">
+                <div class="skill-item">
+                    <h3>Frontend Development</h3>
+                    <p>React, Vue.js, JavaScript, HTML5, CSS3</p>
+                </div>
+                <div class="skill-item">
+                    <h3>Backend Development</h3>
+                    <p>Node.js, Python, Express, Django</p>
+                </div>
+                <div class="skill-item">
+                    <h3>Database & Cloud</h3>
+                    <p>MongoDB, PostgreSQL, AWS, Docker</p>
+                </div>
+                <div class="skill-item">
+                    <h3>Tools & Methods</h3>
+                    <p>Git, Agile, Testing, CI/CD</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="section">
+            <h2>Featured Projects</h2>
+            <div class="project-grid">
+                <div class="project-card">
+                    <h3>E-Commerce Platform</h3>
+                    <p>A full-stack e-commerce solution built with React and Node.js, featuring user authentication, payment integration, and admin dashboard. Implemented responsive design and optimized for performance.</p>
+                    <p><strong>Tech Stack:</strong> React, Node.js, MongoDB, Stripe API</p>
+                </div>
+                
+                <div class="project-card">
+                    <h3>Task Management App</h3>
+                    <p>A collaborative task management application with real-time updates, drag-and-drop functionality, and team collaboration features. Deployed on AWS with automated CI/CD pipeline.</p>
+                    <p><strong>Tech Stack:</strong> Vue.js, Express, PostgreSQL, Socket.io</p>
+                </div>
+                
+                <div class="project-card">
+                    <h3>Data Visualization Dashboard</h3>
+                    <p>Interactive dashboard for data analysis and visualization, featuring dynamic charts, filters, and export capabilities. Handles large datasets with optimized query performance.</p>
+                    <p><strong>Tech Stack:</strong> Python, Django, D3.js, PostgreSQL</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="experience" class="section">
+            <h2>Professional Experience</h2>
+            
+            <div class="experience-item">
+                <h3>Senior Software Developer</h3>
+                <div class="company">Tech Innovations Inc.</div>
+                <div class="date">2022 - Present</div>
+                <p>Led development of scalable web applications serving 100k+ users. Mentored junior developers and implemented best practices for code quality and testing. Reduced application load time by 40% through optimization.</p>
+            </div>
+
+            <div class="experience-item">
+                <h3>Full Stack Developer</h3>
+                <div class="company">Digital Solutions LLC</div>
+                <div class="date">2020 - 2022</div>
+                <p>Developed and maintained multiple client projects using modern web technologies. Collaborated with design teams to create responsive, user-friendly interfaces. Implemented automated testing and deployment processes.</p>
+            </div>
+
+            <div class="experience-item">
+                <h3>Junior Web Developer</h3>
+                <div class="company">StartUp Ventures</div>
+                <div class="date">2019 - 2020</div>
+                <p>Built responsive web applications and contributed to the development of the company's main product. Gained experience in agile methodologies and cross-functional team collaboration.</p>
+            </div>
+        </section>
+
+        <section id="contact" class="section">
+            <h2>Let's Connect</h2>
+            <p style="text-align: center; margin-bottom: 30px; font-size: 1.1rem;">
+                I'm always interested in new opportunities and collaborations. Feel free to reach out!
+            </p>
+            
+            <div class="contact-grid">
+                <div class="contact-item">
+                    <div class="contact-icon">📧</div>
+                    <h3>Email</h3>
+                    <p>your.email@example.com</p>
+                </div>
+                
+                <div class="contact-item">
+                    <div class="contact-icon">💼</div>
+                    <h3>LinkedIn</h3>
+                    <p>linkedin.com/in/yourprofile</p>
+                </div>
+                
+                <div class="contact-item">
+                    <div class="contact-icon">🐙</div>
+                    <h3>GitHub</h3>
+                    <p>github.com/yourusername</p>
+                </div>
+                
+                <div class="contact-item">
+                    <div class="contact-icon">🌐</div>
+                    <h3>Portfolio</h3>
+                    <p>yourportfolio.com</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        function showSection(sectionId) {
+            // Hide all sections
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Show the selected section
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Update nav button styles
+            const navButtons = document.querySelectorAll('.nav-btn');
+            navButtons.forEach(btn => {
+                btn.style.background = 'linear-gradient(45deg, #667eea, #764ba2)';
+            });
+            
+            // Highlight active nav button
+            event.target.style.background = 'linear-gradient(45deg, #764ba2, #667eea)';
+        }
+
+        // Add smooth scrolling and entrance animations
+        document.addEventListener('DOMContentLoaded', function() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            });
+
+            // Observe all project cards and experience items
+            const animatedElements = document.querySelectorAll('.project-card, .experience-item, .contact-item');
+            animatedElements.forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(20px)';
+                el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>
