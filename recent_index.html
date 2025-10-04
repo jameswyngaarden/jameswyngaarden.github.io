@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>James B. Wyngaarden III - Academic Portfolio</title>
+    <title>Jimmy Wyngaarden - Academic Portfolio</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600&display=swap');
 
@@ -22,80 +22,9 @@
         }
 
         .container {
-            max-width: 1400px;
+            max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
-            display: flex;
-            gap: 30px;
-        }
-
-        .sidebar {
-            width: 250px;
-            flex-shrink: 0;
-            position: sticky;
-            top: 20px;
-            height: fit-content;
-        }
-
-        .sidebar-profile {
-            background: #ffffff;
-            padding: 30px 20px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-            border: 1px solid #e0e0e0;
-            text-align: center;
-        }
-
-        .sidebar-profile-img {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            margin: 0 auto 20px;
-            background-image: url('stimuli/headshot.jpg');
-            background-size: cover;
-            background-position: center;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        .sidebar-name {
-            font-family: 'Work Sans', sans-serif;
-            font-size: 1.3rem;
-            font-weight: 600;
-            color: #2c3e50;
-            margin-bottom: 5px;
-        }
-
-        .sidebar-title {
-            font-size: 0.9rem;
-            color: #5d6d7e;
-            margin-bottom: 20px;
-            line-height: 1.4;
-        }
-
-        .sidebar-links {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .sidebar-link {
-            display: flex;
-            align-items: center;
-            padding: 10px;
-            color: #2c3e50;
-            text-decoration: none;
-            border: 1px solid #e0e0e0;
-            transition: all 0.3s ease;
-            font-size: 0.9rem;
-        }
-
-        .sidebar-link:hover {
-            background: #f8f9fa;
-            border-color: #34495e;
-        }
-
-        .main-content {
-            flex-grow: 1;
-            min-width: 0;
         }
 
         header {
@@ -389,7 +318,23 @@
             border-bottom-color: #34495e;
         }
 
-        .contact-list {
+        .publication-title {
+	    margin-bottom: 10px;
+	}
+
+	.publication-title a {
+    	    color: #2c3e50;
+    	    text-decoration: none;
+    	    font-size: 1.2rem;
+    	    font-weight: 600;
+    	    transition: color 0.3s ease;
+	}
+
+	.publication-title a:hover {
+    	    color: #34495e;
+	}
+
+	.contact-list {
             max-width: 600px;
             margin: 0 auto;
             padding: 20px 0;
@@ -426,16 +371,6 @@
         }
 
         @media (max-width: 768px) {
-            .container {
-                flex-direction: column;
-            }
-
-            .sidebar {
-                width: 100%;
-                position: relative;
-                top: 0;
-            }
-
             header {
                 flex-direction: column;
                 text-align: center;
@@ -543,23 +478,6 @@
     </div>
 
     <div class="container">
-        <aside class="sidebar">
-            <div class="sidebar-profile">
-                <div class="sidebar-profile-img"></div>
-                <div class="sidebar-name">James B. Wyngaarden III</div>
-                <div class="sidebar-title">Neuroscientist | PhD Candidate</div>
-                <div class="sidebar-links">
-                    <a href="mailto:james.wyngaarden@temple.edu" class="sidebar-link">📧 Email</a>
-                    <a href="https://www.linkedin.com/in/james-wyngaarden-iii" target="_blank" class="sidebar-link">💼 LinkedIn</a>
-                    <a href="https://bsky.app/profile/jameswyngaarden.bsky.social" target="_blank" class="sidebar-link">🦋 Bluesky</a>
-                    <a href="https://github.com/jameswyngaarden" target="_blank" class="sidebar-link">💻 GitHub</a>
-                    <a href="https://scholar.google.com/citations?user=YOUR_ID" target="_blank" class="sidebar-link">🎓 Google Scholar</a>
-                    <a href="https://orcid.org/YOUR_ORCID" target="_blank" class="sidebar-link">🔬 ORCID</a>
-                </div>
-            </div>
-        </aside>
-
-        <div class="main-content">
         <header>
             <div class="header-left"></div>
             <div class="header-center">
@@ -710,10 +628,13 @@
             
             <div class="publication-list">
                 <div class="publication-item">
-                    <div class="publication-citation">
-                        <strong>Wyngaarden III, J.B.*</strong>, Nambiar, A.*, Dennison, J.B., Alloy, L.B., Fareri, D.S., Jarcho, J.M., & Smith, D.V. (2025). Trait reward sensitivity and motivation shape connectivity between the default mode network and the striatum during reward anticipation. <em>Under review.</em> <a href="https://www.biorxiv.org/content/10.1101/2025.04.17.649386v2" target="_blank">Preprint available</a>.
-                    </div>
-                </div>
+   		 <h3 class="publication-title">
+        	  <a href="publication-reward-sensitivity.html">Trait reward sensitivity and motivation shape connectivity between the default mode network and the striatum during reward anticipation</a>
+    		</h3>
+    		<div class="publication-citation">
+        		<strong>Wyngaarden III, J.B.*</strong>, Nambiar, A.*, Dennison, J.B., Alloy, L.B., Fareri, D.S., Jarcho, J.M., & Smith, D.V. (2025). <em>Under review.</em>
+    		</div>
+	     </div>
                 
                 <div class="publication-item">
                     <div class="publication-citation">
@@ -858,7 +779,24 @@
                 if (activeBtn) activeBtn.classList.add('active');
             }
         });
-
+	// Handle redirect from 404.html
+	(function() {
+   		var redirect = sessionStorage.redirect;
+    		delete sessionStorage.redirect;
+    		if (redirect && redirect !== '/') {
+        		var path = redirect.replace('/', '');
+        		if (['research', 'publications', 'contact'].includes(path)) {
+            			document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            			document.getElementById(path).classList.add('active');
+            
+            			document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+            			const activeBtn = document.querySelector(`[href="#${path}"]`);
+            			if (activeBtn) activeBtn.classList.add('active');
+            
+            			window.history.replaceState({section: path}, '', '/' + path);
+        		}
+    		}
+	})();
         // Scroll-sensitive profile image effect
         function updateProfileImage() {
             const scrollY = window.scrollY;
