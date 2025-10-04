@@ -17,7 +17,7 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
             color: #2c3e50;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            background: #ffffff;
             min-height: 100vh;
         }
 
@@ -28,13 +28,12 @@
         }
 
         header {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
+            background: #ffffff;
             border-radius: 0;
             padding: 30px 40px;
             margin-bottom: 30px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            border-bottom: 1px solid #e0e0e0;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -47,17 +46,6 @@
 
         .header-right {
             flex-shrink: 0;
-        }
-
-        .profile-img {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            background-image: url('stimuli/headshot.jpg');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
         }
 
         h1 {
@@ -111,7 +99,6 @@
             background: linear-gradient(45deg, #7f8c8d, #95a5a6);
         }
 
-        /* Parallax Section Headers */
         .section-header {
             height: 200px;
             background-image: linear-gradient(rgba(44, 62, 80, 0.7), rgba(44, 62, 80, 0.7)), url('stimuli/schuylkill_river_trail.jpg');
@@ -137,13 +124,12 @@
         }
 
         .section {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
+            background: #ffffff;
             border-radius: 0;
             padding: 40px;
             margin-bottom: 30px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: none;
+            border: none;
             display: none;
         }
 
@@ -184,7 +170,6 @@
             padding: 0;
         }
 
-        /* Scroll-sensitive profile image stack */
         .profile-stack {
             width: 160px;
             height: 160px;
@@ -248,7 +233,6 @@
             margin-bottom: 8px;
         }
 
-        /* Grants Section Styling */
         .grants-list {
             max-width: 900px;
             margin: 0 auto;
@@ -333,12 +317,6 @@
         .publication-citation a:hover {
             color: #2c3e50;
             border-bottom-color: #34495e;
-        }
-
-        .publication-status {
-            color: #7f8c8d;
-            font-style: italic;
-            font-size: 0.9rem;
         }
 
         .contact-list {
@@ -486,19 +464,17 @@
 
     <div class="container">
         <header>
-            <div class="header-left">
-                <!-- Profile image removed -->
-            </div>
+            <div class="header-left"></div>
             <div class="header-center">
                 <h1>James B. Wyngaarden III</h1>
                 <p class="subtitle">Neuroscientist | PhD Candidate | Decision-Making Researcher</p>
             </div>
             <div class="header-right">
                 <nav class="nav">
-                    <a href="#" class="nav-btn active" onclick="showSection('about', this)">About</a>
-                    <a href="#" class="nav-btn" onclick="showSection('research', this)">Research</a>
-                    <a href="#" class="nav-btn" onclick="showSection('publications', this)">Publications</a>
-                    <a href="#" class="nav-btn" onclick="showSection('contact', this)">Contact</a>
+                    <a href="#about" class="nav-btn active" onclick="showSection('about', this); return false;">About</a>
+                    <a href="#research" class="nav-btn" onclick="showSection('research', this); return false;">Research</a>
+                    <a href="#publications" class="nav-btn" onclick="showSection('publications', this); return false;">Publications</a>
+                    <a href="#contact" class="nav-btn" onclick="showSection('contact', this); return false;">Contact</a>
                 </nav>
             </div>
         </header>
@@ -598,7 +574,6 @@
                 <p>All datasets are BIDS-compliant with extensive phenotypic data, facilitating reuse and integration. Methodological innovations include multi-echo fMRI for improved signal quality and novel tasks that capture psychological processes traditional paradigms miss.</p>
             </div>
 
-            <!-- Grants Section within Research -->
             <div class="section-header" style="margin-top: 60px;">
                 <h2>Grants, Honors, & Awards</h2>
             </div>
@@ -755,12 +730,42 @@
             
             // Highlight active nav button
             buttonElement.classList.add('active');
+            
+            // Update URL without reloading page
+            const url = sectionId === 'about' ? '/' : `/${sectionId}`;
+            window.history.pushState({section: sectionId}, '', url);
         }
+        
+        // Handle browser back/forward buttons
+        window.addEventListener('popstate', function(event) {
+            if (event.state && event.state.section) {
+                const sectionId = event.state.section;
+                document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+                document.getElementById(sectionId).classList.add('active');
+                
+                document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+                const activeBtn = document.querySelector(`[href="#${sectionId}"]`);
+                if (activeBtn) activeBtn.classList.add('active');
+            }
+        });
+        
+        // Handle direct URL navigation on page load
+        window.addEventListener('DOMContentLoaded', function() {
+            const path = window.location.pathname.replace('/', '');
+            if (path && ['research', 'publications', 'contact'].includes(path)) {
+                document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+                document.getElementById(path).classList.add('active');
+                
+                document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+                const activeBtn = document.querySelector(`[href="#${path}"]`);
+                if (activeBtn) activeBtn.classList.add('active');
+            }
+        });
 
         // Scroll-sensitive profile image effect
         function updateProfileImage() {
             const scrollY = window.scrollY;
-            const maxScroll = 500; // Adjust this value to control sensitivity
+            const maxScroll = 500;
             const scrollRatio = Math.min(scrollY / maxScroll, 1);
             
             const frameOpen = document.querySelector('.frame-open');
@@ -772,10 +777,8 @@
             }
         }
 
-        // Add scroll listener for profile image effect
         window.addEventListener('scroll', updateProfileImage);
 
-        // Add smooth scrolling and entrance animations
         document.addEventListener('DOMContentLoaded', function() {
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
@@ -786,7 +789,6 @@
                 });
             });
 
-            // Observe all publication items and contact items
             const animatedElements = document.querySelectorAll('.publication-item, .contact-item');
             animatedElements.forEach(el => {
                 el.style.opacity = '0';
@@ -795,7 +797,6 @@
                 observer.observe(el);
             });
 
-            // Initialize profile image state
             updateProfileImage();
         });
     </script>
