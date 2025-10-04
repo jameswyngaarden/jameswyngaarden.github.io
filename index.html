@@ -779,7 +779,24 @@
                 if (activeBtn) activeBtn.classList.add('active');
             }
         });
-
+	// Handle redirect from 404.html
+	(function() {
+   		var redirect = sessionStorage.redirect;
+    		delete sessionStorage.redirect;
+    		if (redirect && redirect !== '/') {
+        		var path = redirect.replace('/', '');
+        		if (['research', 'publications', 'contact'].includes(path)) {
+            			document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            			document.getElementById(path).classList.add('active');
+            
+            			document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+            			const activeBtn = document.querySelector(`[href="#${path}"]`);
+            			if (activeBtn) activeBtn.classList.add('active');
+            
+            			window.history.replaceState({section: path}, '', '/' + path);
+        		}
+    		}
+	})();
         // Scroll-sensitive profile image effect
         function updateProfileImage() {
             const scrollY = window.scrollY;
