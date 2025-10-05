@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Research - James B. Wyngaarden III</title>
+    <title>James B. Wyngaarden III - Academic Portfolio</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600&display=swap');
 
@@ -183,7 +183,7 @@
             background-size: cover;
             background-position: center;
             /* Key for Parallax Effect */
-            background-attachment: fixed; 
+            background-attachment: fixed;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -191,11 +191,6 @@
             margin-bottom: 30px;
             position: relative;
             will-change: transform;
-        }
-
-        .section-header.alt-bg {
-            background-image: linear-gradient(rgba(44, 62, 80, 0.7), rgba(44, 62, 80, 0.7)), url('stimuli/schuylkill_river_trail.jpg');
-            margin-top: 60px; /* Keep margin for spacing */
         }
 
         .section-header h2 {
@@ -207,97 +202,19 @@
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
             opacity: 0.85;
         }
-        /* End Parallax/Header styles */
 
-        .research-section {
-            margin-bottom: 40px;
+        .about-content {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            max-width: 800px;
+            margin: 0 auto;
+            color: #34495e;
             padding: 40px;
         }
 
-        .research-section h3 {
-            font-family: 'Work Sans', sans-serif;
-            color: #2c3e50;
-            font-size: 1.5rem;
-            font-weight: 500;
-            margin-bottom: 15px;
-            border-bottom: 2px solid #bdc3c7;
-            padding-bottom: 10px;
-        }
-
-        .research-section p, .research-section ul {
-            color: #34495e;
-            line-height: 1.7;
-            margin-bottom: 15px;
-        }
-
-        .research-section ul {
-            padding-left: 20px;
-        }
-
-        .research-section li {
-            margin-bottom: 8px;
-        }
-
-        .grants-list {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 0 40px 40px 40px;
-        }
-
-        .grant-item {
-            display: flex;
-            align-items: flex-start;
-            padding: 15px 0;
-            border-bottom: 1px solid #e0e0e0;
-            color: #2c3e50;
-        }
-
-        .grant-item:last-child {
-            border-bottom: none;
-        }
-
-        .grant-year {
-            min-width: 60px;
-            font-weight: 600;
-            color: #34495e;
-            margin-right: 20px;
-            flex-shrink: 0;
-        }
-
-        .grant-description {
-            flex-grow: 1;
-            line-height: 1.6;
-        }
-
-        .grant-description a {
-            color: #34495e;
-            text-decoration: none;
-            border-bottom: 1px solid #bdc3c7;
-            transition: all 0.3s ease;
-        }
-
-        .grant-description a:hover {
-            color: #2c3e50;
-            border-bottom-color: #34495e;
-        }
-        
-        /* UPDATED style for the logos container */
-        .funding-logos {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 40px; 
-            margin: 10px auto 40px auto; 
-            padding: 20px;
-            max-width: 900px;
-        }
-
-        /* UPDATED style for the logos */
-        .funding-logos img {
-            height: 90px; 
-            width: auto;
-            max-width: 200px; 
-            object-fit: contain;
+        .about-content p {
+            margin-bottom: 20px;
+            text-align: justify;
         }
 
         @media (max-width: 768px) {
@@ -343,36 +260,16 @@
 
             .section-header {
                 height: 150px;
-                /* Remove fixed attachment on small screens where it can cause issues */
-                background-attachment: scroll; 
+                /* Disable fixed attachment on small screens for better performance and to avoid issues */
+                background-attachment: scroll;
             }
 
             .section-header h2 {
                 font-size: 2rem;
             }
 
-            .research-section {
+            .about-content {
                 padding: 20px;
-            }
-
-            .grants-list {
-                padding: 0 20px 20px 20px;
-            }
-
-            .grant-item {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .grant-year {
-                margin-bottom: 5px;
-                margin-right: 0;
-            }
-
-            /* Responsive style for logos on mobile */
-            .funding-logos {
-                flex-direction: column;
-                gap: 20px;
             }
         }
     </style>
@@ -423,114 +320,24 @@
             </div>
             <div class="header-right">
                 <nav class="nav">
-                    <a href="index.html" class="nav-btn">About</a>
-                    <a href="research.html" class="nav-btn active">Research</a>
+                    <a href="index.html" class="nav-btn active">About</a>
+                    <a href="research.html" class="nav-btn">Research</a>
                     <a href="publications.html" class="nav-btn">Publications</a>
                 </nav>
             </div>
         </header>
 
         <div class="section-header">
-            <h2>Research</h2>
+            <h2>About Me</h2>
         </div>
-        <div class="research-section">
-            <p>My research program centers on understanding <strong>how individual differences in reward sensitivity shape behavior and neural function across development and aging</strong>, with particular attention to vulnerable populations. I study reward processing as a multi-level construct that manifests differently depending on domain specificity (social vs. monetary rewards), state-dependent factors (behavioral motivation, anhedonia), and network-level integration (default mode network-ventral striatum connectivity).</p>
+        <div class="about-content">
+            <p>I'm a PhD candidate in cognitive neuroscience and social psychology at Temple University, working in the Neuroeconomics Lab under the mentorship of Dr. David V. Smith. My research focuses on understanding how the aging brain makes decisions, with particular attention to financial exploitation vulnerability in older adults—a critical public health problem responsible for over $10 billion in annual losses in the United States.</p>
             
-            <h3>Reward Sensitivity as a Multi-Level Construct</h3>
-            <p>I treat reward sensitivity not as a monolithic trait but as something that emerges from dynamic interactions between stable individual differences and context-dependent states. My work demonstrates that understanding reward processing requires examining both what people bring to situations (trait sensitivity) and how current motivational states shape neural responses.</p>
+            <p>My dissertation work, supported by an NIH F31 predoctoral fellowship from the National Institute on Aging and a pilot grant from the Scientific Research Network on Decision Neuroscience and Aging, examines whether targeted brain stimulation can improve decision-making in older adults. Specifically, I'm investigating how transcranial alternating current stimulation (tACS) targeting the prefrontal cortex can modulate reward-based learning and reduce confirmation bias—a key mechanism underlying vulnerability to financial scams. This work represents a translational approach that uses noninvasive brain stimulation both as a tool to understand the neural mechanisms of exploitation and as a potential intervention to protect vulnerable populations.</p>
             
-            <p>Recent findings show that behavioral motivation fundamentally moderates the relationship between reward sensitivity and brain connectivity. When highly motivated, reward-sensitive individuals show stronger default mode network-ventral striatum coupling. When less motivated, this relationship reverses. This pattern holds across gain and loss contexts, suggesting that motivational context determines when enhanced or reduced connectivity emerges.</p>
-            
-            <div style="margin: 30px 0; text-align: center;">
-                <img src="stimuli/figures/wyngaarden-et-al_CABN-2025_fig-5.png" alt="Behavioral motivation modulates reward sensitivity and brain connectivity" style="max-width: 60%; height: auto; border-radius: 8px; box-shadow: 0 0px 0px rgba(0,0,0,0.1);">
-                <p style="margin-top: 15px; color: #5d6d7e; font-size: 0.95rem; font-style: italic; max-width: 800px; margin-left: auto; margin-right: auto;">
-                    <strong>Figure:</strong> Behavioral motivation (i.e., sensitivity to task conditions; BM) moderates the relationship between reward sensitivity and ventral striatum-default mode network connectivity during reward anticipation. Among highly motivated individuals (low BM values), greater reward sensitivity is associated with enhanced corticostriatal connectivity during anticipation (i.e., VS-DMN working together to integrate goal orientation). However, among less motivated individuals, this relationship reverses: even among individuals with high reward sensitivity, VS-DMN connectivity breaks down.
-                </p>
-            </div>
-            
-            <p>I've also developed novel approaches to studying decision-making under ambiguity. The Linked Colored Lottery Task moves beyond traditional models that assume people only consider best- and worst-case scenarios, instead examining how individuals form beliefs about probability distributions and act on those beliefs.</p>
-            
-            <p><strong>Key contributions:</strong></p>
-            <ul>
-                <li>Aberrant reward sensitivity (hyper- or hypo-) relates to altered corticostriatal function and substance use risk</li>
-                <li>Social and monetary rewards engage partially overlapping but functionally distinct neural circuits</li>
-                <li>State-level behavioral motivation moderates how trait reward sensitivity manifests through neural network integration</li>
-            </ul>
-            
-            <h3>Aging and Cognitive Decline</h3>
-            <p>My most distinctive contribution links basic reward neuroscience to <strong>financial exploitation vulnerability in older adults</strong>—a critical public health problem causing over $10 billion in annual losses in the U.S. I'm examining how age-related cognitive decline creates vulnerability through specific neural mechanisms, with the ultimate goal of developing interventions.</p>
-            
-            <div style="float: right; width: 300px; margin-left: 20px; margin-bottom: 10px;">
-                <img src="stimuli/tACS_gif.gif" alt="tACS brain stimulation" style="width: 100%; border-radius: 8px; box-shadow: 0 0px 0px rgba(0,0,0,0.1); display: block;">
-                <p style="margin-top: 10px; color: #5d6d7e; font-size: 0.85rem; font-style: italic; text-align: center;">
-                    <strong>Figure:</strong> Theta-frequency tACS montage targeting left DLPFC (in slow motion..).
-                </p>
-            </div>
-            <p>
-                My dissertation research uses transcranial alternating current stimulation (tACS) targeting prefrontal cortex to modulate reward-based learning and reduce exploitation vulnerability. This represents a translational approach: using noninvasive brain stimulation both as a mechanistic tool and potential intervention.
-            </p>
-
-            <p>The framework centers on confirmation bias: as older adults increasingly prioritize present-oriented goals tied to social and emotional satisfaction, their ability to objectively evaluate contradictory information weakens. Prefrontal cortex deterioration and reduced cognitive flexibility mean older adults rely more heavily on initial beliefs and trusted sources. This is amplified during mild cognitive impairment and Alzheimer's disease, making them more susceptible to scams that align with preexisting beliefs or fears.</p>
-            
-            <p>Socioeconomic factors compound this vulnerability. My collaborative work shows that cognitive decline interacts with socioeconomic status—individuals with lower SES show stronger associations between everyday cognitive decline and financial exploitation risk.</p>
-            
-            <p><strong>Key contributions:</strong></p>
-            <ul>
-                <li>Mechanistic framework: age-related PFC decline → confirmation bias → financial exploitation</li>
-                <li>Evidence that cognitive decline × low SES predicts heightened exploitation risk</li>
-                <li>Proposal that noninvasive brain stimulation could enhance prefrontal function and reduce confirmation bias</li>
-                <li>Identification of specific neural targets (vmPFC, dlPFC, ACC) for intervention</li>
-            </ul>
-            
-            <h3>Methodological Rigor and Open Science</h3>
-            <p>I've contributed to the development and public release of three major datasets on OpenNeuro (500+ participants total), helping to build <strong>research infrastructure</strong> that advances the field beyond single papers:</p>
-            
-            <p><strong>Social/nonsocial reward processing</strong> (N=59): Four fMRI tasks (shared rewards, trust, ultimatum games) enabling examination of domain-specific reward processing and strategic social decision-making.</p>
-            
-            <p><strong>Lifespan reward processing</strong> (N=114, ages 21-80): Multi-echo fMRI + multi-shell diffusion imaging examining social rewards, trust, and fairness across adulthood. Includes FLAIR scans for white matter assessment, creating opportunities for multimodal analyses linking structural and functional connectivity to financial exploitation risk.</p>
-            
-            <p><strong>Risky/ambiguous decision-making</strong> (N=353): Novel Linked Colored Lottery Task capturing belief-based ambiguity processing, with comprehensive individual difference measures (autism spectrum traits, financial vulnerability, substance use, mood).</p>
-            
-            <p>All datasets are BIDS-compliant with extensive phenotypic data, facilitating reuse and integration. Methodological innovations include multi-echo fMRI for improved signal quality and novel tasks that capture psychological processes traditional paradigms miss.</p>
+            <p>Beyond my dissertation, my research program examines how individual differences in reward sensitivity shape behavior and neural function across development and aging. I've led the development and public release of three major neuroimaging datasets on OpenNeuro comprising over 500 participants, positioning my work to build research infrastructure that advances the field beyond individual papers. I employ fMRI, computational modeling, and machine learning to understand decision-making processes, with expertise in Python, R, MATLAB, and advanced statistical methods.</p>
         </div>
-
-        <div class="section-header alt-bg">
-            <h2>Grants, Honors, & Awards</h2>
-        </div>
-        
-        <div class="grants-list">
-            <div class="grant-item">
-                <div class="grant-year">2025</div>
-                <div class="grant-description"><a href="https://srndna.utdallas.edu/2025-pilot-grants/" target="_blank">Scientific Research Network on Decision Neuroscience and Aging (SRNDNA) Pilot Grant</a>, NIH R24-AG076847-04, "Modulating reward-based learning in older adults using transcranial alternating current stimulation" ($24,000)</div>
-            </div>
-            
-            <div class="grant-item">
-                <div class="grant-year">2024</div>
-                <div class="grant-description"><a href="https://reporter.nih.gov/search/sS498jkSfUCBuRmKI-9XjA/project-details/10899057" target="_blank">Ruth L. Kirschstein National Research Service Award (NRSA) Predoctoral Fellowship</a>, National Institute on Aging (NIA), F31-AG085934, "Characterizing the role of confirmation bias in financial exploitation of older adults" (3 years, $106,980)</div>
-            </div>
-            
-            <div class="grant-item">
-                <div class="grant-year">2020</div>
-                <div class="grant-description"><a href="https://graduate.appstate.edu/events/three-minute-thesis-competition" target="_blank">Three Minute Thesis (3MT) Competition</a>—Appalachian State University, 1st Place ($600)</div>
-            </div>
-            
-            <div class="grant-item">
-                <div class="grant-year">2019</div>
-                <div class="grant-description">Wiley F. Smith Endowment (WiSE) Research Award ($300)</div>
-            </div>
-            
-            <div class="grant-item">
-                <div class="grant-year">2019</div>
-                <div class="grant-description">Student and Faculty Excellence (SAFE) Fund Research Grant ($1,000)</div>
-            </div>
-        </div>
-
-        <div class="funding-logos">
-            <img src="stimuli/logos/NIA-Logo.jpg" alt="National Institute on Aging (NIA) Logo">
-            <img src="stimuli/logos/srndna_logo.png" alt="Scientific Research Network on Decision Neuroscience and Aging (SRNDNA) Logo">
-            <img src="stimuli/logos/3MT-logo.png" alt="Three Minute Thesis (3MT) Logo">
-        </div>
-        </div>
+    </div>
     </div>
 
 </body>
