@@ -176,7 +176,7 @@
             background: linear-gradient(45deg, #7f8c8d, #95a5a6);
         }
 
-        /* Parallax/Header styles */
+        /* Parallax/Header styles - NOTE: This block has been updated with the fix */
         .section-header {
             height: 200px;
             background-image: linear-gradient(rgba(44, 62, 80, 0.7), rgba(44, 62, 80, 0.7)), url('stimuli/schuylkill_river_trail.jpg');
@@ -190,7 +190,8 @@
             color: white;
             margin-bottom: 30px;
             position: relative;
-            /* Added for smooth, non-snapping parallax on some browsers */
+            /* FIX: Hints for optimization and smooth scrolling */
+            will-change: transform; 
             transform: translateZ(0); 
         }
 
@@ -263,7 +264,8 @@
                 height: 150px;
                 /* Disable fixed attachment on small screens for better performance and to avoid issues */
                 background-attachment: scroll;
-                transform: none; /* Remove hardware acceleration fix when disabling fixed attachment */
+                /* Remove hardware acceleration fix when disabling fixed attachment */
+                transform: none; 
             }
 
             .section-header h2 {
@@ -282,7 +284,7 @@
         <aside class="sidebar">
             <div class="sidebar-profile">
                 <div class="sidebar-profile-img"></div>
-                <div class="sidebar-name">Jimmy Wyngaarden</div>
+                <div class="sidebar-name">Jimmy Wyngaarden 3</div>
                 <div class="sidebar-title">Neuroscientist | PhD Candidate</div>
                 <div class="sidebar-links">
                     <a href="mailto:james.wyngaarden@temple.edu" class="sidebar-link">
