@@ -176,13 +176,13 @@
             background: linear-gradient(45deg, #7f8c8d, #95a5a6);
         }
 
-        /* Parallax/Header styles */
+        /* Parallax/Header styles - matching index.html */
         .section-header {
             height: 200px;
             background-image: linear-gradient(rgba(44, 62, 80, 0.7), rgba(44, 62, 80, 0.7)), url('stimuli/schuylkill_river_trail.jpg');
             background-size: cover;
             background-position: center;
-            /* Key for Parallax Effect */
+            /* CRITICAL for Parallax: fixes image to the viewport */
             background-attachment: fixed;
             display: flex;
             align-items: center;
@@ -190,11 +190,9 @@
             color: white;
             margin-bottom: 30px;
             position: relative;
-            will-change: transform;
         }
 
         .section-header.alt-bg {
-            background-image: linear-gradient(rgba(44, 62, 80, 0.7), rgba(44, 62, 80, 0.7)), url('stimuli/schuylkill_river_trail.jpg');
             margin-top: 60px; 
         }
 
@@ -207,7 +205,6 @@
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
             opacity: 0.85;
         }
-        /* End Parallax/Header styles */
 
         .research-section {
             margin-bottom: 40px;
@@ -341,8 +338,8 @@
 
             .section-header {
                 height: 150px;
-                /* Disable fixed attachment on small screens for better performance and to avoid issues */
-                background-attachment: scroll; 
+                /* Disable fixed attachment on small screens */
+                background-attachment: scroll;
             }
 
             .section-header h2 {
@@ -367,7 +364,6 @@
                 margin-right: 0;
             }
 
-            /* Responsive style for logos on mobile */
             .funding-logos {
                 flex-direction: column;
                 gap: 20px;
@@ -381,7 +377,7 @@
         <aside class="sidebar">
             <div class="sidebar-profile">
                 <div class="sidebar-profile-img"></div>
-                <div class="sidebar-name">Jimmy Wyngaarden</div>
+                <div class="sidebar-name">Jimmy Wyngaarden 3</div>
                 <div class="sidebar-title">Neuroscientist | PhD Candidate</div>
                 <div class="sidebar-links">
                     <a href="mailto:james.wyngaarden@temple.edu" class="sidebar-link">
