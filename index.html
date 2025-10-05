@@ -13,12 +13,25 @@
             box-sizing: border-box;
         }
 
+        /* PARALLAX FIX: 1. Define the 3D space */
+        html {
+            height: 100%;
+            overflow: hidden; /* Prevent native scrollbar */
+            perspective: 1px; /* Establishes 3D perspective */
+            
+        }
+
+        /* PARALLAX FIX: 2. Make the body the scrolling surface */
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
             color: #2c3e50;
             background: #ffffff;
             min-height: 100vh;
+            
+            /* Enable scrolling on the body */
+            height: 100%;
+            overflow-y: scroll;
         }
 
         .container {
@@ -102,6 +115,8 @@
         .main-content {
             flex-grow: 1;
             min-width: 0;
+            /* Added to address z-index stacking context issue with parallax */
+            z-index: 2; 
         }
 
         header {
@@ -115,6 +130,9 @@
             align-items: center;
             justify-content: space-between;
             gap: 30px;
+            /* Added to prevent header content from obscuring the fixed background */
+            position: relative; 
+            z-index: 3;
         }
 
         .header-center {
@@ -176,23 +194,25 @@
             background: linear-gradient(45deg, #7f8c8d, #95a5a6);
         }
 
-        /* Parallax/Header styles - NOTE: This block has been updated with the fix */
+        /* PARALLAX FIX: 3. Use 3D transforms on the parallax element */
         .section-header {
             height: 200px;
             background-image: linear-gradient(rgba(44, 62, 80, 0.7), rgba(44, 62, 80, 0.7)), url('stimuli/schuylkill_river_trail.jpg');
             background-size: cover;
             background-position: center;
-            /* Key for Parallax Effect */
-            background-attachment: fixed;
+            
+            /* Remove background-attachment: fixed; as we are using a 3D effect instead */
+            
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
             margin-bottom: 30px;
             position: relative;
-            /* FIX: Hints for optimization and smooth scrolling */
-            will-change: transform; 
-            transform: translateZ(0); 
+            z-index: -1; /* Push the background layer behind the content */
+            
+            /* The 3D Parallax effect: moves the element to create a slower scroll rate */
+            transform: translateZ(-1px) scale(2);
         }
 
         .section-header h2 {
@@ -203,6 +223,9 @@
             letter-spacing: 2px;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
             opacity: 0.85;
+            
+            /* Important: Undo the scale on the text so it looks normal */
+            transform: translateZ(0) scale(0.5); 
         }
 
         .about-content {
@@ -212,70 +235,12 @@
             margin: 0 auto;
             color: #34495e;
             padding: 40px;
+            /* Added to address z-index stacking context issue with parallax */
+            position: relative;
+            z-index: 2;
         }
 
-        .about-content p {
-            margin-bottom: 20px;
-            text-align: justify;
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                flex-direction: column;
-            }
-
-            .sidebar {
-                width: 100%;
-                position: relative;
-                top: 0;
-            }
-
-            header {
-                flex-direction: column;
-                text-align: center;
-                gap: 20px;
-                padding: 20px;
-            }
-
-            .nav {
-                justify-content: center;
-                gap: 15px;
-            }
-            
-            .nav-btn {
-                padding: 12px 20px;
-                font-size: 0.8rem;
-            }
-            
-            h1 {
-                font-size: 1.6rem;
-                white-space: normal;
-            }
-
-            .subtitle {
-                font-size: 1rem;
-            }
-            
-            .container {
-                padding: 10px;
-            }
-
-            .section-header {
-                height: 150px;
-                /* Disable fixed attachment on small screens for better performance and to avoid issues */
-                background-attachment: scroll;
-                /* Remove hardware acceleration fix when disabling fixed attachment */
-                transform: none; 
-            }
-
-            .section-header h2 {
-                font-size: 2rem;
-            }
-
-            .about-content {
-                padding: 20px;
-            }
-        }
+        /* REMOVED: All mobile media queries as requested */
     </style>
 </head>
 <body>
@@ -284,7 +249,7 @@
         <aside class="sidebar">
             <div class="sidebar-profile">
                 <div class="sidebar-profile-img"></div>
-                <div class="sidebar-name">Jimmy Wyngaarden 3</div>
+                <div class="sidebar-name">Jimmy Wyngaarden</div>
                 <div class="sidebar-title">Neuroscientist | PhD Candidate</div>
                 <div class="sidebar-links">
                     <a href="mailto:james.wyngaarden@temple.edu" class="sidebar-link">
