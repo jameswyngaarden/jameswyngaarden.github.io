@@ -190,8 +190,7 @@
             color: white;
             margin-bottom: 30px;
             position: relative;
-            /* Added for smooth, non-snapping parallax on some browsers */
-            transform: translateZ(0);
+            will-change: transform;
         }
 
         .section-header.alt-bg {
@@ -344,7 +343,6 @@
                 height: 150px;
                 /* Disable fixed attachment on small screens for better performance and to avoid issues */
                 background-attachment: scroll; 
-                transform: none; /* Remove hardware acceleration fix when disabling fixed attachment */
             }
 
             .section-header h2 {
