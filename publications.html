@@ -176,11 +176,13 @@
             background: linear-gradient(45deg, #7f8c8d, #95a5a6);
         }
 
+        /* Parallax/Header styles - matching index.html */
         .section-header {
             height: 200px;
             background-image: linear-gradient(rgba(44, 62, 80, 0.7), rgba(44, 62, 80, 0.7)), url('stimuli/schuylkill_river_trail.jpg');
             background-size: cover;
             background-position: center;
+            /* CRITICAL for Parallax: fixes image to the viewport */
             background-attachment: fixed;
             display: flex;
             align-items: center;
@@ -188,7 +190,6 @@
             color: white;
             margin-bottom: 30px;
             position: relative;
-            will-change: transform;
         }
 
         .section-header h2 {
@@ -306,6 +307,8 @@
 
             .section-header {
                 height: 150px;
+                /* Disable fixed attachment on small screens */
+                background-attachment: scroll;
             }
 
             .section-header h2 {
