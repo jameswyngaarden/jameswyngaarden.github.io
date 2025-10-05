@@ -176,12 +176,14 @@
             background: linear-gradient(45deg, #7f8c8d, #95a5a6);
         }
 
+        /* Parallax/Header styles */
         .section-header {
             height: 200px;
             background-image: linear-gradient(rgba(44, 62, 80, 0.7), rgba(44, 62, 80, 0.7)), url('stimuli/schuylkill_river_trail.jpg');
             background-size: cover;
             background-position: center;
-            background-attachment: fixed;
+            /* Key for Parallax Effect */
+            background-attachment: fixed; 
             display: flex;
             align-items: center;
             justify-content: center;
@@ -189,6 +191,11 @@
             margin-bottom: 30px;
             position: relative;
             will-change: transform;
+        }
+
+        .section-header.alt-bg {
+            background-image: linear-gradient(rgba(44, 62, 80, 0.7), rgba(44, 62, 80, 0.7)), url('stimuli/schuylkill_river_trail.jpg');
+            margin-top: 60px; /* Keep margin for spacing */
         }
 
         .section-header h2 {
@@ -200,6 +207,7 @@
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
             opacity: 0.85;
         }
+        /* End Parallax/Header styles */
 
         .research-section {
             margin-bottom: 40px;
@@ -278,17 +286,17 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 40px; /* Space between logos */
-            margin: 10px auto 40px auto; /* Significantly reduced top margin to move it closer to the grants list */
+            gap: 40px; 
+            margin: 10px auto 40px auto; 
             padding: 20px;
             max-width: 900px;
         }
 
         /* UPDATED style for the logos */
         .funding-logos img {
-            height: 90px; /* Increased uniform height for the logos */
+            height: 90px; 
             width: auto;
-            max-width: 200px; /* Prevent logos from getting too wide on larger screens */
+            max-width: 200px; 
             object-fit: contain;
         }
 
@@ -335,6 +343,8 @@
 
             .section-header {
                 height: 150px;
+                /* Remove fixed attachment on small screens where it can cause issues */
+                background-attachment: scroll; 
             }
 
             .section-header h2 {
@@ -484,7 +494,7 @@
             <p>All datasets are BIDS-compliant with extensive phenotypic data, facilitating reuse and integration. Methodological innovations include multi-echo fMRI for improved signal quality and novel tasks that capture psychological processes traditional paradigms miss.</p>
         </div>
 
-        <div class="section-header" style="margin-top: 60px;">
+        <div class="section-header alt-bg">
             <h2>Grants, Honors, & Awards</h2>
         </div>
         
