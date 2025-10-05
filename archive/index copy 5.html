@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>James B. Wyngaarden III - Academic Portfolio</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #2c3e50;
+            background: #ffffff;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+            gap: 30px;
+        }
+
+        .sidebar {
+            width: 250px;
+            flex-shrink: 0;
+            position: sticky;
+            top: 20px;
+            height: fit-content;
+        }
+
+        .sidebar-profile {
+            background: #ffffff;
+            padding: 30px 20px;
+            text-align: center;
+        }
+
+        .sidebar-profile-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            background-image: url('stimuli/headshot.jpg');
+            background-size: cover;
+            background-position: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .sidebar-name {
+            font-family: 'Work Sans', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+
+        .sidebar-title {
+            font-size: 0.9rem;
+            color: #5d6d7e;
+            margin-bottom: 20px;
+            line-height: 1.4;
+        }
+
+        .sidebar-links {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .sidebar-link {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 10px;
+            color: #2c3e50;
+            text-decoration: none;
+            border: 1px solid #e0e0e0;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            gap: 10px;
+        }
+
+        .sidebar-link img {
+            width: 20px;
+            height: 20px;
+            object-fit: contain;
+        }
+
+        .sidebar-link:hover {
+            background: #f8f9fa;
+            border-color: #34495e;
+        }
+
+        .main-content {
+            flex-grow: 1;
+            min-width: 0;
+        }
+
+        header {
+            background: #ffffff;
+            border-radius: 0;
+            padding: 30px 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 30px;
+        }
+
+        .header-center {
+            flex-grow: 1;
+        }
+
+        .header-right {
+            flex-shrink: 0;
+        }
+
+        h1 {
+            font-family: 'Work Sans', sans-serif;
+            font-size: 2rem;
+            margin-bottom: 8px;
+            background: linear-gradient(45deg, #2c3e50, #34495e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: #5d6d7e;
+            margin-bottom: 0;
+            font-weight: 300;
+        }
+
+        .nav {
+            display: flex;
+            justify-content: flex-end;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            font-family: 'Work Sans', sans-serif;
+            padding: 15px 30px;
+            background: linear-gradient(45deg, #34495e, #2c3e50);
+            color: white;
+            text-decoration: none;
+            border-radius: 0;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(52, 73, 94, 0.2);
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(52, 73, 94, 0.3);
+            background: linear-gradient(45deg, #2c3e50, #34495e);
+        }
+
+        .nav-btn.active {
+            background: linear-gradient(45deg, #7f8c8d, #95a5a6);
+        }
+
+        .section-header {
+            height: 200px;
+            background-image: linear-gradient(rgba(44, 62, 80, 0.7), rgba(44, 62, 80, 0.7)), url('stimuli/schuylkill_river_trail.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            margin-bottom: 30px;
+            position: relative;
+            will-change: transform;
+        }
+
+        .section-header h2 {
+            font-family: 'Work Sans', sans-serif;
+            font-size: 3rem;
+            font-weight: 500;
+            text-align: center;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            opacity: 0.85;
+        }
+
+        .section {
+            background: #ffffff;
+            border-radius: 0;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: none;
+            border: none;
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .about-content {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            max-width: 800px;
+            margin: 0 auto;
+            color: #34495e;
+        }
+
+        .about-intro {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            margin-bottom: 20px;
+            min-height: 160px;
+        }
+
+        .about-text {
+            flex: 1;
+            display: flex;
+            align-items: center;
+        }
+
+        .about-text p {
+            margin: 0 !important;
+            padding: 0;
+        }
+
+        .profile-stack {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            order: -1;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .profile-frame {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            transition: opacity 0.3s ease;
+        }
+
+        .profile-frame.frame-open {
+            opacity: 1;
+        }
+
+        .profile-frame.frame-closed {
+            opacity: 0;
+        }
+
+        .about-content p {
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+
+        .research-section {
+            margin-bottom: 40px;
+        }
+
+        .research-section h3 {
+            font-family: 'Work Sans', sans-serif;
+            color: #2c3e50;
+            font-size: 1.5rem;
+            font-weight: 500;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #bdc3c7;
+            padding-bottom: 10px;
+        }
+
+        .research-section p, .research-section ul {
+            color: #34495e;
+            line-height: 1.7;
+            margin-bottom: 15px;
+        }
+
+        .research-section ul {
+            padding-left: 20px;
+        }
+
+        .research-section li {
+            margin-bottom: 8px;
+        }
+
+        .grants-list {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .grant-item {
+            display: flex;
+            align-items: flex-start;
+            padding: 15px 0;
+            border-bottom: 1px solid #e0e0e0;
+            color: #2c3e50;
+        }
+
+        .grant-item:last-child {
+            border-bottom: none;
+        }
+
+        .grant-year {
+            min-width: 60px;
+            font-weight: 600;
+            color: #34495e;
+            margin-right: 20px;
+            flex-shrink: 0;
+        }
+
+        .grant-description {
+            flex-grow: 1;
+            line-height: 1.6;
+        }
+
+        .grant-description a {
+            color: #34495e;
+            text-decoration: none;
+            border-bottom: 1px solid #bdc3c7;
+            transition: all 0.3s ease;
+        }
+
+        .grant-description a:hover {
+            color: #2c3e50;
+            border-bottom-color: #34495e;
+        }
+
+        .publication-list {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .publication-item {
+            background: none;
+            padding: 20px 0;
+            border-radius: 0;
+            margin-bottom: 25px;
+            box-shadow: none;
+            border-left: none;
+            border-bottom: 1px solid #e0e0e0;
+            transition: none;
+        }
+
+        .publication-item:hover {
+            transform: none;
+            box-shadow: none;
+        }
+
+        .publication-item:last-child {
+            border-bottom: none;
+        }
+
+        .publication-title {
+            margin-bottom: 10px;
+        }
+
+        .publication-title a {
+            color: #0066cc;
+            text-decoration: underline;
+            font-size: 1.2rem;
+            font-weight: 600;
+            transition: color 0.3s ease;
+            line-height: 1.4;
+        }
+
+        .publication-title a:hover {
+            color: #0052a3;
+        }
+
+        .publication-citation {
+            color: #2c3e50;
+            line-height: 1.6;
+            font-size: 1rem;
+            margin-bottom: 8px;
+        }
+
+        .publication-citation a {
+            color: #34495e;
+            text-decoration: none;
+            border-bottom: 1px solid #bdc3c7;
+            transition: all 0.3s ease;
+        }
+
+        .publication-citation a:hover {
+            color: #2c3e50;
+            border-bottom-color: #34495e;
+        }
+
+        .contact-list {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px 0;
+        }
+
+        .contact-list-item {
+            padding: 15px 0;
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            align-items: center;
+            color: #2c3e50;
+            font-size: 1.1rem;
+        }
+
+        .contact-list-item:last-child {
+            border-bottom: none;
+        }
+
+        .contact-list-item strong {
+            min-width: 120px;
+            color: #34495e;
+        }
+
+        .contact-list-item a {
+            color: #2c3e50;
+            text-decoration: none;
+            border-bottom: 1px solid #bdc3c7;
+            transition: all 0.3s ease;
+        }
+
+        .contact-list-item a:hover {
+            color: #34495e;
+            border-bottom-color: #34495e;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                position: relative;
+                top: 0;
+            }
+
+            header {
+                flex-direction: column;
+                text-align: center;
+                gap: 20px;
+                padding: 20px;
+            }
+
+            .nav {
+                justify-content: center;
+                gap: 15px;
+            }
+            
+            .nav-btn {
+                padding: 12px 20px;
+                font-size: 0.8rem;
+            }
+            
+            h1 {
+                font-size: 1.6rem;
+                white-space: normal;
+            }
+
+            .subtitle {
+                font-size: 1rem;
+            }
+            
+            .container {
+                padding: 10px;
+            }
+            
+            .section {
+                padding: 20px;
+            }
+
+            .section-header {
+                height: 150px;
+            }
+
+            .section-header h2 {
+                font-size: 2rem;
+            }
+
+            .grant-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .grant-year {
+                margin-bottom: 5px;
+                margin-right: 0;
+            }
+
+            .about-intro {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                min-height: auto;
+            }
+
+            .about-text {
+                display: block;
+            }
+
+            .profile-stack {
+                width: 120px;
+                height: 120px;
+                margin-bottom: 20px;
+            }
+        }
+
+        .floating-shapes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .shape {
+            position: absolute;
+            background: rgba(127, 140, 141, 0.1);
+            border-radius: 50%;
+            animation: float 25s infinite linear;
+        }
+
+        .shape:nth-child(1) { width: 80px; height: 80px; top: 20%; left: 10%; animation-delay: 0s; }
+        .shape:nth-child(2) { width: 60px; height: 60px; top: 60%; left: 80%; animation-delay: 8s; }
+        .shape:nth-child(3) { width: 100px; height: 100px; top: 80%; left: 20%; animation-delay: 15s; }
+
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); opacity: 0.3; }
+            50% { transform: translateY(-80px) rotate(180deg); opacity: 0.1; }
+            100% { transform: translateY(0px) rotate(360deg); opacity: 0.3; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <aside class="sidebar">
+            <div class="sidebar-profile">
+                <div class="sidebar-profile-img"></div>
+                <div class="sidebar-name">Jimmy Wyngaarden</div>
+                <div class="sidebar-title">Neuroscientist | PhD Candidate</div>
+                <div class="sidebar-links">
+                    <a href="mailto:james.wyngaarden@temple.edu" class="sidebar-link">
+                        <img src="stimuli/logos/Email.png" alt="">
+                        Email
+                    </a>
+                    <a href="https://www.linkedin.com/in/james-wyngaarden-iii" target="_blank" class="sidebar-link">
+                        <img src="stimuli/logos/Linkedin.png" alt="">
+                        LinkedIn
+                    </a>
+                    <a href="https://bsky.app/profile/jameswyngaarden.bsky.social" target="_blank" class="sidebar-link">
+                        <img src="stimuli/logos/Bluesky.png" alt="">
+                        Bluesky
+                    </a>
+                    <a href="https://github.com/jameswyngaarden" target="_blank" class="sidebar-link">
+                        <img src="stimuli/logos/Github.png" alt="">
+                        GitHub
+                    </a>
+                    <a href="https://scholar.google.com/citations?user=84faR-sAAAAJ&hl=en" target="_blank" class="sidebar-link">
+                        <img src="stimuli/logos/Google-Scholar.png" alt="">
+                        Google Scholar
+                    </a>
+                    <a href="https://orcid.org/0000-0002-0858-8721" target="_blank" class="sidebar-link">
+                        <img src="stimuli/logos/Orcid.png" alt="">
+                        ORCID
+                    </a>
+                </div>
+            </div>
+        </aside>
+
+        <div class="main-content">
+        <header>
+            <div class="header-left"></div>
+            <div class="header-center">
+                <h1>James B. Wyngaarden III</h1>
+                <p class="subtitle">Neuroscientist | PhD Candidate | Decision-Making Researcher</p>
+            </div>
+            <div class="header-right">
+                <nav class="nav">
+                    <a href="#about" class="nav-btn active" onclick="showSection('about', this); return false;">About</a>
+                    <a href="#research" class="nav-btn" onclick="showSection('research', this); return false;">Research</a>
+                    <a href="#publications" class="nav-btn" onclick="showSection('publications', this); return false;">Publications</a>
+                </nav>
+            </div>
+        </header>
+
+        <section id="about" class="section active">
+            <div class="section-header">
+                <h2>About Me</h2>
+            </div>
+            <div class="about-content">
+                <p>I'm a PhD candidate in cognitive neuroscience and social psychology at Temple University, working in the Neuroeconomics Lab under the mentorship of Dr. David V. Smith. My research focuses on understanding how the aging brain makes decisions, with particular attention to financial exploitation vulnerability in older adults—a critical public health problem responsible for over $10 billion in annual losses in the United States.</p>
+                
+                <p>My dissertation work, supported by an NIH F31 predoctoral fellowship from the National Institute on Aging and a pilot grant from the Scientific Research Network on Decision Neuroscience and Aging, examines whether targeted brain stimulation can improve decision-making in older adults. Specifically, I'm investigating how transcranial alternating current stimulation (tACS) targeting the prefrontal cortex can modulate reward-based learning and reduce confirmation bias—a key mechanism underlying vulnerability to financial scams. This work represents a translational approach that uses noninvasive brain stimulation both as a tool to understand the neural mechanisms of exploitation and as a potential intervention to protect vulnerable populations.</p>
+                
+                <p>Beyond my dissertation, my research program examines how individual differences in reward sensitivity shape behavior and neural function across development and aging. I've led the development and public release of three major neuroimaging datasets on OpenNeuro comprising over 500 participants, positioning my work to build research infrastructure that advances the field beyond individual papers. I employ fMRI, computational modeling, and machine learning to understand decision-making processes, with expertise in Python, R, MATLAB, and advanced statistical methods.</p>
+            </div>
+        </section>
+
+        <section id="research" class="section">
+            <div class="section-header">
+                <h2>Research</h2>
+            </div>
+            <div class="research-section">
+                <p>My research program centers on understanding <strong>how individual differences in reward sensitivity shape behavior and neural function across development and aging</strong>, with particular attention to vulnerable populations. I study reward processing as a multi-level construct that manifests differently depending on domain specificity (social vs. monetary rewards), state-dependent factors (behavioral motivation, anhedonia), and network-level integration (default mode network-ventral striatum connectivity).</p>
+                
+                <h3>Reward Sensitivity as a Multi-Level Construct</h3>
+                <p>I treat reward sensitivity not as a monolithic trait but as something that emerges from dynamic interactions between stable individual differences and context-dependent states. My work demonstrates that understanding reward processing requires examining both what people bring to situations (trait sensitivity) and how current motivational states shape neural responses.</p>
+                
+                <p>Recent findings show that behavioral motivation fundamentally moderates the relationship between reward sensitivity and brain connectivity. When highly motivated, reward-sensitive individuals show stronger default mode network-ventral striatum coupling. When less motivated, this relationship reverses. This pattern holds across gain and loss contexts, suggesting that motivational context determines when enhanced or reduced connectivity emerges.</p>
+                
+                <div style="margin: 30px 0; text-align: center;">
+                    <img src="stimuli/figures/wyngaarden-et-al_CABN-2025_fig-5.png" alt="Behavioral motivation modulates reward sensitivity and brain connectivity" style="max-width: 60%; height: auto; border-radius: 8px; box-shadow: 0 0px 0px rgba(0,0,0,0.1);">
+                    <p style="margin-top: 15px; color: #5d6d7e; font-size: 0.95rem; font-style: italic; max-width: 800px; margin-left: auto; margin-right: auto;">
+                        <strong>Figure:</strong> Behavioral motivation (i.e., sensitivity to task conditions; BM) moderates the relationship between reward sensitivity and ventral striatum-default mode network connectivity during reward anticipation. Among highly motivated individuals (low BM values), greater reward sensitivity is associated with enhanced corticostriatal connectivity during anticipation (i.e., VS-DMN working together to integrate goal orientation). However, among less motivated individuals, this relationship reverses: even among individuals with high reward sensitivity, VS-DMN connectivity breaks down.
+                    </p>
+                </div>
+                
+                <p>I've also developed novel approaches to studying decision-making under ambiguity. The Linked Colored Lottery Task moves beyond traditional models that assume people only consider best- and worst-case scenarios, instead examining how individuals form beliefs about probability distributions and act on those beliefs.</p>
+                
+                <p><strong>Key contributions:</strong></p>
+                <ul>
+                    <li>Aberrant reward sensitivity (hyper- or hypo-) relates to altered corticostriatal function and substance use risk</li>
+                    <li>Social and monetary rewards engage partially overlapping but functionally distinct neural circuits</li>
+                    <li>State-level behavioral motivation moderates how trait reward sensitivity manifests through neural network integration</li>
+                </ul>
+                
+                <h3>Aging and Cognitive Decline</h3>
+                <p>My most distinctive contribution links basic reward neuroscience to <strong>financial exploitation vulnerability in older adults</strong>—a critical public health problem causing over $10 billion in annual losses in the U.S. I'm examining how age-related cognitive decline creates vulnerability through specific neural mechanisms, with the ultimate goal of developing interventions.</p>
+                
+                <div style="float: right; width: 300px; margin-left: 20px; margin-bottom: 10px;">
+                    <img src="stimuli/tACS_gif.gif" alt="tACS brain stimulation" style="width: 100%; border-radius: 8px; box-shadow: 0 0px 0px rgba(0,0,0,0.1); display: block;">
+                    <p style="margin-top: 10px; color: #5d6d7e; font-size: 0.85rem; font-style: italic; text-align: center;">
+                        <strong>Figure:</strong> Theta-frequency tACS montage targeting left DLPFC (in slow motion..).
+                    </p>
+                </div>
+                <p>
+                    My dissertation research uses transcranial alternating current stimulation (tACS) targeting prefrontal cortex to modulate reward-based learning and reduce exploitation vulnerability. This represents a translational approach: using noninvasive brain stimulation both as a mechanistic tool and potential intervention.
+                </p>
+
+                <p>The framework centers on confirmation bias: as older adults increasingly prioritize present-oriented goals tied to social and emotional satisfaction, their ability to objectively evaluate contradictory information weakens. Prefrontal cortex deterioration and reduced cognitive flexibility mean older adults rely more heavily on initial beliefs and trusted sources. This is amplified during mild cognitive impairment and Alzheimer's disease, making them more susceptible to scams that align with preexisting beliefs or fears.</p>
+                
+                <p>Socioeconomic factors compound this vulnerability. My collaborative work shows that cognitive decline interacts with socioeconomic status—individuals with lower SES show stronger associations between everyday cognitive decline and financial exploitation risk.</p>
+                
+                <p><strong>Key contributions:</strong></p>
+                <ul>
+                    <li>Mechanistic framework: age-related PFC decline → confirmation bias → financial exploitation</li>
+                    <li>Evidence that cognitive decline × low SES predicts heightened exploitation risk</li>
+                    <li>Proposal that noninvasive brain stimulation could enhance prefrontal function and reduce confirmation bias</li>
+                    <li>Identification of specific neural targets (vmPFC, dlPFC, ACC) for intervention</li>
+                </ul>
+                
+                <h3>Methodological Rigor and Open Science</h3>
+                <p>I've contributed to the development and public release of three major datasets on OpenNeuro (500+ participants total), helping to build <strong>research infrastructure</strong> that advances the field beyond single papers:</p>
+                
+                <p><strong>Social/nonsocial reward processing</strong> (N=59): Four fMRI tasks (shared rewards, trust, ultimatum games) enabling examination of domain-specific reward processing and strategic social decision-making.</p>
+                
+                <p><strong>Lifespan reward processing</strong> (N=114, ages 21-80): Multi-echo fMRI + multi-shell diffusion imaging examining social rewards, trust, and fairness across adulthood. Includes FLAIR scans for white matter assessment, creating opportunities for multimodal analyses linking structural and functional connectivity to financial exploitation risk.</p>
+                
+                <p><strong>Risky/ambiguous decision-making</strong> (N=353): Novel Linked Colored Lottery Task capturing belief-based ambiguity processing, with comprehensive individual difference measures (autism spectrum traits, financial vulnerability, substance use, mood).</p>
+                
+                <p>All datasets are BIDS-compliant with extensive phenotypic data, facilitating reuse and integration. Methodological innovations include multi-echo fMRI for improved signal quality and novel tasks that capture psychological processes traditional paradigms miss.</p>
+            </div>
+
+            <div class="section-header" style="margin-top: 60px;">
+                <h2>Grants, Honors, & Awards</h2>
+            </div>
+            
+            <div class="grants-list">
+                <div class="grant-item">
+                    <div class="grant-year">2025</div>
+                    <div class="grant-description"><a href="https://srndna.utdallas.edu/2025-pilot-grants/" target="_blank">Scientific Research Network on Decision Neuroscience and Aging (SRNDNA) Pilot Grant</a>, NIH R24-AG076847-04, "Modulating reward-based learning in older adults using transcranial alternating current stimulation" ($24,000)</div>
+                </div>
+                
+                <div class="grant-item">
+                    <div class="grant-year">2024</div>
+                    <div class="grant-description"><a href="https://reporter.nih.gov/search/sS498jkSfUCBuRmKI-9XjA/project-details/10899057" target="_blank">Ruth L. Kirschstein National Research Service Award (NRSA) Predoctoral Fellowship</a>, National Institute on Aging (NIA), F31-AG085934, "Characterizing the role of confirmation bias in financial exploitation of older adults" (3 years, $106,980)</div>
+                </div>
+                
+                <div class="grant-item">
+                    <div class="grant-year">2020</div>
+                    <div class="grant-description"><a href="https://graduate.appstate.edu/events/three-minute-thesis-competition" target="_blank">Three Minute Thesis (3MT) Competition</a>—Appalachian State University, 1st Place ($600)</div>
+                </div>
+                
+                <div class="grant-item">
+                    <div class="grant-year">2019</div>
+                    <div class="grant-description">Wiley F. Smith Endowment (WiSE) Research Award ($300)</div>
+                </div>
+                
+                <div class="grant-item">
+                    <div class="grant-year">2019</div>
+                    <div class="grant-description">Student and Faculty Excellence (SAFE) Fund Research Grant ($1,000)</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="publications" class="section">
+            <div class="section-header">
+                <h2>Publications</h2>
+            </div>
+            
+            <div class="publication-list">
+                <div class="publication-item">
+                    <h3 class="publication-title">
+                        <a href="publications/reward-sensitivity-motivation.html">Trait reward sensitivity and motivation shape connectivity between the default mode network and the striatum during reward anticipation</a>
+                    </h3>
+                    <div class="publication-citation">
+                        <strong>Wyngaarden III, J.B.*</strong>, Nambiar, A.*, Dennison, J.B., Alloy, L.B., Fareri, D.S., Jarcho, J.M., & Smith, D.V. (2025). Trait reward sensitivity and motivation shape connectivity between the default mode network and the striatum during reward anticipation. <em>Under review.</em> <a href="https://www.biorxiv.org/content/10.1101/2025.04.17.649386v2" target="_blank">Preprint available</a>.
+                    </div>
+                </div>
+                
+                <div class="publication-item">
+                    <h3 class="publication-title">
+                        <a href="publications/confirmation-bias-exploitation.html">Maladaptive decision making in older adults: Confirmation bias and financial exploitation</a>
+                    </h3>
+                    <div class="publication-citation">
+                        <strong>Wyngaarden III, J.B.</strong>, Giovannetti, T., Krekelberg, B., & Smith, D.V. (2025). Maladaptive decision making in older adults: Confirmation bias and financial exploitation. <em>Under review.</em> <a href="https://osf.io/preprints/psyarxiv/abnyd_v2" target="_blank">Preprint available</a>.
+                    </div>
+                </div>
+                
+                <div class="publication-item">
+                    <h3 class="publication-title">
+                        <a href="publications/linked-colored-lottery.html">A dataset of risky and ambiguous decisions using a novel linked colored lottery task across two datasets</a>
+                    </h3>
+                    <div class="publication-citation">
+                        <strong>Wyngaarden III, J.B.*</strong>, Yang, Y.*, Dennison, J.B.*, Smith, D.V. (2025). A dataset of risky and ambiguous decisions using a novel linked colored lottery task across two datasets. <em>Data in Brief.</em> <a href="https://doi.org/10.1016/j.dib.2025.111844" target="_blank">https://doi.org/10.1016/j.dib.2025.111844</a>.
+                    </div>
+                </div>
+                
+                <div class="publication-item">
+                    <h3 class="publication-title">
+                        <a href="publications/lifespan-reward-dataset.html">Social reward and nonsocial reward processing across the adult lifespan: An interim multi-echo fMRI and diffusion dataset</a>
+                    </h3>
+                    <div class="publication-citation">
+                        Smith, D.V., Sharp, C.J., Dachs, A., <strong>Wyngaarden III, J.B.</strong>, Sazhin, D., Yang, Y., Kos, M., Tropea, T., Kohli, I., Clithero, J.A., Olson, I., Giovannetti, T., Fareri, D., Jarcho, J.M.  (2024). Social reward and nonsocial reward processing across the adult lifespan: An interim multi-echo fMRI and diffusion dataset. <em>Data in Brief.</em> <a href="https://doi.org/10.1016/j.dib.2024.110810" target="_blank">https://doi.org/10.1016/j.dib.2024.110810</a>.
+                    </div>
+                </div>
+                
+                <div class="publication-item">
+                    <h3 class="publication-title">
+                        <a href="publications/corticostriatal-social-reward.html">Corticostriatal responses to social reward are linked to trait reward sensitivity and subclinical substance use in young adults</a>
+                    </h3>
+                    <div class="publication-citation">
+                        <strong>Wyngaarden III, J.B.*</strong>, Johnston, C.R.*, Sazhin, D., Dennison, J.B., Zaff, O., Fareri, D., McCloskey, M., Alloy, L.B., Smith, D.V., & Jarcho, J.M. (2024). Corticostriatal responses to social reward are linked to trait reward sensitivity and subclinical substance use in young adults. <em>Social Cognitive and Affective Neuroscience.</em> <a href="https://doi.org/10.1093/scan/nsae033" target="_blank">https://doi.org/10.1093/scan/nsae033</a>.
+                    </div>
+                </div>
+                
+                <div class="publication-item">
+                    <h3 class="publication-title">
+                        <a href="publications/reward-sensitivity-strategic-decision.html">Trait reward sensitivity modulates connectivity with the temporoparietal junction and anterior insula during strategic decision making</a>
+                    </h3>
+                    <div class="publication-citation">
+                        Sazhin, D., <strong>Wyngaarden III, J.B.</strong>, Dennison, J.B., Zaff, O., Fareri, D., McCloskey, M.S., Alloy, L.B., Jarcho, J.M., & Smith, D.V. (2024). Trait reward sensitivity modulates connectivity with the temporoparietal junction and anterior insula during strategic decision making. <em>Biological Psychology, 192</em>, 108857. <a href="https://doi.org/10.1016/j.biopsycho.2024.108857" target="_blank">https://doi.org/10.1016/j.biopsycho.2024.108857</a>.
+                    </div>
+                </div>
+                
+                <div class="publication-item">
+                    <h3 class="publication-title">
+                        <a href="publications/neuroimaging-dataset-young-adults.html">A neuroimaging dataset of social and nonsocial reward processing in young adults</a>
+                    </h3>
+                    <div class="publication-citation">
+                        Smith, D.V., <strong>Wyngaarden III, J.B.</strong>, Sharp, C.J., Sazhin, D., Zaff, O., Fareri, D., Jarcho, J.M. (2023). A neuroimaging dataset of social and nonsocial reward processing in young adults. <em>Data in Brief.</em> <a href="https://doi.org/10.1016/j.dib.2024.110197" target="_blank">https://doi.org/10.1016/j.dib.2024.110197</a>.
+                    </div>
+                </div>
+                
+                <div class="publication-item">
+                    <h3 class="publication-title">
+                        <a href="publications/social-context-shared-rewards.html">Social context and reward sensitivity enhance corticostriatal function during experiences of shared rewards</a>
+                    </h3>
+                    <div class="publication-citation">
+                        Zaff, O., <strong>Wyngaarden III, J.B.</strong>, Dennison, J.B., Sazhin, D., Chein, J., McCloskey, M., Alloy, L.B., Jarcho, J.M., Smith, D.V., & Fareri, D. (2023). Social context and reward sensitivity enhance corticostriatal function during experiences of shared rewards. <em>Under Review.</em> <a href="https://pubmed.ncbi.nlm.nih.gov/37905048/" target="_blank">Preprint available</a>.
+                    </div>
+                </div>
+                
+                <div class="publication-item">
+                    <h3 class="publication-title">
+                        <a href="publications/substance-abuse-neuromelanin.html">Substance abuse in emerging adults: The role of neuromelanin and ventral striatal response to social and monetary rewards</a>
+                    </h3>
+                    <div class="publication-citation">
+                        Jarcho, J.M., <strong>Wyngaarden III, J.B.</strong>, Johnston, C.J., Quarmley, M., Smith, D.V., & Cassidy, C.M. (2022). Substance abuse in emerging adults: The role of neuromelanin and ventral striatal response to social and monetary rewards. <em>Brain Sciences, 12</em>, 352. <a href="https://doi.org/10.3390/brainsci12030352" target="_blank">https://doi.org/10.3390/brainsci12030352</a>.
+                    </div>
+                </div>
+                
+                <div class="publication-item">
+                    <h3 class="publication-title">
+                        <a href="publications/fairness-authority-protests.html">"They should have followed the rules": Trade-offs between fairness and authority values predict judgments of social justice protests</a>
+                    </h3>
+                    <div class="publication-citation">
+                        Monroe, A.E., <strong>Wyngaarden III, J.B.</strong>, & Plant, A.E. (2021). "They should have followed the rules": Trade-offs between fairness and authority values predict judgments of social justice protests. <em>Social Psychological and Personality Science, 12</em>(4), 471-478. <a href="https://doi.org/10.1177/1948550620923854" target="_blank">https://doi.org/10.1177/1948550620923854</a>.
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    </div>
+
+    <script>
+        function showSection(sectionId, buttonElement) {
+            // Hide all sections
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Show the selected section
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Update nav button styles
+            const navButtons = document.querySelectorAll('.nav-btn');
+            navButtons.forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Highlight active nav button
+            buttonElement.classList.add('active');
+            
+            // Update URL without reloading page
+            const url = sectionId === 'about' ? '/' : `/${sectionId}`;
+            window.history.pushState({section: sectionId}, '', url);
+        }
+        
+        // Handle browser back/forward buttons
+        window.addEventListener('popstate', function(event) {
+            if (event.state && event.state.section) {
+                const sectionId = event.state.section;
+                document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+                document.getElementById(sectionId).classList.add('active');
+                
+                document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+                const activeBtn = document.querySelector(`[href="#${sectionId}"]`);
+                if (activeBtn) activeBtn.classList.add('active');
+            }
+        });
+        
+        // Handle direct URL navigation on page load
+        window.addEventListener('DOMContentLoaded', function() {
+            const path = window.location.pathname.replace('/', '');
+            if (path && ['research', 'publications'].includes(path)) {
+                document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+                document.getElementById(path).classList.add('active');
+                
+                document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+                const activeBtn = document.querySelector(`[href="#${path}"]`);
+                if (activeBtn) activeBtn.classList.add('active');
+            }
+        });
+
+        // Scroll-sensitive profile image effect
+        function updateProfileImage() {
+            const scrollY = window.scrollY;
+            const maxScroll = 500;
+            const scrollRatio = Math.min(scrollY / maxScroll, 1);
+            
+            const frameOpen = document.querySelector('.frame-open');
+            const frameClosed = document.querySelector('.frame-closed');
+            
+            if (frameOpen && frameClosed) {
+                frameOpen.style.opacity = 1 - scrollRatio;
+                frameClosed.style.opacity = scrollRatio;
+            }
+        }
+
+        window.addEventListener('scroll', updateProfileImage);
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            });
+
+            const animatedElements = document.querySelectorAll('.publication-item, .contact-item');
+            animatedElements.forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(20px)';
+                el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(el);
+            });
+
+            updateProfileImage();
+        });
+    </script>
+</body>
+</html>
