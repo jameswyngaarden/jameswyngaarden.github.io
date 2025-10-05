@@ -272,6 +272,25 @@
             color: #2c3e50;
             border-bottom-color: #34495e;
         }
+        
+        /* New style for the logos container */
+        .funding-logos {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 40px; /* Space between logos */
+            margin: 40px auto; /* Margin above and below the logos */
+            padding: 20px;
+            max-width: 900px;
+        }
+
+        /* New style for the logos */
+        .funding-logos img {
+            height: 50px; /* Uniform height for the logos */
+            width: auto;
+            max-width: 150px; /* Prevent logos from getting too wide on larger screens */
+            object-fit: contain;
+        }
 
         @media (max-width: 768px) {
             .container {
@@ -338,6 +357,12 @@
             .grant-year {
                 margin-bottom: 5px;
                 margin-right: 0;
+            }
+
+            /* Responsive style for logos on mobile */
+            .funding-logos {
+                flex-direction: column;
+                gap: 20px;
             }
         }
     </style>
@@ -489,7 +514,13 @@
                 <div class="grant-description">Student and Faculty Excellence (SAFE) Fund Research Grant ($1,000)</div>
             </div>
         </div>
-    </div>
+
+        <div class="funding-logos">
+            <img src="stimuli/logos/NIA-Logo.jpg" alt="National Institute on Aging (NIA) Logo">
+            <img src="stimuli/logos/srndna_logo.png" alt="Scientific Research Network on Decision Neuroscience and Aging (SRNDNA) Logo">
+            <img src="stimuli/logos/3MT-logo.png" alt="Three Minute Thesis (3MT) Logo">
+        </div>
+        </div>
     </div>
 
 </body>
