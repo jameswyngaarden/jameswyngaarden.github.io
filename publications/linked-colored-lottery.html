@@ -7,11 +7,101 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600&display=swap');
         
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
             color: #2c3e50;
             background: #ffffff;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+            gap: 30px;
+        }
+
+        .sidebar {
+            width: 250px;
+            flex-shrink: 0;
+            position: sticky;
+            top: 20px;
+            height: fit-content;
+        }
+
+        .sidebar-profile {
+            background: #ffffff;
+            padding: 30px 20px;
+            text-align: center;
+        }
+
+        .sidebar-profile-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            background-image: url('../stimuli/headshot.jpg');
+            background-size: cover;
+            background-position: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .sidebar-name {
+            font-family: 'Work Sans', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+
+        .sidebar-title {
+            font-size: 0.9rem;
+            color: #5d6d7e;
+            margin-bottom: 20px;
+            line-height: 1.4;
+        }
+
+        .sidebar-links {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .sidebar-link {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 10px;
+            color: #2c3e50;
+            text-decoration: none;
+            border: 1px solid #e0e0e0;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            gap: 10px;
+        }
+
+        .sidebar-link img {
+            width: 20px;
+            height: 20px;
+            object-fit: contain;
+        }
+
+        .sidebar-link:hover {
+            background: #f8f9fa;
+            border-color: #34495e;
+        }
+
+        .main-content {
+            flex-grow: 1;
+            min-width: 0;
             max-width: 900px;
             margin: 0 auto;
             padding: 40px 20px;
@@ -87,26 +177,80 @@
             text-align: justify;
             line-height: 1.8;
         }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                position: relative;
+                top: 0;
+            }
+
+            .main-content {
+                padding: 20px 10px;
+            }
+        }
     </style>
 </head>
 <body>
-    <a href="../#publications" class="back-link">← Back to Publications</a>
-    
-    <h1>A dataset of risky and ambiguous decisions using a novel linked colored lottery task across two datasets</h1>
-    
-    <p class="publication-meta">Published in <em>Data in Brief</em>, 2025</p>
-    
-    <div class="citation">
-        <strong>Citation:</strong> Wyngaarden III, J.B.*, Yang, Y.*, Dennison, J.B.*, Smith, D.V. (2025). A dataset of risky and ambiguous decisions using a novel linked colored lottery task across two datasets. <em>Data in Brief.</em> https://doi.org/10.1016/j.dib.2025.111844
-    </div>
-    
-    <div class="links">
-        <a href="https://doi.org/10.1016/j.dib.2025.111844" target="_blank">Read Paper</a>
-    </div>
-    
-    <h2>Abstract</h2>
-    <div class="abstract">
-        <p>How individuals make decisions under ambiguity (i.e., uncertain situations where the probability of an outcome is unknown) has been related to numerous individual differences of clinical importance including aging, substance use, and autism spectrum disorders. Despite this, many studies rely on a max-min model of ambiguity decision-making, which assumes that individuals evaluate ambiguous options based solely on worst-case and best-case scenarios. However, this approach does not account for the role of individual beliefs about underlying probabilities, which can significantly shape decision-making behavior. We introduce a novel task, the Linked Colored Lottery Task, in an in-person (N= 53) and online sample (N= 300) which allows for analyses that examine the effect of these beliefs. Along with this novel task, demographic information and data for several personality and clinical questionnaires were collected. By incorporating measures that capture differences in probability beliefs, this dataset enables researchers to examine how ambiguity-related decision-making varies beyond max-min assumptions, providing a richer understanding of how individuals form and act upon beliefs about probabilities. These data offer opportunities to explore how individual tendencies—such as risk preferences, cognitive styles, and clinical traits–interact with beliefs about uncertainty, advancing both theoretical and applied perspectives on decision-making under ambiguity.</p>
+    <div class="container">
+        <aside class="sidebar">
+            <div class="sidebar-profile">
+                <div class="sidebar-profile-img"></div>
+                <div class="sidebar-name">Jimmy Wyngaarden</div>
+                <div class="sidebar-title">PhD Candidate</div>
+                <div class="sidebar-links">
+                    <a href="mailto:james.wyngaarden@temple.edu" class="sidebar-link">
+                        <img src="../stimuli/logos/Email.png" alt="">
+                        Email
+                    </a>
+                    <a href="https://www.linkedin.com/in/james-wyngaarden-iii" target="_blank" class="sidebar-link">
+                        <img src="../stimuli/logos/Linkedin.png" alt="">
+                        LinkedIn
+                    </a>
+                    <a href="https://bsky.app/profile/jameswyngaarden.bsky.social" target="_blank" class="sidebar-link">
+                        <img src="../stimuli/logos/Bluesky.png" alt="">
+                        Bluesky
+                    </a>
+                    <a href="https://github.com/jameswyngaarden" target="_blank" class="sidebar-link">
+                        <img src="../stimuli/logos/Github.png" alt="">
+                        GitHub
+                    </a>
+                    <a href="https://scholar.google.com/citations?user=84faR-sAAAAJ&hl=en" target="_blank" class="sidebar-link">
+                        <img src="../stimuli/logos/Google-Scholar.png" alt="">
+                        Google Scholar
+                    </a>
+                    <a href="https://orcid.org/0000-0002-0858-8721" target="_blank" class="sidebar-link">
+                        <img src="../stimuli/logos/Orcid.png" alt="">
+                        ORCID
+                    </a>
+                </div>
+            </div>
+        </aside>
+
+        <div class="main-content">
+            <a href="../publications.html" class="back-link">← Back to Publications</a>
+            
+            <h1>A dataset of risky and ambiguous decisions using a novel linked colored lottery task across two datasets</h1>
+            
+            <p class="publication-meta">Published in <em>Data in Brief</em>, 2025</p>
+            
+            <div class="citation">
+                <strong>Citation:</strong> Wyngaarden III, J.B.*, Yang, Y.*, Dennison, J.B.*, Smith, D.V. (2025). A dataset of risky and ambiguous decisions using a novel linked colored lottery task across two datasets. <em>Data in Brief.</em> https://doi.org/10.1016/j.dib.2025.111844
+            </div>
+            
+            <div class="links">
+                <a href="https://doi.org/10.1016/j.dib.2025.111844" target="_blank">Read Paper</a>
+            </div>
+            
+            <h2>Abstract</h2>
+            <div class="abstract">
+                <p>How individuals make decisions under ambiguity (i.e., uncertain situations where the probability of an outcome is unknown) has been related to numerous individual differences of clinical importance including aging, substance use, and autism spectrum disorders. Despite this, many studies rely on a max-min model of ambiguity decision-making, which assumes that individuals evaluate ambiguous options based solely on worst-case and best-case scenarios. However, this approach does not account for the role of individual beliefs about underlying probabilities, which can significantly shape decision-making behavior. We introduce a novel task, the Linked Colored Lottery Task, in an in-person (N= 53) and online sample (N= 300) which allows for analyses that examine the effect of these beliefs. Along with this novel task, demographic information and data for several personality and clinical questionnaires were collected. By incorporating measures that capture differences in probability beliefs, this dataset enables researchers to examine how ambiguity-related decision-making varies beyond max-min assumptions, providing a richer understanding of how individuals form and act upon beliefs about probabilities. These data offer opportunities to explore how individual tendencies—such as risk preferences, cognitive styles, and clinical traits—interact with beliefs about uncertainty, advancing both theoretical and applied perspectives on decision-making under ambiguity.</p>
+            </div>
+        </div>
     </div>
 </body>
 </html>
