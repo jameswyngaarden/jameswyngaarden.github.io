@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social context and shared rewards - James B. Wyngaarden III</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #2c3e50;
+            background: #ffffff;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+            gap: 30px;
+        }
+
+        .sidebar {
+            width: 250px;
+            flex-shrink: 0;
+            position: sticky;
+            top: 20px;
+            height: fit-content;
+        }
+
+        .sidebar-profile {
+            background: #ffffff;
+            padding: 30px 20px;
+            text-align: center;
+        }
+
+        .sidebar-profile-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            background-image: url('../stimuli/headshot.jpg');
+            background-size: cover;
+            background-position: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .sidebar-name {
+            font-family: 'Work Sans', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+
+        .sidebar-title {
+            font-size: 0.9rem;
+            color: #5d6d7e;
+            margin-bottom: 20px;
+            line-height: 1.4;
+        }
+
+        .sidebar-links {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .sidebar-link {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 10px;
+            color: #2c3e50;
+            text-decoration: none;
+            border: 1px solid #e0e0e0;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            gap: 10px;
+        }
+
+        .sidebar-link img {
+            width: 20px;
+            height: 20px;
+            object-fit: contain;
+        }
+
+        .sidebar-link:hover {
+            background: #f8f9fa;
+            border-color: #34495e;
+        }
+
+        .main-content {
+            flex-grow: 1;
+            min-width: 0;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .back-link {
+            color: #34495e;
+            text-decoration: none;
+            border-bottom: 1px solid #bdc3c7;
+            margin-bottom: 30px;
+            display: inline-block;
+        }
+        
+        .back-link:hover {
+            color: #2c3e50;
+            border-bottom-color: #34495e;
+        }
+        
+        h1 {
+            font-family: 'Work Sans', sans-serif;
+            color: #2c3e50;
+            font-size: 2rem;
+            margin-bottom: 20px;
+            line-height: 1.3;
+        }
+        
+        .publication-meta {
+            color: #5d6d7e;
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+        }
+        
+        .citation {
+            background: #f8f9fa;
+            padding: 20px;
+            border-left: 4px solid #34495e;
+            margin-bottom: 30px;
+            color: #2c3e50;
+        }
+        
+        .links {
+            margin-bottom: 30px;
+        }
+        
+        .links a {
+            display: inline-block;
+            padding: 10px 20px;
+            background: linear-gradient(45deg, #34495e, #2c3e50);
+            color: white;
+            text-decoration: none;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .links a:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(52, 73, 94, 0.3);
+        }
+        
+        h2 {
+            font-family: 'Work Sans', sans-serif;
+            color: #2c3e50;
+            font-size: 1.5rem;
+            margin-top: 40px;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #bdc3c7;
+            padding-bottom: 10px;
+        }
+        
+        .abstract {
+            text-align: justify;
+            line-height: 1.8;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                position: relative;
+                top: 0;
+            }
+
+            .main-content {
+                padding: 20px 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <div class="sidebar-profile">
+                <div class="sidebar-profile-img"></div>
+                <div class="sidebar-name">Jimmy Wyngaarden</div>
+                <div class="sidebar-title">PhD Candidate</div>
+                <div class="sidebar-links">
+                    <a href="mailto:james.wyngaarden@temple.edu" class="sidebar-link">
+                        <img src="../stimuli/logos/Email.png" alt="">
+                        Email
+                    </a>
+                    <a href="https://www.linkedin.com/in/james-wyngaarden-iii" target="_blank" class="sidebar-link">
+                        <img src="../stimuli/logos/Linkedin.png" alt="">
+                        LinkedIn
+                    </a>
+                    <a href="https://bsky.app/profile/jameswyngaarden.bsky.social" target="_blank" class="sidebar-link">
+                        <img src="../stimuli/logos/Bluesky.png" alt="">
+                        Bluesky
+                    </a>
+                    <a href="https://github.com/jameswyngaarden" target="_blank" class="sidebar-link">
+                        <img src="../stimuli/logos/Github.png" alt="">
+                        GitHub
+                    </a>
+                    <a href="https://scholar.google.com/citations?user=84faR-sAAAAJ&hl=en" target="_blank" class="sidebar-link">
+                        <img src="../stimuli/logos/Google-Scholar.png" alt="">
+                        Google Scholar
+                    </a>
+                    <a href="https://orcid.org/0000-0002-0858-8721" target="_blank" class="sidebar-link">
+                        <img src="../stimuli/logos/Orcid.png" alt="">
+                        ORCID
+                    </a>
+                </div>
+            </div>
+        </aside>
+
+        <div class="main-content">
+            <a href="../publications.html" class="back-link">← Back to Publications</a>
+            
+            <h1>Social context and reward sensitivity enhance corticostriatal function during experiences of shared rewards</h1>
+            
+            <p class="publication-meta">Published in <em>Under Review</em>, 2023</p>
+            
+            <div class="citation">
+                <strong>Citation:</strong> Zaff, O., Wyngaarden III, J.B., Dennison, J.B., Sazhin, D., Chein, J., McCloskey, M., Alloy, L.B., Jarcho, J.M., Smith, D.V., & Fareri, D. (2023). Social context and reward sensitivity enhance corticostriatal function during experiences of shared rewards. <em>Under Review.</em>
+            </div>
+            
+            <div class="links">
+                <a href="https://pubmed.ncbi.nlm.nih.gov/37905048/" target="_blank">Read Preprint</a>
+            </div>
+            
+            <h2>Abstract</h2>
+            <div class="abstract">
+                <p>Although prior research has demonstrated enhanced striatal response when sharing rewards with close social connections, less is known about how individual differences affect ventral striatal (VS) activation and connectivity when experiencing rewards within social contexts. Given that self-reported reward sensitivity and level of substance use have been associated with differences in VS activation, we set out to investigate whether these factors would be independently associated with enhancements to neural reward responses within social contexts. In this pre-registered study, participants (N=45) underwent fMRI while playing a card guessing game in which correct or incorrect guesses resulted in monetary gains and losses that were shared evenly with either a close friend, stranger (confederate), or non-human partner. Consistent with our prior work, we found increased VS activation when sharing rewards with a socially close peer as opposed to an out-of-network stranger. As self-reported reward sensitivity increased, the difference in VS response to rewards shared with friends and strangers decreased. We also found enhanced connectivity between the VS and temporoparietal junction when sharing rewards with close friends as opposed to strangers. Finally, exploratory analyses revealed that as reward sensitivity and sub-clinical substance use increase, the difference in VS connectivity with the right fusiform face area increases as a function of social context. These findings demonstrate that responsivity to the context of close friends may be tied to individual reward sensitivity or sub-clinical substance use habits; together these factors may inform predictions of risk for future mental health disorders.</p>
+            </div>
+        </div>
+    </div>
+</body>

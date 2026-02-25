@@ -176,12 +176,13 @@
             background: linear-gradient(45deg, #7f8c8d, #95a5a6);
         }
 
-        /* Parallax/Header styles */
+        /* Parallax/Header styles - matching index.html */
         .section-header {
             height: 200px;
             background-image: linear-gradient(rgba(44, 62, 80, 0.7), rgba(44, 62, 80, 0.7)), url('stimuli/schuylkill_river_trail.jpg');
             background-size: cover;
             background-position: center;
+            /* CRITICAL for Parallax: fixes image to the viewport */
             background-attachment: fixed;
             display: flex;
             align-items: center;
@@ -337,6 +338,7 @@
 
             .section-header {
                 height: 150px;
+                /* Disable fixed attachment on small screens */
                 background-attachment: scroll;
             }
 
@@ -426,30 +428,49 @@
             <h2>Research</h2>
         </div>
         <div class="research-section">
-            <p>My research program centers on understanding <strong>how individual differences in reward sensitivity shape behavior and neural function across development and aging</strong>, with particular attention to vulnerable populations.</p>
+            <p>My research program centers on understanding <strong>how individual differences in reward sensitivity shape behavior and neural function across development and aging</strong>, with particular attention to vulnerable populations. I study reward processing as a multi-level construct that manifests differently depending on domain specificity (social vs. monetary rewards), state-dependent factors (behavioral motivation, anhedonia), and network-level integration (default mode network-ventral striatum connectivity).</p>
             
             <h3>Reward Sensitivity as a Multi-Level Construct</h3>
-            <p>Sensitivity to rewards emerges from dynamic interactions between stable traits and context-dependent states. My work demonstrates that behavioral motivation fundamentally moderates the relationship between reward sensitivity and brain connectivity: when highly motivated, reward-sensitive individuals show stronger default mode network–ventral striatum coupling, but when less motivated, this relationship reverses—a pattern that holds across gain and loss contexts. I've also developed novel approaches to studying decision-making under ambiguity, including the Linked Colored Lottery Task, which examines how individuals form beliefs about probability distributions rather than assuming people only weigh best- and worst-case scenarios.</p>
+            <p>Sensitivity to rewards emerges from dynamic interactions between stable individual differences and context-dependent states. My work demonstrates that understanding reward processing requires examining both what people bring to situations (trait sensitivity) and how current motivational states shape neural responses.</p>
+            
+            <p>Recent findings show that behavioral motivation fundamentally moderates the relationship between reward sensitivity and brain connectivity. When highly motivated, reward-sensitive individuals show stronger default mode network-ventral striatum coupling. When less motivated, this relationship reverses. This pattern holds across gain and loss contexts, suggesting that motivational context determines when enhanced or reduced connectivity emerges.</p>
             
             <div style="margin: 30px 0; text-align: center;">
                 <img src="stimuli/figures/wyngaarden-et-al_CABN-2025_fig-5.png" alt="Behavioral motivation modulates reward sensitivity and brain connectivity" style="max-width: 60%; height: auto; border-radius: 8px; box-shadow: 0 0px 0px rgba(0,0,0,0.1);">
                 <p style="margin-top: 15px; color: #5d6d7e; font-size: 0.95rem; font-style: italic; max-width: 800px; margin-left: auto; margin-right: auto;">
-                    <strong>Figure:</strong> Behavioral motivation moderates the relationship between reward sensitivity and ventral striatum–default mode network connectivity during reward anticipation. Among highly motivated individuals, greater reward sensitivity is associated with enhanced corticostriatal connectivity; among less motivated individuals, this relationship reverses.
+                    <strong>Figure:</strong> Behavioral motivation (i.e., sensitivity to task conditions; BM) moderates the relationship between reward sensitivity and ventral striatum-default mode network connectivity during reward anticipation. Among highly motivated individuals (low BM values), greater reward sensitivity is associated with enhanced corticostriatal connectivity during anticipation (i.e., VS-DMN working together to integrate goal orientation). However, among less motivated individuals, this relationship reverses: even among individuals with high reward sensitivity, VS-DMN connectivity breaks down.
                 </p>
             </div>
             
-            <h3>Aging, Cognitive Flexibility, and Financial Exploitation</h3>
-            <p>My most distinctive contribution connects basic reward neuroscience to <strong>financial exploitation vulnerability in older adults</strong>—a critical public health problem causing over $40 billion in annual losses in the U.S. My dissertation uses transcranial alternating current stimulation (tACS) targeting prefrontal cortex to modulate reward-based learning in older adults, with reversal learning as the core behavioral paradigm. Reversal learning taps into cognitive flexibility—the ability to update behavior when reward contingencies change—which declines with age alongside broader executive function deterioration and maps onto real-world situations older adults face: adapting financial strategies, adjusting medication routines, or navigating social changes after retirement. It is also sensitive to frontal lobe integrity, particularly DLPFC and orbitofrontal cortex, regions showing disproportionate age-related volume loss, making it a direct behavioral probe for the prefrontally-mediated reward learning that tACS can target. The broader framework centers on confirmation bias: as older adults increasingly prioritize present-oriented goals tied to social and emotional satisfaction, their capacity to evaluate contradictory information weakens, making them more susceptible to scams that align with preexisting beliefs.</p>
-
+            <p>I've also developed novel approaches to studying decision-making under ambiguity. The Linked Colored Lottery Task moves beyond traditional models that assume people only consider best- and worst-case scenarios, instead examining how individuals form beliefs about probability distributions and act on those beliefs.</p>
+            
+            <h3>Aging and Cognitive Decline</h3>
+            <p>My most distinctive contribution links basic reward neuroscience to <strong>financial exploitation vulnerability in older adults</strong>—a critical public health problem causing over $40 billion in annual losses in the U.S. I'm examining how age-related cognitive decline creates vulnerability through specific neural mechanisms, with the ultimate goal of developing interventions.</p>
+            
             <div style="float: right; width: 300px; margin-left: 20px; margin-bottom: 10px;">
                 <img src="stimuli/tACS_gif.gif" alt="tACS brain stimulation" style="width: 100%; border-radius: 8px; box-shadow: 0 0px 0px rgba(0,0,0,0.1); display: block;">
                 <p style="margin-top: 10px; color: #5d6d7e; font-size: 0.85rem; font-style: italic; text-align: center;">
                     <strong>Figure:</strong> Theta-frequency tACS montage targeting left DLPFC (in slow motion..).
                 </p>
             </div>
+            <p>
+                My dissertation research uses transcranial alternating current stimulation (tACS) targeting prefrontal cortex to modulate reward-based learning and reduce exploitation vulnerability. This represents a translational approach: using noninvasive brain stimulation both as a mechanistic tool and potential intervention.
+            </p>
 
-            <h3>Open Science and Research Infrastructure</h3>
-            <p><img src="stimuli/logos/openneuro.png" alt="OpenNeuro logo" style="float: left; width: 120px; margin-right: 15px; margin-bottom: 10px;">I've contributed to three publicly released neuroimaging datasets on OpenNeuro (500+ participants total), building research infrastructure that advances the field beyond individual papers: a social/nonsocial reward processing dataset (N=59, four fMRI tasks), a lifespan reward processing dataset (N=114, ages 21–80, multi-echo fMRI + diffusion imaging), and a risky/ambiguous decision-making dataset (N=353, novel Linked Colored Lottery Task). All are BIDS-compliant with extensive phenotypic data, facilitating reuse and multimodal analyses linking structural and functional connectivity to financial exploitation risk.</p>
+            <p>The framework centers on confirmation bias: as older adults increasingly prioritize present-oriented goals tied to social and emotional satisfaction, their ability to objectively evaluate contradictory information weakens. Prefrontal cortex deterioration and reduced cognitive flexibility mean older adults rely more heavily on initial beliefs and trusted sources. This is amplified during mild cognitive impairment and Alzheimer's disease, making them more susceptible to scams that align with preexisting beliefs or fears.</p>
+            
+            <p>Socioeconomic factors compound this vulnerability. My collaborative work shows that cognitive decline interacts with socioeconomic status—individuals with lower SES show stronger associations between everyday cognitive decline and financial exploitation risk.</p>
+            
+            <h3>Methodological Rigor and Open Science</h3>
+            <p><img src="stimuli/logos/openneuro.png" alt="OpenNeuro logo" style="float: left; width: 120px; margin-right: 15px; margin-bottom: 10px;">I've contributed to the development and public release of three major datasets on OpenNeuro (500+ participants total), helping to build <strong>research infrastructure</strong> that advances the field beyond single papers:</p>
+            
+            <p><strong>Social/nonsocial reward processing</strong> (N=59): Four fMRI tasks (shared rewards, trust, ultimatum games) enabling examination of domain-specific reward processing and strategic social decision-making.</p>
+            
+            <p><strong>Lifespan reward processing</strong> (N=114, ages 21-80): Multi-echo fMRI + multi-shell diffusion imaging examining social rewards, trust, and fairness across adulthood. Includes FLAIR scans for white matter assessment, creating opportunities for multimodal analyses linking structural and functional connectivity to financial exploitation risk.</p>
+            
+            <p><strong>Risky/ambiguous decision-making</strong> (N=353): Novel Linked Colored Lottery Task capturing belief-based ambiguity processing, with comprehensive individual difference measures (autism spectrum traits, financial vulnerability, substance use, mood).</p>
+            
+            <p>All datasets are BIDS-compliant with extensive phenotypic data, facilitating reuse and integration. Methodological innovations include multi-echo fMRI for improved signal quality and novel tasks that capture psychological processes traditional paradigms miss.</p>
         </div>
 
         <div class="section-header alt-bg">
@@ -488,7 +509,7 @@
             <img src="stimuli/logos/srndna_logo.png" alt="Scientific Research Network on Decision Neuroscience and Aging (SRNDNA) Logo">
             <img src="stimuli/logos/3MT-logo.png" alt="Three Minute Thesis (3MT) Logo">
         </div>
-    </div>
+        </div>
     </div>
 
 </body>

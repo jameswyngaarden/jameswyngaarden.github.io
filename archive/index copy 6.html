@@ -176,11 +176,13 @@
             background: linear-gradient(45deg, #7f8c8d, #95a5a6);
         }
 
+        /* Parallax/Header styles - Now using only the essential 'fixed' property */
         .section-header {
             height: 200px;
             background-image: linear-gradient(rgba(44, 62, 80, 0.7), rgba(44, 62, 80, 0.7)), url('stimuli/schuylkill_river_trail.jpg');
             background-size: cover;
             background-position: center;
+            /* CRITICAL for Parallax: fixes image to the viewport */
             background-attachment: fixed;
             display: flex;
             align-items: center;
@@ -257,6 +259,7 @@
 
             .section-header {
                 height: 150px;
+                /* Disable fixed attachment on small screens */
                 background-attachment: scroll;
             }
 
@@ -327,11 +330,11 @@
             <h2>About Me</h2>
         </div>
         <div class="about-content">
-            <p>I'm a PhD candidate in cognitive neuroscience at Temple University, working with David V. Smith in the Neuroeconomics Lab. I study how aging changes the way people process rewards and make decisions—and why that makes older adults vulnerable to financial exploitation, a problem responsible for over $40 billion in annual losses in the U.S.</p>
+            <p>I'm a PhD candidate in cognitive neuroscience and social psychology at Temple University, working in the Neuroeconomics Lab under the mentorship of Dr. David V. Smith. My research focuses on understanding how the aging brain makes decisions, with particular attention to vulnerabiltiy to financial exploitation in older adults—a critical public health problem responsible for over $40 billion in annual losses in the United States.</p>
             
-            <p>My dissertation, funded by an NIH F31 fellowship from the National Institute on Aging, tests whether noninvasive brain stimulation (tACS) targeting prefrontal cortex can improve reward-based learning and reduce confirmation bias in older adults. This work aims to both clarify the neural mechanisms of exploitation vulnerability and develop a potential intervention.</p>
+            <p>My dissertation work, supported by an NIH F31 predoctoral fellowship from the National Institute on Aging and a pilot grant from the Scientific Research Network on Decision Neuroscience and Aging, examines whether targeted brain stimulation can improve decision-making in older adults. Specifically, I'm investigating how transcranial alternating current stimulation (tACS) targeting the prefrontal cortex can modulate reward-based learning and reduce confirmation bias—a key mechanism underlying vulnerability to financial scams. This work represents a translational approach that uses noninvasive brain stimulation both as a tool to understand the neural mechanisms of exploitation and as a potential intervention to protect vulnerable populations.</p>
             
-            <p>More broadly, I investigate how individual differences in reward sensitivity shape behavior and brain function across the lifespan. I've contributed to three publicly released neuroimaging datasets on OpenNeuro (500+ participants), and my work draws on fMRI, computational modeling, and machine learning methods.</p>
+            <p>Beyond my dissertation, my research program examines how individual differences in reward sensitivity shape behavior and neural function across development and aging. I've contributed to the development and public release of three major neuroimaging datasets on OpenNeuro comprising over 500 participants, positioning my work to build research infrastructure that advances the field beyond individual papers. I employ fMRI, computational modeling, and machine learning to understand decision-making processes, with expertise in Python, R, MATLAB, and advanced statistical methods.</p>
         </div>
     </div>
     </div>

@@ -176,12 +176,13 @@
             background: linear-gradient(45deg, #7f8c8d, #95a5a6);
         }
 
-        /* Parallax/Header styles */
+        /* Parallax/Header styles - matching index.html */
         .section-header {
             height: 200px;
             background-image: linear-gradient(rgba(44, 62, 80, 0.7), rgba(44, 62, 80, 0.7)), url('stimuli/schuylkill_river_trail.jpg');
             background-size: cover;
             background-position: center;
+            /* CRITICAL for Parallax: fixes image to the viewport */
             background-attachment: fixed;
             display: flex;
             align-items: center;
@@ -306,6 +307,7 @@
 
             .section-header {
                 height: 150px;
+                /* Disable fixed attachment on small screens */
                 background-attachment: scroll;
             }
 
@@ -377,147 +379,95 @@
         </div>
         
         <div class="publication-list">
-
-            <!-- 1. Wyngaarden et al. (2026) - Confirmation bias book chapter -->
-            <div class="publication-item">
-                <h3 class="publication-title">
-                    <a href="publications/confirmation-bias-exploitation.html">Maladaptive decision-making in older adults: Confirmation bias and financial exploitation</a>
-                </h3>
-                <div class="publication-citation">
-                    <strong>Wyngaarden, J.B., III</strong>, Giovannetti, T., Krekelberg, B., & Smith, D.V. (2026). Maladaptive decision-making in older adults: Confirmation bias and financial exploitation. In: Smith, D.V., Lockwood, P.L., Fareri, D.S. (eds) <em>Neuroeconomics: Core Topics and Current Directions.</em> Springer, Cham. <a href="https://doi.org/10.1007/978-3-032-02925-6_30" target="_blank">https://doi.org/10.1007/978-3-032-02925-6_30</a>.
-                </div>
-            </div>
-
-            <!-- 2. Smith, Wyngaarden et al. (2026) - tACS preprint -->
-            <div class="publication-item">
-                <h3 class="publication-title">
-                    <a href="publications/alpha-tacs-reward-pupil.html">&alpha;-tACS modulates reward-dependent pupil responses and corticostriatal connectivity</a>
-                </h3>
-                <div class="publication-citation">
-                    Smith, D.V., <strong>Wyngaarden, J.B., III</strong>, Weinstein, S.M., Illenberger, N., Liu, Y., Siegel, J., & Krekelberg, B. (2026). &alpha;-tACS modulates reward-dependent pupil responses and corticostriatal connectivity. <em>bioRxiv.</em> <a href="https://doi.org/10.64898/2026.01.30.702963" target="_blank">https://doi.org/10.64898/2026.01.30.702963</a>.
-                </div>
-            </div>
-
-            <!-- 3. Smith, Zaff, Wyngaarden et al. (2026) - Shared rewards -->
-            <div class="publication-item">
-                <h3 class="publication-title">
-                    <a href="publications/social-context-shared-rewards.html">Social closeness and reward sensitivity enhance corticostriatal function during experiences of shared rewards</a>
-                </h3>
-                <div class="publication-citation">
-                    Smith, D.V., Zaff, O., <strong>Wyngaarden, J.B., III</strong>, Dennison, J.B., Sazhin, D., Chein, J., McCloskey, M., Alloy, L.B., Jarcho, J.M., & Fareri, D.S. (2026). Social closeness and reward sensitivity enhance corticostriatal function during experiences of shared rewards. <em>Biological Psychology, 109209.</em> <a href="https://doi.org/10.1016/j.biopsycho.2026.109209" target="_blank">https://doi.org/10.1016/j.biopsycho.2026.109209</a>.
-                </div>
-            </div>
-
-            <!-- 4. Dwamena et al. (2025) - Social norm violations -->
-            <div class="publication-item">
-                <h3 class="publication-title">
-                    <a href="publications/neural-behavioral-social-norm-violations.html">Neural and behavioral responses to social norm violations across trust and fairness contexts</a>
-                </h3>
-                <div class="publication-citation">
-                    Dwamena, D., Stanley, J.M., <strong>Wyngaarden, J.B., III</strong>, Kos, M., Sharp, C., Yang, Y., Jarcho, J., Fareri, D., & Smith, D. (2025). Neural and behavioral responses to social norm violations across trust and fairness contexts. <em>Under review.</em> <a href="https://doi.org/10.1101/2025.11.20.689349" target="_blank">Preprint available</a>.
-                </div>
-            </div>
-
-            <!-- 5. Shah et al. (2025) - Ambiguity preferences -->
-            <div class="publication-item">
-                <h3 class="publication-title">
-                    <a href="publications/ambiguity-preferences-beliefs-risk.html">Ambiguity preferences are distinct from beliefs about risk</a>
-                </h3>
-                <div class="publication-citation">
-                    Shah, S.F.A., Dennison, J.B., <strong>Wyngaarden, J.B., III</strong>, Clithero, J.A., & Smith, D.V. (2025). Ambiguity preferences are distinct from beliefs about risk. <em>Under review.</em> <a href="https://osf.io/preprints/psyarxiv/wrej8_v1" target="_blank">Preprint available</a>.
-                </div>
-            </div>
-
-            <!-- 6. Wyngaarden, Nambiar et al. (2025) - Reward sensitivity & motivation -->
             <div class="publication-item">
                 <h3 class="publication-title">
                     <a href="publications/reward-sensitivity-motivation.html">Trait reward sensitivity and motivation shape connectivity between the default mode network and the striatum during reward anticipation</a>
                 </h3>
                 <div class="publication-citation">
-                    <strong>Wyngaarden, J.B., III*</strong>, Nambiar, A.*, Dennison, J.B., Alloy, L.B., Fareri, D.S., Jarcho, J.M., & Smith, D.V. (2025). Trait reward sensitivity and motivation shape connectivity between the default mode network and the striatum during reward anticipation. <em>Accepted at CABN.</em> <a href="https://www.biorxiv.org/content/10.1101/2025.04.17.649386v4" target="_blank">Preprint available</a>.
+                    <strong>Wyngaarden III, J.B.*</strong>, Nambiar, A.*, Dennison, J.B., Alloy, L.B., Fareri, D.S., Jarcho, J.M., & Smith, D.V. (2025). Trait reward sensitivity and motivation shape connectivity between the default mode network and the striatum during reward anticipation. <em>Accepted at CABN.</em> <a href="https://www.biorxiv.org/content/10.1101/2025.04.17.649386v4" target="_blank">Preprint available</a>.
                 </div>
             </div>
-
-            <!-- 7. Yang et al. (2025) - Older adults fairness -->
+            
             <div class="publication-item">
                 <h3 class="publication-title">
-                    <a href="publications/older-adults-fairness-connectivity.html">Older adults show altered network connectivity during fairness decisions with similar and dissimilar partners</a>
+                    <a href="publications/confirmation-bias-exploitation.html">Maladaptive decision making in older adults: Confirmation bias and financial exploitation</a>
                 </h3>
                 <div class="publication-citation">
-                    Yang, Y., Ludwig, R.M., <strong>Wyngaarden, J.B., III</strong>, Dwamena, D., Hackett, K., Giovannetti, T., Fareri, D., & Smith, D.V. (2025). Older adults show altered network connectivity during fairness decisions with similar and dissimilar partners. <em>Under review.</em> <a href="https://www.biorxiv.org/content/10.1101/2025.08.13.670194v1" target="_blank">Preprint available</a>.
+                    <strong>Wyngaarden III, J.B.</strong>, Giovannetti, T., Krekelberg, B., & Smith, D.V. (2025). Maladaptive decision making in older adults: Confirmation bias and financial exploitation. <em>Under review.</em> <a href="https://osf.io/preprints/psyarxiv/abnyd_v2" target="_blank">Preprint available</a>.
                 </div>
             </div>
-
-            <!-- 8. Wyngaarden, Yang, Dennison et al. (2025) - Linked colored lottery -->
+            
             <div class="publication-item">
                 <h3 class="publication-title">
                     <a href="publications/linked-colored-lottery.html">A dataset of risky and ambiguous decisions using a novel linked colored lottery task across two datasets</a>
                 </h3>
                 <div class="publication-citation">
-                    <strong>Wyngaarden, J.B., III*</strong>, Yang, Y.*, Dennison, J.B.*, & Smith, D.V. (2025). A dataset of risky and ambiguous decisions using a novel linked colored lottery task across two datasets. <em>Data in Brief.</em> <a href="https://doi.org/10.1016/j.dib.2025.111844" target="_blank">https://doi.org/10.1016/j.dib.2025.111844</a>.
+                    <strong>Wyngaarden III, J.B.*</strong>, Yang, Y.*, Dennison, J.B.*, Smith, D.V. (2025). A dataset of risky and ambiguous decisions using a novel linked colored lottery task across two datasets. <em>Data in Brief.</em> <a href="https://doi.org/10.1016/j.dib.2025.111844" target="_blank">https://doi.org/10.1016/j.dib.2025.111844</a>.
                 </div>
             </div>
-
-            <!-- 9. Smith et al. (2024) - Lifespan reward dataset -->
+            
             <div class="publication-item">
                 <h3 class="publication-title">
                     <a href="publications/lifespan-reward-dataset.html">Social reward and nonsocial reward processing across the adult lifespan: An interim multi-echo fMRI and diffusion dataset</a>
                 </h3>
                 <div class="publication-citation">
-                    Smith, D.V., Sharp, C.J., Dachs, A., <strong>Wyngaarden, J.B., III</strong>, Sazhin, D., Yang, Y., Kos, M., Tropea, T., Kohli, I., Clithero, J.A., Olson, I., Giovannetti, T., Fareri, D., & Jarcho, J.M. (2024). Social reward and nonsocial reward processing across the adult lifespan: An interim multi-echo fMRI and diffusion dataset. <em>Data in Brief.</em> <a href="https://doi.org/10.1016/j.dib.2024.110810" target="_blank">https://doi.org/10.1016/j.dib.2024.110810</a>.
+                    Smith, D.V., Sharp, C.J., Dachs, A., <strong>Wyngaarden III, J.B.</strong>, Sazhin, D., Yang, Y., Kos, M., Tropea, T., Kohli, I., Clithero, J.A., Olson, I., Giovannetti, T., Fareri, D., Jarcho, J.M.  (2024). Social reward and nonsocial reward processing across the adult lifespan: An interim multi-echo fMRI and diffusion dataset. <em>Data in Brief.</em> <a href="https://doi.org/10.1016/j.dib.2024.110810" target="_blank">https://doi.org/10.1016/j.dib.2024.110810</a>.
                 </div>
             </div>
-
-            <!-- 10. Wyngaarden, Johnston et al. (2024) - Corticostriatal social reward -->
+            
             <div class="publication-item">
                 <h3 class="publication-title">
                     <a href="publications/corticostriatal-social-reward.html">Corticostriatal responses to social reward are linked to trait reward sensitivity and subclinical substance use in young adults</a>
                 </h3>
                 <div class="publication-citation">
-                    <strong>Wyngaarden, J.B., III*</strong>, Johnston, C.R.*, Sazhin, D., Dennison, J.B., Zaff, O., Fareri, D., McCloskey, M., Alloy, L.B., Smith, D.V., & Jarcho, J.M. (2024). Corticostriatal responses to social reward are linked to trait reward sensitivity and subclinical substance use in young adults. <em>Social Cognitive and Affective Neuroscience.</em> <a href="https://doi.org/10.1093/scan/nsae033" target="_blank">https://doi.org/10.1093/scan/nsae033</a>.
+                    <strong>Wyngaarden III, J.B.*</strong>, Johnston, C.R.*, Sazhin, D., Dennison, J.B., Zaff, O., Fareri, D., McCloskey, M., Alloy, L.B., Smith, D.V., & Jarcho, J.M. (2024). Corticostriatal responses to social reward are linked to trait reward sensitivity and subclinical substance use in young adults. <em>Social Cognitive and Affective Neuroscience.</em> <a href="https://doi.org/10.1093/scan/nsae033" target="_blank">https://doi.org/10.1093/scan/nsae033</a>.
                 </div>
             </div>
-
-            <!-- 11. Sazhin et al. (2024) - Reward sensitivity strategic decision -->
+            
             <div class="publication-item">
                 <h3 class="publication-title">
                     <a href="publications/reward-sensitivity-strategic-decision.html">Trait reward sensitivity modulates connectivity with the temporoparietal junction and anterior insula during strategic decision making</a>
                 </h3>
                 <div class="publication-citation">
-                    Sazhin, D., <strong>Wyngaarden, J.B., III</strong>, Dennison, J.B., Zaff, O., Fareri, D., McCloskey, M.S., Alloy, L.B., Jarcho, J.M., & Smith, D.V. (2024). Trait reward sensitivity modulates connectivity with the temporoparietal junction and anterior insula during strategic decision making. <em>Biological Psychology, 192</em>, 108857. <a href="https://doi.org/10.1016/j.biopsycho.2024.108857" target="_blank">https://doi.org/10.1016/j.biopsycho.2024.108857</a>.
+                    Sazhin, D., <strong>Wyngaarden III, J.B.</strong>, Dennison, J.B., Zaff, O., Fareri, D., McCloskey, M.S., Alloy, L.B., Jarcho, J.M., & Smith, D.V. (2024). Trait reward sensitivity modulates connectivity with the temporoparietal junction and anterior insula during strategic decision making. <em>Biological Psychology, 192</em>, 108857. <a href="https://doi.org/10.1016/j.biopsycho.2024.108857" target="_blank">https://doi.org/10.1016/j.biopsycho.2024.108857</a>.
                 </div>
             </div>
-
-            <!-- 12. Smith et al. (2023) - Neuroimaging dataset young adults -->
+            
             <div class="publication-item">
                 <h3 class="publication-title">
                     <a href="publications/neuroimaging-dataset-young-adults.html">A neuroimaging dataset of social and nonsocial reward processing in young adults</a>
                 </h3>
                 <div class="publication-citation">
-                    Smith, D.V., <strong>Wyngaarden, J.B., III</strong>, Sharp, C.J., Sazhin, D., Zaff, O., Fareri, D., & Jarcho, J.M. (2023). A neuroimaging dataset of social and nonsocial reward processing in young adults. <em>Data in Brief.</em> <a href="https://doi.org/10.1016/j.dib.2024.110197" target="_blank">https://doi.org/10.1016/j.dib.2024.110197</a>.
+                    Smith, D.V., <strong>Wyngaarden III, J.B.</strong>, Sharp, C.J., Sazhin, D., Zaff, O., Fareri, D., Jarcho, J.M. (2023). A neuroimaging dataset of social and nonsocial reward processing in young adults. <em>Data in Brief.</em> <a href="https://doi.org/10.1016/j.dib.2024.110197" target="_blank">https://doi.org/10.1016/j.dib.2024.110197</a>.
                 </div>
             </div>
-
-            <!-- 13. Jarcho et al. (2022) - Substance abuse neuromelanin -->
+            
+            <div class="publication-item">
+                <h3 class="publication-title">
+                    <a href="publications/social-context-shared-rewards.html">Social context and reward sensitivity enhance corticostriatal function during experiences of shared rewards</a>
+                </h3>
+                <div class="publication-citation">
+                    Zaff, O., <strong>Wyngaarden III, J.B.</strong>, Dennison, J.B., Sazhin, D., Chein, J., McCloskey, M., Alloy, L.B., Jarcho, J.M., Smith, D.V., & Fareri, D. (2023). Social context and reward sensitivity enhance corticostriatal function during experiences of shared rewards. <em>Under Review.</em> <a href="https://pubmed.ncbi.nlm.nih.gov/37905048/" target="_blank">Preprint available</a>.
+                </div>
+            </div>
+            
             <div class="publication-item">
                 <h3 class="publication-title">
                     <a href="publications/substance-abuse-neuromelanin.html">Substance abuse in emerging adults: The role of neuromelanin and ventral striatal response to social and monetary rewards</a>
                 </h3>
                 <div class="publication-citation">
-                    Jarcho, J.M., <strong>Wyngaarden, J.B., III</strong>, Johnston, C.J., Quarmley, M., Smith, D.V., & Cassidy, C.M. (2022). Substance abuse in emerging adults: The role of neuromelanin and ventral striatal response to social and monetary rewards. <em>Brain Sciences, 12</em>, 352. <a href="https://doi.org/10.3390/brainsci12030352" target="_blank">https://doi.org/10.3390/brainsci12030352</a>.
+                    Jarcho, J.M., <strong>Wyngaarden III, J.B.</strong>, Johnston, C.J., Quarmley, M., Smith, D.V., & Cassidy, C.M. (2022). Substance abuse in emerging adults: The role of neuromelanin and ventral striatal response to social and monetary rewards. <em>Brain Sciences, 12</em>, 352. <a href="https://doi.org/10.3390/brainsci12030352" target="_blank">https://doi.org/10.3390/brainsci12030352</a>.
                 </div>
             </div>
-
-            <!-- 14. Monroe et al. (2021) - Fairness authority protests -->
+            
             <div class="publication-item">
                 <h3 class="publication-title">
                     <a href="publications/fairness-authority-protests.html">"They should have followed the rules": Trade-offs between fairness and authority values predict judgments of social justice protests</a>
                 </h3>
                 <div class="publication-citation">
-                    Monroe, A.E., <strong>Wyngaarden, J.B., III</strong>, & Plant, A.E. (2021). "They should have followed the rules": Trade-offs between fairness and authority values predict judgments of social justice protests. <em>Social Psychological and Personality Science, 12</em>(4), 471-478. <a href="https://doi.org/10.1177/1948550620923854" target="_blank">https://doi.org/10.1177/1948550620923854</a>.
+                    Monroe, A.E., <strong>Wyngaarden III, J.B.</strong>, & Plant, A.E. (2021). "They should have followed the rules": Trade-offs between fairness and authority values predict judgments of social justice protests. <em>Social Psychological and Personality Science, 12</em>(4), 471-478. <a href="https://doi.org/10.1177/1948550620923854" target="_blank">https://doi.org/10.1177/1948550620923854</a>.
                 </div>
             </div>
-
         </div>
     </div>
     </div>
