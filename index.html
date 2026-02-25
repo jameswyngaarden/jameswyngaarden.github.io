@@ -5,26 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>James B. Wyngaarden III - Academic Portfolio</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,500;1,8..60,400&family=Work+Sans:wght@300;400;500;600&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,500;1,8..60,400&family=Sora:wght@300;400;500;600;700&display=swap');
 
         :root {
-            --color-text: #2c3e50;
-            --color-text-light: #5d6d7e;
-            --color-accent: #2a7f8a;
-            --color-accent-hover: #1f6670;
+            --color-text: #1e2d3d;
+            --color-text-light: #5a6a78;
+            --color-navy: #1a3a5c;
+            --color-navy-light: #2a4f7a;
+            --color-gold: #b8860b;
+            --color-gold-muted: #c4973b;
+            --color-gold-subtle: rgba(184, 134, 11, 0.12);
             --color-bg: #ffffff;
-            --color-bg-subtle: #f8f9fa;
-            --color-border: #e2e2e2;
-            --color-border-light: #eee;
+            --color-bg-subtle: #f7f8f9;
+            --color-border: #dfe3e7;
             --font-serif: 'Source Serif 4', 'Georgia', serif;
-            --font-sans: 'Work Sans', 'Helvetica Neue', sans-serif;
+            --font-display: 'Sora', 'Helvetica Neue', sans-serif;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: var(--font-serif);
@@ -70,17 +68,16 @@
         }
 
         .sidebar-name {
-            font-family: var(--font-sans);
-            font-size: 1.2rem;
+            font-family: var(--font-display);
+            font-size: 1.15rem;
             font-weight: 600;
-            color: var(--color-text);
+            color: var(--color-navy);
             margin-bottom: 4px;
-            letter-spacing: -0.01em;
         }
 
         .sidebar-title {
-            font-family: var(--font-sans);
-            font-size: 0.85rem;
+            font-family: var(--font-display);
+            font-size: 0.82rem;
             color: var(--color-text-light);
             margin-bottom: 28px;
             font-weight: 400;
@@ -99,8 +96,8 @@
             color: var(--color-text);
             text-decoration: none;
             transition: all 0.2s ease;
-            font-family: var(--font-sans);
-            font-size: 0.88rem;
+            font-family: var(--font-display);
+            font-size: 0.85rem;
             font-weight: 400;
             gap: 10px;
             border-radius: 6px;
@@ -110,13 +107,13 @@
             width: 18px;
             height: 18px;
             object-fit: contain;
-            opacity: 0.6;
+            opacity: 0.55;
             transition: opacity 0.2s ease;
         }
 
         .sidebar-link:hover {
             background: var(--color-bg-subtle);
-            color: var(--color-accent);
+            color: var(--color-navy);
         }
 
         .sidebar-link:hover img {
@@ -131,7 +128,7 @@
 
         /* ── Header ── */
         header {
-            padding: 0 0 32px 0;
+            padding: 0 0 28px 0;
             margin-bottom: 0;
             display: flex;
             align-items: baseline;
@@ -145,21 +142,21 @@
         }
 
         h1 {
-            font-family: var(--font-sans);
-            font-size: 2rem;
-            margin-bottom: 6px;
-            color: var(--color-text);
-            font-weight: 500;
+            font-family: var(--font-display);
+            font-size: 1.9rem;
+            margin-bottom: 5px;
+            color: var(--color-navy);
+            font-weight: 600;
             letter-spacing: -0.02em;
             white-space: nowrap;
         }
 
         .subtitle {
-            font-family: var(--font-sans);
-            font-size: 0.95rem;
+            font-family: var(--font-display);
+            font-size: 0.88rem;
             color: var(--color-text-light);
             font-weight: 300;
-            letter-spacing: 0.02em;
+            letter-spacing: 0.03em;
         }
 
         /* ── Navigation ── */
@@ -171,61 +168,70 @@
         }
 
         .nav-link {
-            font-family: var(--font-sans);
-            font-size: 0.92rem;
+            font-family: var(--font-display);
+            font-size: 0.88rem;
             font-weight: 400;
             color: var(--color-text-light);
             text-decoration: none;
             padding-bottom: 4px;
             border-bottom: 2px solid transparent;
             transition: all 0.2s ease;
-            letter-spacing: 0.01em;
         }
 
         .nav-link:hover {
-            color: var(--color-text);
+            color: var(--color-navy);
             border-bottom-color: var(--color-border);
         }
 
         .nav-link.active {
-            color: var(--color-text);
-            border-bottom-color: var(--color-accent);
+            color: var(--color-navy);
+            border-bottom-color: var(--color-gold);
             font-weight: 500;
         }
 
-        /* ── Parallax Section Headers ── */
+        /* ── Text-Clip Parallax Section Headers ── */
         .section-header {
-            height: 180px;
-            background-image: linear-gradient(rgba(42, 127, 138, 0.55), rgba(44, 62, 80, 0.6)), url('stimuli/schuylkill_river_trail.jpg');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
+            padding: 50px 0;
+            text-align: center;
             margin: 40px 0 0 0;
             position: relative;
+            background: var(--color-bg);
         }
 
         .section-header h2 {
-            font-family: var(--font-sans);
-            font-size: 2.2rem;
-            font-weight: 300;
-            text-align: center;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+            font-family: var(--font-display);
+            font-size: 4.5rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1;
+            background-image: url('stimuli/schuylkill_river_trail.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+        }
+
+        /* Thin gold rule below the header text */
+        .section-header::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 2px;
+            background: var(--color-gold);
+            margin: 24px auto 0;
         }
 
         /* ── About Content ── */
         .about-content {
             font-size: 1.05rem;
             line-height: 1.85;
-            max-width: 740px;
+            max-width: 700px;
             margin: 0 auto;
             color: var(--color-text);
-            padding: 48px 20px 60px;
+            padding: 44px 20px 60px;
         }
 
         .about-content p {
@@ -234,14 +240,14 @@
         }
 
         .about-content a {
-            color: var(--color-accent);
+            color: var(--color-navy);
             text-decoration: none;
-            border-bottom: 1px solid rgba(42, 127, 138, 0.3);
+            border-bottom: 1px solid var(--color-gold-muted);
             transition: border-color 0.2s ease;
         }
 
         .about-content a:hover {
-            border-bottom-color: var(--color-accent);
+            border-bottom-color: var(--color-navy);
         }
 
         /* ── Responsive ── */
@@ -258,12 +264,6 @@
                 top: 0;
             }
 
-            .sidebar-profile {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-            }
-
             .sidebar-links {
                 flex-direction: row;
                 flex-wrap: wrap;
@@ -278,23 +278,17 @@
                 padding-bottom: 24px;
             }
 
-            .nav {
-                gap: 24px;
-            }
-
-            h1 {
-                font-size: 1.6rem;
-                white-space: normal;
-            }
+            .nav { gap: 24px; }
+            h1 { font-size: 1.5rem; white-space: normal; }
 
             .section-header {
-                height: 140px;
-                background-attachment: scroll;
-                margin: 30px 0 0 0;
+                padding: 36px 0;
+                margin: 28px 0 0 0;
             }
 
             .section-header h2 {
-                font-size: 1.6rem;
+                font-size: 2.8rem;
+                background-attachment: scroll;
             }
 
             .about-content {
@@ -313,28 +307,22 @@
                 <div class="sidebar-title">PhD Candidate</div>
                 <div class="sidebar-links">
                     <a href="mailto:james.wyngaarden@temple.edu" class="sidebar-link">
-                        <img src="stimuli/logos/Email.png" alt="">
-                        Email
+                        <img src="stimuli/logos/Email.png" alt="">Email
                     </a>
                     <a href="https://www.linkedin.com/in/james-wyngaarden-iii" target="_blank" class="sidebar-link">
-                        <img src="stimuli/logos/Linkedin.png" alt="">
-                        LinkedIn
+                        <img src="stimuli/logos/Linkedin.png" alt="">LinkedIn
                     </a>
                     <a href="https://bsky.app/profile/jameswyngaarden.bsky.social" target="_blank" class="sidebar-link">
-                        <img src="stimuli/logos/Bluesky.png" alt="">
-                        Bluesky
+                        <img src="stimuli/logos/Bluesky.png" alt="">Bluesky
                     </a>
                     <a href="https://github.com/jameswyngaarden" target="_blank" class="sidebar-link">
-                        <img src="stimuli/logos/Github.png" alt="">
-                        GitHub
+                        <img src="stimuli/logos/Github.png" alt="">GitHub
                     </a>
                     <a href="https://scholar.google.com/citations?user=84faR-sAAAAJ&hl=en" target="_blank" class="sidebar-link">
-                        <img src="stimuli/logos/Google-Scholar.png" alt="">
-                        Google Scholar
+                        <img src="stimuli/logos/Google-Scholar.png" alt="">Google Scholar
                     </a>
                     <a href="https://orcid.org/0000-0002-0858-8721" target="_blank" class="sidebar-link">
-                        <img src="stimuli/logos/Orcid.png" alt="">
-                        ORCID
+                        <img src="stimuli/logos/Orcid.png" alt="">ORCID
                     </a>
                 </div>
             </div>
