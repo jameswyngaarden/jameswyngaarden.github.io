@@ -5,149 +5,56 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Publications - James B. Wyngaarden III</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,500;1,8..60,400&family=Work+Sans:wght@300;400;500;600&display=swap');
-
-        :root {
-            --color-text: #2c3e50;
-            --color-text-light: #5d6d7e;
-            --color-accent: #2a7f8a;
-            --color-accent-hover: #1f6670;
-            --color-bg: #ffffff;
-            --color-bg-subtle: #f8f9fa;
-            --color-border: #e2e2e2;
-            --font-serif: 'Source Serif 4', 'Georgia', serif;
-            --font-sans: 'Work Sans', 'Helvetica Neue', sans-serif;
-        }
-
+        @import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600&display=swap');
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        body {
-            font-family: var(--font-serif);
-            line-height: 1.7;
-            color: var(--color-text);
-            background: var(--color-bg);
-            min-height: 100vh;
-            font-size: 16px;
-            -webkit-font-smoothing: antialiased;
-        }
-
-        .container { max-width: 1300px; margin: 0 auto; padding: 40px 30px; display: flex; gap: 50px; }
-
-        /* Sidebar */
-        .sidebar { width: 240px; flex-shrink: 0; position: sticky; top: 40px; height: fit-content; }
-        .sidebar-profile { padding: 0; text-align: center; }
-        .sidebar-profile-img { width: 160px; height: 160px; border-radius: 50%; margin: 0 auto 24px; background-image: url('stimuli/headshot.jpg'); background-size: cover; background-position: center; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08); }
-        .sidebar-name { font-family: var(--font-sans); font-size: 1.2rem; font-weight: 600; color: var(--color-text); margin-bottom: 4px; letter-spacing: -0.01em; }
-        .sidebar-title { font-family: var(--font-sans); font-size: 0.85rem; color: var(--color-text-light); margin-bottom: 28px; font-weight: 400; }
-        .sidebar-links { display: flex; flex-direction: column; gap: 2px; }
-        .sidebar-link { display: flex; align-items: center; padding: 9px 12px; color: var(--color-text); text-decoration: none; transition: all 0.2s ease; font-family: var(--font-sans); font-size: 0.88rem; font-weight: 400; gap: 10px; border-radius: 6px; }
-        .sidebar-link img { width: 18px; height: 18px; object-fit: contain; opacity: 0.6; transition: opacity 0.2s ease; }
-        .sidebar-link:hover { background: var(--color-bg-subtle); color: var(--color-accent); }
-        .sidebar-link:hover img { opacity: 0.85; }
-
-        /* Main */
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #2c3e50; background: #ffffff; min-height: 100vh; }
+        .container { max-width: 1400px; margin: 0 auto; padding: 20px; display: flex; gap: 30px; }
+        .sidebar { width: 250px; flex-shrink: 0; position: sticky; top: 20px; height: fit-content; }
+        .sidebar-profile { background: #ffffff; padding: 30px 20px; text-align: center; }
+        .sidebar-profile-img { width: 150px; height: 150px; border-radius: 50%; margin: 0 auto 20px; background-image: url('stimuli/headshot.jpg'); background-size: cover; background-position: center; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); }
+        .sidebar-name { font-family: 'Work Sans', sans-serif; font-size: 1.3rem; font-weight: 600; color: #2c3e50; margin-bottom: 5px; }
+        .sidebar-title { font-size: 0.9rem; color: #5d6d7e; margin-bottom: 20px; line-height: 1.4; }
+        .sidebar-links { display: flex; flex-direction: column; gap: 10px; }
+        .sidebar-link { display: flex; align-items: center; justify-content: flex-start; padding: 10px; color: #2c3e50; text-decoration: none; border: 1px solid #e0e0e0; transition: all 0.3s ease; font-size: 0.9rem; gap: 10px; }
+        .sidebar-link img { width: 20px; height: 20px; object-fit: contain; }
+        .sidebar-link:hover { background: #f8f9fa; border-color: #34495e; }
         .main-content { flex-grow: 1; min-width: 0; }
-
-        /* Header */
-        header { padding: 0 0 32px 0; margin-bottom: 0; display: flex; align-items: baseline; justify-content: space-between; gap: 30px; border-bottom: 1px solid var(--color-border); }
+        header { background: #ffffff; border-radius: 0; padding: 30px 40px; margin-bottom: 30px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); border-bottom: 1px solid #e0e0e0; display: flex; align-items: center; justify-content: space-between; gap: 30px; }
         .header-center { flex-grow: 1; }
-        h1 { font-family: var(--font-sans); font-size: 2rem; margin-bottom: 6px; color: var(--color-text); font-weight: 500; letter-spacing: -0.02em; white-space: nowrap; }
-        .subtitle { font-family: var(--font-sans); font-size: 0.95rem; color: var(--color-text-light); font-weight: 300; letter-spacing: 0.02em; }
-
-        /* Nav */
-        .nav { display: flex; gap: 32px; flex-shrink: 0; align-items: baseline; }
-        .nav-link { font-family: var(--font-sans); font-size: 0.92rem; font-weight: 400; color: var(--color-text-light); text-decoration: none; padding-bottom: 4px; border-bottom: 2px solid transparent; transition: all 0.2s ease; letter-spacing: 0.01em; }
-        .nav-link:hover { color: var(--color-text); border-bottom-color: var(--color-border); }
-        .nav-link.active { color: var(--color-text); border-bottom-color: var(--color-accent); font-weight: 500; }
-
-        /* Parallax */
-        .section-header { height: 180px; background-image: linear-gradient(rgba(42, 127, 138, 0.55), rgba(44, 62, 80, 0.6)), url('stimuli/schuylkill_river_trail.jpg'); background-size: cover; background-position: center; background-attachment: fixed; display: flex; align-items: center; justify-content: center; color: white; margin: 40px 0 0 0; position: relative; }
-        .section-header h2 { font-family: var(--font-sans); font-size: 2.2rem; font-weight: 300; text-align: center; letter-spacing: 0.08em; text-transform: uppercase; text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2); }
-
-        /* Publications */
-        .publication-list { max-width: 740px; margin: 0 auto; padding: 0 20px 48px; }
-
-        .section-label {
-            font-family: var(--font-sans);
-            font-size: 1.15rem;
-            font-weight: 500;
-            color: var(--color-accent);
-            margin-top: 44px;
-            margin-bottom: 20px;
-            padding-bottom: 8px;
-            border-bottom: 2px solid var(--color-accent);
-            display: inline-block;
-            letter-spacing: 0.01em;
-        }
-
-        .publication-item {
-            padding: 22px 0;
-            border-bottom: 1px solid var(--color-border);
-        }
-
+        .header-right { flex-shrink: 0; }
+        h1 { font-family: 'Work Sans', sans-serif; font-size: 2rem; margin-bottom: 8px; background: linear-gradient(45deg, #2c3e50, #34495e); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-weight: 500; white-space: nowrap; }
+        .subtitle { font-size: 1.1rem; color: #5d6d7e; margin-bottom: 0; font-weight: 300; }
+        .nav { display: flex; justify-content: flex-end; gap: 20px; flex-wrap: wrap; }
+        .nav-btn { font-family: 'Work Sans', sans-serif; padding: 15px 30px; background: linear-gradient(45deg, #34495e, #2c3e50); color: white; text-decoration: none; border-radius: 0; font-weight: 500; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(52, 73, 94, 0.2); letter-spacing: 0.5px; text-transform: uppercase; font-size: 0.9rem; }
+        .nav-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(52, 73, 94, 0.3); background: linear-gradient(45deg, #2c3e50, #34495e); }
+        .nav-btn.active { background: linear-gradient(45deg, #7f8c8d, #95a5a6); }
+        .section-header { height: 200px; background-image: linear-gradient(rgba(44, 62, 80, 0.7), rgba(44, 62, 80, 0.7)), url('stimuli/schuylkill_river_trail.jpg'); background-size: cover; background-position: center; background-attachment: fixed; display: flex; align-items: center; justify-content: center; color: white; margin-bottom: 30px; position: relative; }
+        .section-header h2 { font-family: 'Work Sans', sans-serif; font-size: 3rem; font-weight: 500; text-align: center; letter-spacing: 2px; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); opacity: 0.85; }
+        .publication-list { max-width: 900px; margin: 0 auto; padding: 0 40px 40px 40px; }
+        .section-label { font-family: 'Work Sans', sans-serif; font-size: 1.4rem; font-weight: 500; color: #2c3e50; margin-top: 40px; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 2px solid #bdc3c7; }
+        .section-label:first-child { margin-top: 10px; }
+        .publication-item { background: none; padding: 20px 0; border-radius: 0; margin-bottom: 25px; box-shadow: none; border-left: none; border-bottom: 1px solid #e0e0e0; transition: none; }
+        .publication-item:hover { transform: none; box-shadow: none; }
         .publication-item:last-child { border-bottom: none; }
-
-        .publication-title { margin-bottom: 8px; }
-
-        .publication-title a {
-            font-family: var(--font-serif);
-            color: var(--color-accent);
-            text-decoration: none;
-            font-size: 1.08rem;
-            font-weight: 500;
-            line-height: 1.45;
-            border-bottom: 1px solid transparent;
-            transition: border-color 0.2s ease;
-        }
-
-        .publication-title a:hover {
-            border-bottom-color: var(--color-accent);
-        }
-
-        .preprint-flag {
-            display: inline-block;
-            font-family: var(--font-sans);
-            font-size: 0.65rem;
-            font-weight: 600;
-            color: var(--color-text-light);
-            background: var(--color-bg-subtle);
-            border: 1px solid var(--color-border);
-            padding: 1px 7px;
-            margin-left: 8px;
-            vertical-align: middle;
-            letter-spacing: 0.05em;
-            text-transform: uppercase;
-            border-radius: 3px;
-        }
-
-        .publication-citation {
-            color: var(--color-text);
-            line-height: 1.6;
-            font-size: 0.92rem;
-        }
-
-        .publication-citation a {
-            color: var(--color-accent);
-            text-decoration: none;
-            border-bottom: 1px solid rgba(42, 127, 138, 0.3);
-            transition: border-color 0.2s ease;
-        }
-
-        .publication-citation a:hover {
-            border-bottom-color: var(--color-accent);
-        }
-
-        /* Responsive */
-        @media (max-width: 900px) {
-            .container { flex-direction: column; padding: 20px 16px; gap: 30px; }
+        .publication-title { margin-bottom: 10px; }
+        .publication-title a { color: #0066cc; text-decoration: underline; font-size: 1.2rem; font-weight: 600; transition: color 0.3s ease; line-height: 1.4; }
+        .publication-title a:hover { color: #0052a3; }
+        .preprint-flag { display: inline-block; font-size: 0.7rem; font-weight: 600; color: #7f8c8d; background: #f0f0f0; padding: 2px 8px; margin-left: 8px; vertical-align: middle; letter-spacing: 0.5px; text-transform: uppercase; font-family: 'Work Sans', sans-serif; }
+        .publication-citation { color: #2c3e50; line-height: 1.6; font-size: 1rem; margin-bottom: 8px; }
+        .publication-citation a { color: #34495e; text-decoration: none; border-bottom: 1px solid #bdc3c7; transition: all 0.3s ease; }
+        .publication-citation a:hover { color: #2c3e50; border-bottom-color: #34495e; }
+        @media (max-width: 768px) {
+            .container { flex-direction: column; }
             .sidebar { width: 100%; position: relative; top: 0; }
-            .sidebar-links { flex-direction: row; flex-wrap: wrap; justify-content: center; gap: 4px; }
-            header { flex-direction: column; align-items: flex-start; gap: 16px; padding-bottom: 24px; }
-            .nav { gap: 24px; }
+            header { flex-direction: column; text-align: center; gap: 20px; padding: 20px; }
+            .nav { justify-content: center; gap: 15px; }
+            .nav-btn { padding: 12px 20px; font-size: 0.8rem; }
             h1 { font-size: 1.6rem; white-space: normal; }
-            .section-header { height: 140px; background-attachment: scroll; margin: 30px 0 0 0; }
-            .section-header h2 { font-size: 1.6rem; }
-            .publication-list { padding: 0 8px 40px; }
+            .subtitle { font-size: 1rem; }
+            .container { padding: 10px; }
+            .section-header { height: 150px; background-attachment: scroll; }
+            .section-header h2 { font-size: 2rem; }
+            .publication-list { padding: 0 20px 20px 20px; }
         }
     </style>
 </head>
@@ -170,16 +77,19 @@
         </aside>
         <div class="main-content">
         <header>
-                <div class="header-center">
+            <div class="header-left"></div>
+            <div class="header-center">
                 <h1>James B. Wyngaarden III</h1>
-                <p class="subtitle">Neuroeconomics &ensp;·&ensp; Reward Processing &ensp;·&ensp; Decision Making</p>
+                <p class="subtitle">Neuroeconomics | Reward Processing | Decision Making</p>
             </div>
+            <div class="header-right">
                 <nav class="nav">
-                    <a href="index.html" class="nav-link">About</a>
-                    <a href="research.html" class="nav-link">Research</a>
-                    <a href="publications.html" class="nav-link active">Publications</a>
+                    <a href="index.html" class="nav-btn">About</a>
+                    <a href="research.html" class="nav-btn">Research</a>
+                    <a href="publications.html" class="nav-btn active">Publications</a>
                 </nav>
-            </header>
+            </div>
+        </header>
         <div class="section-header">
             <h2>Publications</h2>
         </div>
