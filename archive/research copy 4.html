@@ -93,9 +93,13 @@
         .research-section a:hover { border-bottom-color: var(--color-navy); }
 
         /* Figures */
-        .figure-container { margin: 20px 0 28px; text-align: center; }
-        .figure-container img { max-width: 75%; height: auto; border-radius: 4px; }
-        .figure-caption { margin-top: 10px; color: var(--color-text-light); font-size: 0.85rem; font-style: italic; max-width: 600px; margin-left: auto; margin-right: auto; line-height: 1.6; }
+        .figure-container { margin: 24px 0; text-align: center; }
+        .figure-container img { max-width: 78%; height: auto; border-radius: 4px; }
+        .figure-caption { margin-top: 10px; color: var(--color-text-light); font-size: 0.85rem; font-style: italic; max-width: 640px; margin-left: auto; margin-right: auto; line-height: 1.6; }
+        .figure-float-right { float: right; width: 240px; margin-left: 24px; margin-bottom: 12px; margin-top: 8px; }
+        .figure-float-right img { width: 100%; border-radius: 4px; display: block; }
+        .figure-float-right .figure-caption { text-align: center; }
+        .figure-inline-left { float: left; width: 100px; margin-right: 16px; margin-bottom: 8px; opacity: 0.75; }
 
         /* Grants */
         .grants-list { max-width: 700px; margin: 0 auto; padding: 36px 20px 48px; }
@@ -138,7 +142,7 @@
                 <div class="sidebar-name">Jimmy Wyngaarden</div>
                 <div class="sidebar-title">PhD Candidate</div>
                 <div class="sidebar-links">
-                    <a href="/cdn-cgi/l/email-protection#deb4bfb3bbadf0a9a7b0b9bfbfacbabbb09eaabbb3aeb2bbf0bbbaab" class="sidebar-link"><img src="stimuli/logos/Email.png" alt="">Email</a>
+                    <a href="/cdn-cgi/l/email-protection#94fef5f9f1e7bae3edfaf3f5f5e6f0f1fad4e0f1f9e4f8f1baf1f0e1" class="sidebar-link"><img src="stimuli/logos/Email.png" alt="">Email</a>
                     <a href="https://www.linkedin.com/in/james-wyngaarden-iii" target="_blank" class="sidebar-link"><img src="stimuli/logos/Linkedin.png" alt="">LinkedIn</a>
                     <a href="https://bsky.app/profile/jameswyngaarden.bsky.social" target="_blank" class="sidebar-link"><img src="stimuli/logos/Bluesky.png" alt="">Bluesky</a>
                     <a href="https://github.com/jameswyngaarden" target="_blank" class="sidebar-link"><img src="stimuli/logos/Github.png" alt="">GitHub</a>
@@ -179,18 +183,16 @@
                 </div>
 
                 <h3>Aging and Cognitive Flexibility</h3>
-                <div class="figure-container">
+                <div class="figure-float-right">
                     <img src="stimuli/tACS_setup.png" alt="tACS setup">
                     <p class="figure-caption">
                         HD-tACS montage targeting left DLPFC.
                     </p>
                 </div>
-                <p>My most distinctive contribution connects basic reward neuroscience to <strong>financial exploitation vulnerability in older adults</strong>—a critical public health problem causing over $40 billion in annual losses in the U.S. My dissertation uses transcranial alternating current stimulation (tACS) targeting prefrontal cortex to modulate reward-based learning in older adults, with reversal learning as the core behavioral paradigm. Reversal learning taps into cognitive flexibility—the ability to update behavior when reward contingencies change—which declines with age alongside broader executive function deterioration and maps onto real-world situations older adults face: adapting financial strategies, adjusting medication routines, or navigating social changes after retirement. It is also sensitive to frontal lobe integrity, particularly DLPFC and orbitofrontal cortex, regions showing disproportionate age-related volume loss, making it a direct behavioral probe for the prefrontally-mediated reward learning that tACS can target. The broader framework centers on confirmation bias: as older adults increasingly prioritize present-oriented goals tied to social and emotional satisfaction, their capacity to evaluate contradictory information weakens, making them more susceptible to scams that align with preexisting beliefs.</p>
+                <p>My most distinctive contribution connects basic reward neuroscience to <strong>financial exploitation vulnerability in older adults</strong>—a critical public health problem causing over $40 billion in annual losses in the U.S. My dissertation uses transcranial alternating current stimulation (tACS) targeting prefrontal cortex to modulate reward-based learning in older adults, with reversal learning as the core behavioral paradigm. Reversal learning taps into cognitive flexibility—the ability to update behavior when reward contingencies change—which declines with age alongside broader executive function deterioration and maps onto real-world situations older adults face: adapting financial strategies, adjusting medication routines, or navigating social changes after retirement. It is also sensitive to frontal lobe integrity, particularly DLPFC and orbitofrontal cortex, regions showing disproportionate age-related volume loss, making it a direct behavioral probe for the prefrontally-mediated reward learning that tACS can target. The broader framework centers on confirmation bias: as older adults increasingly prioritize present-oriented goals tied to social and emotional satisfaction, their capacity to evaluate contradictory information weakens, making them more susceptible to scams that align with preexisting beliefs.
+                </p>
                 <h3>Open Science and Research Infrastructure</h3>
-                <div class="figure-container">
-                    <img src="stimuli/openNeuro.png" alt="OpenNeuro">
-                </div>
-                <p>I've contributed to three publicly released neuroimaging datasets on OpenNeuro (500+ participants total), building research infrastructure that advances the field beyond individual papers: a social/nonsocial reward processing dataset (N=59, four fMRI tasks), a lifespan reward processing dataset (N=114, ages 21–80, multi-echo fMRI + diffusion imaging), and a risky/ambiguous decision-making dataset (N=353, novel Linked Colored Lottery Task). All are BIDS-compliant with extensive phenotypic data, facilitating reuse and multimodal analyses linking structural and functional connectivity to financial exploitation risk.</p>
+                <p><img src="stimuli/logos/openneuro.png" alt="OpenNeuro logo" class="figure-inline-left">I've contributed to three publicly released neuroimaging datasets on OpenNeuro (500+ participants total), building research infrastructure that advances the field beyond individual papers: a social/nonsocial reward processing dataset (N=59, four fMRI tasks), a lifespan reward processing dataset (N=114, ages 21–80, multi-echo fMRI + diffusion imaging), and a risky/ambiguous decision-making dataset (N=353, novel Linked Colored Lottery Task). All are BIDS-compliant with extensive phenotypic data, facilitating reuse and multimodal analyses linking structural and functional connectivity to financial exploitation risk.</p>
             </div>
 
             <div class="section-header alt-bg">
