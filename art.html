@@ -73,11 +73,13 @@
 
         /* Gallery */
         .gallery-intro { max-width: 700px; margin: 0 auto; padding: 44px 20px 20px; font-size: 1.05rem; line-height: 1.8; color: var(--color-text); }
-        .gallery-grid { max-width: 900px; margin: 0 auto; padding: 20px 20px 60px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px; }
-        .gallery-item { overflow: hidden; border-radius: 4px; }
-        .gallery-item img { width: 100%; height: auto; display: block; transition: transform 0.3s ease; }
-        .gallery-item:hover img { transform: scale(1.02); }
-        .gallery-caption { margin-top: 8px; font-family: var(--font-display); font-size: 0.8rem; color: var(--color-text-light); }
+        .gallery-grid { max-width: 960px; margin: 0 auto; padding: 20px 20px 60px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+        .gallery-item { overflow: hidden; }
+        .gallery-item-img { width: 100%; aspect-ratio: 4 / 5; overflow: hidden; border-radius: 4px; }
+        .gallery-item-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.3s ease; }
+        .gallery-item:hover .gallery-item-img img { transform: scale(1.02); }
+        .gallery-title { margin-top: 10px; font-family: var(--font-display); font-size: 0.82rem; font-weight: 500; color: var(--color-text); }
+        .gallery-medium { font-family: var(--font-display); font-size: 0.75rem; font-style: italic; color: var(--color-text-light); margin-top: 2px; }
 
         /* Responsive */
         @media (max-width: 900px) {
@@ -89,7 +91,10 @@
             h1 { font-size: 1.5rem; white-space: normal; }
             .section-header { padding: 36px 0; margin: 28px 0 0 0; }
             .section-header h2 { font-size: 2.8rem; background-attachment: scroll; }
-            .gallery-grid { grid-template-columns: 1fr; padding: 20px 8px 40px; }
+            .gallery-grid { grid-template-columns: repeat(2, 1fr); padding: 20px 8px 40px; }
+        }
+        @media (max-width: 550px) {
+            .gallery-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -101,7 +106,7 @@
                 <div class="sidebar-name">Jimmy Wyngaarden</div>
                 <div class="sidebar-title">PhD Candidate</div>
                 <div class="sidebar-links">
-                    <a href="mailto:james.wyngaarden@temple.edu" class="sidebar-link"><img src="stimuli/logos/Email.png" alt="">Email</a>
+                    <a href="/cdn-cgi/l/email-protection#84eee5e9e1f7aaf3fdeae3e5e5f6e0e1eac4f0e1e9f4e8e1aae1e0f1" class="sidebar-link"><img src="stimuli/logos/Email.png" alt="">Email</a>
                     <a href="https://www.linkedin.com/in/james-wyngaarden-iii" target="_blank" class="sidebar-link"><img src="stimuli/logos/Linkedin.png" alt="">LinkedIn</a>
                     <a href="https://bsky.app/profile/jameswyngaarden.bsky.social" target="_blank" class="sidebar-link"><img src="stimuli/logos/Bluesky.png" alt="">Bluesky</a>
                     <a href="https://github.com/jameswyngaarden" target="_blank" class="sidebar-link"><img src="stimuli/logos/Github.png" alt="">GitHub</a>
@@ -132,34 +137,44 @@
             <p class="gallery-intro">A selection of paintings and drawings from outside the lab.</p>
 
             <div class="gallery-grid">
-                <!-- Replace filenames with your actual image files -->
-                <!-- Note: TIFFs don't render in most browsers — convert to JPG or PNG before deploying -->
                 <div class="gallery-item">
-                    <img src="art/IMG_religious.png" alt="">
+                    <div class="gallery-item-img"><img src="art/IMG_religious.png" alt="Religious figure"></div>
+                    <div class="gallery-title">Religious Figures</div>
+                    <div class="gallery-medium">Oil paint, 11"x14", 2024</div>
                 </div>
                 <div class="gallery-item">
-                    <img src="art/IMG_stoneybrook-unfinished.png" alt="">
+                    <div class="gallery-item-img"><img src="art/IMG_stoneybrook-unfinished.png" alt="Stoneybrook"></div>
+                    <div class="gallery-title">View from Stoneybrook (in progress)</div>
+                    <div class="gallery-medium">Oil pastels, 2024</div>
                 </div>
                 <div class="gallery-item">
-                    <img src="art/IMG_monet.png" alt="">
+                    <div class="gallery-item-img"><img src="art/IMG_monet.png" alt="Monet"></div>
+                    <div class="gallery-title">After Monet</div>
+                    <div class="gallery-medium">Oil pastels, 2025</div>
                 </div>
                 <div class="gallery-item">
-                    <img src="art/IMG_bust.png" alt="">
+                    <div class="gallery-item-img"><img src="art/IMG_bust.png" alt="Bust study"></div>
+                    <div class="gallery-title">Bust Study</div>
+                    <div class="gallery-medium">Pastel pencil, 2026</div>
                 </div>
                 <div class="gallery-item">
-                    <img src="art/IMG_gandhi.png" alt="">
+                    <div class="gallery-item-img"><img src="art/IMG_gandhi.png" alt="Gandhi"></div>
+                    <div class="gallery-title">Gandhi</div>
+                    <div class="gallery-medium">graphite, 2026</div>
                 </div>
                 <div class="gallery-item">
-                    <img src="art/IMG_louvre.png" alt="">
+                    <div class="gallery-item-img"><img src="art/IMG_louvre.png" alt="Louvre sketch"></div>
+                    <div class="gallery-title">Louvre Sketch</div>
+                    <div class="gallery-medium">Graphite, 3"×4", 2025</div>
                 </div>
                 <div class="gallery-item">
-                    <img src="art/IMG_boathouse.png" alt="">
+                    <div class="gallery-item-img"><img src="art/IMG_boathouse.png" alt="Boathouse"></div>
+                    <div class="gallery-title">Boathouse</div>
+                    <div class="gallery-medium">Graphite, 2025</div>
                 </div>
                 <div class="gallery-item">
-                    <img src="art/IMG_park.png" alt="">
+                    <div class="gallery-item-img"><img src="art/IMG_park.png" alt="Park scene"></div>
+                    <div class="gallery-title">Park</div>
+                    <div class="gallery-medium">graphite, 2024</div>
                 </div>
-            </div>
-        </div>
-    </div>
-</body>
-</html>
+           
