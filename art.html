@@ -78,7 +78,8 @@
         .gallery-item-img { width: 100%; aspect-ratio: 4 / 5; border-radius: 4px; display: flex; align-items: center; justify-content: center; }
         .gallery-item-img img { max-width: 100%; max-height: 100%; object-fit: contain; display: block; transition: transform 0.3s ease; }
         .gallery-item:hover .gallery-item-img img { transform: scale(1.02); }
-        .gallery-title { margin-top: 10px; font-family: var(--font-display); font-size: 0.82rem; font-weight: 500; color: var(--color-text); }
+        .gallery-title { margin-top: 10px; font-family: var(--font-display); font-size: 0.82rem; font-weight: 500; color: var(--color-text); text-decoration: none; }
+        .gallery-item:hover .gallery-title { text-decoration: underline; text-underline-offset: 2px; }
         .gallery-medium { font-family: var(--font-display); font-size: 0.75rem; font-style: italic; color: var(--color-text-light); margin-top: 2px; }
 
         /* Lightbox */
