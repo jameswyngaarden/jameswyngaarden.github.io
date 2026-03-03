@@ -74,136 +74,12 @@
         /* Gallery */
         .gallery-intro { max-width: 700px; margin: 0 auto; padding: 44px 20px 20px; font-size: 1.05rem; line-height: 1.8; color: var(--color-text); }
         .gallery-grid { max-width: 960px; margin: 0 auto; padding: 20px 20px 60px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
-        .gallery-item { overflow: hidden; cursor: pointer; }
+        .gallery-item { overflow: hidden; }
         .gallery-item-img { width: 100%; aspect-ratio: 4 / 5; border-radius: 4px; display: flex; align-items: center; justify-content: center; }
         .gallery-item-img img { max-width: 100%; max-height: 100%; object-fit: contain; display: block; transition: transform 0.3s ease; }
         .gallery-item:hover .gallery-item-img img { transform: scale(1.02); }
         .gallery-title { margin-top: 10px; font-family: var(--font-display); font-size: 0.82rem; font-weight: 500; color: var(--color-text); }
         .gallery-medium { font-family: var(--font-display); font-size: 0.75rem; font-style: italic; color: var(--color-text-light); margin-top: 2px; }
-
-        /* Lightbox */
-        .lightbox-overlay {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(10, 18, 28, 0.92);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
-            padding: 40px;
-            opacity: 0;
-            transition: opacity 0.25s ease;
-        }
-        .lightbox-overlay.active { display: flex; }
-        .lightbox-overlay.visible { opacity: 1; }
-
-        .lightbox-content {
-            display: flex;
-            align-items: center;
-            gap: 40px;
-            max-width: 1100px;
-            width: 100%;
-            max-height: 90vh;
-            position: relative;
-        }
-
-        .lightbox-img-wrap {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-width: 0;
-            max-height: 80vh;
-        }
-        .lightbox-img-wrap img {
-            max-width: 100%;
-            max-height: 80vh;
-            object-fit: contain;
-            border-radius: 4px;
-            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
-        }
-
-        .lightbox-info {
-            width: 240px;
-            flex-shrink: 0;
-            color: #ffffff;
-        }
-        .lightbox-title {
-            font-family: var(--font-display);
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: #ffffff;
-            margin-bottom: 6px;
-        }
-        .lightbox-medium {
-            font-family: var(--font-display);
-            font-size: 0.85rem;
-            font-style: italic;
-            color: rgba(255, 255, 255, 0.6);
-            margin-bottom: 16px;
-        }
-        .lightbox-desc {
-            font-family: var(--font-serif);
-            font-size: 0.9rem;
-            line-height: 1.6;
-            color: rgba(255, 255, 255, 0.75);
-        }
-
-        .lightbox-nav {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: none;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: rgba(255, 255, 255, 0.7);
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 1.2rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s ease;
-            z-index: 10;
-        }
-        .lightbox-nav:hover {
-            background: rgba(255, 255, 255, 0.1);
-            color: #ffffff;
-            border-color: rgba(255, 255, 255, 0.4);
-        }
-        .lightbox-prev { left: -60px; }
-        .lightbox-next { right: -60px; }
-
-        .lightbox-close {
-            position: fixed;
-            top: 20px;
-            right: 24px;
-            background: none;
-            border: none;
-            color: rgba(255, 255, 255, 0.6);
-            font-size: 1.5rem;
-            cursor: pointer;
-            z-index: 1001;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: color 0.2s ease;
-        }
-        .lightbox-close:hover { color: #ffffff; }
-
-        .lightbox-counter {
-            position: fixed;
-            bottom: 24px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-family: var(--font-display);
-            font-size: 0.78rem;
-            color: rgba(255, 255, 255, 0.4);
-            z-index: 1001;
-        }
 
         /* Responsive */
         @media (max-width: 900px) {
@@ -216,12 +92,6 @@
             .section-header { padding: 36px 0; margin: 28px 0 0 0; }
             .section-header h2 { font-size: 2.8rem; background-attachment: scroll; }
             .gallery-grid { grid-template-columns: repeat(2, 1fr); padding: 20px 8px 40px; }
-            .lightbox-overlay { padding: 20px; }
-            .lightbox-content { flex-direction: column; gap: 20px; }
-            .lightbox-info { width: 100%; text-align: center; }
-            .lightbox-prev { left: 10px; }
-            .lightbox-next { right: 10px; }
-            .lightbox-nav { width: 36px; height: 36px; font-size: 1rem; }
         }
         @media (max-width: 550px) {
             .gallery-grid { grid-template-columns: 1fr; }
@@ -236,7 +106,7 @@
                 <div class="sidebar-name">Jimmy Wyngaarden</div>
                 <div class="sidebar-title">PhD Candidate</div>
                 <div class="sidebar-links">
-                    <a href="mailto:james.wyngaarden@temple.edu" class="sidebar-link"><img src="stimuli/logos/Email.png" alt="">Email</a>
+                    <a href="/cdn-cgi/l/email-protection#84eee5e9e1f7aaf3fdeae3e5e5f6e0e1eac4f0e1e9f4e8e1aae1e0f1" class="sidebar-link"><img src="stimuli/logos/Email.png" alt="">Email</a>
                     <a href="https://www.linkedin.com/in/james-wyngaarden-iii" target="_blank" class="sidebar-link"><img src="stimuli/logos/Linkedin.png" alt="">LinkedIn</a>
                     <a href="https://bsky.app/profile/jameswyngaarden.bsky.social" target="_blank" class="sidebar-link"><img src="stimuli/logos/Bluesky.png" alt="">Bluesky</a>
                     <a href="https://github.com/jameswyngaarden" target="_blank" class="sidebar-link"><img src="stimuli/logos/Github.png" alt="">GitHub</a>
@@ -250,7 +120,7 @@
             <header>
                 <div class="header-center">
                     <h1>James B. Wyngaarden III</h1>
-                    <p class="subtitle">Neuroeconomics &ensp;&middot;&ensp; Reward Processing &ensp;&middot;&ensp; Decision Making</p>
+                    <p class="subtitle">Neuroeconomics &ensp;·&ensp; Reward Processing &ensp;·&ensp; Decision Making</p>
                 </div>
                 <nav class="nav">
                     <a href="index.html" class="nav-link">About</a>
@@ -300,7 +170,7 @@
                 <div class="gallery-item">
                     <div class="gallery-item-img"><img src="art/IMG_louvre.png" alt="Louvre sketch"></div>
                     <div class="gallery-title">Louvre Sketch</div>
-                    <div class="gallery-medium">Graphite, 3"&times;4", 2025</div>
+                    <div class="gallery-medium">Graphite, 3"×4", 2025</div>
                 </div>
                 <div class="gallery-item">
                     <div class="gallery-item-img"><img src="art/IMG_boathouse.png" alt="Boathouse"></div>
@@ -312,102 +182,4 @@
                     <div class="gallery-title">Park</div>
                     <div class="gallery-medium">graphite, 2024</div>
                 </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Lightbox -->
-    <div class="lightbox-overlay" id="lightbox">
-        <button class="lightbox-close" id="lb-close">&times;</button>
-        <div class="lightbox-content">
-            <button class="lightbox-nav lightbox-prev" id="lb-prev">&#8592;</button>
-            <div class="lightbox-img-wrap">
-                <img id="lb-img" src="" alt="">
-            </div>
-            <div class="lightbox-info">
-                <div class="lightbox-title" id="lb-title"></div>
-                <div class="lightbox-medium" id="lb-medium"></div>
-                <div class="lightbox-desc" id="lb-desc"></div>
-            </div>
-            <button class="lightbox-nav lightbox-next" id="lb-next">&#8594;</button>
-        </div>
-        <div class="lightbox-counter" id="lb-counter"></div>
-    </div>
-
-    <script>
-    (function() {
-        var items = document.querySelectorAll('.gallery-item');
-        var overlay = document.getElementById('lightbox');
-        var lbImg = document.getElementById('lb-img');
-        var lbTitle = document.getElementById('lb-title');
-        var lbMedium = document.getElementById('lb-medium');
-        var lbDesc = document.getElementById('lb-desc');
-        var lbCounter = document.getElementById('lb-counter');
-        var current = 0;
-
-        function getDataFromItem(item) {
-            var img = item.querySelector('img');
-            var titleEl = item.querySelector('.gallery-title');
-            var mediumEl = item.querySelector('.gallery-medium');
-            return {
-                src: img ? img.src : '',
-                alt: img ? img.alt : '',
-                title: titleEl ? titleEl.textContent : '',
-                medium: mediumEl ? mediumEl.textContent : '',
-                desc: item.getAttribute('data-desc') || ''
-            };
-        }
-
-        function show(index) {
-            current = index;
-            var data = getDataFromItem(items[current]);
-            lbImg.src = data.src;
-            lbImg.alt = data.alt;
-            lbTitle.textContent = data.title;
-            lbMedium.textContent = data.medium;
-            lbDesc.textContent = data.desc;
-            lbCounter.textContent = (current + 1) + ' / ' + items.length;
-            overlay.classList.add('active');
-            document.body.style.overflow = 'hidden';
-            requestAnimationFrame(function() {
-                requestAnimationFrame(function() {
-                    overlay.classList.add('visible');
-                });
-            });
-        }
-
-        function hide() {
-            overlay.classList.remove('visible');
-            setTimeout(function() {
-                overlay.classList.remove('active');
-                document.body.style.overflow = '';
-            }, 250);
-        }
-
-        function next() { show((current + 1) % items.length); }
-        function prev() { show((current - 1 + items.length) % items.length); }
-
-        for (var i = 0; i < items.length; i++) {
-            (function(idx) {
-                items[idx].addEventListener('click', function() { show(idx); });
-            })(i);
-        }
-
-        document.getElementById('lb-close').addEventListener('click', hide);
-        document.getElementById('lb-next').addEventListener('click', next);
-        document.getElementById('lb-prev').addEventListener('click', prev);
-
-        overlay.addEventListener('click', function(e) {
-            if (e.target === overlay) hide();
-        });
-
-        document.addEventListener('keydown', function(e) {
-            if (!overlay.classList.contains('active')) return;
-            if (e.key === 'Escape') hide();
-            if (e.key === 'ArrowRight') next();
-            if (e.key === 'ArrowLeft') prev();
-        });
-    })();
-    </script>
-</body>
-</html>
+           
