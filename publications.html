@@ -46,25 +46,6 @@
         .publication-citation a { color:var(--color-navy); text-decoration:none; border-bottom:1px solid var(--color-gold-muted); transition:border-color 0.2s ease; }
         .publication-citation a:hover { border-bottom-color:var(--color-navy); }
         @media (max-width:900px) { .container { flex-direction:column; padding:20px 16px; gap:30px; } .sidebar { width:100%; position:relative; top:0; } .sidebar-links { flex-direction:row; flex-wrap:wrap; justify-content:center; gap:4px; } header { flex-direction:column; align-items:flex-start; gap:16px; padding-bottom:24px; } .nav { gap:24px; } h1 { font-size:1.5rem; white-space:normal; } .section-header { padding:36px 0; margin:28px 0 0 0; } .section-header h2 { font-size:2.8rem; background-attachment:scroll; } .publication-list { padding:0 8px 40px; } }
-        /* Paired figure layout for Selected Works */
-        .pub-row { display:flex; gap:32px; padding:20px 0; border-bottom:1px solid var(--color-border); align-items:flex-start; }
-        .pub-row:last-child { border-bottom:none; }
-        .pub-text { flex:1; min-width:0; }
-        .pub-text .publication-title { margin-bottom:8px; }
-        .pub-text .publication-citation { font-size:0.88rem; }
-        .pub-figure { width:340px; flex-shrink:0; position:relative; }
-        .pub-figure-gallery { position:relative; width:100%; max-width:340px; border-radius:4px; border:1px solid var(--color-border); overflow:hidden; background:var(--color-bg-subtle); }
-        .pub-figure-gallery img { width:100%; height:auto; max-height:280px; object-fit:contain; display:none; }
-        .pub-figure-gallery img.active { display:block; }
-        .fig-prev, .fig-next { position:absolute; top:50%; transform:translateY(-50%); background:rgba(255,255,255,0.85); border:1px solid var(--color-border); color:var(--color-text-light); width:28px; height:28px; border-radius:50%; cursor:pointer; font-size:0.8rem; display:flex; align-items:center; justify-content:center; transition:all 0.2s ease; z-index:2; }
-        .fig-prev:hover, .fig-next:hover { background:#fff; color:var(--color-navy); border-color:var(--color-navy); }
-        .fig-prev { left:8px; }
-        .fig-next { right:8px; }
-        .fig-nav-hidden { display:none !important; }
-        .pub-figure-caption { font-family:var(--font-display); font-size:0.72rem; color:var(--color-text-light); margin-top:8px; line-height:1.5; }
-        .fig-counter { font-family:var(--font-display); font-size:0.68rem; color:var(--color-text-light); text-align:center; margin-top:4px; }
-        .fig-counter-hidden { display:none; }
-        @media (max-width:900px) { .pub-row { flex-direction:column; gap:20px; } .pub-figure { width:100%; max-width:400px; } }
     </style>
 </head>
 <body>
@@ -103,88 +84,37 @@
         <div class="publication-list">
             <!-- ==================== SELECTED WORKS ==================== -->
             <h3 class="section-label">Selected Works</h3>
-
-            <div class="pub-row">
-                <div class="pub-text">
-                    <h3 class="publication-title">
-                        <a href="publications/confirmation-bias-exploitation.html">Maladaptive decision-making in older adults: Confirmation bias and financial exploitation</a>
-                    </h3>
-                    <div class="publication-citation">
-                        <strong>Wyngaarden, J.B., III</strong>, Giovannetti, T., Krekelberg, B., &amp; Smith, D.V. (2026). In: Smith, D.V., Lockwood, P.L., Fareri, D.S. (eds) <em>Neuroeconomics: Core Topics and Current Directions.</em> Springer, Cham. <a href="https://doi.org/10.1007/978-3-032-02925-6_30" target="_blank">DOI</a>
-                    </div>
-                </div>
-                <div class="pub-figure">
-                    <div class="pub-figure-gallery">
-                        <img src="publications/figures/springer-2026_fig-1.png" alt="" class="active" data-caption="Figure 1. Age-related cognitive changes lead to increased confirmation bias.">
-                        <img src="publications/figures/springer-2026_fig-2.png" alt="" data-caption="Figure 2. Interaction between cognitive decline and socioeconomic status associated with risk for financial exploitation. (Adapted from Yang et al. (2025), CC BY 4.0).">
-                        <img src="publications/figures/springer_2026_fig-3.png" alt="" data-caption="Figure 3. Optimistic update bias increases in older age. (Adapted from Chowdhury et al. (2014), CC BY 3.0).">
-                        <img src="publications/figures/springer_2026-fig-4.png" alt="" data-caption="Figure 4. Key regions of the prefrontal cortex implicated in confirmation bias. (From Friedman and Robbins (2022), CC BY 4.0).">
-                    </div>
-                    <button class="fig-prev fig-nav-hidden">&#8592;</button>
-                    <button class="fig-next fig-nav-hidden">&#8594;</button>
-                    <div class="pub-figure-caption"></div>
-                    <div class="fig-counter fig-counter-hidden"></div>
+            <div class="publication-item">
+                <h3 class="publication-title">
+                    <a href="publications/confirmation-bias-exploitation.html">Maladaptive decision-making in older adults: Confirmation bias and financial exploitation</a>
+                </h3>
+                <div class="publication-citation">
+                    <strong>Wyngaarden, J.B., III</strong>, Giovannetti, T., Krekelberg, B., &amp; Smith, D.V. (2026). Maladaptive decision-making in older adults: Confirmation bias and financial exploitation. In: Smith, D.V., Lockwood, P.L., Fareri, D.S. (eds) <em>Neuroeconomics: Core Topics and Current Directions.</em> Springer, Cham. <a href="https://doi.org/10.1007/978-3-032-02925-6_30" target="_blank">https://doi.org/10.1007/978-3-032-02925-6_30</a>.
                 </div>
             </div>
-
-            <div class="pub-row">
-                <div class="pub-text">
-                    <h3 class="publication-title">
-                        <a href="publications/alpha-tacs-reward-pupil.html">&alpha;-tACS modulates reward-dependent pupil responses and corticostriatal connectivity</a>
-                        <span class="preprint-flag">Preprint</span>
-                    </h3>
-                    <div class="publication-citation">
-                        Smith, D.V., <strong>Wyngaarden, J.B., III</strong>, Weinstein, S.M., Illenberger, N., Liu, Y., Siegel, J., &amp; Krekelberg, B. (2026). <em>bioRxiv.</em> <a href="https://doi.org/10.64898/2026.01.30.702963" target="_blank">DOI</a>
-                    </div>
-                </div>
-                <div class="pub-figure">
-                    <div class="pub-figure-gallery">
-                        <!-- Add figures: <img src="publications/figures/tacs-fig1.png" alt="" class="active" data-caption="Figure 1. ..."> -->
-                    </div>
-                    <button class="fig-prev fig-nav-hidden">&#8592;</button>
-                    <button class="fig-next fig-nav-hidden">&#8594;</button>
-                    <div class="pub-figure-caption"></div>
-                    <div class="fig-counter fig-counter-hidden"></div>
+            <div class="publication-item">
+                <h3 class="publication-title">
+                    <a href="publications/alpha-tacs-reward-pupil.html">&alpha;-tACS modulates reward-dependent pupil responses and corticostriatal connectivity</a>
+                    <span class="preprint-flag">Preprint</span>
+                </h3>
+                <div class="publication-citation">
+                    Smith, D.V., <strong>Wyngaarden, J.B., III</strong>, Weinstein, S.M., Illenberger, N., Liu, Y., Siegel, J., &amp; Krekelberg, B. (2026). &alpha;-tACS modulates reward-dependent pupil responses and corticostriatal connectivity. <em>bioRxiv.</em> <a href="https://doi.org/10.64898/2026.01.30.702963" target="_blank">https://doi.org/10.64898/2026.01.30.702963</a>.
                 </div>
             </div>
-
-            <div class="pub-row">
-                <div class="pub-text">
-                    <h3 class="publication-title">
-                        <a href="publications/reward-sensitivity-motivation.html">Trait reward sensitivity and behavioral motivation are associated with connectivity between the default mode network and the striatum during reward anticipation</a>
-                    </h3>
-                    <div class="publication-citation">
-                        <strong>Wyngaarden, J.B., III</strong>, Nambiar, A., Dennison, J.B., Alloy, L.B., Fareri, D.S., Jarcho, J.M., &amp; Smith, D.V. (2026). <em>Cognitive, Affective, &amp; Behavioral Neuroscience.</em> <a href="https://doi.org/10.3758/s13415-025-01396-9" target="_blank">DOI</a>
-                    </div>
-                </div>
-                <div class="pub-figure">
-                    <div class="pub-figure-gallery">
-                        <!-- Add figures here -->
-                    </div>
-                    <button class="fig-prev fig-nav-hidden">&#8592;</button>
-                    <button class="fig-next fig-nav-hidden">&#8594;</button>
-                    <div class="pub-figure-caption"></div>
-                    <div class="fig-counter fig-counter-hidden"></div>
+            <div class="publication-item">
+                <h3 class="publication-title">
+                    <a href="publications/reward-sensitivity-motivation.html">Trait reward sensitivity and behavioral motivation are associated with connectivity between the default mode network and the striatum during reward anticipation</a>
+                </h3>
+                <div class="publication-citation">
+                    <strong>Wyngaarden, J.B., III</strong>, Nambiar, A., Dennison, J.B., Alloy, L.B., Fareri, D.S., Jarcho, J.M., &amp; Smith, D.V. (2026). Trait reward sensitivity and behavioral motivation are associated with connectivity between the default mode network and the striatum during reward anticipation. <em>Cognitive, Affective, &amp; Behavioral Neuroscience.</em> <a href="https://doi.org/10.3758/s13415-025-01396-9" target="_blank">https://doi.org/10.3758/s13415-025-01396-9</a>.
                 </div>
             </div>
-
-            <div class="pub-row">
-                <div class="pub-text">
-                    <h3 class="publication-title">
-                        <a href="publications/corticostriatal-social-reward.html">Corticostriatal responses to social reward are linked to trait reward sensitivity and subclinical substance use in young adults</a>
-                    </h3>
-                    <div class="publication-citation">
-                        <strong>Wyngaarden, J.B., III*</strong>, Johnston, C.R.*, Sazhin, D., Dennison, J.B., Zaff, O., Fareri, D., McCloskey, M., Alloy, L.B., Smith, D.V., &amp; Jarcho, J.M. (2024). <em>Social Cognitive and Affective Neuroscience.</em> <a href="https://doi.org/10.1093/scan/nsae033" target="_blank">DOI</a>
-                    </div>
-                </div>
-                <div class="pub-figure">
-                    <div class="pub-figure-gallery">
-                        <!-- Add figures here -->
-                    </div>
-                    <button class="fig-prev fig-nav-hidden">&#8592;</button>
-                    <button class="fig-next fig-nav-hidden">&#8594;</button>
-                    <div class="pub-figure-caption"></div>
-                    <div class="fig-counter fig-counter-hidden"></div>
+            <div class="publication-item">
+                <h3 class="publication-title">
+                    <a href="publications/corticostriatal-social-reward.html">Corticostriatal responses to social reward are linked to trait reward sensitivity and subclinical substance use in young adults</a>
+                </h3>
+                <div class="publication-citation">
+                    <strong>Wyngaarden, J.B., III*</strong>, Johnston, C.R.*, Sazhin, D., Dennison, J.B., Zaff, O., Fareri, D., McCloskey, M., Alloy, L.B., Smith, D.V., &amp; Jarcho, J.M. (2024). Corticostriatal responses to social reward are linked to trait reward sensitivity and subclinical substance use in young adults. <em>Social Cognitive and Affective Neuroscience.</em> <a href="https://doi.org/10.1093/scan/nsae033" target="_blank">https://doi.org/10.1093/scan/nsae033</a>.
                 </div>
             </div>
             <!-- ==================== PUBLISHED ==================== -->
@@ -310,35 +240,5 @@
         </div>
     </div>
     </div>
-    <script>
-    (function() {
-        var figures = document.querySelectorAll('.pub-figure');
-        figures.forEach(function(fig) {
-            var gallery = fig.querySelector('.pub-figure-gallery');
-            var imgs = gallery ? gallery.querySelectorAll('img') : [];
-            var prevBtn = fig.querySelector('.fig-prev');
-            var nextBtn = fig.querySelector('.fig-next');
-            var captionEl = fig.querySelector('.pub-figure-caption');
-            var counterEl = fig.querySelector('.fig-counter');
-            if (imgs.length === 0) { if (gallery) gallery.style.display = 'none'; return; }
-            var current = 0;
-            function showImg(index) {
-                current = index;
-                for (var i = 0; i < imgs.length; i++) imgs[i].classList.remove('active');
-                imgs[current].classList.add('active');
-                if (captionEl) captionEl.textContent = imgs[current].getAttribute('data-caption') || '';
-                if (counterEl && imgs.length > 1) counterEl.textContent = (current + 1) + ' / ' + imgs.length;
-            }
-            if (imgs.length > 1) {
-                prevBtn.classList.remove('fig-nav-hidden');
-                nextBtn.classList.remove('fig-nav-hidden');
-                counterEl.classList.remove('fig-counter-hidden');
-                prevBtn.addEventListener('click', function() { showImg((current - 1 + imgs.length) % imgs.length); });
-                nextBtn.addEventListener('click', function() { showImg((current + 1) % imgs.length); });
-            }
-            showImg(0);
-        });
-    })();
-    </script>
 </body>
 </html>
