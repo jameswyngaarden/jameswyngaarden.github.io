@@ -257,10 +257,7 @@ h2 {
 .fig-featured {
   width: 100%;
   max-width: 680px;
-  border: 1px solid #dfe3e7;
-  border-radius: 6px;
   overflow: hidden;
-  background: #f7f8f9;
   margin-bottom: 8px;
 }
 .fig-featured img {
@@ -291,15 +288,15 @@ h2 {
 }
 .fig-thumb {
   aspect-ratio: 4 / 3;
-  border: 2px solid var(--color-border);
+  border: 2px solid transparent;
   border-radius: 4px;
   overflow: hidden;
   cursor: pointer;
-  background: var(--color-bg-subtle);
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: border-color 0.2s ease;
+  transition: all 0.2s ease;
+  opacity: 0.45;
 }
 .fig-thumb img {
   width: 100%;
@@ -307,8 +304,8 @@ h2 {
   object-fit: contain;
   display: block;
 }
-.fig-thumb:hover { border-color: var(--color-navy); }
-.fig-thumb.active { border-color: var(--color-gold); }
+.fig-thumb:hover { opacity: 0.75; }
+.fig-thumb.active { opacity: 1; border-color: var(--color-gold); }
 
 @media (max-width: 600px) {
   .fig-thumbs { grid-template-columns: repeat(2, 1fr); }
