@@ -204,7 +204,7 @@
             font-size: 1.3rem;
             font-weight: 600;
             color: var(--color-navy);
-            margin: 32px 0 16px 0;
+            margin: 48px 0 20px 0;
             padding-bottom: 8px;
             border-bottom: 2px solid var(--color-gold);
             display: inline-block;
@@ -214,7 +214,7 @@
         .content-section {
             max-width: 800px;
             margin: 0 auto;
-            padding: 28px 20px;
+            padding: 44px 20px;
         }
 
         .content-section p {
@@ -291,13 +291,15 @@
             letter-spacing: 0.05em;
         }
 
-        .trial-choice-img {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            object-fit: cover;
+        .trial-choice {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            font-weight: 600;
             margin-bottom: 4px;
         }
+
+        .trial-choice.option-a { color: var(--color-navy); }
+        .trial-choice.option-b { color: var(--color-gold); }
 
         .trial-outcome {
             font-family: var(--font-display);
@@ -566,56 +568,61 @@
 
         .bandit-cards {
             display: flex;
-            gap: 48px;
+            gap: 32px;
             justify-content: center;
-            align-items: flex-start;
         }
 
         .bandit-card {
+            width: 140px;
+            height: 190px;
+            border-radius: 12px;
             cursor: pointer;
             position: relative;
             transition: all 0.2s ease;
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: center;
             user-select: none;
+            background: white;
+            border: 3px solid var(--color-border);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
         }
 
         .bandit-card-img {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
+            width: 100%;
+            height: 140px;
             object-fit: cover;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-
-        .bandit-card.option-left .bandit-card-img {
-            box-shadow: 0 4px 16px rgba(26, 58, 92, 0.25);
-        }
-
-        .bandit-card.option-right .bandit-card-img {
-            box-shadow: 0 4px 16px rgba(184, 134, 11, 0.25);
         }
 
         .bandit-card-subtitle {
             font-family: var(--font-display);
             font-size: 0.75rem;
             color: var(--color-text-light);
-            margin-top: 10px;
+            padding: 8px 0;
             text-transform: uppercase;
             letter-spacing: 0.1em;
         }
 
-        .bandit-card:hover:not(.disabled) .bandit-card-img {
-            transform: scale(1.05);
+        .bandit-card.option-left {
+            border-color: var(--color-navy);
         }
 
-        .bandit-card.option-left:hover:not(.disabled) .bandit-card-img {
-            box-shadow: 0 8px 24px rgba(26, 58, 92, 0.35);
+        .bandit-card.option-right {
+            border-color: var(--color-gold);
         }
 
-        .bandit-card.option-right:hover:not(.disabled) .bandit-card-img {
-            box-shadow: 0 8px 24px rgba(184, 134, 11, 0.35);
+        .bandit-card:hover:not(.disabled) {
+            transform: translateY(-4px);
+        }
+
+        .bandit-card.option-left:hover:not(.disabled) {
+            box-shadow: 0 8px 30px rgba(26, 58, 92, 0.3);
+        }
+
+        .bandit-card.option-right:hover:not(.disabled) {
+            box-shadow: 0 8px 30px rgba(184, 134, 11, 0.3);
         }
 
         .bandit-card.disabled {
@@ -625,19 +632,17 @@
 
         .bandit-card-feedback {
             position: absolute;
-            top: 45px;
+            top: 50%;
             left: 50%;
-            transform: translateX(-50%) scale(0);
+            transform: translate(-50%, -50%) scale(0);
             font-family: var(--font-display);
-            font-size: 1.5rem;
+            font-size: 2rem;
             font-weight: 700;
-            padding: 8px 16px;
+            padding: 12px 24px;
             border-radius: 8px;
             opacity: 0;
             transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             pointer-events: none;
-            white-space: nowrap;
-            z-index: 10;
         }
 
         .bandit-card-feedback.win {
@@ -652,7 +657,7 @@
 
         .bandit-card-feedback.show {
             opacity: 1;
-            transform: translateX(-50%) scale(1);
+            transform: translate(-50%, -50%) scale(1);
         }
 
         .bandit-message {
@@ -1020,13 +1025,14 @@
             .demo-container { padding: 20px 16px; }
 
             .trial-card { width: 60px; padding: 8px 6px; }
-            .trial-choice-img { width: 28px; height: 28px; }
+            .trial-choice { font-size: 0.95rem; }
 
             .wsls-metrics { flex-direction: column; gap: 20px; }
             .rw-controls { flex-direction: column; align-items: center; }
 
-            .bandit-cards { gap: 24px; }
-            .bandit-card-img { width: 90px; height: 90px; }
+            .bandit-cards { gap: 16px; }
+            .bandit-card { width: 110px; height: 160px; }
+            .bandit-card-img { height: 110px; }
             .bandit-status { gap: 20px; }
             .bandit-results-grid { grid-template-columns: 1fr; }
         }
@@ -1615,9 +1621,9 @@
                 
                 pos.applyMatrix4(rotMatrix);
                 
-                // Push slightly outward from center (reduced distance)
+                // Push slightly outward from center
                 const dir = pos.clone().normalize();
-                pos.add(dir.multiplyScalar(3));
+                pos.add(dir.multiplyScalar(8));
                 
                 electrode.position.copy(pos);
                 
@@ -1771,9 +1777,6 @@
             const phase = oscillationPaused ? frozenPhase : Math.sin(time * 2 * Math.PI * VIS_FREQ);
             if (!oscillationPaused) frozenPhase = phase;
             
-            // Normalized phase: 0 = full negative, 0.5 = neutral, 1 = full positive
-            const normalizedPhase = (phase + 1) / 2;
-            
             if (cortexMesh && baseColors) {
                 const colors = cortexMesh.geometry.attributes.color;
                 
@@ -1787,19 +1790,21 @@
                     const intensity = Math.max(r, g, b);
                     
                     if (intensity > 0.1) {
-                        // Smooth interpolation between blue (phase=0) and warm (phase=1)
-                        // At normalizedPhase=0: cool blue tint
-                        // At normalizedPhase=0.5: neutral (base colors)
-                        // At normalizedPhase=1: warm orange/red enhancement
-                        
-                        // Red channel: lower when cool, higher when warm
-                        colors.array[i] = r * (0.4 + 0.6 * normalizedPhase);
-                        
-                        // Green channel: slightly reduced at extremes
-                        colors.array[i + 1] = g * (0.6 + 0.4 * normalizedPhase);
-                        
-                        // Blue channel: higher when cool, lower when warm
-                        colors.array[i + 2] = Math.min(1, b * 0.3 + intensity * 0.7 * (1 - normalizedPhase));
+                        // Oscillate between warm (positive phase) and cool (negative phase)
+                        // Positive phase: original hot colors (red/yellow)
+                        // Negative phase: shift toward blue
+                        if (phase > 0) {
+                            // Positive: enhance red/yellow
+                            colors.array[i] = r * (0.7 + 0.3 * phase);
+                            colors.array[i + 1] = g * (0.7 + 0.3 * phase);
+                            colors.array[i + 2] = b * 0.5;
+                        } else {
+                            // Negative: shift to blue
+                            const negPhase = -phase;
+                            colors.array[i] = r * (1 - negPhase * 0.7);
+                            colors.array[i + 1] = g * (1 - negPhase * 0.5);
+                            colors.array[i + 2] = Math.min(1, b + intensity * negPhase * 0.8);
+                        }
                     } else {
                         // Keep dark areas dark
                         colors.array[i] = r;
@@ -1810,32 +1815,27 @@
                 colors.needsUpdate = true;
             }
 
-            // Smooth electrode pulsing - interpolate colors instead of switching
+            // Pulse electrodes with tACS phase
             electrodeMeshes.forEach(mesh => {
                 if (mesh.userData.type === 'center') {
-                    // Center electrode: interpolate between blue (negative) and orange (positive)
-                    // Use normalizedPhase for smooth transition
-                    const orangeR = 0.9, orangeG = 0.32, orangeB = 0;
-                    const blueR = 0.08, blueG = 0.4, blueB = 0.75;
-                    
-                    mesh.material.emissive.setRGB(
-                        blueR + (orangeR - blueR) * normalizedPhase,
-                        blueG + (orangeG - blueG) * normalizedPhase,
-                        blueB + (orangeB - blueB) * normalizedPhase
-                    );
-                    mesh.material.emissiveIntensity = 0.4 + Math.abs(phase) * 0.4;
+                    // Center electrode: positive phase = orange glow
+                    if (phase > 0) {
+                        mesh.material.emissive.setHex(0xe65100);
+                        mesh.material.emissiveIntensity = 0.3 + phase * 0.5;
+                    } else {
+                        // Negative phase = blue tint
+                        mesh.material.emissive.setHex(0x1565c0);
+                        mesh.material.emissiveIntensity = 0.3 + (-phase) * 0.5;
+                    }
                 } else {
-                    // Return electrodes: opposite phase (inverted)
-                    const invertedPhase = 1 - normalizedPhase;
-                    const purpleR = 0.48, purpleG = 0.12, purpleB = 0.64;
-                    const indigoR = 0.19, indigoG = 0.25, indigoB = 0.62;
-                    
-                    mesh.material.emissive.setRGB(
-                        indigoR + (purpleR - indigoR) * invertedPhase,
-                        indigoG + (purpleG - indigoG) * invertedPhase,
-                        indigoB + (purpleB - indigoB) * invertedPhase
-                    );
-                    mesh.material.emissiveIntensity = 0.25 + Math.abs(phase) * 0.25;
+                    // Return electrodes: opposite phase
+                    if (phase < 0) {
+                        mesh.material.emissive.setHex(0x7b1fa2);
+                        mesh.material.emissiveIntensity = 0.2 + (-phase) * 0.3;
+                    } else {
+                        mesh.material.emissive.setHex(0x303f9f);
+                        mesh.material.emissiveIntensity = 0.2 + phase * 0.3;
+                    }
                 }
             });
 
@@ -2121,17 +2121,11 @@
             return t;
         }
 
-        // Flower image paths
-        const flowerImages = {
-            'A': 'stimuli/022-flowers.png',
-            'B': 'stimuli/032-flowers.png'
-        };
-
         function renderTrials() {
             trialHistoryEl.innerHTML = trials.map((t, i) => `
                 <div class="trial-card" data-index="${i}">
                     <div class="trial-number">Trial ${t.trial}</div>
-                    <img src="${flowerImages[t.choice]}" alt="Flower ${t.choice}" class="trial-choice-img">
+                    <div class="trial-choice option-${t.choice.toLowerCase()}">${t.choice}</div>
                     <div class="trial-outcome ${t.outcome}">${t.outcome === 'win' ? '+$' : '−'}</div>
                     ${t.behavior ? `<div class="trial-behavior ${t.behavior}">${t.behavior}</div>` : ''}
                 </div>
