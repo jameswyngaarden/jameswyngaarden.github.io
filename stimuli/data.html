@@ -584,18 +584,33 @@
             align-items: center;
             justify-content: center;
             user-select: none;
+            background: white;
+            border: 3px solid var(--color-border);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .bandit-card-img {
+            width: 100%;
+            height: 140px;
+            object-fit: cover;
+        }
+
+        .bandit-card-subtitle {
+            font-family: var(--font-display);
+            font-size: 0.75rem;
+            color: var(--color-text-light);
+            padding: 8px 0;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
         }
 
         .bandit-card.option-left {
-            background: linear-gradient(145deg, #1a3a5c 0%, #2a4f7a 100%);
-            border: 3px solid #1a3a5c;
-            box-shadow: 0 4px 20px rgba(26, 58, 92, 0.3);
+            border-color: var(--color-navy);
         }
 
         .bandit-card.option-right {
-            background: linear-gradient(145deg, #8b6914 0%, #b8860b 100%);
-            border: 3px solid #b8860b;
-            box-shadow: 0 4px 20px rgba(184, 134, 11, 0.3);
+            border-color: var(--color-gold);
         }
 
         .bandit-card:hover:not(.disabled) {
@@ -603,33 +618,16 @@
         }
 
         .bandit-card.option-left:hover:not(.disabled) {
-            box-shadow: 0 8px 30px rgba(26, 58, 92, 0.4);
+            box-shadow: 0 8px 30px rgba(26, 58, 92, 0.3);
         }
 
         .bandit-card.option-right:hover:not(.disabled) {
-            box-shadow: 0 8px 30px rgba(184, 134, 11, 0.4);
+            box-shadow: 0 8px 30px rgba(184, 134, 11, 0.3);
         }
 
         .bandit-card.disabled {
             cursor: default;
             opacity: 0.7;
-        }
-
-        .bandit-card-label {
-            font-family: var(--font-display);
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: white;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
-        }
-
-        .bandit-card-subtitle {
-            font-family: var(--font-display);
-            font-size: 0.75rem;
-            color: rgba(255,255,255,0.7);
-            margin-top: 8px;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
         }
 
         .bandit-card-feedback {
@@ -998,8 +996,8 @@
             .rw-controls { flex-direction: column; align-items: center; }
 
             .bandit-cards { gap: 16px; }
-            .bandit-card { width: 110px; height: 150px; }
-            .bandit-card-label { font-size: 2rem; }
+            .bandit-card { width: 110px; height: 160px; }
+            .bandit-card-img { height: 110px; }
             .bandit-status { gap: 20px; }
             .bandit-results-grid { grid-template-columns: 1fr; }
         }
@@ -1071,9 +1069,9 @@
             <div class="content-section">
                 <h3 class="subsection-header">The Task</h3>
 
-                <p>In the <strong>two-armed bandit</strong> task, you repeatedly choose between two options. One option is "better" — it rewards you 75% of the time, while the other only rewards 25% of the time. Your job is to figure out which is which.</p>
+                <p>In the <strong>two-armed bandit</strong> task, you repeatedly choose between two options — here represented as flowers. One flower is "better" — it rewards you 75% of the time, while the other only rewards 25% of the time. Your job is to figure out which is which.</p>
 
-                <p>The twist: partway through, the contingencies <strong>reverse</strong>. The previously good option becomes bad, and vice versa. Detecting this shift and adapting quickly is the hallmark of cognitive flexibility — and it's exactly what declines with age.</p>
+                <p>The twist: partway through, the contingencies <strong>reverse</strong>. The previously good flower becomes bad, and vice versa. Detecting this shift and adapting quickly is the hallmark of cognitive flexibility — and it's exactly what declines with age.</p>
 
                 <p>Try it yourself below. You'll play 30 trials with one reversal midway through.</p>
 
@@ -1097,23 +1095,23 @@
                             </div>
                         </div>
 
-                        <!-- Cards -->
+                        <!-- Flowers -->
                         <div class="bandit-cards">
                             <div class="bandit-card option-left" id="cardLeft" data-choice="left">
-                                <div class="bandit-card-label">◆</div>
-                                <div class="bandit-card-subtitle">Left</div>
+                                <img src="stimuli/022-flowers.png" alt="Blue Flower" class="bandit-card-img">
+                                <div class="bandit-card-subtitle">Flower A</div>
                                 <div class="bandit-card-feedback" id="feedbackLeft"></div>
                             </div>
                             <div class="bandit-card option-right" id="cardRight" data-choice="right">
-                                <div class="bandit-card-label">◆</div>
-                                <div class="bandit-card-subtitle">Right</div>
+                                <img src="stimuli/032-flowers.png" alt="Orange Flower" class="bandit-card-img">
+                                <div class="bandit-card-subtitle">Flower B</div>
                                 <div class="bandit-card-feedback" id="feedbackRight"></div>
                             </div>
                         </div>
 
                         <!-- Message -->
                         <div class="bandit-message" id="banditMessage">
-                            Click a card to begin. Try to learn which option is better!
+                            Click a flower to begin. Try to learn which one is better!
                         </div>
 
                         <!-- History dots -->
@@ -1161,8 +1159,8 @@
 
                 <p>One simple but powerful way to characterize learning is to ask: <em>How does someone respond to feedback?</em> The <strong>Win-Stay, Lose-Shift</strong> (WSLS) framework breaks this down into two probabilities:</p>
 
-                <p><strong>p(stay | win)</strong> — After a rewarded choice, how often does the person repeat that choice?<br>
-                <strong>p(shift | lose)</strong> — After an unrewarded choice, how often do they switch to the other option?</p>
+                <p><strong>p(stay | win)</strong> — After a rewarded choice, how often does the person pick the same flower again?<br>
+                <strong>p(shift | lose)</strong> — After an unrewarded choice, how often do they switch to the other flower?</p>
 
                 <p>Higher values indicate more feedback-driven behavior. Someone with high p(stay|win) exploits what works; someone with high p(shift|lose) quickly abandons what doesn't. Use the demo below to see how these metrics are calculated from a trial sequence.</p>
 
@@ -2112,7 +2110,7 @@
                 if (currentStep < trials.length - 1) {
                     const behaviorText = t.behavior === 'stay' ? 'stayed with' : 'shifted away from';
                     const outcomeText = t.outcome === 'win' ? 'After winning' : 'After losing';
-                    explanationEl.innerHTML = `<strong>Trial ${t.trial}:</strong> ${outcomeText} on option ${t.choice}, the participant <strong>${behaviorText}</strong> option ${t.choice}. 
+                    explanationEl.innerHTML = `<strong>Trial ${t.trial}:</strong> ${outcomeText} on flower ${t.choice}, the participant <strong>${behaviorText}</strong> flower ${t.choice}. 
                         <br><em>Running totals:</em> ${wsls.staysAfterWin}/${wsls.wins} stays after wins, ${wsls.shiftsAfterLoss}/${wsls.losses} shifts after losses.`;
                 } else {
                     explanationEl.innerHTML = `<strong>Complete!</strong> Final metrics: p(stay|win) = ${wsls.pStayWin}, p(shift|lose) = ${wsls.pShiftLose}. 
