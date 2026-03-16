@@ -908,6 +908,41 @@
             letter-spacing: 0.05em;
         }
 
+        .tacs-footnote {
+            font-family: var(--font-display);
+            font-size: 0.72rem;
+            color: var(--color-text-light);
+            text-align: center;
+            padding: 12px 16px;
+            background: white;
+            border-radius: 6px;
+            border: 1px solid var(--color-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .tacs-pause-btn {
+            font-family: var(--font-display);
+            font-size: 0.75rem;
+            font-weight: 500;
+            padding: 6px 14px;
+            background: var(--color-bg-subtle);
+            color: var(--color-navy);
+            border: 1px solid var(--color-border);
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .tacs-pause-btn:hover {
+            background: var(--color-navy);
+            color: white;
+            border-color: var(--color-navy);
+        }
+
         @media (max-width: 900px) {
             .tacs-viewer { height: 350px; }
             .tacs-params { grid-template-columns: 1fr; }
@@ -1289,7 +1324,7 @@
                         <!-- Parameters -->
                         <div class="tacs-params">
                             <div class="tacs-param">
-                                <div class="tacs-param-value">6 Hz</div>
+                                <div class="tacs-param-value">6 Hz*</div>
                                 <div class="tacs-param-label">Frequency (θ)</div>
                             </div>
                             <div class="tacs-param">
@@ -1300,6 +1335,10 @@
                                 <div class="tacs-param-value">F3</div>
                                 <div class="tacs-param-label">Target Site</div>
                             </div>
+                        </div>
+                        <div class="tacs-footnote">
+                            *Oscillation slowed for visualization. Actual stimulation cycles 6× per second.
+                            <button class="tacs-pause-btn" id="tacsPauseBtn">❚❚ Pause</button>
                         </div>
                     </div>
                 </div>
@@ -1333,18 +1372,20 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script>
     // ═══════════════════════════════════════════════════════════════════════
-    // tACS 3D VISUALIZATION (SimNIBS-based with 6 Hz oscillation)
+    // tACS 3D VISUALIZATION (SimNIBS-based with slowed oscillation for display)
     // ═══════════════════════════════════════════════════════════════════════
     (function() {
         const container = document.getElementById('tacsViewer');
         const tooltip = document.getElementById('tacsTooltip');
         const tooltipTitle = tooltip.querySelector('.tacs-tooltip-title');
         const tooltipDesc = tooltip.querySelector('.tacs-tooltip-desc');
+        const pauseBtn = document.getElementById('tacsPauseBtn');
 
         if (!container) return;
 
-        // Stimulation parameters
-        const TACS_FREQ = 6; // Hz (theta)
+        // Visualization frequency (slowed for display; actual is 6 Hz)
+        const VIS_FREQ = 0.5; // Hz - 2 second cycle
+        let oscillationPaused = false;
 
         // Scene setup
         const scene = new THREE.Scene();
@@ -1409,6 +1450,10 @@
         let baseColors = null; // Store original E-field colors
         let meshCenter = new THREE.Vector3();
         let meshScale = 1;
+        
+        // Store cortex rotation for electrode alignment
+        let cortexRotationX = 0;
+        let cortexRotationZ = 0;
 
         // PLY Loader
         function parsePLY(text) {
@@ -1511,9 +1556,12 @@
                 cortexMesh.scale.set(meshScale, meshScale, meshScale);
                 
                 // Rotate to face viewer (Y is up in SimNIBS, but mesh faces "up")
-                // Rotate around X to tilt face toward camera
-                cortexMesh.rotation.x = -Math.PI / 2;
-                cortexMesh.rotation.z = Math.PI; // Face forward
+                // Store rotation values for electrode alignment
+                cortexRotationX = -Math.PI / 2;
+                cortexRotationZ = Math.PI; // Face forward
+                
+                cortexMesh.rotation.x = cortexRotationX;
+                cortexMesh.rotation.z = cortexRotationZ;
                 
                 headGroup.add(cortexMesh);
                 
@@ -1558,21 +1606,29 @@
                 
                 const electrode = new THREE.Mesh(geometry, material);
                 
-                // Transform position: subtract center, scale, then apply same rotation as cortex
+                // Transform position: subtract center, scale
                 let pos = new THREE.Vector3(...data.position);
                 pos.sub(meshCenter);
                 pos.multiplyScalar(meshScale);
                 
-                // Apply the same rotation as cortex mesh
-                pos.applyAxisAngle(new THREE.Vector3(1, 0, 0), -Math.PI / 2);
-                pos.applyAxisAngle(new THREE.Vector3(0, 0, 1), Math.PI);
+                // Apply the same rotations as cortex mesh (X then Z)
+                // Create rotation matrix matching cortex
+                const rotMatrix = new THREE.Matrix4();
+                rotMatrix.makeRotationX(cortexRotationX);
+                const rotMatrixZ = new THREE.Matrix4();
+                rotMatrixZ.makeRotationZ(cortexRotationZ);
+                rotMatrix.multiply(rotMatrixZ);
                 
-                // Push slightly outward
+                pos.applyMatrix4(rotMatrix);
+                
+                // Push slightly outward from center
                 const dir = pos.clone().normalize();
-                pos.add(dir.multiplyScalar(5));
+                pos.add(dir.multiplyScalar(8));
                 
                 electrode.position.copy(pos);
-                electrode.lookAt(pos.clone().multiplyScalar(2));
+                
+                // Orient electrode to face outward
+                electrode.lookAt(pos.clone().add(dir));
                 electrode.rotateX(Math.PI / 2);
                 
                 electrode.userData = { name, ...data };
@@ -1590,7 +1646,7 @@
                     });
                     const ring = new THREE.Mesh(ringGeometry, ringMaterial);
                     ring.position.copy(electrode.position);
-                    ring.lookAt(ring.position.clone().multiplyScalar(2));
+                    ring.lookAt(ring.position.clone().add(dir));
                     headGroup.add(ring);
                 }
             });
@@ -1688,11 +1744,24 @@
 
         container.addEventListener('touchend', () => { isDragging = false; });
 
-        // Animation with 6 Hz oscillation
+        // Animation with slowed oscillation for visualization
         let time = 0;
+        let frozenPhase = 0;
+        
+        // Pause button handler
+        if (pauseBtn) {
+            pauseBtn.addEventListener('click', () => {
+                oscillationPaused = !oscillationPaused;
+                pauseBtn.textContent = oscillationPaused ? '▶ Play' : '❚❚ Pause';
+            });
+        }
+        
         function animate() {
             requestAnimationFrame(animate);
-            time += 0.016; // ~60fps
+            
+            if (!oscillationPaused) {
+                time += 0.016; // ~60fps
+            }
 
             if (autoRotate) {
                 targetRotationY += 0.001;
@@ -1704,9 +1773,11 @@
             headGroup.rotation.y = rotationY;
             headGroup.rotation.x = rotationX;
 
-            // 6 Hz tACS oscillation on cortex colors
+            // Slowed oscillation for visualization (0.5 Hz instead of 6 Hz)
+            const phase = oscillationPaused ? frozenPhase : Math.sin(time * 2 * Math.PI * VIS_FREQ);
+            if (!oscillationPaused) frozenPhase = phase;
+            
             if (cortexMesh && baseColors) {
-                const phase = Math.sin(time * 2 * Math.PI * TACS_FREQ); // -1 to 1
                 const colors = cortexMesh.geometry.attributes.color;
                 
                 for (let i = 0; i < baseColors.length; i += 3) {
@@ -1745,7 +1816,6 @@
             }
 
             // Pulse electrodes with tACS phase
-            const phase = Math.sin(time * 2 * Math.PI * TACS_FREQ);
             electrodeMeshes.forEach(mesh => {
                 if (mesh.userData.type === 'center') {
                     // Center electrode: positive phase = orange glow
