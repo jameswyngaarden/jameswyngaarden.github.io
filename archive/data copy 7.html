@@ -30,10 +30,6 @@
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
-        html {
-            scroll-behavior: smooth;
-        }
-
         body {
             font-family: var(--font-serif);
             line-height: 1.7;
@@ -949,83 +945,6 @@
             .tacs-legend { gap: 16px; }
         }
 
-        /* ── Section Navigation ── */
-        .section-nav {
-            display: flex;
-            justify-content: center;
-            margin: 32px 0 0 0;
-        }
-
-        .section-nav-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            font-family: var(--font-display);
-            font-size: 0.82rem;
-            font-weight: 500;
-            color: var(--color-text-light);
-            background: white;
-            border: 1px solid var(--color-border);
-            padding: 10px 20px;
-            border-radius: 24px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            text-decoration: none;
-        }
-
-        .section-nav-btn:hover {
-            color: var(--color-navy);
-            border-color: var(--color-gold);
-            box-shadow: 0 2px 12px rgba(184, 134, 11, 0.15);
-            transform: translateY(-1px);
-        }
-
-        .section-nav-btn .arrow {
-            font-size: 1rem;
-            transition: transform 0.2s ease;
-        }
-
-        .section-nav-btn:hover .arrow {
-            transform: translateY(2px);
-        }
-
-        /* ── Closing CTA ── */
-        .closing-cta {
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 40px 20px 60px;
-            text-align: center;
-        }
-
-        .closing-cta-text {
-            font-family: var(--font-serif);
-            font-size: 1.05rem;
-            line-height: 1.75;
-            color: var(--color-text);
-            margin-bottom: 20px;
-        }
-
-        .closing-cta-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            font-family: var(--font-display);
-            font-size: 0.9rem;
-            font-weight: 500;
-            color: white;
-            background: var(--color-navy);
-            padding: 12px 24px;
-            border-radius: 6px;
-            text-decoration: none;
-            transition: all 0.2s ease;
-        }
-
-        .closing-cta-link:hover {
-            background: var(--color-navy-light);
-            transform: translateY(-1px);
-            box-shadow: 0 4px 16px rgba(26, 58, 92, 0.25);
-        }
-
         /* ── Placeholder Cards ── */
         .placeholder-card {
             background: linear-gradient(135deg, var(--color-bg-subtle) 0%, white 100%);
@@ -1172,18 +1091,12 @@
                 <p>The core paradigm is <strong>reversal learning</strong>: participants learn which of two options is more rewarding, then the contingencies flip and they must adapt. This deceptively simple task engages prefrontal-striatal circuits critical for flexible decision-making — circuits that show pronounced age-related decline.</p>
 
                 <p>Below, I walk through the behavioral and computational methods used to quantify learning and flexibility, along with the brain stimulation approach we're testing. These interactive explainers are designed to make the methods accessible without requiring prior expertise.</p>
-
-                <div class="section-nav">
-                    <a href="#section-task" class="section-nav-btn">
-                        The Task <span class="arrow">↓</span>
-                    </a>
-                </div>
             </div>
 
             <!-- ════════════════════════════════════════════════════════════ -->
             <!-- TASK STRUCTURE -->
             <!-- ════════════════════════════════════════════════════════════ -->
-            <div class="content-section" id="section-task">
+            <div class="content-section">
                 <h3 class="subsection-header">The Task</h3>
 
                 <p>In the <strong>two-armed bandit</strong> task, you repeatedly choose between two options — here represented as flowers. One flower is "better" — it rewards you 75% of the time, while the other only rewards 25% of the time. Your job is to figure out which is which.</p>
@@ -1266,18 +1179,12 @@
                         </div>
                     </div>
                 </div>
-
-                <div class="section-nav">
-                    <a href="#section-wsls" class="section-nav-btn">
-                        Measuring Behavior <span class="arrow">↓</span>
-                    </a>
-                </div>
             </div>
 
             <!-- ════════════════════════════════════════════════════════════ -->
             <!-- WSLS SECTION -->
             <!-- ════════════════════════════════════════════════════════════ -->
-            <div class="content-section" id="section-wsls">
+            <div class="content-section">
                 <h3 class="subsection-header">Measuring Behavior: Win-Stay, Lose-Shift</h3>
 
                 <p>One simple but powerful way to characterize learning is to ask: <em>How does someone respond to feedback?</em> The <strong>Win-Stay, Lose-Shift</strong> (WSLS) framework breaks this down into two probabilities:</p>
@@ -1318,18 +1225,12 @@
                         </div>
                     </div>
                 </div>
-
-                <div class="section-nav">
-                    <a href="#section-rw" class="section-nav-btn">
-                        Computational Modeling <span class="arrow">↓</span>
-                    </a>
-                </div>
             </div>
 
             <!-- ════════════════════════════════════════════════════════════ -->
             <!-- RESCORLA-WAGNER SECTION -->
             <!-- ════════════════════════════════════════════════════════════ -->
-            <div class="content-section" id="section-rw">
+            <div class="content-section">
                 <h3 class="subsection-header">Computational Modeling: Rescorla-Wagner</h3>
 
                 <p>WSLS captures the immediate response to feedback, but it doesn't tell us <em>how</em> people integrate information over time. For that, we fit <strong>reinforcement learning models</strong> to the trial-by-trial choice data.</p>
@@ -1368,18 +1269,12 @@
                         </div>
                     </div>
                 </div>
-
-                <div class="section-nav">
-                    <a href="#section-tacs" class="section-nav-btn">
-                        Brain Stimulation <span class="arrow">↓</span>
-                    </a>
-                </div>
             </div>
 
             <!-- ════════════════════════════════════════════════════════════ -->
             <!-- tACS SECTION -->
             <!-- ════════════════════════════════════════════════════════════ -->
-            <div class="content-section" id="section-tacs">
+            <div class="content-section">
                 <h3 class="subsection-header">Brain Stimulation: tACS</h3>
 
                 <p><strong>Transcranial alternating current stimulation (tACS)</strong> delivers weak oscillating electrical currents through scalp electrodes, modulating neural oscillations in targeted regions. We apply theta-frequency (6 Hz) stimulation over left dorsolateral prefrontal cortex (DLPFC) — a region critical for cognitive control and flexibility.</p>
@@ -1460,18 +1355,6 @@
                     </div>
                     <div class="placeholder-badge">Coming Soon</div>
                 </div>
-            </div>
-
-            <!-- ════════════════════════════════════════════════════════════ -->
-            <!-- CLOSING CTA -->
-            <!-- ════════════════════════════════════════════════════════════ -->
-            <div class="closing-cta">
-                <p class="closing-cta-text">
-                    Curious how factors like age, reward sensitivity, and cognitive flexibility influence these parameters — and whether tACS can shift them? Our preregistered hypotheses and analysis plan are publicly available.
-                </p>
-                <a href="https://osf.io/s9k64" target="_blank" class="closing-cta-link">
-                    View Preregistration on OSF →
-                </a>
             </div>
 
         </div>
@@ -1771,10 +1654,10 @@
         // Controls
         let isDragging = false;
         let previousMousePosition = { x: 0, y: 0 };
-        let targetRotationY = -0.5; // Start rotated to show left hemisphere (F3 side)
-        let targetRotationX = 0.1; // Slight downward tilt
+        let targetRotationY = 0.4; // Start rotated to show left hemisphere (F3 side)
+        let targetRotationX = 0;
         let rotationY = targetRotationY;
-        let rotationX = targetRotationX;
+        let rotationX = 0;
         let autoRotate = true;
         let zoom = 220;
 
