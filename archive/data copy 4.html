@@ -584,33 +584,18 @@
             align-items: center;
             justify-content: center;
             user-select: none;
-            background: white;
-            border: 3px solid var(--color-border);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-        }
-
-        .bandit-card-img {
-            width: 100%;
-            height: 140px;
-            object-fit: cover;
-        }
-
-        .bandit-card-subtitle {
-            font-family: var(--font-display);
-            font-size: 0.75rem;
-            color: var(--color-text-light);
-            padding: 8px 0;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
         }
 
         .bandit-card.option-left {
-            border-color: var(--color-navy);
+            background: linear-gradient(145deg, #1a3a5c 0%, #2a4f7a 100%);
+            border: 3px solid #1a3a5c;
+            box-shadow: 0 4px 20px rgba(26, 58, 92, 0.3);
         }
 
         .bandit-card.option-right {
-            border-color: var(--color-gold);
+            background: linear-gradient(145deg, #8b6914 0%, #b8860b 100%);
+            border: 3px solid #b8860b;
+            box-shadow: 0 4px 20px rgba(184, 134, 11, 0.3);
         }
 
         .bandit-card:hover:not(.disabled) {
@@ -618,16 +603,33 @@
         }
 
         .bandit-card.option-left:hover:not(.disabled) {
-            box-shadow: 0 8px 30px rgba(26, 58, 92, 0.3);
+            box-shadow: 0 8px 30px rgba(26, 58, 92, 0.4);
         }
 
         .bandit-card.option-right:hover:not(.disabled) {
-            box-shadow: 0 8px 30px rgba(184, 134, 11, 0.3);
+            box-shadow: 0 8px 30px rgba(184, 134, 11, 0.4);
         }
 
         .bandit-card.disabled {
             cursor: default;
             opacity: 0.7;
+        }
+
+        .bandit-card-label {
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .bandit-card-subtitle {
+            font-family: var(--font-display);
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.7);
+            margin-top: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
         }
 
         .bandit-card-feedback {
@@ -908,41 +910,6 @@
             letter-spacing: 0.05em;
         }
 
-        .tacs-footnote {
-            font-family: var(--font-display);
-            font-size: 0.72rem;
-            color: var(--color-text-light);
-            text-align: center;
-            padding: 12px 16px;
-            background: white;
-            border-radius: 6px;
-            border: 1px solid var(--color-border);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 16px;
-            flex-wrap: wrap;
-        }
-
-        .tacs-pause-btn {
-            font-family: var(--font-display);
-            font-size: 0.75rem;
-            font-weight: 500;
-            padding: 6px 14px;
-            background: var(--color-bg-subtle);
-            color: var(--color-navy);
-            border: 1px solid var(--color-border);
-            border-radius: 4px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .tacs-pause-btn:hover {
-            background: var(--color-navy);
-            color: white;
-            border-color: var(--color-navy);
-        }
-
         @media (max-width: 900px) {
             .tacs-viewer { height: 350px; }
             .tacs-params { grid-template-columns: 1fr; }
@@ -1031,8 +998,8 @@
             .rw-controls { flex-direction: column; align-items: center; }
 
             .bandit-cards { gap: 16px; }
-            .bandit-card { width: 110px; height: 160px; }
-            .bandit-card-img { height: 110px; }
+            .bandit-card { width: 110px; height: 150px; }
+            .bandit-card-label { font-size: 2rem; }
             .bandit-status { gap: 20px; }
             .bandit-results-grid { grid-template-columns: 1fr; }
         }
@@ -1104,9 +1071,9 @@
             <div class="content-section">
                 <h3 class="subsection-header">The Task</h3>
 
-                <p>In the <strong>two-armed bandit</strong> task, you repeatedly choose between two options — here represented as flowers. One flower is "better" — it rewards you 75% of the time, while the other only rewards 25% of the time. Your job is to figure out which is which.</p>
+                <p>In the <strong>two-armed bandit</strong> task, you repeatedly choose between two options. One option is "better" — it rewards you 75% of the time, while the other only rewards 25% of the time. Your job is to figure out which is which.</p>
 
-                <p>The twist: partway through, the contingencies <strong>reverse</strong>. The previously good flower becomes bad, and vice versa. Detecting this shift and adapting quickly is the hallmark of cognitive flexibility — and it's exactly what declines with age.</p>
+                <p>The twist: partway through, the contingencies <strong>reverse</strong>. The previously good option becomes bad, and vice versa. Detecting this shift and adapting quickly is the hallmark of cognitive flexibility — and it's exactly what declines with age.</p>
 
                 <p>Try it yourself below. You'll play 30 trials with one reversal midway through.</p>
 
@@ -1130,23 +1097,23 @@
                             </div>
                         </div>
 
-                        <!-- Flowers -->
+                        <!-- Cards -->
                         <div class="bandit-cards">
                             <div class="bandit-card option-left" id="cardLeft" data-choice="left">
-                                <img src="stimuli/022-flowers.png" alt="Blue Flower" class="bandit-card-img">
-                                <div class="bandit-card-subtitle">Flower A</div>
+                                <div class="bandit-card-label">◆</div>
+                                <div class="bandit-card-subtitle">Left</div>
                                 <div class="bandit-card-feedback" id="feedbackLeft"></div>
                             </div>
                             <div class="bandit-card option-right" id="cardRight" data-choice="right">
-                                <img src="stimuli/032-flowers.png" alt="Orange Flower" class="bandit-card-img">
-                                <div class="bandit-card-subtitle">Flower B</div>
+                                <div class="bandit-card-label">◆</div>
+                                <div class="bandit-card-subtitle">Right</div>
                                 <div class="bandit-card-feedback" id="feedbackRight"></div>
                             </div>
                         </div>
 
                         <!-- Message -->
                         <div class="bandit-message" id="banditMessage">
-                            Click a flower to begin. Try to learn which one is better!
+                            Click a card to begin. Try to learn which option is better!
                         </div>
 
                         <!-- History dots -->
@@ -1194,8 +1161,8 @@
 
                 <p>One simple but powerful way to characterize learning is to ask: <em>How does someone respond to feedback?</em> The <strong>Win-Stay, Lose-Shift</strong> (WSLS) framework breaks this down into two probabilities:</p>
 
-                <p><strong>p(stay | win)</strong> — After a rewarded choice, how often does the person pick the same flower again?<br>
-                <strong>p(shift | lose)</strong> — After an unrewarded choice, how often do they switch to the other flower?</p>
+                <p><strong>p(stay | win)</strong> — After a rewarded choice, how often does the person repeat that choice?<br>
+                <strong>p(shift | lose)</strong> — After an unrewarded choice, how often do they switch to the other option?</p>
 
                 <p>Higher values indicate more feedback-driven behavior. Someone with high p(stay|win) exploits what works; someone with high p(shift|lose) quickly abandons what doesn't. Use the demo below to see how these metrics are calculated from a trial sequence.</p>
 
@@ -1324,7 +1291,7 @@
                         <!-- Parameters -->
                         <div class="tacs-params">
                             <div class="tacs-param">
-                                <div class="tacs-param-value">6 Hz*</div>
+                                <div class="tacs-param-value">6 Hz</div>
                                 <div class="tacs-param-label">Frequency (θ)</div>
                             </div>
                             <div class="tacs-param">
@@ -1335,10 +1302,6 @@
                                 <div class="tacs-param-value">F3</div>
                                 <div class="tacs-param-label">Target Site</div>
                             </div>
-                        </div>
-                        <div class="tacs-footnote">
-                            *Oscillation slowed for visualization. Actual stimulation cycles 6× per second.
-                            <button class="tacs-pause-btn" id="tacsPauseBtn">❚❚ Pause</button>
                         </div>
                     </div>
                 </div>
@@ -1372,20 +1335,18 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script>
     // ═══════════════════════════════════════════════════════════════════════
-    // tACS 3D VISUALIZATION (SimNIBS-based with slowed oscillation for display)
+    // tACS 3D VISUALIZATION (SimNIBS-based with 6 Hz oscillation)
     // ═══════════════════════════════════════════════════════════════════════
     (function() {
         const container = document.getElementById('tacsViewer');
         const tooltip = document.getElementById('tacsTooltip');
         const tooltipTitle = tooltip.querySelector('.tacs-tooltip-title');
         const tooltipDesc = tooltip.querySelector('.tacs-tooltip-desc');
-        const pauseBtn = document.getElementById('tacsPauseBtn');
 
         if (!container) return;
 
-        // Visualization frequency (slowed for display; actual is 6 Hz)
-        const VIS_FREQ = 0.5; // Hz - 2 second cycle
-        let oscillationPaused = false;
+        // Stimulation parameters
+        const TACS_FREQ = 6; // Hz (theta)
 
         // Scene setup
         const scene = new THREE.Scene();
@@ -1450,10 +1411,6 @@
         let baseColors = null; // Store original E-field colors
         let meshCenter = new THREE.Vector3();
         let meshScale = 1;
-        
-        // Store cortex rotation for electrode alignment
-        let cortexRotationX = 0;
-        let cortexRotationZ = 0;
 
         // PLY Loader
         function parsePLY(text) {
@@ -1556,12 +1513,9 @@
                 cortexMesh.scale.set(meshScale, meshScale, meshScale);
                 
                 // Rotate to face viewer (Y is up in SimNIBS, but mesh faces "up")
-                // Store rotation values for electrode alignment
-                cortexRotationX = -Math.PI / 2;
-                cortexRotationZ = Math.PI; // Face forward
-                
-                cortexMesh.rotation.x = cortexRotationX;
-                cortexMesh.rotation.z = cortexRotationZ;
+                // Rotate around X to tilt face toward camera
+                cortexMesh.rotation.x = -Math.PI / 2;
+                cortexMesh.rotation.z = Math.PI; // Face forward
                 
                 headGroup.add(cortexMesh);
                 
@@ -1606,29 +1560,21 @@
                 
                 const electrode = new THREE.Mesh(geometry, material);
                 
-                // Transform position: subtract center, scale
+                // Transform position: subtract center, scale, then apply same rotation as cortex
                 let pos = new THREE.Vector3(...data.position);
                 pos.sub(meshCenter);
                 pos.multiplyScalar(meshScale);
                 
-                // Apply the same rotations as cortex mesh (X then Z)
-                // Create rotation matrix matching cortex
-                const rotMatrix = new THREE.Matrix4();
-                rotMatrix.makeRotationX(cortexRotationX);
-                const rotMatrixZ = new THREE.Matrix4();
-                rotMatrixZ.makeRotationZ(cortexRotationZ);
-                rotMatrix.multiply(rotMatrixZ);
+                // Apply the same rotation as cortex mesh
+                pos.applyAxisAngle(new THREE.Vector3(1, 0, 0), -Math.PI / 2);
+                pos.applyAxisAngle(new THREE.Vector3(0, 0, 1), Math.PI);
                 
-                pos.applyMatrix4(rotMatrix);
-                
-                // Push slightly outward from center
+                // Push slightly outward
                 const dir = pos.clone().normalize();
-                pos.add(dir.multiplyScalar(8));
+                pos.add(dir.multiplyScalar(5));
                 
                 electrode.position.copy(pos);
-                
-                // Orient electrode to face outward
-                electrode.lookAt(pos.clone().add(dir));
+                electrode.lookAt(pos.clone().multiplyScalar(2));
                 electrode.rotateX(Math.PI / 2);
                 
                 electrode.userData = { name, ...data };
@@ -1646,7 +1592,7 @@
                     });
                     const ring = new THREE.Mesh(ringGeometry, ringMaterial);
                     ring.position.copy(electrode.position);
-                    ring.lookAt(ring.position.clone().add(dir));
+                    ring.lookAt(ring.position.clone().multiplyScalar(2));
                     headGroup.add(ring);
                 }
             });
@@ -1744,24 +1690,11 @@
 
         container.addEventListener('touchend', () => { isDragging = false; });
 
-        // Animation with slowed oscillation for visualization
+        // Animation with 6 Hz oscillation
         let time = 0;
-        let frozenPhase = 0;
-        
-        // Pause button handler
-        if (pauseBtn) {
-            pauseBtn.addEventListener('click', () => {
-                oscillationPaused = !oscillationPaused;
-                pauseBtn.textContent = oscillationPaused ? '▶ Play' : '❚❚ Pause';
-            });
-        }
-        
         function animate() {
             requestAnimationFrame(animate);
-            
-            if (!oscillationPaused) {
-                time += 0.016; // ~60fps
-            }
+            time += 0.016; // ~60fps
 
             if (autoRotate) {
                 targetRotationY += 0.001;
@@ -1773,11 +1706,9 @@
             headGroup.rotation.y = rotationY;
             headGroup.rotation.x = rotationX;
 
-            // Slowed oscillation for visualization (0.5 Hz instead of 6 Hz)
-            const phase = oscillationPaused ? frozenPhase : Math.sin(time * 2 * Math.PI * VIS_FREQ);
-            if (!oscillationPaused) frozenPhase = phase;
-            
+            // 6 Hz tACS oscillation on cortex colors
             if (cortexMesh && baseColors) {
+                const phase = Math.sin(time * 2 * Math.PI * TACS_FREQ); // -1 to 1
                 const colors = cortexMesh.geometry.attributes.color;
                 
                 for (let i = 0; i < baseColors.length; i += 3) {
@@ -1816,6 +1747,7 @@
             }
 
             // Pulse electrodes with tACS phase
+            const phase = Math.sin(time * 2 * Math.PI * TACS_FREQ);
             electrodeMeshes.forEach(mesh => {
                 if (mesh.userData.type === 'center') {
                     // Center electrode: positive phase = orange glow
@@ -2180,7 +2112,7 @@
                 if (currentStep < trials.length - 1) {
                     const behaviorText = t.behavior === 'stay' ? 'stayed with' : 'shifted away from';
                     const outcomeText = t.outcome === 'win' ? 'After winning' : 'After losing';
-                    explanationEl.innerHTML = `<strong>Trial ${t.trial}:</strong> ${outcomeText} on flower ${t.choice}, the participant <strong>${behaviorText}</strong> flower ${t.choice}. 
+                    explanationEl.innerHTML = `<strong>Trial ${t.trial}:</strong> ${outcomeText} on option ${t.choice}, the participant <strong>${behaviorText}</strong> option ${t.choice}. 
                         <br><em>Running totals:</em> ${wsls.staysAfterWin}/${wsls.wins} stays after wins, ${wsls.shiftsAfterLoss}/${wsls.losses} shifts after losses.`;
                 } else {
                     explanationEl.innerHTML = `<strong>Complete!</strong> Final metrics: p(stay|win) = ${wsls.pStayWin}, p(shift|lose) = ${wsls.pShiftLose}. 
