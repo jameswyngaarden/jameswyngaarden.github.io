@@ -1,0 +1,1183 @@
+<!DOCTYPE html>
+<html lang="en">
+<script data-goatcounter="https://jameswyngaarden.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<link rel="icon" type="image/png" href="stimuli/favicon.png">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data - James B. Wyngaarden III</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,500;1,8..60,400&family=Sora:wght@300;400;500;600;700&display=swap');
+
+        :root {
+            --color-text: #1e2d3d;
+            --color-text-light: #5a6a78;
+            --color-navy: #1a3a5c;
+            --color-navy-light: #2a4f7a;
+            --color-gold: #b8860b;
+            --color-gold-muted: #c4973b;
+            --color-gold-subtle: rgba(184, 134, 11, 0.12);
+            --color-bg: #ffffff;
+            --color-bg-subtle: #f7f8f9;
+            --color-border: #dfe3e7;
+            --color-win: #2e7d32;
+            --color-win-bg: rgba(46, 125, 50, 0.08);
+            --color-lose: #c62828;
+            --color-lose-bg: rgba(198, 40, 40, 0.08);
+            --font-serif: 'Source Serif 4', 'Georgia', serif;
+            --font-display: 'Sora', 'Helvetica Neue', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: var(--font-serif);
+            line-height: 1.7;
+            color: var(--color-text);
+            background: var(--color-bg);
+            min-height: 100vh;
+            font-size: 16px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 40px 30px;
+            display: flex;
+            gap: 50px;
+        }
+
+        /* ── Sidebar ── */
+        .sidebar {
+            width: 240px;
+            flex-shrink: 0;
+            position: sticky;
+            top: 40px;
+            height: fit-content;
+        }
+
+        .sidebar-profile { padding: 0; text-align: center; }
+
+        .sidebar-profile-img {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            margin: 0 auto 24px;
+            background-image: url('stimuli/headshot.jpg');
+            background-size: cover;
+            background-position: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .sidebar-name {
+            font-family: var(--font-display);
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--color-navy);
+            margin-bottom: 4px;
+        }
+
+        .sidebar-title {
+            font-family: var(--font-display);
+            font-size: 0.82rem;
+            color: var(--color-text-light);
+            margin-bottom: 28px;
+            font-weight: 400;
+        }
+
+        .sidebar-links { display: flex; flex-direction: column; gap: 2px; }
+
+        .sidebar-link {
+            display: flex;
+            align-items: center;
+            padding: 9px 12px;
+            color: var(--color-text);
+            text-decoration: none;
+            transition: all 0.2s ease;
+            font-family: var(--font-display);
+            font-size: 0.85rem;
+            font-weight: 400;
+            gap: 10px;
+            border-radius: 6px;
+        }
+
+        .sidebar-link img {
+            width: 18px;
+            height: 18px;
+            object-fit: contain;
+            opacity: 0.55;
+            transition: opacity 0.2s ease;
+        }
+
+        .sidebar-link:hover { background: var(--color-bg-subtle); color: var(--color-navy); }
+        .sidebar-link:hover img { opacity: 0.85; }
+
+        /* ── Main Content ── */
+        .main-content { flex-grow: 1; min-width: 0; }
+
+        /* ── Header ── */
+        header {
+            padding: 0 0 28px 0;
+            margin-bottom: 0;
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 30px;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .header-center { flex-grow: 1; }
+
+        h1 {
+            font-family: var(--font-display);
+            font-size: 1.9rem;
+            margin-bottom: 5px;
+            color: var(--color-navy);
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            white-space: nowrap;
+        }
+
+        .subtitle {
+            font-family: var(--font-display);
+            font-size: 0.88rem;
+            color: var(--color-text-light);
+            font-weight: 300;
+            letter-spacing: 0.03em;
+        }
+
+        /* ── Navigation ── */
+        .nav { display: flex; gap: 32px; flex-shrink: 0; align-items: baseline; }
+
+        .nav-link {
+            font-family: var(--font-display);
+            font-size: 0.88rem;
+            font-weight: 400;
+            color: var(--color-text-light);
+            text-decoration: none;
+            padding-bottom: 4px;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s ease;
+        }
+
+        .nav-link:hover { color: var(--color-navy); border-bottom-color: var(--color-border); }
+        .nav-link.active { color: var(--color-navy); border-bottom-color: var(--color-gold); font-weight: 500; }
+
+        /* ── Section Headers ── */
+        .section-header {
+            padding: 10px 0;
+            text-align: center;
+            margin: 40px 0 0 0;
+            position: relative;
+            background: var(--color-bg);
+        }
+
+        .section-header h2 {
+            font-family: var(--font-display);
+            font-size: 4.5rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1;
+            background-image: url('stimuli/schuylkill_river_trail.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+        }
+
+        .section-header::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 2px;
+            background: var(--color-gold);
+            margin: 24px auto 0;
+        }
+
+        /* ── Sub-section Headers ── */
+        .subsection-header {
+            font-family: var(--font-display);
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--color-navy);
+            margin: 48px 0 20px 0;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--color-gold);
+            display: inline-block;
+        }
+
+        /* ── Content Sections ── */
+        .content-section {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 44px 20px;
+        }
+
+        .content-section p {
+            font-size: 1.02rem;
+            line-height: 1.85;
+            margin-bottom: 20px;
+            color: var(--color-text);
+        }
+
+        .content-section a {
+            color: var(--color-navy);
+            text-decoration: none;
+            border-bottom: 1px solid var(--color-gold-muted);
+            transition: border-color 0.2s ease;
+        }
+
+        .content-section a:hover { border-bottom-color: var(--color-navy); }
+
+        /* ── Interactive Demo Containers ── */
+        .demo-container {
+            background: var(--color-bg-subtle);
+            border: 1px solid var(--color-border);
+            border-radius: 8px;
+            padding: 32px;
+            margin: 28px 0;
+        }
+
+        .demo-title {
+            font-family: var(--font-display);
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--color-navy);
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* ── WSLS Interactive ── */
+        .wsls-demo {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .trial-history {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .trial-card {
+            width: 72px;
+            background: white;
+            border: 1px solid var(--color-border);
+            border-radius: 6px;
+            padding: 10px 8px;
+            text-align: center;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .trial-card.highlight {
+            border-color: var(--color-gold);
+            box-shadow: 0 0 0 2px var(--color-gold-subtle);
+        }
+
+        .trial-number {
+            font-family: var(--font-display);
+            font-size: 0.65rem;
+            color: var(--color-text-light);
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .trial-choice {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .trial-choice.option-a { color: var(--color-navy); }
+        .trial-choice.option-b { color: var(--color-gold); }
+
+        .trial-outcome {
+            font-family: var(--font-display);
+            font-size: 0.72rem;
+            font-weight: 500;
+            padding: 2px 8px;
+            border-radius: 3px;
+        }
+
+        .trial-outcome.win {
+            background: var(--color-win-bg);
+            color: var(--color-win);
+        }
+
+        .trial-outcome.lose {
+            background: var(--color-lose-bg);
+            color: var(--color-lose);
+        }
+
+        .trial-behavior {
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: var(--font-display);
+            font-size: 0.62rem;
+            font-weight: 600;
+            white-space: nowrap;
+            padding: 2px 6px;
+            border-radius: 3px;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+
+        .trial-card.show-behavior .trial-behavior {
+            opacity: 1;
+        }
+
+        .trial-behavior.stay { background: #e3f2fd; color: #1565c0; }
+        .trial-behavior.shift { background: #fff3e0; color: #e65100; }
+
+        .wsls-metrics {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            padding: 20px;
+            background: white;
+            border-radius: 6px;
+            border: 1px solid var(--color-border);
+        }
+
+        .metric-box {
+            text-align: center;
+        }
+
+        .metric-label {
+            font-family: var(--font-display);
+            font-size: 0.75rem;
+            color: var(--color-text-light);
+            margin-bottom: 6px;
+        }
+
+        .metric-value {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--color-navy);
+        }
+
+        .metric-formula {
+            font-family: var(--font-display);
+            font-size: 0.68rem;
+            color: var(--color-text-light);
+            margin-top: 4px;
+        }
+
+        .wsls-controls {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .wsls-btn {
+            font-family: var(--font-display);
+            font-size: 0.85rem;
+            font-weight: 500;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .wsls-btn.primary {
+            background: var(--color-navy);
+            color: white;
+        }
+
+        .wsls-btn.primary:hover {
+            background: var(--color-navy-light);
+        }
+
+        .wsls-btn.secondary {
+            background: white;
+            color: var(--color-navy);
+            border: 1px solid var(--color-border);
+        }
+
+        .wsls-btn.secondary:hover {
+            border-color: var(--color-navy);
+        }
+
+        .wsls-explanation {
+            font-family: var(--font-serif);
+            font-size: 0.92rem;
+            line-height: 1.7;
+            color: var(--color-text);
+            text-align: center;
+            padding: 16px;
+            background: white;
+            border-radius: 6px;
+            border-left: 3px solid var(--color-gold);
+        }
+
+        /* ── R-W Interactive ── */
+        .rw-demo {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .rw-controls {
+            display: flex;
+            gap: 40px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .rw-slider-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            min-width: 200px;
+        }
+
+        .rw-slider-label {
+            font-family: var(--font-display);
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--color-navy);
+        }
+
+        .rw-slider-value {
+            font-family: var(--font-display);
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--color-gold);
+        }
+
+        .rw-slider {
+            width: 100%;
+            -webkit-appearance: none;
+            height: 6px;
+            border-radius: 3px;
+            background: var(--color-border);
+            outline: none;
+        }
+
+        .rw-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--color-navy);
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .rw-slider::-webkit-slider-thumb:hover {
+            background: var(--color-navy-light);
+        }
+
+        .rw-slider-desc {
+            font-family: var(--font-display);
+            font-size: 0.72rem;
+            color: var(--color-text-light);
+            text-align: center;
+            max-width: 180px;
+        }
+
+        .rw-chart-container {
+            background: white;
+            border: 1px solid var(--color-border);
+            border-radius: 6px;
+            padding: 20px;
+            min-height: 300px;
+        }
+
+        .rw-chart {
+            width: 100%;
+            height: 260px;
+        }
+
+        .rw-equation {
+            font-family: var(--font-display);
+            font-size: 0.9rem;
+            color: var(--color-text);
+            text-align: center;
+            padding: 16px;
+            background: white;
+            border-radius: 6px;
+            border: 1px solid var(--color-border);
+        }
+
+        .rw-equation code {
+            font-family: 'SF Mono', 'Consolas', monospace;
+            background: var(--color-bg-subtle);
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 0.85rem;
+        }
+
+        /* ── Placeholder Cards ── */
+        .placeholder-card {
+            background: linear-gradient(135deg, var(--color-bg-subtle) 0%, white 100%);
+            border: 1px dashed var(--color-border);
+            border-radius: 8px;
+            padding: 48px 32px;
+            text-align: center;
+            margin: 28px 0;
+        }
+
+        .placeholder-icon {
+            font-size: 2.5rem;
+            margin-bottom: 16px;
+            opacity: 0.6;
+        }
+
+        .placeholder-title {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--color-navy);
+            margin-bottom: 8px;
+        }
+
+        .placeholder-desc {
+            font-family: var(--font-serif);
+            font-size: 0.95rem;
+            color: var(--color-text-light);
+            max-width: 500px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .placeholder-badge {
+            display: inline-block;
+            font-family: var(--font-display);
+            font-size: 0.68rem;
+            font-weight: 600;
+            color: var(--color-text-light);
+            background: var(--color-bg-subtle);
+            border: 1px solid var(--color-border);
+            padding: 4px 12px;
+            border-radius: 12px;
+            margin-top: 16px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 900px) {
+            .container {
+                flex-direction: column;
+                padding: 20px 16px;
+                gap: 30px;
+            }
+
+            .sidebar { width: 100%; position: relative; top: 0; }
+            .sidebar-links { flex-direction: row; flex-wrap: wrap; justify-content: center; gap: 4px; }
+
+            header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 16px;
+                padding-bottom: 24px;
+            }
+
+            .nav { gap: 24px; }
+            h1 { font-size: 1.5rem; white-space: normal; }
+
+            .section-header { padding: 36px 0; margin: 28px 0 0 0; }
+            .section-header h2 { font-size: 2.8rem; background-attachment: scroll; }
+
+            .content-section { padding: 30px 8px; }
+            .demo-container { padding: 20px 16px; }
+
+            .trial-card { width: 60px; padding: 8px 6px; }
+            .trial-choice { font-size: 0.95rem; }
+
+            .wsls-metrics { flex-direction: column; gap: 20px; }
+            .rw-controls { flex-direction: column; align-items: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <aside class="sidebar">
+            <div class="sidebar-profile">
+                <div class="sidebar-profile-img"></div>
+                <div class="sidebar-name">Jimmy Wyngaarden</div>
+                <div class="sidebar-title">PhD Candidate</div>
+                <div class="sidebar-links">
+                    <a href="mailto:james.wyngaarden@temple.edu" class="sidebar-link">
+                        <img src="stimuli/logos/Email.png" alt="">Email
+                    </a>
+                    <a href="https://www.linkedin.com/in/james-wyngaarden-iii" target="_blank" class="sidebar-link">
+                        <img src="stimuli/logos/Linkedin.png" alt="">LinkedIn
+                    </a>
+                    <a href="https://bsky.app/profile/jameswyngaarden.bsky.social" target="_blank" class="sidebar-link">
+                        <img src="stimuli/logos/Bluesky.png" alt="">Bluesky
+                    </a>
+                    <a href="https://github.com/jameswyngaarden" target="_blank" class="sidebar-link">
+                        <img src="stimuli/logos/Github.png" alt="">GitHub
+                    </a>
+                    <a href="https://scholar.google.com/citations?user=84faR-sAAAAJ&hl=en" target="_blank" class="sidebar-link">
+                        <img src="stimuli/logos/Google-Scholar.png" alt="">Google Scholar
+                    </a>
+                    <a href="https://orcid.org/0000-0002-0858-8721" target="_blank" class="sidebar-link">
+                        <img src="stimuli/logos/Orcid.png" alt="">ORCID
+                    </a>
+                </div>
+            </div>
+        </aside>
+
+        <div class="main-content">
+            <header>
+                <div class="header-center">
+                    <h1>James B. Wyngaarden III</h1>
+                    <p class="subtitle">Neuroeconomics &ensp;·&ensp; Reward Processing &ensp;·&ensp; Decision Making</p>
+                </div>
+                <nav class="nav">
+                    <a href="index.html" class="nav-link">About</a>
+                    <a href="data.html" class="nav-link active">Data</a>
+                    <a href="publications.html" class="nav-link">Publications</a>
+                    <a href="art.html" class="nav-link">Art</a>
+                </nav>
+            </header>
+
+            <!-- ════════════════════════════════════════════════════════════ -->
+            <!-- INTRO SECTION -->
+            <!-- ════════════════════════════════════════════════════════════ -->
+            <div class="section-header">
+                <h2>Dissertation</h2>
+            </div>
+
+            <div class="content-section">
+                <p>My dissertation, funded by an <a href="https://reporter.nih.gov/search/sS498jkSfUCBuRmKI-9XjA/project-details/10899057" target="_blank">NIH F31 fellowship</a> from the National Institute on Aging, investigates how cognitive flexibility declines with age — and whether noninvasive brain stimulation can help restore it.</p>
+
+                <p>The core paradigm is <strong>reversal learning</strong>: participants learn which of two options is more rewarding, then the contingencies flip and they must adapt. This deceptively simple task engages prefrontal-striatal circuits critical for flexible decision-making — circuits that show pronounced age-related decline.</p>
+
+                <p>Below, I walk through the behavioral and computational methods used to quantify learning and flexibility, along with the brain stimulation approach we're testing. These interactive explainers are designed to make the methods accessible without requiring prior expertise.</p>
+            </div>
+
+            <!-- ════════════════════════════════════════════════════════════ -->
+            <!-- TASK STRUCTURE -->
+            <!-- ════════════════════════════════════════════════════════════ -->
+            <div class="content-section">
+                <h3 class="subsection-header">The Task</h3>
+
+                <div class="placeholder-card">
+                    <div class="placeholder-icon">🎴</div>
+                    <div class="placeholder-title">Two-Armed Bandit with Reversals</div>
+                    <div class="placeholder-desc">
+                        An interactive demo where you can play the reversal learning task yourself. Choose between two options, learn which is better, and adapt when the contingencies reverse.
+                    </div>
+                    <div class="placeholder-badge">Coming Soon</div>
+                </div>
+            </div>
+
+            <!-- ════════════════════════════════════════════════════════════ -->
+            <!-- WSLS SECTION -->
+            <!-- ════════════════════════════════════════════════════════════ -->
+            <div class="content-section">
+                <h3 class="subsection-header">Measuring Behavior: Win-Stay, Lose-Shift</h3>
+
+                <p>One simple but powerful way to characterize learning is to ask: <em>How does someone respond to feedback?</em> The <strong>Win-Stay, Lose-Shift</strong> (WSLS) framework breaks this down into two probabilities:</p>
+
+                <p><strong>p(stay | win)</strong> — After a rewarded choice, how often does the person repeat that choice?<br>
+                <strong>p(shift | lose)</strong> — After an unrewarded choice, how often do they switch to the other option?</p>
+
+                <p>Higher values indicate more feedback-driven behavior. Someone with high p(stay|win) exploits what works; someone with high p(shift|lose) quickly abandons what doesn't. Use the demo below to see how these metrics are calculated from a trial sequence.</p>
+
+                <div class="demo-container">
+                    <div class="demo-title">Interactive WSLS Calculator</div>
+                    
+                    <div class="wsls-demo">
+                        <div class="trial-history" id="trialHistory">
+                            <!-- Trials will be generated by JS -->
+                        </div>
+
+                        <div class="wsls-metrics">
+                            <div class="metric-box">
+                                <div class="metric-label">p(stay | win)</div>
+                                <div class="metric-value" id="pStayWin">—</div>
+                                <div class="metric-formula">stayed after win / total wins</div>
+                            </div>
+                            <div class="metric-box">
+                                <div class="metric-label">p(shift | lose)</div>
+                                <div class="metric-value" id="pShiftLose">—</div>
+                                <div class="metric-formula">shifted after loss / total losses</div>
+                            </div>
+                        </div>
+
+                        <div class="wsls-explanation" id="wslsExplanation">
+                            Click <strong>Step Through</strong> to see how each trial contributes to the WSLS metrics, or <strong>New Sequence</strong> to generate a different trial history.
+                        </div>
+
+                        <div class="wsls-controls">
+                            <button class="wsls-btn primary" id="stepBtn">Step Through</button>
+                            <button class="wsls-btn secondary" id="resetBtn">New Sequence</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ════════════════════════════════════════════════════════════ -->
+            <!-- RESCORLA-WAGNER SECTION -->
+            <!-- ════════════════════════════════════════════════════════════ -->
+            <div class="content-section">
+                <h3 class="subsection-header">Computational Modeling: Rescorla-Wagner</h3>
+
+                <p>WSLS captures the immediate response to feedback, but it doesn't tell us <em>how</em> people integrate information over time. For that, we fit <strong>reinforcement learning models</strong> to the trial-by-trial choice data.</p>
+
+                <p>The <strong>Rescorla-Wagner</strong> model tracks an internal estimate of each option's value (Q), updating it after every outcome. Two parameters control learning:</p>
+
+                <p><strong>α (learning rate)</strong> — How much weight is given to the most recent outcome? High α means fast learning but high volatility; low α means slow, stable learning.<br>
+                <strong>β (inverse temperature)</strong> — How deterministically does the person exploit learned values? High β means choices closely track value estimates; low β means more random exploration.</p>
+
+                <div class="demo-container">
+                    <div class="demo-title">Interactive R-W Parameter Explorer</div>
+                    
+                    <div class="rw-demo">
+                        <div class="rw-controls">
+                            <div class="rw-slider-group">
+                                <div class="rw-slider-label">Learning Rate (α)</div>
+                                <div class="rw-slider-value" id="alphaValue">0.30</div>
+                                <input type="range" class="rw-slider" id="alphaSlider" min="0.01" max="0.99" step="0.01" value="0.30">
+                                <div class="rw-slider-desc">Higher = faster learning, more volatile</div>
+                            </div>
+                            <div class="rw-slider-group">
+                                <div class="rw-slider-label">Inverse Temperature (β)</div>
+                                <div class="rw-slider-value" id="betaValue">5.0</div>
+                                <input type="range" class="rw-slider" id="betaSlider" min="0.5" max="20" step="0.5" value="5">
+                                <div class="rw-slider-desc">Higher = more exploitation</div>
+                            </div>
+                        </div>
+
+                        <div class="rw-chart-container">
+                            <canvas id="rwChart" class="rw-chart"></canvas>
+                        </div>
+
+                        <div class="rw-equation">
+                            <strong>Update rule:</strong> <code>Q(t+1) = Q(t) + α × (reward − Q(t))</code><br>
+                            <strong>Choice rule:</strong> <code>p(A) = exp(β × Q_A) / [exp(β × Q_A) + exp(β × Q_B)]</code>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ════════════════════════════════════════════════════════════ -->
+            <!-- tACS SECTION -->
+            <!-- ════════════════════════════════════════════════════════════ -->
+            <div class="content-section">
+                <h3 class="subsection-header">Brain Stimulation: tACS</h3>
+
+                <p><strong>Transcranial alternating current stimulation (tACS)</strong> delivers weak oscillating electrical currents through scalp electrodes, modulating neural oscillations in targeted regions. We apply theta-frequency (6 Hz) stimulation over left dorsolateral prefrontal cortex (DLPFC) — a region critical for cognitive control and flexibility.</p>
+
+                <p>The logic: if age-related reversal learning deficits stem from weakened prefrontal function, then boosting prefrontal oscillations during the task might improve performance.</p>
+
+                <div class="placeholder-card">
+                    <div class="placeholder-icon">🧠</div>
+                    <div class="placeholder-title">3D tACS Montage Visualization</div>
+                    <div class="placeholder-desc">
+                        A rotatable 3D head model showing electrode placement (F3, Fp1, FCz, FT7) and the estimated current flow targeting left DLPFC.
+                    </div>
+                    <div class="placeholder-badge">Coming Soon</div>
+                </div>
+            </div>
+
+            <!-- ════════════════════════════════════════════════════════════ -->
+            <!-- CORTICAL THICKNESS SECTION -->
+            <!-- ════════════════════════════════════════════════════════════ -->
+            <div class="content-section">
+                <h3 class="subsection-header">Structural Imaging: Cortical Thickness</h3>
+
+                <p>Reversal learning depends on prefrontal cortex integrity, and prefrontal regions show disproportionate age-related thinning. Using FreeSurfer, we quantify cortical thickness from T1-weighted MRI scans to examine how structural decline relates to behavioral flexibility.</p>
+
+                <div class="placeholder-card">
+                    <div class="placeholder-icon">📊</div>
+                    <div class="placeholder-title">Age × Cortical Thickness</div>
+                    <div class="placeholder-desc">
+                        Interactive visualization of regional cortical thickness across the lifespan, with focus on DLPFC and orbitofrontal regions implicated in reversal learning.
+                    </div>
+                    <div class="placeholder-badge">Coming Soon</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ════════════════════════════════════════════════════════════════════ -->
+    <!-- SCRIPTS -->
+    <!-- ════════════════════════════════════════════════════════════════════ -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+    // ═══════════════════════════════════════════════════════════════════════
+    // WSLS INTERACTIVE
+    // ═══════════════════════════════════════════════════════════════════════
+    (function() {
+        const trialHistoryEl = document.getElementById('trialHistory');
+        const pStayWinEl = document.getElementById('pStayWin');
+        const pShiftLoseEl = document.getElementById('pShiftLose');
+        const explanationEl = document.getElementById('wslsExplanation');
+        const stepBtn = document.getElementById('stepBtn');
+        const resetBtn = document.getElementById('resetBtn');
+
+        let trials = [];
+        let currentStep = -1;
+
+        function generateTrials(n = 8) {
+            const t = [];
+            let prevChoice = Math.random() < 0.5 ? 'A' : 'B';
+            
+            for (let i = 0; i < n; i++) {
+                // Determine choice (biased toward WSLS-ish behavior for demonstration)
+                let choice;
+                if (i === 0) {
+                    choice = prevChoice;
+                } else {
+                    const prevOutcome = t[i-1].outcome;
+                    if (prevOutcome === 'win') {
+                        // 70% chance to stay after win
+                        choice = Math.random() < 0.7 ? t[i-1].choice : (t[i-1].choice === 'A' ? 'B' : 'A');
+                    } else {
+                        // 60% chance to shift after loss
+                        choice = Math.random() < 0.6 ? (t[i-1].choice === 'A' ? 'B' : 'A') : t[i-1].choice;
+                    }
+                }
+                
+                // Outcome (Option A is better: 75% win)
+                const winProb = choice === 'A' ? 0.75 : 0.25;
+                const outcome = Math.random() < winProb ? 'win' : 'lose';
+                
+                t.push({ trial: i + 1, choice, outcome });
+                prevChoice = choice;
+            }
+            
+            // Add behavior labels (computed from next trial)
+            for (let i = 0; i < t.length - 1; i++) {
+                const current = t[i];
+                const next = t[i + 1];
+                current.behavior = next.choice === current.choice ? 'stay' : 'shift';
+            }
+            t[t.length - 1].behavior = null; // Last trial has no next
+            
+            return t;
+        }
+
+        function renderTrials() {
+            trialHistoryEl.innerHTML = trials.map((t, i) => `
+                <div class="trial-card" data-index="${i}">
+                    <div class="trial-number">Trial ${t.trial}</div>
+                    <div class="trial-choice option-${t.choice.toLowerCase()}">${t.choice}</div>
+                    <div class="trial-outcome ${t.outcome}">${t.outcome === 'win' ? '+$' : '−'}</div>
+                    ${t.behavior ? `<div class="trial-behavior ${t.behavior}">${t.behavior}</div>` : ''}
+                </div>
+            `).join('');
+        }
+
+        function calculateWSLS(upToIndex) {
+            let wins = 0, staysAfterWin = 0;
+            let losses = 0, shiftsAfterLoss = 0;
+            
+            for (let i = 0; i <= upToIndex && i < trials.length - 1; i++) {
+                const t = trials[i];
+                if (t.outcome === 'win') {
+                    wins++;
+                    if (t.behavior === 'stay') staysAfterWin++;
+                } else {
+                    losses++;
+                    if (t.behavior === 'shift') shiftsAfterLoss++;
+                }
+            }
+            
+            return {
+                pStayWin: wins > 0 ? (staysAfterWin / wins).toFixed(2) : '—',
+                pShiftLose: losses > 0 ? (shiftsAfterLoss / losses).toFixed(2) : '—',
+                wins, staysAfterWin, losses, shiftsAfterLoss
+            };
+        }
+
+        function updateDisplay() {
+            const cards = trialHistoryEl.querySelectorAll('.trial-card');
+            
+            cards.forEach((card, i) => {
+                card.classList.remove('highlight', 'show-behavior');
+                if (i <= currentStep) {
+                    card.classList.add('show-behavior');
+                }
+                if (i === currentStep) {
+                    card.classList.add('highlight');
+                }
+            });
+
+            if (currentStep < 0) {
+                pStayWinEl.textContent = '—';
+                pShiftLoseEl.textContent = '—';
+                explanationEl.innerHTML = 'Click <strong>Step Through</strong> to see how each trial contributes to the WSLS metrics.';
+            } else {
+                const wsls = calculateWSLS(currentStep);
+                pStayWinEl.textContent = wsls.pStayWin;
+                pShiftLoseEl.textContent = wsls.pShiftLose;
+                
+                const t = trials[currentStep];
+                if (currentStep < trials.length - 1) {
+                    const behaviorText = t.behavior === 'stay' ? 'stayed with' : 'shifted away from';
+                    const outcomeText = t.outcome === 'win' ? 'After winning' : 'After losing';
+                    explanationEl.innerHTML = `<strong>Trial ${t.trial}:</strong> ${outcomeText} on option ${t.choice}, the participant <strong>${behaviorText}</strong> option ${t.choice}. 
+                        <br><em>Running totals:</em> ${wsls.staysAfterWin}/${wsls.wins} stays after wins, ${wsls.shiftsAfterLoss}/${wsls.losses} shifts after losses.`;
+                } else {
+                    explanationEl.innerHTML = `<strong>Complete!</strong> Final metrics: p(stay|win) = ${wsls.pStayWin}, p(shift|lose) = ${wsls.pShiftLose}. 
+                        <br>This participant stayed after ${wsls.staysAfterWin} of ${wsls.wins} wins and shifted after ${wsls.shiftsAfterLoss} of ${wsls.losses} losses.`;
+                }
+            }
+        }
+
+        function step() {
+            if (currentStep < trials.length - 1) {
+                currentStep++;
+                updateDisplay();
+            }
+        }
+
+        function reset() {
+            trials = generateTrials(8);
+            currentStep = -1;
+            renderTrials();
+            updateDisplay();
+        }
+
+        stepBtn.addEventListener('click', step);
+        resetBtn.addEventListener('click', reset);
+
+        // Initialize
+        reset();
+    })();
+
+    // ═══════════════════════════════════════════════════════════════════════
+    // RESCORLA-WAGNER INTERACTIVE
+    // ═══════════════════════════════════════════════════════════════════════
+    (function() {
+        const alphaSlider = document.getElementById('alphaSlider');
+        const betaSlider = document.getElementById('betaSlider');
+        const alphaValueEl = document.getElementById('alphaValue');
+        const betaValueEl = document.getElementById('betaValue');
+        const chartCanvas = document.getElementById('rwChart');
+
+        // Generate a fixed reward sequence for demonstration
+        // Option A is better (75%) for first 15 trials, then reverses
+        const nTrials = 30;
+        const reversalPoint = 15;
+        const rewards = [];
+        
+        for (let i = 0; i < nTrials; i++) {
+            const pRewardA = i < reversalPoint ? 0.75 : 0.25;
+            rewards.push({
+                A: Math.random() < pRewardA ? 1 : 0,
+                B: Math.random() < (1 - pRewardA) ? 1 : 0
+            });
+        }
+
+        function softmax(qA, qB, beta) {
+            const expA = Math.exp(beta * qA);
+            const expB = Math.exp(beta * qB);
+            return expA / (expA + expB);
+        }
+
+        function simulateRW(alpha, beta) {
+            let qA = 0.5, qB = 0.5;
+            const qAHistory = [qA];
+            const qBHistory = [qB];
+            const pAHistory = [0.5];
+            const choices = [];
+            
+            for (let i = 0; i < nTrials; i++) {
+                // Choose based on current Q values
+                const pA = softmax(qA, qB, beta);
+                const choice = Math.random() < pA ? 'A' : 'B';
+                choices.push(choice);
+                
+                // Get reward
+                const reward = choice === 'A' ? rewards[i].A : rewards[i].B;
+                
+                // Update Q value for chosen option
+                if (choice === 'A') {
+                    qA = qA + alpha * (reward - qA);
+                } else {
+                    qB = qB + alpha * (reward - qB);
+                }
+                
+                qAHistory.push(qA);
+                qBHistory.push(qB);
+                pAHistory.push(softmax(qA, qB, beta));
+            }
+            
+            return { qAHistory, qBHistory, pAHistory, choices };
+        }
+
+        let chart = null;
+
+        function updateChart() {
+            const alpha = parseFloat(alphaSlider.value);
+            const beta = parseFloat(betaSlider.value);
+            
+            alphaValueEl.textContent = alpha.toFixed(2);
+            betaValueEl.textContent = beta.toFixed(1);
+            
+            const sim = simulateRW(alpha, beta);
+            const labels = Array.from({ length: nTrials + 1 }, (_, i) => i);
+            
+            if (chart) {
+                chart.data.datasets[0].data = sim.qAHistory;
+                chart.data.datasets[1].data = sim.qBHistory;
+                chart.update('none');
+            } else {
+                chart = new Chart(chartCanvas, {
+                    type: 'line',
+                    data: {
+                        labels: labels,
+                        datasets: [
+                            {
+                                label: 'Q(A)',
+                                data: sim.qAHistory,
+                                borderColor: '#1a3a5c',
+                                backgroundColor: 'rgba(26, 58, 92, 0.1)',
+                                borderWidth: 2.5,
+                                fill: false,
+                                tension: 0.3,
+                                pointRadius: 0,
+                                pointHoverRadius: 4,
+                            },
+                            {
+                                label: 'Q(B)',
+                                data: sim.qBHistory,
+                                borderColor: '#b8860b',
+                                backgroundColor: 'rgba(184, 134, 11, 0.1)',
+                                borderWidth: 2.5,
+                                fill: false,
+                                tension: 0.3,
+                                pointRadius: 0,
+                                pointHoverRadius: 4,
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        interaction: {
+                            intersect: false,
+                            mode: 'index',
+                        },
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                                labels: {
+                                    font: { family: "'Sora', sans-serif", size: 12 },
+                                    usePointStyle: true,
+                                    padding: 16,
+                                }
+                            },
+                            tooltip: {
+                                backgroundColor: 'rgba(30, 45, 61, 0.95)',
+                                titleFont: { family: "'Sora', sans-serif", size: 12 },
+                                bodyFont: { family: "'Sora', sans-serif", size: 11 },
+                                padding: 10,
+                                cornerRadius: 4,
+                            },
+                            annotation: {
+                                annotations: {
+                                    reversalLine: {
+                                        type: 'line',
+                                        xMin: reversalPoint,
+                                        xMax: reversalPoint,
+                                        borderColor: 'rgba(198, 40, 40, 0.5)',
+                                        borderWidth: 2,
+                                        borderDash: [6, 4],
+                                        label: {
+                                            display: true,
+                                            content: 'Reversal',
+                                            position: 'start',
+                                            font: { family: "'Sora', sans-serif", size: 10 },
+                                            backgroundColor: 'rgba(198, 40, 40, 0.8)',
+                                            color: 'white',
+                                            padding: 4,
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            x: {
+                                title: {
+                                    display: true,
+                                    text: 'Trial',
+                                    font: { family: "'Sora', sans-serif", size: 12, weight: 500 },
+                                    color: '#5a6a78',
+                                },
+                                grid: { display: false },
+                                ticks: {
+                                    font: { family: "'Sora', sans-serif", size: 11 },
+                                    color: '#5a6a78',
+                                }
+                            },
+                            y: {
+                                title: {
+                                    display: true,
+                                    text: 'Value Estimate (Q)',
+                                    font: { family: "'Sora', sans-serif", size: 12, weight: 500 },
+                                    color: '#5a6a78',
+                                },
+                                min: 0,
+                                max: 1,
+                                grid: { color: 'rgba(223, 227, 231, 0.5)' },
+                                ticks: {
+                                    font: { family: "'Sora', sans-serif", size: 11 },
+                                    color: '#5a6a78',
+                                }
+                            }
+                        }
+                    },
+                    plugins: [{
+                        id: 'reversalAnnotation',
+                        afterDraw: (chart) => {
+                            const ctx = chart.ctx;
+                            const xAxis = chart.scales.x;
+                            const yAxis = chart.scales.y;
+                            const x = xAxis.getPixelForValue(reversalPoint);
+                            
+                            ctx.save();
+                            ctx.strokeStyle = 'rgba(198, 40, 40, 0.4)';
+                            ctx.lineWidth = 2;
+                            ctx.setLineDash([6, 4]);
+                            ctx.beginPath();
+                            ctx.moveTo(x, yAxis.top);
+                            ctx.lineTo(x, yAxis.bottom);
+                            ctx.stroke();
+                            
+                            ctx.fillStyle = 'rgba(198, 40, 40, 0.85)';
+                            ctx.font = "500 10px 'Sora', sans-serif";
+                            ctx.textAlign = 'center';
+                            ctx.fillText('REVERSAL', x, yAxis.top - 6);
+                            ctx.restore();
+                        }
+                    }]
+                });
+            }
+        }
+
+        alphaSlider.addEventListener('input', updateChart);
+        betaSlider.addEventListener('input', updateChart);
+
+        // Initialize
+        updateChart();
+    })();
+    </script>
+
+</body>
+</html>
