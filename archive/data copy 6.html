@@ -782,9 +782,8 @@
             position: relative;
             width: 100%;
             height: 420px;
-            background: linear-gradient(180deg, #f7f8f9 0%, #ffffff 100%);
+            background: linear-gradient(180deg, #0d1a26 0%, #1a2d3d 100%);
             border-radius: 8px;
-            border: 1px solid var(--color-border);
             overflow: hidden;
             cursor: grab;
         }
@@ -804,8 +803,8 @@
             transform: translateX(-50%);
             font-family: var(--font-display);
             font-size: 0.72rem;
-            color: var(--color-text-light);
-            background: rgba(255, 255, 255, 0.85);
+            color: rgba(255, 255, 255, 0.5);
+            background: rgba(0, 0, 0, 0.3);
             padding: 6px 12px;
             border-radius: 4px;
             pointer-events: none;
@@ -882,7 +881,7 @@
 
         .tacs-param {
             text-align: center;
-            padding: 12px;
+            padding: 16px;
             background: white;
             border-radius: 6px;
             border: 1px solid var(--color-border);
@@ -890,15 +889,15 @@
 
         .tacs-param-value {
             font-family: var(--font-display);
-            font-size: 1.1rem;
+            font-size: 1.4rem;
             font-weight: 700;
             color: var(--color-navy);
-            margin-bottom: 2px;
+            margin-bottom: 4px;
         }
 
         .tacs-param-label {
             font-family: var(--font-display);
-            font-size: 0.68rem;
+            font-size: 0.72rem;
             color: var(--color-text-light);
             text-transform: uppercase;
             letter-spacing: 0.05em;
@@ -1255,7 +1254,7 @@
                                 <div class="rw-slider-label">Inverse Temperature (β)</div>
                                 <div class="rw-slider-value" id="betaValue">5.0</div>
                                 <input type="range" class="rw-slider" id="betaSlider" min="0.5" max="20" step="0.5" value="5">
-                                <div class="rw-slider-desc">Higher = choices track Q more closely (see gray line)</div>
+                                <div class="rw-slider-desc">Higher = more exploitation</div>
                             </div>
                         </div>
 
@@ -1389,22 +1388,22 @@
         
         renderer.setSize(container.clientWidth, container.clientHeight);
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-        renderer.setClearColor(0xf7f8f9, 1);
+        renderer.setClearColor(0x0d1a26, 1);
         container.insertBefore(renderer.domElement, container.firstChild);
 
-        // Lighting (adjusted for white background)
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
+        // Lighting
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
         scene.add(ambientLight);
 
-        const frontLight = new THREE.DirectionalLight(0xffffff, 0.6);
+        const frontLight = new THREE.DirectionalLight(0xffffff, 0.7);
         frontLight.position.set(0, 50, 100);
         scene.add(frontLight);
 
-        const backLight = new THREE.DirectionalLight(0x8899bb, 0.25);
+        const backLight = new THREE.DirectionalLight(0x6688cc, 0.3);
         backLight.position.set(0, 50, -100);
         scene.add(backLight);
 
-        const leftLight = new THREE.DirectionalLight(0xffffff, 0.4);
+        const leftLight = new THREE.DirectionalLight(0xffffff, 0.5);
         leftLight.position.set(-100, 30, 50);
         scene.add(leftLight);
 
@@ -2293,22 +2292,15 @@
             if (chart) {
                 chart.data.datasets[0].data = sim.qAHistory;
                 chart.data.datasets[1].data = sim.qBHistory;
-                chart.data.datasets[2].data = sim.pAHistory;
                 chart.update('none');
             } else {
-                // Load flower images for legend
-                const flowerAImg = new Image();
-                flowerAImg.src = 'stimuli/022-flowers.png';
-                const flowerBImg = new Image();
-                flowerBImg.src = 'stimuli/032-flowers.png';
-                
                 chart = new Chart(chartCanvas, {
                     type: 'line',
                     data: {
                         labels: labels,
                         datasets: [
                             {
-                                label: 'Q(Flower A)',
+                                label: 'Q(A)',
                                 data: sim.qAHistory,
                                 borderColor: '#1a3a5c',
                                 backgroundColor: 'rgba(26, 58, 92, 0.1)',
@@ -2319,7 +2311,7 @@
                                 pointHoverRadius: 4,
                             },
                             {
-                                label: 'Q(Flower B)',
+                                label: 'Q(B)',
                                 data: sim.qBHistory,
                                 borderColor: '#b8860b',
                                 backgroundColor: 'rgba(184, 134, 11, 0.1)',
@@ -2328,18 +2320,6 @@
                                 tension: 0.3,
                                 pointRadius: 0,
                                 pointHoverRadius: 4,
-                            },
-                            {
-                                label: 'p(choose Flower A)',
-                                data: sim.pAHistory,
-                                borderColor: 'rgba(90, 106, 120, 0.6)',
-                                backgroundColor: 'rgba(90, 106, 120, 0.05)',
-                                borderWidth: 1.5,
-                                borderDash: [4, 4],
-                                fill: true,
-                                tension: 0.3,
-                                pointRadius: 0,
-                                pointHoverRadius: 3,
                             }
                         ]
                     },
@@ -2354,22 +2334,9 @@
                             legend: {
                                 position: 'top',
                                 labels: {
-                                    font: { family: "'Sora', sans-serif", size: 11 },
+                                    font: { family: "'Sora', sans-serif", size: 12 },
                                     usePointStyle: true,
-                                    padding: 20,
-                                    generateLabels: function(chart) {
-                                        const datasets = chart.data.datasets;
-                                        return datasets.map((dataset, i) => ({
-                                            text: dataset.label,
-                                            fillStyle: dataset.borderColor,
-                                            strokeStyle: dataset.borderColor,
-                                            lineWidth: dataset.borderWidth,
-                                            lineDash: dataset.borderDash || [],
-                                            hidden: !chart.isDatasetVisible(i),
-                                            datasetIndex: i,
-                                            pointStyle: 'line',
-                                        }));
-                                    }
+                                    padding: 16,
                                 }
                             },
                             tooltip: {
@@ -2449,11 +2416,10 @@
                             ctx.lineTo(x, yAxis.bottom);
                             ctx.stroke();
                             
-                            // Position REVERSAL label at bottom right of the line
                             ctx.fillStyle = 'rgba(198, 40, 40, 0.85)';
                             ctx.font = "500 10px 'Sora', sans-serif";
-                            ctx.textAlign = 'left';
-                            ctx.fillText('REVERSAL', x + 6, yAxis.bottom - 8);
+                            ctx.textAlign = 'center';
+                            ctx.fillText('REVERSAL', x, yAxis.top - 6);
                             ctx.restore();
                         }
                     }]
