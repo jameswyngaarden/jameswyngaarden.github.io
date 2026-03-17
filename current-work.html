@@ -968,18 +968,22 @@
             font-family: var(--font-display);
             font-size: 0.82rem;
             font-weight: 500;
-            color: var(--color-gold);
-            background: transparent;
-            border: none;
-            padding: 10px 16px;
+            color: var(--color-text-light);
+            background: white;
+            border: 1px solid var(--color-border);
+            padding: 10px 20px;
+            border-radius: 24px;
             cursor: pointer;
-            transition: color 0.2s ease;
+            transition: all 0.2s ease;
             text-decoration: none;
             animation: float 2.5s ease-in-out infinite;
         }
 
         .section-nav-btn:hover {
             color: var(--color-navy);
+            border-color: var(--color-gold);
+            box-shadow: 0 2px 12px rgba(184, 134, 11, 0.15);
+            animation-play-state: paused;
         }
 
         .section-nav-btn .arrow {
