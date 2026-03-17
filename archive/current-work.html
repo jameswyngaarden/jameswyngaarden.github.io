@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Data - James B. Wyngaarden III</title>
+    <title>Current Work - James B. Wyngaarden III</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,500;1,8..60,400&family=Sora:wght@300;400;500;600;700&display=swap');
 
@@ -172,7 +172,7 @@
         .section-header {
             padding: 10px 0;
             text-align: center;
-            margin: 28px 0 0 0;
+            margin: 40px 0 0 0;
             position: relative;
             background: var(--color-bg);
         }
@@ -208,7 +208,7 @@
             font-size: 1.3rem;
             font-weight: 600;
             color: var(--color-navy);
-            margin: 24px 0 16px 0;
+            margin: 32px 0 16px 0;
             padding-bottom: 8px;
             border-bottom: 2px solid var(--color-gold);
             display: inline-block;
@@ -218,7 +218,7 @@
         .content-section {
             max-width: 800px;
             margin: 0 auto;
-            padding: 20px 20px;
+            padding: 28px 20px;
         }
 
         .content-section p {
@@ -243,7 +243,7 @@
             border: 1px solid var(--color-border);
             border-radius: 8px;
             padding: 32px;
-            margin: 20px 0;
+            margin: 28px 0;
         }
 
         .demo-title {
@@ -953,12 +953,7 @@
         .section-nav {
             display: flex;
             justify-content: center;
-            margin: 24px 0 0 0;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-4px); }
+            margin: 32px 0 0 0;
         }
 
         .section-nav-btn {
@@ -968,18 +963,21 @@
             font-family: var(--font-display);
             font-size: 0.82rem;
             font-weight: 500;
-            color: var(--color-gold);
-            background: transparent;
-            border: none;
-            padding: 10px 16px;
+            color: var(--color-text-light);
+            background: white;
+            border: 1px solid var(--color-border);
+            padding: 10px 20px;
+            border-radius: 24px;
             cursor: pointer;
-            transition: color 0.2s ease;
+            transition: all 0.2s ease;
             text-decoration: none;
-            animation: float 2.5s ease-in-out infinite;
         }
 
         .section-nav-btn:hover {
             color: var(--color-navy);
+            border-color: var(--color-gold);
+            box-shadow: 0 2px 12px rgba(184, 134, 11, 0.15);
+            transform: translateY(-1px);
         }
 
         .section-nav-btn .arrow {
@@ -1125,7 +1123,7 @@
                 <div class="sidebar-name">Jimmy Wyngaarden</div>
                 <div class="sidebar-title">PhD Candidate</div>
                 <div class="sidebar-links">
-                    <a href="/cdn-cgi/l/email-protection#92f8f3fff7e1bce5ebfcf5f3f3e0f6f7fcd2e6f7ffe2fef7bcf7f6e7" class="sidebar-link">
+                    <a href="mailto:james.wyngaarden@temple.edu" class="sidebar-link">
                         <img src="stimuli/logos/Email.png" alt="">Email
                     </a>
                     <a href="https://www.linkedin.com/in/james-wyngaarden-iii" target="_blank" class="sidebar-link">
@@ -1165,7 +1163,7 @@
             <!-- INTRO SECTION -->
             <!-- ════════════════════════════════════════════════════════════ -->
             <div class="section-header">
-                <h2>Dissertation</h2>
+                <h2>Current Work</h2>
             </div>
 
             <div class="content-section">
@@ -1482,7 +1480,7 @@
     <!-- ════════════════════════════════════════════════════════════════════ -->
     <!-- SCRIPTS -->
     <!-- ════════════════════════════════════════════════════════════════════ -->
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script>
     // ═══════════════════════════════════════════════════════════════════════
@@ -2023,7 +2021,7 @@
             historyEl.innerHTML = '';
             resultsEl.style.display = 'none';
             messageEl.classList.remove('reversal');
-            messageEl.innerHTML = 'Click a card to begin. Try to learn which option is better!';
+            messageEl.innerHTML = 'Click a flower to begin. Try to learn which option is better!';
             
             cardLeft.classList.remove('disabled');
             cardRight.classList.remove('disabled');
@@ -2580,4 +2578,13 @@
             }
         }
 
-        alphaSlider.addEventListener('input', up
+        alphaSlider.addEventListener('input', updateChart);
+        betaSlider.addEventListener('input', updateChart);
+
+        // Initialize
+        updateChart();
+    })();
+    </script>
+
+</body>
+</html>
