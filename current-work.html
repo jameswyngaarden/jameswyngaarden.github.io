@@ -2584,4 +2584,13 @@
             }
         }
 
-        alphaSlider.addEventListener('input', up
+        alphaSlider.addEventListener('input', updateChart);
+        betaSlider.addEventListener('input', updateChart);
+
+        // Initialize
+        updateChart();
+    })();
+    </script>
+
+</body>
+</html>
