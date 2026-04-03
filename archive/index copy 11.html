@@ -253,10 +253,10 @@
 
         .headshot-tooltip {
             position: absolute;
-            bottom: 100%;
+            bottom: calc(100% + 12px);
             left: 50%;
             transform: translateX(-50%);
-            background: #5a6a78;
+            background: var(--color-navy);
             color: white;
             padding: 10px 14px;
             border-radius: 8px;
@@ -267,7 +267,6 @@
             visibility: hidden;
             transition: opacity 0.2s ease, visibility 0.2s ease;
             z-index: 10;
-            pointer-events: none;
         }
 
         .headshot-tooltip::after {
@@ -277,13 +276,17 @@
             left: 50%;
             transform: translateX(-50%);
             border: 6px solid transparent;
-            border-top-color: #5a6a78;
+            border-top-color: var(--color-navy);
         }
 
         .headshot-tooltip a {
-            color: white;
-            text-decoration: underline;
+            color: var(--color-gold);
+            text-decoration: none;
             font-weight: 500;
+        }
+
+        .headshot-tooltip a:hover {
+            text-decoration: underline;
         }
 
         .headshot-wrapper:hover .headshot-tooltip {
@@ -541,6 +544,8 @@
     <div class="container">
         <aside class="sidebar">
             <div class="sidebar-profile">
+                <div class="sidebar-name">Jimmy Wyngaarden</div>
+                <div class="sidebar-title">PhD Candidate</div>
                 <div class="sidebar-links">
                     <a href="/cdn-cgi/l/email-protection#1b717a767e68356c62757c7a7a697f7e755b6f7e766b777e357e7f6e" class="sidebar-link">
                         <img src="stimuli/logos/Email.png" alt="">Email
@@ -655,25 +660,4 @@
                 <img src="stimuli/logos/NIA-Logo.jpg" alt="National Institute on Aging (NIA) Logo">
                 <img src="stimuli/logos/srndna_logo.png" alt="Scientific Research Network on Decision Neuroscience and Aging (SRNDNA) Logo">
                 <img src="stimuli/logos/3MT-logo.png" alt="Three Minute Thesis (3MT) Logo">
-            </div>
-        </div>
-    </div>
-
-    <script>
-        const wrapper = document.querySelector('.headshot-wrapper');
-        const tooltip = document.querySelector('.headshot-tooltip');
-        
-        if (wrapper && tooltip) {
-            wrapper.addEventListener('mousemove', (e) => {
-                const rect = wrapper.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                
-                tooltip.style.left = x + 'px';
-                tooltip.style.bottom = (rect.height - y + 12) + 'px';
-                tooltip.style.transform = 'translateX(-50%)';
-            });
-        }
-    </script>
-</body>
-</html>
+            
