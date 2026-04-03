@@ -64,6 +64,49 @@
             <div class="abstract">
                 <p>Aberrant levels of reward sensitivity have been linked to substance use disorder and are characterized by alterations in reward processing in the ventral striatum (VS). Less is known about how reward sensitivity and subclinical substance use relate to striatal function during social rewards (e.g. positive peer feedback). Testing this relation is critical for predicting risk for development of substance use disorder. In this pre-registered study, participants (N = 44) underwent fMRI while completing well-matched tasks that assess neural response to reward in social and monetary domains. Contrary to our hypotheses, aberrant reward sensitivity blunted the relationship between substance use and striatal activation during receipt of rewards, regardless of domain. Moreover, exploratory whole-brain analyses showed unique relations between substance use and social rewards in temporoparietal junction. Psychophysiological interactions demonstrated that aberrant reward sensitivity is associated with increased connectivity between the VS and ventromedial prefrontal cortex during social rewards. Finally, we found that substance use was associated with decreased connectivity between the VS and dorsomedial prefrontal cortex for social rewards, independent of reward sensitivity. These findings demonstrate nuanced relations between reward sensitivity and substance use, even among those without substance use disorder, and suggest altered reward-related engagement of cortico-VS responses as potential predictors of developing disordered behavior.</p>
             </div>
+                                                <!-- Figure Gallery -->
+            <div class="fig-gallery">
+                <h2>Figures</h2>
+                <div class="fig-featured">
+                    <img id="fig-main" src="figures/scan-2024_fig-2.png" alt="Figure 2">
+                </div>
+                <div class="fig-featured-caption" id="fig-caption">Figure 2. ROIs for PPI analyses.</div>
+                <div class="fig-thumbs">
+                    <div class="fig-thumb active" data-src="figures/scan-2024_fig-1.png" data-caption="Figure 1. fMRI-based monetary and social reward tasks.">
+                        <img src="figures/scan-2024_fig-1.png" alt="Figure 1 thumbnail">
+                    </div>
+                    <div class="fig-thumb" data-src="figures/scan-2024_fig-2.png" data-caption="Figure 2. ROIs for PPI analyses.">
+                        <img src="figures/scan-2024_fig-2.png" alt="Figure 2 thumbnail">
+                    </div>
+                    <div class="fig-thumb" data-src="figures/scan-2024_fig-3.png" data-caption="Figure 3. Aberrant reward sensitivity blunts the relationship between substance use and striatal activation during receipt of rewards.">
+                        <img src="figures/scan-2024_fig-3.png" alt="Figure 3 thumbnail">
+                    </div>
+                    <div class="fig-thumb" data-src="figures/scan-2024_fig-4.png" data-caption="Figure 4. Substance use is associated with blunted TPJ responses to Social vs Monetary Reward.">
+                        <img src="figures/scan-2024_fig-4.png" alt="Figure 4 thumbnail">
+                    </div>
+                    <div class="fig-thumb" data-src="figures/scan-2024_fig-5.png" data-caption="Figure 5.  Substance use is associated with decreased VS–dmPFC connectivity for Social vs Monetary Reward.">
+                        <img src="figures/scan-2024_fig-5.png" alt="Figure 5 thumbnail">
+                    </div>
+                    <div class="fig-thumb" data-src="figures/scan-2024_fig-6.png" data-caption="Figure 6. Reward sensitivity is associated with increased VS–vmPFC connectivity for Social vs Monetary Reward.">
+                        <img src="figures/scan-2024_fig-6.png" alt="Figure 6 thumbnail">
+                    </div>
+                </div>
+            </div>
+                    <script>
+            (function() {
+                var mainImg = document.getElementById('fig-main');
+                var captionEl = document.getElementById('fig-caption');
+                var thumbs = document.querySelectorAll('.fig-thumb');
+                thumbs.forEach(function(thumb) {
+                    thumb.addEventListener('click', function() {
+                        mainImg.src = this.getAttribute('data-src');
+                        captionEl.textContent = this.getAttribute('data-caption');
+                        thumbs.forEach(function(t) { t.classList.remove('active'); });
+                        this.classList.add('active');
+                    });
+                });
+            })();
+            </script>
         </div>
     </div>
 </body>
