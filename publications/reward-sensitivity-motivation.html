@@ -63,6 +63,21 @@
                     </div>
                 </div>
             </div>
+                    <script>
+            (function() {
+                var mainImg = document.getElementById('fig-main');
+                var captionEl = document.getElementById('fig-caption');
+                var thumbs = document.querySelectorAll('.fig-thumb');
+                thumbs.forEach(function(thumb) {
+                    thumb.addEventListener('click', function() {
+                        mainImg.src = this.getAttribute('data-src');
+                        captionEl.textContent = this.getAttribute('data-caption');
+                        thumbs.forEach(function(t) { t.classList.remove('active'); });
+                        this.classList.add('active');
+                    });
+                });
+            })();
+            </script>
         </div>
     </div>
 </body>
