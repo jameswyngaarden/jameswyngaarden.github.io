@@ -75,10 +75,10 @@
 
         /* Gallery */
         .gallery-intro { max-width: 700px; margin: 0 auto; padding: 44px 20px 20px; font-size: 1.05rem; line-height: 1.8; color: var(--color-text); }
-        .gallery-grid { max-width: 960px; margin: 0 auto; padding: 20px 20px 60px; column-count: 3; column-gap: 24px; }
-        .gallery-item { break-inside: avoid; margin-bottom: 24px; overflow: hidden; cursor: pointer; }
-        .gallery-item-img { width: 100%; border-radius: 4px; display: flex; align-items: center; justify-content: center; }
-        .gallery-item-img img { width: 100%; height: auto; object-fit: contain; display: block; transition: transform 0.3s ease; border-radius: 4px; }
+        .gallery-grid { max-width: 960px; margin: 0 auto; padding: 20px 20px 60px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+        .gallery-item { overflow: hidden; cursor: pointer; }
+        .gallery-item-img { width: 100%; aspect-ratio: 4 / 5; border-radius: 4px; display: flex; align-items: center; justify-content: center; }
+        .gallery-item-img img { max-width: 100%; max-height: 100%; object-fit: contain; display: block; transition: transform 0.3s ease; }
         .gallery-item:hover .gallery-item-img img { transform: scale(1.02); }
         .gallery-title { margin-top: 10px; font-family: var(--font-display); font-size: 0.82rem; font-weight: 500; color: var(--color-text); text-decoration: none; }
         .gallery-item:hover .gallery-title { text-decoration: underline; text-underline-offset: 2px; }
@@ -89,7 +89,7 @@
             display: none;
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(255, 255, 255, 0.98);
+            background: rgba(10, 18, 28, 0.92);
             z-index: 1000;
             align-items: center;
             justify-content: center;
@@ -123,38 +123,33 @@
             max-height: 80vh;
             object-fit: contain;
             border-radius: 4px;
-            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.12);
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
         }
 
         .lightbox-info {
-            width: 260px;
+            width: 240px;
             flex-shrink: 0;
-            color: var(--color-text);
+            color: #ffffff;
         }
         .lightbox-title {
             font-family: var(--font-display);
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: 600;
-            color: var(--color-navy);
+            color: #ffffff;
             margin-bottom: 6px;
         }
         .lightbox-medium {
             font-family: var(--font-display);
             font-size: 0.85rem;
             font-style: italic;
-            color: var(--color-text-light);
+            color: rgba(255, 255, 255, 0.6);
             margin-bottom: 16px;
         }
         .lightbox-desc {
             font-family: var(--font-serif);
-            font-size: 0.92rem;
-            line-height: 1.7;
-            color: var(--color-text);
-        }
-        .lightbox-desc a {
-            color: var(--color-navy);
-            text-decoration: underline;
-            text-underline-offset: 2px;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.75);
         }
 
         .lightbox-nav {
@@ -162,8 +157,8 @@
             top: 50%;
             transform: translateY(-50%);
             background: none;
-            border: 1px solid var(--color-border);
-            color: var(--color-text-light);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 0.7);
             width: 44px;
             height: 44px;
             border-radius: 50%;
@@ -176,9 +171,9 @@
             z-index: 10;
         }
         .lightbox-nav:hover {
-            background: var(--color-bg-subtle);
-            color: var(--color-navy);
-            border-color: var(--color-text-light);
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            border-color: rgba(255, 255, 255, 0.4);
         }
         .lightbox-prev { left: -60px; }
         .lightbox-next { right: -60px; }
@@ -189,7 +184,7 @@
             right: 24px;
             background: none;
             border: none;
-            color: var(--color-text-light);
+            color: rgba(255, 255, 255, 0.6);
             font-size: 1.5rem;
             cursor: pointer;
             z-index: 1001;
@@ -200,7 +195,7 @@
             justify-content: center;
             transition: color 0.2s ease;
         }
-        .lightbox-close:hover { color: var(--color-navy); }
+        .lightbox-close:hover { color: #ffffff; }
 
         .lightbox-counter {
             position: fixed;
@@ -209,7 +204,7 @@
             transform: translateX(-50%);
             font-family: var(--font-display);
             font-size: 0.78rem;
-            color: var(--color-text-light);
+            color: rgba(255, 255, 255, 0.4);
             z-index: 1001;
         }
 
@@ -223,7 +218,7 @@
             h1 { font-size: 1.5rem; white-space: normal; }
             .section-header { padding: 36px 0; margin: 28px 0 0 0; }
             .section-header h2 { font-size: 2.8rem; background-attachment: scroll; }
-            .gallery-grid { column-count: 2; padding: 20px 8px 40px; }
+            .gallery-grid { grid-template-columns: repeat(2, 1fr); padding: 20px 8px 40px; }
             .lightbox-overlay { padding: 20px; }
             .lightbox-content { flex-direction: column; gap: 20px; }
             .lightbox-info { width: 100%; text-align: center; }
@@ -232,7 +227,7 @@
             .lightbox-nav { width: 36px; height: 36px; font-size: 1rem; }
         }
         @media (max-width: 550px) {
-            .gallery-grid { column-count: 1; }
+            .gallery-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -244,7 +239,7 @@
                 
                 
                 <div class="sidebar-links">
-                    <a href="/cdn-cgi/l/email-protection#117b707c74623f66687f7670706375747f5165747c617d743f747564" class="sidebar-link"><img src="stimuli/logos/Email.png" alt="">Email</a>
+                    <a href="mailto:james.wyngaarden@temple.edu" class="sidebar-link"><img src="stimuli/logos/Email.png" alt="">Email</a>
                     <a href="https://www.linkedin.com/in/james-wyngaarden-iii" target="_blank" class="sidebar-link"><img src="stimuli/logos/Linkedin.png" alt="">LinkedIn</a>
                     <a href="https://bsky.app/profile/jameswyngaarden.bsky.social" target="_blank" class="sidebar-link"><img src="stimuli/logos/Bluesky.png" alt="">Bluesky</a>
                     <a href="https://github.com/jameswyngaarden" target="_blank" class="sidebar-link"><img src="stimuli/logos/Github.png" alt="">GitHub</a>
@@ -357,7 +352,7 @@
         <div class="lightbox-counter" id="lb-counter"></div>
     </div>
 
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    <script>
     (function() {
         var items = document.querySelectorAll('.gallery-item');
         var overlay = document.getElementById('lightbox');
@@ -426,4 +421,11 @@
 
         document.addEventListener('keydown', function(e) {
             if (!overlay.classList.contains('active')) return;
-            if (e.key === 'Escape
+            if (e.key === 'Escape') hide();
+            if (e.key === 'ArrowRight') next();
+            if (e.key === 'ArrowLeft') prev();
+        });
+    })();
+    </script>
+</body>
+</html>
