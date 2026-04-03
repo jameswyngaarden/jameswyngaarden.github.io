@@ -75,11 +75,11 @@
 
         /* Gallery */
         .gallery-intro { max-width: 700px; margin: 0 auto; padding: 44px 20px 20px; font-size: 1.05rem; line-height: 1.8; color: var(--color-text); }
-        .gallery-grid { max-width: 960px; margin: 0 auto; padding: 20px 20px 60px; column-count: 3; column-gap: 24px; }
+        .gallery-grid { max-width: 1100px; margin: 0 auto; padding: 20px 20px 60px; column-count: 4; column-gap: 24px; }
         .gallery-item { break-inside: avoid; margin-bottom: 24px; overflow: hidden; cursor: pointer; }
         .gallery-item-img { width: 100%; border-radius: 4px; display: flex; align-items: center; justify-content: center; }
-        .gallery-item-img img { width: 100%; height: auto; object-fit: contain; display: block; transition: transform 0.3s ease; border-radius: 4px; }
-        .gallery-item:hover .gallery-item-img img { transform: scale(1.02); }
+        .gallery-item-img img { width: 100%; height: auto; object-fit: contain; display: block; transition: opacity 0.3s ease; border-radius: 4px; }
+        .gallery-item:hover .gallery-item-img img { opacity: 0.7; }
         .gallery-title { margin-top: 10px; font-family: var(--font-display); font-size: 0.82rem; font-weight: 500; color: var(--color-text); text-decoration: none; }
         .gallery-item:hover .gallery-title { text-decoration: underline; text-underline-offset: 2px; }
         .gallery-medium { font-family: var(--font-display); font-size: 0.75rem; font-style: italic; color: var(--color-text-light); margin-top: 2px; }
@@ -214,6 +214,9 @@
         }
 
         /* Responsive */
+        @media (max-width: 1000px) {
+            .gallery-grid { column-count: 3; }
+        }
         @media (max-width: 900px) {
             .container { flex-direction: column; padding: 20px 16px; gap: 30px; }
             .sidebar { width: 100%; position: relative; top: 0; }
@@ -426,4 +429,11 @@
 
         document.addEventListener('keydown', function(e) {
             if (!overlay.classList.contains('active')) return;
-            if (e.key === 'Escape
+            if (e.key === 'Escape') hide();
+            if (e.key === 'ArrowRight') next();
+            if (e.key === 'ArrowLeft') prev();
+        });
+    })();
+    </script>
+</body>
+</html>
