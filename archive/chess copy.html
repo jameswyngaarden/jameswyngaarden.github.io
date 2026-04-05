@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chess Accuracy Analyzer - James B. Wyngaarden III</title>
     <link rel="icon" type="image/png" href="stimuli/favicon.png">
-    <link rel="stylesheet" href="https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,500;1,8..60,400&family=Sora:wght@300;400;500;600;700&display=swap');
 
@@ -75,275 +74,6 @@
             padding: 24px;
         }
 
-        /* Featured Game Section */
-        .featured-section {
-            margin-bottom: 32px;
-        }
-
-        .featured-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 16px;
-            flex-wrap: wrap;
-            gap: 12px;
-        }
-
-        .featured-title {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--color-navy);
-        }
-
-        .featured-selector {
-            display: flex;
-            gap: 8px;
-        }
-
-        .featured-btn {
-            padding: 6px 12px;
-            border-radius: 6px;
-            border: 1px solid var(--color-border);
-            background: var(--color-bg);
-            font-size: 13px;
-            font-family: var(--font-display);
-            cursor: pointer;
-            transition: all 0.2s;
-            color: var(--color-text-light);
-        }
-
-        .featured-btn:hover {
-            border-color: var(--color-navy);
-            color: var(--color-navy);
-        }
-
-        .featured-btn.active {
-            background: var(--color-navy);
-            border-color: var(--color-navy);
-            color: white;
-        }
-
-        .featured-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        .featured-game-container {
-            background: var(--color-bg-subtle);
-            border-radius: 12px;
-            padding: 20px;
-        }
-
-        .featured-loading {
-            text-align: center;
-            padding: 60px 20px;
-            color: var(--color-text-light);
-        }
-
-        .featured-loading-spinner {
-            display: inline-block;
-            width: 24px;
-            height: 24px;
-            border: 3px solid var(--color-border);
-            border-radius: 50%;
-            border-top-color: var(--color-navy);
-            animation: spin 0.8s linear infinite;
-            margin-bottom: 12px;
-        }
-
-        .featured-error {
-            text-align: center;
-            padding: 40px 20px;
-            color: var(--color-text-light);
-        }
-
-        .featured-game-info {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 16px;
-            flex-wrap: wrap;
-            gap: 12px;
-        }
-
-        .featured-game-stats {
-            display: flex;
-            gap: 24px;
-            flex-wrap: wrap;
-        }
-
-        .featured-stat {
-            text-align: center;
-        }
-
-        .featured-stat-value {
-            font-size: 1.5rem;
-            font-weight: 700;
-        }
-
-        .featured-stat-value.accuracy { color: #22c55e; }
-        .featured-stat-value.win { color: #22c55e; }
-        .featured-stat-value.loss { color: #ef4444; }
-        .featured-stat-value.draw { color: #eab308; }
-
-        .featured-stat-label {
-            font-size: 12px;
-            color: var(--color-text-light);
-        }
-
-        .featured-game-meta {
-            font-size: 14px;
-            color: var(--color-text-light);
-            text-align: right;
-        }
-
-        .featured-game-meta strong {
-            color: var(--color-text);
-        }
-
-        /* Chess Board Container */
-        .board-container {
-            display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
-
-        .board-wrapper {
-            flex: 1;
-            min-width: 300px;
-            max-width: 450px;
-        }
-
-        #featured-board {
-            width: 100%;
-        }
-
-        .board-controls {
-            display: flex;
-            justify-content: center;
-            gap: 8px;
-            margin-top: 12px;
-        }
-
-        .board-btn {
-            padding: 8px 16px;
-            border-radius: 6px;
-            border: 1px solid var(--color-border);
-            background: var(--color-bg);
-            font-size: 14px;
-            font-family: var(--font-display);
-            cursor: pointer;
-            transition: all 0.2s;
-            color: var(--color-text);
-        }
-
-        .board-btn:hover {
-            border-color: var(--color-navy);
-            color: var(--color-navy);
-            background: var(--color-bg);
-        }
-
-        .board-btn:disabled {
-            opacity: 0.4;
-            cursor: not-allowed;
-        }
-
-        .move-counter {
-            font-size: 13px;
-            color: var(--color-text-light);
-            min-width: 80px;
-            text-align: center;
-            line-height: 35px;
-        }
-
-        /* Move List */
-        .move-list-container {
-            flex: 1;
-            min-width: 200px;
-            max-width: 300px;
-        }
-
-        .move-list-header {
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--color-navy);
-            margin-bottom: 8px;
-        }
-
-        .move-list {
-            max-height: 350px;
-            overflow-y: auto;
-            background: var(--color-bg);
-            border-radius: 8px;
-            padding: 12px;
-            font-family: 'SF Mono', 'Monaco', 'Consolas', monospace;
-            font-size: 13px;
-            line-height: 1.8;
-        }
-
-        .move-pair {
-            display: flex;
-            gap: 8px;
-            padding: 2px 4px;
-            border-radius: 4px;
-        }
-
-        .move-pair:hover {
-            background: var(--color-bg-subtle);
-        }
-
-        .move-number {
-            color: var(--color-text-light);
-            min-width: 28px;
-        }
-
-        .move {
-            cursor: pointer;
-            padding: 0 4px;
-            border-radius: 3px;
-            transition: background 0.15s;
-        }
-
-        .move:hover {
-            background: var(--color-border);
-        }
-
-        .move.active {
-            background: var(--color-navy);
-            color: white;
-        }
-
-        .move.white-move {
-            min-width: 55px;
-        }
-
-        .featured-link {
-            display: inline-block;
-            margin-top: 16px;
-            font-size: 13px;
-            color: var(--color-navy);
-            text-decoration: none;
-            border-bottom: 1px solid var(--color-gold-muted);
-        }
-
-        .featured-link:hover {
-            border-bottom-color: var(--color-navy);
-        }
-
-        /* Analyzer Section */
-        .analyzer-section {
-            border-top: 1px solid var(--color-border);
-            padding-top: 32px;
-            margin-top: 16px;
-        }
-
-        .analyzer-title {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--color-navy);
-            margin-bottom: 16px;
-        }
-
         .controls {
             display: flex;
             gap: 12px;
@@ -401,6 +131,125 @@
             color: #dc2626;
             border-radius: 8px;
             margin-bottom: 20px;
+        }
+
+        /* Featured Game Section */
+        .featured-section {
+            margin-bottom: 32px;
+        }
+
+        .featured-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .featured-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--color-navy);
+        }
+
+        .featured-selector {
+            display: flex;
+            gap: 8px;
+        }
+
+        .featured-btn {
+            padding: 6px 12px;
+            border-radius: 6px;
+            border: 1px solid var(--color-border);
+            background: var(--color-bg);
+            font-size: 13px;
+            font-family: var(--font-display);
+            cursor: pointer;
+            transition: all 0.2s;
+            color: var(--color-text-light);
+        }
+
+        .featured-btn:hover {
+            border-color: var(--color-navy);
+            color: var(--color-navy);
+        }
+
+        .featured-btn.active {
+            background: var(--color-navy);
+            border-color: var(--color-navy);
+            color: white;
+        }
+
+        .featured-game-container {
+            background: var(--color-bg-subtle);
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .featured-game-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .featured-game-stats {
+            display: flex;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+
+        .featured-stat {
+            text-align: center;
+        }
+
+        .featured-stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .featured-stat-value.accuracy { color: #22c55e; }
+        .featured-stat-value.win { color: #22c55e; }
+        .featured-stat-value.loss { color: #ef4444; }
+        .featured-stat-value.draw { color: #eab308; }
+
+        .featured-stat-label {
+            font-size: 12px;
+            color: var(--color-text-light);
+        }
+
+        .featured-game-meta {
+            font-size: 14px;
+            color: var(--color-text-light);
+            text-align: right;
+        }
+
+        .featured-game-meta strong {
+            color: var(--color-text);
+        }
+
+        .featured-embed {
+            width: 100%;
+            aspect-ratio: 4 / 3;
+            border: none;
+            border-radius: 8px;
+            background: #fff;
+        }
+
+        .featured-link {
+            display: inline-block;
+            margin-top: 12px;
+            font-size: 13px;
+            color: var(--color-navy);
+            text-decoration: none;
+            border-bottom: 1px solid var(--color-gold-muted);
+        }
+
+        .featured-link:hover {
+            border-bottom-color: var(--color-navy);
         }
 
         .stats-grid {
@@ -548,21 +397,6 @@
             to { transform: rotate(360deg); }
         }
 
-        @media (max-width: 700px) {
-            .board-container {
-                flex-direction: column;
-            }
-            .board-wrapper {
-                max-width: 100%;
-            }
-            .move-list-container {
-                max-width: 100%;
-            }
-            .move-list {
-                max-height: 200px;
-            }
-        }
-
         @media (max-width: 600px) {
             .game-row {
                 grid-template-columns: 50px 60px 1fr;
@@ -577,11 +411,14 @@
             .control-group input {
                 width: 100%;
             }
-            .featured-selector {
-                flex-wrap: wrap;
+            .featured-embed {
+                aspect-ratio: 1 / 1;
             }
             .featured-game-stats {
                 gap: 16px;
+            }
+            .featured-selector {
+                flex-wrap: wrap;
             }
         }
     </style>
@@ -594,130 +431,91 @@
     </header>
 
     <div id="chess-app">
-        <!-- Featured Game Section -->
-        <div class="featured-section">
+        <div class="controls">
+            <div class="control-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" value="babyboyjw" placeholder="Chess.com username">
+            </div>
+            <div class="control-group">
+                <label for="months">Months</label>
+                <select id="months">
+                    <option value="1">1 month</option>
+                    <option value="3" selected>3 months</option>
+                    <option value="6">6 months</option>
+                    <option value="12">12 months</option>
+                </select>
+            </div>
+            <button class="analyze-btn" id="analyze-btn">Analyze Games</button>
+        </div>
+
+        <div id="error" class="error-msg" style="display: none;"></div>
+
+        <div id="featured-section" class="featured-section" style="display: none;">
             <div class="featured-header">
                 <div class="featured-title">⭐ Featured Game</div>
                 <div class="featured-selector">
-                    <button class="featured-btn active" data-type="accuracy" disabled>Most Accurate</button>
-                    <button class="featured-btn" data-type="upset" disabled>Biggest Upset</button>
-                    <button class="featured-btn" data-type="recent" disabled>Most Recent Win</button>
+                    <button class="featured-btn active" data-type="accuracy">Most Accurate</button>
+                    <button class="featured-btn" data-type="upset">Biggest Upset</button>
+                    <button class="featured-btn" data-type="recent">Most Recent Win</button>
                 </div>
             </div>
             <div class="featured-game-container">
-                <div id="featured-loading" class="featured-loading">
-                    <div class="featured-loading-spinner"></div>
-                    <div>Fetching games from Chess.com...</div>
-                </div>
-                <div id="featured-error" class="featured-error" style="display: none;">
-                    <div>Couldn't load games — try the analyzer below.</div>
-                </div>
-                <div id="featured-content" style="display: none;">
-                    <div class="featured-game-info">
-                        <div class="featured-game-stats">
-                            <div class="featured-stat">
-                                <div class="featured-stat-value accuracy" id="featured-accuracy">--</div>
-                                <div class="featured-stat-label">Accuracy</div>
-                            </div>
-                            <div class="featured-stat">
-                                <div class="featured-stat-value" id="featured-result">--</div>
-                                <div class="featured-stat-label">Result</div>
-                            </div>
-                            <div class="featured-stat">
-                                <div class="featured-stat-value" id="featured-rating">--</div>
-                                <div class="featured-stat-label">My Rating</div>
-                            </div>
+                <div class="featured-game-info">
+                    <div class="featured-game-stats">
+                        <div class="featured-stat">
+                            <div class="featured-stat-value accuracy" id="featured-accuracy">--</div>
+                            <div class="featured-stat-label">Accuracy</div>
                         </div>
-                        <div class="featured-game-meta">
-                            <div>vs <strong id="featured-opponent">--</strong> (<span id="featured-opp-rating">--</span>)</div>
-                            <div id="featured-date">--</div>
-                            <div id="featured-time-class">--</div>
+                        <div class="featured-stat">
+                            <div class="featured-stat-value" id="featured-result">--</div>
+                            <div class="featured-stat-label">Result</div>
+                        </div>
+                        <div class="featured-stat">
+                            <div class="featured-stat-value" id="featured-rating">--</div>
+                            <div class="featured-stat-label">Your Rating</div>
                         </div>
                     </div>
-                    <div class="board-container">
-                        <div class="board-wrapper">
-                            <div id="featured-board"></div>
-                            <div class="board-controls">
-                                <button class="board-btn" id="btn-start">⏮</button>
-                                <button class="board-btn" id="btn-prev">←</button>
-                                <span class="move-counter" id="move-counter">0 / 0</span>
-                                <button class="board-btn" id="btn-next">→</button>
-                                <button class="board-btn" id="btn-end">⏭</button>
-                            </div>
-                        </div>
-                        <div class="move-list-container">
-                            <div class="move-list-header">Moves</div>
-                            <div class="move-list" id="move-list"></div>
-                        </div>
+                    <div class="featured-game-meta">
+                        <div>vs <strong id="featured-opponent">--</strong> (<span id="featured-opp-rating">--</span>)</div>
+                        <div id="featured-date">--</div>
+                        <div id="featured-time-class">--</div>
                     </div>
-                    <a id="featured-link" class="featured-link" href="#" target="_blank">View full analysis on Chess.com →</a>
                 </div>
+                <iframe id="featured-embed" class="featured-embed" src="" allowtransparency="true"></iframe>
+                <a id="featured-link" class="featured-link" href="#" target="_blank">View on Chess.com →</a>
             </div>
         </div>
 
-        <!-- Analyzer Section -->
-        <div class="analyzer-section">
-            <div class="analyzer-title">📊 Full Game Analysis</div>
-            <div class="controls">
-                <div class="control-group">
-                    <label for="username">Username</label>
-                    <input type="text" id="username" value="babyboyjw" placeholder="Chess.com username">
-                </div>
-                <div class="control-group">
-                    <label for="months">Months</label>
-                    <select id="months">
-                        <option value="1">1 month</option>
-                        <option value="3" selected>3 months</option>
-                        <option value="6">6 months</option>
-                        <option value="12">12 months</option>
-                    </select>
-                </div>
-                <button class="analyze-btn" id="analyze-btn">Analyze Games</button>
-            </div>
+        <div id="stats" style="display: none;"></div>
 
-            <div id="error" class="error-msg" style="display: none;"></div>
-            <div id="stats" style="display: none;"></div>
-
-            <div id="games-container" style="display: none;">
-                <div class="filters">
-                    <select id="sort-by">
-                        <option value="accuracy">Highest Accuracy</option>
-                        <option value="accuracy_asc">Lowest Accuracy</option>
-                        <option value="rating">Highest Rating</option>
-                        <option value="rating_asc">Lowest Rating</option>
-                        <option value="date">Most Recent</option>
-                    </select>
-                    <select id="filter-time">
-                        <option value="all">All Time Controls</option>
-                        <option value="rapid">Rapid</option>
-                        <option value="blitz">Blitz</option>
-                        <option value="bullet">Bullet</option>
-                        <option value="daily">Daily</option>
-                    </select>
-                </div>
-                <div id="games-count" class="games-count"></div>
-                <div id="games-list" class="games-list"></div>
-                <div id="more-games" class="more-games" style="display: none;"></div>
+        <div id="games-container" style="display: none;">
+            <div class="filters">
+                <select id="sort-by">
+                    <option value="accuracy">Highest Accuracy</option>
+                    <option value="accuracy_asc">Lowest Accuracy</option>
+                    <option value="rating">Highest Rating</option>
+                    <option value="rating_asc">Lowest Rating</option>
+                    <option value="date">Most Recent</option>
+                </select>
+                <select id="filter-time">
+                    <option value="all">All Time Controls</option>
+                    <option value="rapid">Rapid</option>
+                    <option value="blitz">Blitz</option>
+                    <option value="bullet">Bullet</option>
+                    <option value="daily">Daily</option>
+                </select>
             </div>
+            <div id="games-count" class="games-count"></div>
+            <div id="games-list" class="games-list"></div>
+            <div id="more-games" class="more-games" style="display: none;"></div>
         </div>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script src="https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.3/chess.min.js"></script>
     <script>
         (function() {
-            const DEFAULT_USERNAME = 'babyboyjw';
-            const DEFAULT_MONTHS = 3;
-
             let allGames = [];
             let featuredType = 'accuracy';
-            let currentGame = null;
-            let board = null;
-            let chess = new Chess();
-            let moveHistory = [];
-            let currentMoveIndex = -1;
-
+            
             const elements = {
                 username: document.getElementById('username'),
                 months: document.getElementById('months'),
@@ -730,9 +528,8 @@
                 gamesCount: document.getElementById('games-count'),
                 gamesList: document.getElementById('games-list'),
                 moreGames: document.getElementById('more-games'),
-                featuredLoading: document.getElementById('featured-loading'),
-                featuredError: document.getElementById('featured-error'),
-                featuredContent: document.getElementById('featured-content'),
+                featuredSection: document.getElementById('featured-section'),
+                featuredEmbed: document.getElementById('featured-embed'),
                 featuredAccuracy: document.getElementById('featured-accuracy'),
                 featuredResult: document.getElementById('featured-result'),
                 featuredRating: document.getElementById('featured-rating'),
@@ -740,30 +537,12 @@
                 featuredOppRating: document.getElementById('featured-opp-rating'),
                 featuredDate: document.getElementById('featured-date'),
                 featuredTimeClass: document.getElementById('featured-time-class'),
-                featuredLink: document.getElementById('featured-link'),
-                moveList: document.getElementById('move-list'),
-                moveCounter: document.getElementById('move-counter'),
-                btnStart: document.getElementById('btn-start'),
-                btnPrev: document.getElementById('btn-prev'),
-                btnNext: document.getElementById('btn-next'),
-                btnEnd: document.getElementById('btn-end')
+                featuredLink: document.getElementById('featured-link')
             };
-
-            // Initialize board
-            function initBoard() {
-                board = Chessboard('featured-board', {
-                    position: 'start',
-                    pieceTheme: 'https://chessboardjs.com/img/chesspieces/wikipedia/{piece}.png'
-                });
-                $(window).resize(function() {
-                    if (board) board.resize();
-                });
-            }
 
             // Featured type buttons
             document.querySelectorAll('.featured-btn').forEach(btn => {
                 btn.addEventListener('click', () => {
-                    if (btn.disabled) return;
                     document.querySelectorAll('.featured-btn').forEach(b => b.classList.remove('active'));
                     btn.classList.add('active');
                     featuredType = btn.dataset.type;
@@ -771,141 +550,29 @@
                 });
             });
 
-            // Board controls
-            elements.btnStart.addEventListener('click', () => goToMove(-1));
-            elements.btnPrev.addEventListener('click', () => goToMove(currentMoveIndex - 1));
-            elements.btnNext.addEventListener('click', () => goToMove(currentMoveIndex + 1));
-            elements.btnEnd.addEventListener('click', () => goToMove(moveHistory.length - 1));
-
-            // Keyboard navigation
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'ArrowLeft') goToMove(currentMoveIndex - 1);
-                if (e.key === 'ArrowRight') goToMove(currentMoveIndex + 1);
-            });
-
-            elements.analyzeBtn.addEventListener('click', () => fetchGames(true));
+            elements.analyzeBtn.addEventListener('click', fetchGames);
             elements.sortBy.addEventListener('change', renderGames);
             elements.filterTime.addEventListener('change', renderGames);
             elements.username.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') fetchGames(true);
+                if (e.key === 'Enter') fetchGames();
             });
 
-            // Parse PGN moves from Chess.com format
-            function parsePGN(pgn) {
-                chess.reset();
-                moveHistory = [];
+            async function fetchGames() {
+                const username = elements.username.value.trim();
+                const monthsToFetch = parseInt(elements.months.value);
 
-                // Extract moves section (after headers)
-                const movesMatch = pgn.match(/\n\n([\s\S]+)$/);
-                if (!movesMatch) return [];
-
-                let movesText = movesMatch[1];
-                // Remove comments, variations, and result
-                movesText = movesText.replace(/\{[^}]*\}/g, '');
-                movesText = movesText.replace(/\([^)]*\)/g, '');
-                movesText = movesText.replace(/1-0|0-1|1\/2-1\/2|\*/g, '');
-
-                // Extract individual moves
-                const moveRegex = /([KQRBN]?[a-h]?[1-8]?x?[a-h][1-8](=[QRBN])?|O-O-O|O-O)[+#]?/g;
-                let match;
-                const moves = [];
-
-                while ((match = moveRegex.exec(movesText)) !== null) {
-                    moves.push(match[1]);
+                if (!username) {
+                    showError('Please enter a username');
+                    return;
                 }
 
-                // Validate and play moves
-                for (const move of moves) {
-                    const result = chess.move(move, { sloppy: true });
-                    if (result) {
-                        moveHistory.push({
-                            san: result.san,
-                            fen: chess.fen()
-                        });
-                    }
-                }
-
-                return moveHistory;
-            }
-
-            function goToMove(index) {
-                if (index < -1) index = -1;
-                if (index >= moveHistory.length) index = moveHistory.length - 1;
-
-                currentMoveIndex = index;
-
-                if (index === -1) {
-                    board.position('start');
-                } else {
-                    board.position(moveHistory[index].fen);
-                }
-
-                updateMoveCounter();
-                highlightCurrentMove();
-                updateButtonStates();
-            }
-
-            function updateMoveCounter() {
-                const display = currentMoveIndex + 1;
-                elements.moveCounter.textContent = `${display} / ${moveHistory.length}`;
-            }
-
-            function updateButtonStates() {
-                elements.btnStart.disabled = currentMoveIndex <= -1;
-                elements.btnPrev.disabled = currentMoveIndex <= -1;
-                elements.btnNext.disabled = currentMoveIndex >= moveHistory.length - 1;
-                elements.btnEnd.disabled = currentMoveIndex >= moveHistory.length - 1;
-            }
-
-            function highlightCurrentMove() {
-                document.querySelectorAll('.move').forEach((el, i) => {
-                    el.classList.toggle('active', i === currentMoveIndex);
-                });
-
-                // Scroll active move into view
-                const activeMove = document.querySelector('.move.active');
-                if (activeMove) {
-                    activeMove.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
-                }
-            }
-
-            function renderMoveList() {
-                let html = '';
-                for (let i = 0; i < moveHistory.length; i += 2) {
-                    const moveNum = Math.floor(i / 2) + 1;
-                    const whiteMove = moveHistory[i];
-                    const blackMove = moveHistory[i + 1];
-
-                    html += `<div class="move-pair">
-                        <span class="move-number">${moveNum}.</span>
-                        <span class="move white-move" data-index="${i}">${whiteMove.san}</span>`;
-
-                    if (blackMove) {
-                        html += `<span class="move black-move" data-index="${i + 1}">${blackMove.san}</span>`;
-                    }
-                    html += '</div>';
-                }
-                elements.moveList.innerHTML = html;
-
-                // Add click handlers to moves
-                document.querySelectorAll('.move').forEach(el => {
-                    el.addEventListener('click', () => {
-                        goToMove(parseInt(el.dataset.index));
-                    });
-                });
-            }
-
-            async function fetchGames(isManualTrigger = false) {
-                const username = elements.username.value.trim() || DEFAULT_USERNAME;
-                const monthsToFetch = parseInt(elements.months.value) || DEFAULT_MONTHS;
-
-                if (isManualTrigger) {
-                    elements.analyzeBtn.disabled = true;
-                    elements.analyzeBtn.innerHTML = '<span class="loading-spinner"></span>Loading...';
-                    elements.error.style.display = 'none';
-                    elements.stats.style.display = 'none';
-                    elements.gamesContainer.style.display = 'none';
-                }
+                elements.analyzeBtn.disabled = true;
+                elements.analyzeBtn.innerHTML = '<span class="loading-spinner"></span>Loading...';
+                elements.error.style.display = 'none';
+                elements.stats.style.display = 'none';
+                elements.gamesContainer.style.display = 'none';
+                elements.featuredSection.style.display = 'none';
+                allGames = [];
 
                 try {
                     const archivesResp = await fetch(
@@ -937,6 +604,10 @@
                             const opponentData = isWhite ? game.black : game.white;
                             const accuracy = isWhite ? game.accuracies.white : game.accuracies.black;
 
+                            // Extract game ID from URL
+                            const urlParts = game.url.split('/');
+                            const gameId = urlParts[urlParts.length - 1];
+
                             return {
                                 accuracy,
                                 result: playerData.result,
@@ -947,44 +618,24 @@
                                 ratingDiff: opponentData.rating - playerData.rating,
                                 timeClass: game.time_class,
                                 url: game.url,
-                                pgn: game.pgn,
+                                gameId: gameId,
                                 date: new Date(game.end_time * 1000)
                             };
                         });
 
                     if (allGames.length === 0) {
-                        throw new Error('No analyzed games found.');
+                        throw new Error('No analyzed games found. Games need accuracy data from Chess.com analysis.');
                     }
-
-                    // Enable featured buttons
-                    document.querySelectorAll('.featured-btn').forEach(btn => {
-                        btn.disabled = false;
-                    });
-
-                    // Show featured game
-                    elements.featuredLoading.style.display = 'none';
-                    elements.featuredError.style.display = 'none';
-                    elements.featuredContent.style.display = 'block';
 
                     renderFeaturedGame();
-
-                    if (isManualTrigger) {
-                        renderStats();
-                        renderGames();
-                    }
+                    renderStats();
+                    renderGames();
 
                 } catch (err) {
-                    if (isManualTrigger) {
-                        showError(err.message);
-                    } else {
-                        elements.featuredLoading.style.display = 'none';
-                        elements.featuredError.style.display = 'block';
-                    }
+                    showError(err.message);
                 } finally {
-                    if (isManualTrigger) {
-                        elements.analyzeBtn.disabled = false;
-                        elements.analyzeBtn.textContent = 'Analyze Games';
-                    }
+                    elements.analyzeBtn.disabled = false;
+                    elements.analyzeBtn.textContent = 'Analyze Games';
                 }
             }
 
@@ -1000,11 +651,14 @@
 
                 switch (featuredType) {
                     case 'accuracy':
+                        // Most accurate game overall
                         return [...allGames].sort((a, b) => b.accuracy - a.accuracy)[0];
                     case 'upset':
+                        // Win against highest-rated opponent (biggest rating difference)
                         if (wins.length === 0) return [...allGames].sort((a, b) => b.accuracy - a.accuracy)[0];
                         return [...wins].sort((a, b) => b.ratingDiff - a.ratingDiff)[0];
                     case 'recent':
+                        // Most recent win
                         if (wins.length === 0) return [...allGames].sort((a, b) => b.date - a.date)[0];
                         return [...wins].sort((a, b) => b.date - a.date)[0];
                     default:
@@ -1016,13 +670,11 @@
                 const game = getFeaturedGame();
                 if (!game) return;
 
-                currentGame = game;
-
                 elements.featuredAccuracy.textContent = game.accuracy.toFixed(1) + '%';
-
-                const resultText = game.result === 'win' ? 'Win' :
+                
+                const resultText = game.result === 'win' ? 'Win' : 
                                    (game.result === 'draw' || game.result === 'stalemate') ? 'Draw' : 'Loss';
-                const resultClass = game.result === 'win' ? 'win' :
+                const resultClass = game.result === 'win' ? 'win' : 
                                     (game.result === 'draw' || game.result === 'stalemate') ? 'draw' : 'loss';
                 elements.featuredResult.textContent = resultText;
                 elements.featuredResult.className = 'featured-stat-value ' + resultClass;
@@ -1030,25 +682,17 @@
                 elements.featuredRating.textContent = game.yourRating;
                 elements.featuredOpponent.textContent = game.opponent;
                 elements.featuredOppRating.textContent = game.opponentRating;
-                elements.featuredDate.textContent = game.date.toLocaleDateString('en-US', {
-                    year: 'numeric', month: 'short', day: 'numeric'
+                elements.featuredDate.textContent = game.date.toLocaleDateString('en-US', { 
+                    year: 'numeric', month: 'short', day: 'numeric' 
                 });
                 elements.featuredTimeClass.textContent = game.timeClass.charAt(0).toUpperCase() + game.timeClass.slice(1);
+
+                // Chess.com embed URL
+                const embedUrl = `https://www.chess.com/emboard?id=${game.gameId}`;
+                elements.featuredEmbed.src = embedUrl;
                 elements.featuredLink.href = game.url;
 
-                // Parse and display the game
-                if (game.pgn) {
-                    parsePGN(game.pgn);
-                    renderMoveList();
-
-                    // Set board orientation based on player color
-                    if (board) {
-                        board.orientation(game.color);
-                    }
-
-                    // Reset to starting position
-                    goToMove(-1);
-                }
+                elements.featuredSection.style.display = 'block';
             }
 
             function renderStats() {
@@ -1105,7 +749,7 @@
                 const sortBy = elements.sortBy.value;
                 const filterTime = elements.filterTime.value;
 
-                let filtered = allGames.filter(g =>
+                let filtered = allGames.filter(g => 
                     filterTime === 'all' || g.timeClass === filterTime
                 );
 
@@ -1123,17 +767,17 @@
                 elements.gamesCount.textContent = `Showing ${Math.min(filtered.length, 50)} of ${filtered.length} games`;
 
                 const gamesHtml = filtered.slice(0, 50).map(game => {
-                    const accClass = game.accuracy >= 90 ? 'excellent' :
-                                     game.accuracy >= 80 ? 'good' :
+                    const accClass = game.accuracy >= 90 ? 'excellent' : 
+                                     game.accuracy >= 80 ? 'good' : 
                                      game.accuracy >= 70 ? 'average' : 'poor';
-
-                    const resultClass = game.result === 'win' ? 'win' :
+                    
+                    const resultClass = game.result === 'win' ? 'win' : 
                                         (game.result === 'draw' || game.result === 'stalemate') ? 'draw' : 'loss';
-
-                    const resultIcon = game.result === 'win' ? '✓' :
+                    
+                    const resultIcon = game.result === 'win' ? '✓' : 
                                        (game.result === 'draw' || game.result === 'stalemate') ? '½' : '✗';
-
-                    const resultText = game.result === 'win' ? 'Win' :
+                    
+                    const resultText = game.result === 'win' ? 'Win' : 
                                        (game.result === 'draw' || game.result === 'stalemate') ? 'Draw' : 'Loss';
 
                     return `
@@ -1163,10 +807,6 @@
 
                 elements.gamesContainer.style.display = 'block';
             }
-
-            // Initialize
-            initBoard();
-            fetchGames(false); // Auto-fetch on page load
         })();
     </script>
 </body>
