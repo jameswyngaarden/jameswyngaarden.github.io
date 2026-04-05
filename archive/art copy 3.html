@@ -215,26 +215,6 @@
             z-index: 1001;
         }
 
-        /* Link Preview */
-        .link-preview {
-            position: fixed;
-            width: 320px;
-            background: #5a6a78;
-            border-radius: 8px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-            z-index: 1000;
-            overflow: hidden;
-            pointer-events: none;
-            opacity: 0;
-            transition: opacity 0.15s ease;
-        }
-        .link-preview.visible { opacity: 1; }
-        .link-preview-img { width: 100%; height: 120px; object-fit: cover; display: block; }
-        .link-preview-content { padding: 12px 14px; }
-        .link-preview-title { font-family: var(--font-display); font-size: 0.95rem; font-weight: 600; color: #ffffff; margin-bottom: 4px; }
-        .link-preview-desc { font-family: var(--font-serif); font-size: 0.85rem; color: rgba(255,255,255,0.85); line-height: 1.5; }
-        .link-preview-source { font-family: var(--font-display); font-size: 0.75rem; color: rgba(255,255,255,0.6); margin-top: 8px; }
-
         /* Responsive */
         @media (max-width: 1000px) {
             .gallery-grid { column-count: 3; }
@@ -297,7 +277,11 @@
                 <h2>Art</h2>
             </div>
 
-            <p class="gallery-intro">Outside the lab, I spend my time <a href="https://www.strava.com/activities/10246820359" target="_blank" data-preview-title="Philadelphia Marathon" data-preview-desc="Marathon PR — 3:14:59, November 2023" data-preview-source="Strava">running</a>, playing <a href="chess.html">chess</a>, and painting. Here are some favorites.</p>
+            <p class="gallery-intro">Outside the lab, I spend my time <a href="https://www.strava.com/activities/10246820359" target="_blank"
+                data-preview-title="Philadelphia Marathon"
+                data-preview-desc="Marathon PR — 3:14:59, November 2023"
+                data-preview-source="Strava">running</a></a>, playing <a href="chess.html">chess</a>, and painting. Here are some favorites.
+            </p>
 
             <div class="gallery-grid">
                 <div class="gallery-item" data-desc="Self-portrait done while living in Charlotte, NC in 2017. One of my first forays into the world of oil painting. <a href='https://www.instagram.com/p/Bl8-JH6BKCP/?img_index=1' target='_blank' style='color: var(--color-gold);'>Read more about this foundational work on Instagram.</a>">
@@ -361,16 +345,6 @@
                     <div class="gallery-medium">Graphite, 5.5"x8.5", 2024</div>
                 </div>
             </div>
-        </div>
-    </div>
-
-    <!-- Link Preview -->
-    <div class="link-preview" id="link-preview">
-        <img class="link-preview-img" id="preview-img" src="" alt="" style="display:none;">
-        <div class="link-preview-content">
-            <div class="link-preview-title" id="preview-title"></div>
-            <div class="link-preview-desc" id="preview-desc"></div>
-            <div class="link-preview-source" id="preview-source"></div>
         </div>
     </div>
 
@@ -464,48 +438,6 @@
             if (e.key === 'Escape') hide();
             if (e.key === 'ArrowRight') next();
             if (e.key === 'ArrowLeft') prev();
-        });
-    })();
-
-    // Link preview
-    (function() {
-        var preview = document.getElementById('link-preview');
-        var previewImg = document.getElementById('preview-img');
-        var previewTitle = document.getElementById('preview-title');
-        var previewDesc = document.getElementById('preview-desc');
-        var previewSource = document.getElementById('preview-source');
-        var hideTimeout;
-
-        document.querySelectorAll('a[data-preview-title]').forEach(function(link) {
-            link.addEventListener('mouseenter', function() {
-                clearTimeout(hideTimeout);
-                var img = this.getAttribute('data-preview-img');
-                previewTitle.textContent = this.getAttribute('data-preview-title') || '';
-                previewDesc.textContent = this.getAttribute('data-preview-desc') || '';
-                previewSource.textContent = this.getAttribute('data-preview-source') || '';
-                if (img) {
-                    previewImg.src = img;
-                    previewImg.style.display = 'block';
-                } else {
-                    previewImg.style.display = 'none';
-                }
-                preview.classList.add('visible');
-            });
-
-            link.addEventListener('mousemove', function(e) {
-                var x = e.clientX + 15;
-                var y = e.clientY + 15;
-                if (x + 330 > window.innerWidth) x = e.clientX - 335;
-                if (y + preview.offsetHeight > window.innerHeight) y = e.clientY - preview.offsetHeight - 10;
-                preview.style.left = x + 'px';
-                preview.style.top = y + 'px';
-            });
-
-            link.addEventListener('mouseleave', function() {
-                hideTimeout = setTimeout(function() {
-                    preview.classList.remove('visible');
-                }, 100);
-            });
         });
     })();
     </script>

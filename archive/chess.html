@@ -133,125 +133,6 @@
             margin-bottom: 20px;
         }
 
-        /* Featured Game Section */
-        .featured-section {
-            margin-bottom: 32px;
-        }
-
-        .featured-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 16px;
-            flex-wrap: wrap;
-            gap: 12px;
-        }
-
-        .featured-title {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--color-navy);
-        }
-
-        .featured-selector {
-            display: flex;
-            gap: 8px;
-        }
-
-        .featured-btn {
-            padding: 6px 12px;
-            border-radius: 6px;
-            border: 1px solid var(--color-border);
-            background: var(--color-bg);
-            font-size: 13px;
-            font-family: var(--font-display);
-            cursor: pointer;
-            transition: all 0.2s;
-            color: var(--color-text-light);
-        }
-
-        .featured-btn:hover {
-            border-color: var(--color-navy);
-            color: var(--color-navy);
-        }
-
-        .featured-btn.active {
-            background: var(--color-navy);
-            border-color: var(--color-navy);
-            color: white;
-        }
-
-        .featured-game-container {
-            background: var(--color-bg-subtle);
-            border-radius: 12px;
-            padding: 20px;
-        }
-
-        .featured-game-info {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 16px;
-            flex-wrap: wrap;
-            gap: 12px;
-        }
-
-        .featured-game-stats {
-            display: flex;
-            gap: 24px;
-            flex-wrap: wrap;
-        }
-
-        .featured-stat {
-            text-align: center;
-        }
-
-        .featured-stat-value {
-            font-size: 1.5rem;
-            font-weight: 700;
-        }
-
-        .featured-stat-value.accuracy { color: #22c55e; }
-        .featured-stat-value.win { color: #22c55e; }
-        .featured-stat-value.loss { color: #ef4444; }
-        .featured-stat-value.draw { color: #eab308; }
-
-        .featured-stat-label {
-            font-size: 12px;
-            color: var(--color-text-light);
-        }
-
-        .featured-game-meta {
-            font-size: 14px;
-            color: var(--color-text-light);
-            text-align: right;
-        }
-
-        .featured-game-meta strong {
-            color: var(--color-text);
-        }
-
-        .featured-embed {
-            width: 100%;
-            aspect-ratio: 4 / 3;
-            border: none;
-            border-radius: 8px;
-            background: #fff;
-        }
-
-        .featured-link {
-            display: inline-block;
-            margin-top: 12px;
-            font-size: 13px;
-            color: var(--color-navy);
-            text-decoration: none;
-            border-bottom: 1px solid var(--color-gold-muted);
-        }
-
-        .featured-link:hover {
-            border-bottom-color: var(--color-navy);
-        }
-
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
@@ -411,15 +292,6 @@
             .control-group input {
                 width: 100%;
             }
-            .featured-embed {
-                aspect-ratio: 1 / 1;
-            }
-            .featured-game-stats {
-                gap: 16px;
-            }
-            .featured-selector {
-                flex-wrap: wrap;
-            }
         }
     </style>
 </head>
@@ -450,42 +322,6 @@
 
         <div id="error" class="error-msg" style="display: none;"></div>
 
-        <div id="featured-section" class="featured-section" style="display: none;">
-            <div class="featured-header">
-                <div class="featured-title">⭐ Featured Game</div>
-                <div class="featured-selector">
-                    <button class="featured-btn active" data-type="accuracy">Most Accurate</button>
-                    <button class="featured-btn" data-type="upset">Biggest Upset</button>
-                    <button class="featured-btn" data-type="recent">Most Recent Win</button>
-                </div>
-            </div>
-            <div class="featured-game-container">
-                <div class="featured-game-info">
-                    <div class="featured-game-stats">
-                        <div class="featured-stat">
-                            <div class="featured-stat-value accuracy" id="featured-accuracy">--</div>
-                            <div class="featured-stat-label">Accuracy</div>
-                        </div>
-                        <div class="featured-stat">
-                            <div class="featured-stat-value" id="featured-result">--</div>
-                            <div class="featured-stat-label">Result</div>
-                        </div>
-                        <div class="featured-stat">
-                            <div class="featured-stat-value" id="featured-rating">--</div>
-                            <div class="featured-stat-label">Your Rating</div>
-                        </div>
-                    </div>
-                    <div class="featured-game-meta">
-                        <div>vs <strong id="featured-opponent">--</strong> (<span id="featured-opp-rating">--</span>)</div>
-                        <div id="featured-date">--</div>
-                        <div id="featured-time-class">--</div>
-                    </div>
-                </div>
-                <iframe id="featured-embed" class="featured-embed" src="" allowtransparency="true"></iframe>
-                <a id="featured-link" class="featured-link" href="#" target="_blank">View on Chess.com →</a>
-            </div>
-        </div>
-
         <div id="stats" style="display: none;"></div>
 
         <div id="games-container" style="display: none;">
@@ -514,7 +350,6 @@
     <script>
         (function() {
             let allGames = [];
-            let featuredType = 'accuracy';
             
             const elements = {
                 username: document.getElementById('username'),
@@ -527,28 +362,8 @@
                 filterTime: document.getElementById('filter-time'),
                 gamesCount: document.getElementById('games-count'),
                 gamesList: document.getElementById('games-list'),
-                moreGames: document.getElementById('more-games'),
-                featuredSection: document.getElementById('featured-section'),
-                featuredEmbed: document.getElementById('featured-embed'),
-                featuredAccuracy: document.getElementById('featured-accuracy'),
-                featuredResult: document.getElementById('featured-result'),
-                featuredRating: document.getElementById('featured-rating'),
-                featuredOpponent: document.getElementById('featured-opponent'),
-                featuredOppRating: document.getElementById('featured-opp-rating'),
-                featuredDate: document.getElementById('featured-date'),
-                featuredTimeClass: document.getElementById('featured-time-class'),
-                featuredLink: document.getElementById('featured-link')
+                moreGames: document.getElementById('more-games')
             };
-
-            // Featured type buttons
-            document.querySelectorAll('.featured-btn').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    document.querySelectorAll('.featured-btn').forEach(b => b.classList.remove('active'));
-                    btn.classList.add('active');
-                    featuredType = btn.dataset.type;
-                    renderFeaturedGame();
-                });
-            });
 
             elements.analyzeBtn.addEventListener('click', fetchGames);
             elements.sortBy.addEventListener('change', renderGames);
@@ -571,7 +386,6 @@
                 elements.error.style.display = 'none';
                 elements.stats.style.display = 'none';
                 elements.gamesContainer.style.display = 'none';
-                elements.featuredSection.style.display = 'none';
                 allGames = [];
 
                 try {
@@ -604,10 +418,6 @@
                             const opponentData = isWhite ? game.black : game.white;
                             const accuracy = isWhite ? game.accuracies.white : game.accuracies.black;
 
-                            // Extract game ID from URL
-                            const urlParts = game.url.split('/');
-                            const gameId = urlParts[urlParts.length - 1];
-
                             return {
                                 accuracy,
                                 result: playerData.result,
@@ -615,10 +425,8 @@
                                 yourRating: playerData.rating,
                                 opponent: opponentData.username,
                                 opponentRating: opponentData.rating,
-                                ratingDiff: opponentData.rating - playerData.rating,
                                 timeClass: game.time_class,
                                 url: game.url,
-                                gameId: gameId,
                                 date: new Date(game.end_time * 1000)
                             };
                         });
@@ -627,7 +435,6 @@
                         throw new Error('No analyzed games found. Games need accuracy data from Chess.com analysis.');
                     }
 
-                    renderFeaturedGame();
                     renderStats();
                     renderGames();
 
@@ -642,57 +449,6 @@
             function showError(message) {
                 elements.error.textContent = message;
                 elements.error.style.display = 'block';
-            }
-
-            function getFeaturedGame() {
-                if (allGames.length === 0) return null;
-
-                const wins = allGames.filter(g => g.result === 'win');
-
-                switch (featuredType) {
-                    case 'accuracy':
-                        // Most accurate game overall
-                        return [...allGames].sort((a, b) => b.accuracy - a.accuracy)[0];
-                    case 'upset':
-                        // Win against highest-rated opponent (biggest rating difference)
-                        if (wins.length === 0) return [...allGames].sort((a, b) => b.accuracy - a.accuracy)[0];
-                        return [...wins].sort((a, b) => b.ratingDiff - a.ratingDiff)[0];
-                    case 'recent':
-                        // Most recent win
-                        if (wins.length === 0) return [...allGames].sort((a, b) => b.date - a.date)[0];
-                        return [...wins].sort((a, b) => b.date - a.date)[0];
-                    default:
-                        return allGames[0];
-                }
-            }
-
-            function renderFeaturedGame() {
-                const game = getFeaturedGame();
-                if (!game) return;
-
-                elements.featuredAccuracy.textContent = game.accuracy.toFixed(1) + '%';
-                
-                const resultText = game.result === 'win' ? 'Win' : 
-                                   (game.result === 'draw' || game.result === 'stalemate') ? 'Draw' : 'Loss';
-                const resultClass = game.result === 'win' ? 'win' : 
-                                    (game.result === 'draw' || game.result === 'stalemate') ? 'draw' : 'loss';
-                elements.featuredResult.textContent = resultText;
-                elements.featuredResult.className = 'featured-stat-value ' + resultClass;
-
-                elements.featuredRating.textContent = game.yourRating;
-                elements.featuredOpponent.textContent = game.opponent;
-                elements.featuredOppRating.textContent = game.opponentRating;
-                elements.featuredDate.textContent = game.date.toLocaleDateString('en-US', { 
-                    year: 'numeric', month: 'short', day: 'numeric' 
-                });
-                elements.featuredTimeClass.textContent = game.timeClass.charAt(0).toUpperCase() + game.timeClass.slice(1);
-
-                // Chess.com embed URL
-                const embedUrl = `https://www.chess.com/emboard?id=${game.gameId}`;
-                elements.featuredEmbed.src = embedUrl;
-                elements.featuredLink.href = game.url;
-
-                elements.featuredSection.style.display = 'block';
             }
 
             function renderStats() {
