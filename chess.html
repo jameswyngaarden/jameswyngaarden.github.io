@@ -1044,13 +1044,18 @@
                     parsePGN(game.pgn);
                     renderMoveList();
 
-                    // Set board orientation based on player color
-                    if (board) {
-                        board.orientation(game.color);
-                    }
-
-                    // Reset to starting position
-                    goToMove(-1);
+                    // Initialize or reinitialize board now that container is visible
+                    setTimeout(function() {
+                        if (board) {
+                            board.destroy();
+                        }
+                        board = Chessboard('featured-board', {
+                            position: 'start',
+                            pieceTheme: 'https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/img/chesspieces/wikipedia/{piece}.png',
+                            orientation: game.color
+                        });
+                        goToMove(-1);
+                    }, 50);
                 }
             }
 
@@ -1168,7 +1173,7 @@
             }
 
             // Initialize
-            initBoard();
+            // initBoard();
             fetchGames(false); // Auto-fetch on page load
         })();
     </script>
