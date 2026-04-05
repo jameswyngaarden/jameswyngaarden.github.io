@@ -753,7 +753,7 @@
             function initBoard() {
                 board = Chessboard('featured-board', {
                     position: 'start',
-                    pieceTheme: 'https://chessboardjs.com/img/chesspieces/wikipedia/{piece}.png'
+                    pieceTheme: 'https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/img/chesspieces/wikipedia/{piece}.png'
                 });
                 $(window).resize(function() {
                     if (board) board.resize();
