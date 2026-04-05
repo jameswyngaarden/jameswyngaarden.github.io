@@ -751,13 +751,16 @@
 
             // Initialize board
             function initBoard() {
-                board = Chessboard('featured-board', {
-                    position: 'start',
-                    pieceTheme: 'https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/img/chesspieces/wikipedia/{piece}.png'
-                });
-                $(window).resize(function() {
-                    if (board) board.resize();
-                });
+                // Delay initialization to ensure container has rendered with proper dimensions
+                setTimeout(function() {
+                    board = Chessboard('featured-board', {
+                        position: 'start',
+                        pieceTheme: 'https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/img/chesspieces/wikipedia/{piece}.png'
+                    });
+                    $(window).resize(function() {
+                        if (board) board.resize();
+                    });
+                }, 100);
             }
 
             // Featured type buttons
