@@ -22,8 +22,6 @@
             --color-border: #dfe3e7;
             --font-serif: 'Source Serif 4', 'Georgia', serif;
             --font-display: 'Sora', 'Helvetica Neue', sans-serif;
-            --expand-duration: 0.8s;
-            --expand-easing: cubic-bezier(0.25, 0.1, 0.25, 1);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -498,86 +496,6 @@
             opacity: 1;
         }
 
-        /* ── Animated Name (inline in header) ── */
-        .name-animated {
-            display: flex;
-            align-items: baseline;
-            white-space: nowrap;
-            font-family: var(--font-display);
-            font-size: 1.9rem;
-            font-weight: 600;
-            color: var(--color-navy);
-            letter-spacing: -0.02em;
-            margin-bottom: 5px;
-        }
-
-        .name-animated .letter {
-            display: inline-block;
-            line-height: 1;
-        }
-
-        .name-animated .letter.initial {
-            opacity: 0;
-            transform: translateY(6px);
-            transition: opacity 0.35s ease-out, transform 0.35s ease-out;
-        }
-
-        .name-animated.show-initials .letter.initial {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .name-animated .letter.hidden {
-            display: inline-block;
-            max-width: 0;
-            opacity: 0;
-            overflow: hidden;
-            transition: max-width var(--expand-duration) var(--expand-easing),
-                        opacity 0.3s ease-out;
-        }
-
-        .name-animated.expanded .letter.hidden {
-            max-width: 1em;
-            opacity: 1;
-        }
-
-        .name-animated.expanded .letter.hidden.g1 { transition-delay: 0.0s; }
-        .name-animated.expanded .letter.hidden.g2 { transition-delay: 0.05s; }
-        .name-animated.expanded .letter.hidden.g3 { transition-delay: 0.10s; }
-        .name-animated.expanded .letter.hidden.g4 { transition-delay: 0.15s; }
-        .name-animated.expanded .letter.hidden.g5 { transition-delay: 0.20s; }
-        .name-animated.expanded .letter.hidden.g6 { transition-delay: 0.25s; }
-        .name-animated.expanded .letter.hidden.g7 { transition-delay: 0.30s; }
-        .name-animated.expanded .letter.hidden.g8 { transition-delay: 0.35s; }
-        .name-animated.expanded .letter.hidden.g9 { transition-delay: 0.40s; }
-        .name-animated.expanded .letter.hidden.g10 { transition-delay: 0.45s; }
-        .name-animated.expanded .letter.hidden.g11 { transition-delay: 0.50s; }
-        .name-animated.expanded .letter.hidden.g12 { transition-delay: 0.55s; }
-        .name-animated.expanded .letter.hidden.g13 { transition-delay: 0.60s; }
-        .name-animated.expanded .letter.hidden.g14 { transition-delay: 0.65s; }
-        .name-animated.expanded .letter.hidden.g15 { transition-delay: 0.70s; }
-
-        .name-animated .letter.space {
-            width: 0.35em;
-            max-width: 0;
-            transition: max-width var(--expand-duration) var(--expand-easing);
-        }
-
-        .name-animated.expanded .letter.space {
-            max-width: 0.35em;
-        }
-
-        .name-animated .letter.period {
-            max-width: 0;
-            transition: max-width var(--expand-duration) var(--expand-easing),
-                        opacity 0.3s ease-out;
-        }
-
-        .name-animated.expanded .letter.period {
-            max-width: 0.3em;
-            opacity: 1;
-        }
-
         /* ── Responsive ── */
         @media (max-width: 900px) {
             .container {
@@ -663,7 +581,7 @@
         <aside class="sidebar">
             <div class="sidebar-profile">
                 <div class="sidebar-links">
-                    <a href="/cdn-cgi/l/email-protection#8fe5eee2eafca1f8f6e1e8eeeefdebeae1cffbeae2ffe3eaa1eaebfa" class="sidebar-link">
+                    <a href="mailto:james.wyngaarden@temple.edu" class="sidebar-link">
                         <img src="stimuli/logos/Email.png" alt="">Email
                     </a>
                     <a href="https://www.linkedin.com/in/james-wyngaarden-iii" target="_blank" class="sidebar-link">
@@ -688,31 +606,7 @@
         <div class="main-content">
             <header>
                 <div class="header-center">
-                    <div class="name-animated" id="nameAnimated">
-                        <span class="letter initial">J</span>
-                        <span class="letter hidden g1">a</span>
-                        <span class="letter hidden g2">m</span>
-                        <span class="letter hidden g3">e</span>
-                        <span class="letter hidden g4">s</span>
-                        <span class="letter space hidden g5"></span>
-                        <span class="letter initial">B</span>
-                        <span class="letter period hidden g6">.</span>
-                        <span class="letter space hidden g7"></span>
-                        <span class="letter initial">W</span>
-                        <span class="letter hidden g8">y</span>
-                        <span class="letter hidden g9">n</span>
-                        <span class="letter hidden g10">g</span>
-                        <span class="letter hidden g11">a</span>
-                        <span class="letter hidden g11">a</span>
-                        <span class="letter hidden g12">r</span>
-                        <span class="letter hidden g13">d</span>
-                        <span class="letter hidden g14">e</span>
-                        <span class="letter hidden g15">n</span>
-                        <span class="letter space hidden g15"></span>
-                        <span class="letter initial">I</span>
-                        <span class="letter initial">I</span>
-                        <span class="letter initial">I</span>
-                    </div>
+                    <h1>James B. Wyngaarden III</h1>
                     <p class="subtitle">Neuroeconomics &ensp;·&ensp; Reward Processing &ensp;·&ensp; Decision Making</p>
                 </div>
                 <nav class="nav">
@@ -740,7 +634,7 @@
                 <p>I'm a PhD candidate in cognitive neuroscience at Temple University, working with David V. Smith in the <a href="https://sites.temple.edu/neuroeconlab/" target="_blank"
                    data-preview-title="Temple Neuroeconomics Lab"
                    data-preview-desc="Directed by Dr. David V. Smith, our lab investigates the neural and computational mechanisms underlying reward processing, social decision-making, and economic choice across the lifespan."
-                   data-preview-img="stimuli/placeholder-neuroeconlab.png"
+                   data-preview-img="stimuli/neuroeconlab.png"
                    data-preview-source="Temple University">Neuroeconomics Lab</a>. Our work uses fMRI, noninvasive brain stimulation (tACS), and computational modeling to understand why people persist with unrewarding choices — and what it takes to shift those patterns. Our work spans reward processing, social decision-making, and economic games commonly used in neuroeconomics, including trust, fairness, and risky choice paradigms.</p>
                 
                 <p>My recent work, funded by an <a href="https://reporter.nih.gov/search/sS498jkSfUCBuRmKI-9XjA/project-details/10899057" target="_blank"
@@ -750,7 +644,7 @@
                    data-preview-source="NIH F31-AG085934, $106,000">NIH F31 fellowship</a> from the National Institute on Aging, focuses on older adults, who show marked declines in cognitive flexibility. Reversal learning — the ability to update behavior when reward contingencies change — is a useful behavioral probe for this kind of prefrontally-mediated reward processing, and I'm testing whether <a href="current-work.html#section-tacs"
                    data-preview-title="Brain Stimulation: tACS"
                    data-preview-desc="Transcranial alternating current stimulation (tACS) delivers weak oscillating electrical currents to modulate neural activity. My dissertation tests whether targeting the dorsolateral prefrontal cortex can improve reversal learning in older adults."
-                   data-preview-img="stimuli/placeholder-tacs.png"
+                   data-preview-img="stimuli/DLPFC_tacs.png"
                    data-preview-source="Current Work">tACS targeting dorsolateral prefrontal cortex</a> can help restore that function. In the real world, the ability to adapt to new medication routines, adjust financial strategies, or shift social behaviors after life transitions are essential to successfully navigating through life.</p>
                 
                 <p>More broadly, I'm committed to open and reproducible science. I've contributed to three publicly released neuroimaging datasets on OpenNeuro totaling over 500 participants, with data drawing on methods spanning task-based and resting-state fMRI, diffusion imaging, and computational modeling. My goal is to deepen our understanding of how reward processing and decision-making change across the lifespan, and translate that knowledge into tools that help people achieve better outcomes.</p>
@@ -877,7 +771,7 @@
         </div>
     </div>
 
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    <script>
         // Headshot tooltip cursor tracking
         const wrapper = document.querySelector('.headshot-wrapper');
         const tooltip = document.querySelector('.headshot-tooltip');
@@ -952,21 +846,6 @@
                 }, 100);
             });
         });
-
-        // Name Animation (inline in header)
-        (function() {
-            const nameAnimated = document.getElementById('nameAnimated');
-
-            // Phase 1: JBWIII appears all at once
-            setTimeout(() => {
-                nameAnimated.classList.add('show-initials');
-            }, 100);
-
-            // Phase 2: Expand to full name
-            setTimeout(() => {
-                nameAnimated.classList.add('expanded');
-            }, 600);
-        })();
     </script>
 </body>
 </html>
