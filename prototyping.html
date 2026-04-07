@@ -4,23 +4,33 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-<title>Initials Animation Fixed</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600&display=swap" rel="stylesheet">
+<title>True Glyph Animation</title>
 
 <style>
+    
+@font-face {
+  font-family: 'Sora Local';
+  /* This path assumes index.html and the 'static' folder are together */
+  src: url('code/Sora/static/subset.woff22') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   --navy: #1a3a5c;
   --ease: cubic-bezier(0.25, 0.1, 0.25, 1);
 }
 
 body {
-  font-family: 'Sora', sans-serif;
+  margin: 0;
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
   background: white;
+  /* Now 'Sora Local' will actually trigger */
+  font-family: 'Sora Local', sans-serif;
 }
 
 .container {
@@ -32,12 +42,7 @@ body {
 
 svg {
   height: 1.9rem;
-  width: auto;
   overflow: visible;
-}
-
-svg text {
-  dominant-baseline: alphabetic;
 }
 
 .name-part {
@@ -52,7 +57,7 @@ svg text {
 }
 
 .expand .name-part {
-  max-width: 200px;
+  max-width: 220px;
   opacity: 1;
 }
 </style>
@@ -63,97 +68,93 @@ svg text {
 <div class="container" id="name">
 
 <!-- J -->
-<svg viewBox="0 0 100 100">
+<svg viewBox="0 0 120 120">
 <defs>
-<mask id="maskJ">
-  <rect width="100%" height="100%" fill="black"/>
+  <mask id="maskJ">
+    <rect width="100%" height="100%" fill="black"/>
 
-  <!-- Top bar -->
-  <rect id="j-top" x="0" y="0" width="0" height="25" fill="white"/>
-
-  <!-- Sweep -->
-  <path id="j-sweep"
-    d="M70 0 L70 80 Q70 100 40 100"
-    stroke="white"
-    stroke-width="40"
-    stroke-linecap="round"
-    fill="none"
-    stroke-dasharray="300"
-    stroke-dashoffset="300"/>
-</mask>
+    <!-- reveal sweep -->
+    <path id="j-reveal"
+      d="M90 0 L90 100 Q90 120 50 120"
+      stroke="white"
+      stroke-width="60"
+      stroke-linecap="round"
+      fill="none"
+      stroke-dasharray="400"
+      stroke-dashoffset="400"/>
+  </mask>
 </defs>
 
-<text x="0" y="75" font-size="80" fill="var(--navy)" mask="url(#maskJ)">J</text>
+<!-- REAL PATH -->
+<path d="M95 5 H20 V25 H70 V85 Q70 105 50 105 Q35 105 30 95 L15 105 Q25 120 50 120 Q90 120 90 85 V5 Z"
+fill="var(--navy)" mask="url(#maskJ)"/>
 </svg>
 
 <span class="name-part">ames</span>
 
 <!-- B -->
-<svg viewBox="0 0 100 100">
+<svg viewBox="0 0 120 120">
 <defs>
-<mask id="maskB">
-  <rect width="100%" height="100%" fill="black"/>
+  <mask id="maskB">
+    <rect width="100%" height="100%" fill="black"/>
 
-  <!-- Backbone -->
-  <rect id="b-backbone" x="0" y="0" width="25" height="0" fill="white"/>
+    <rect id="b-backbone" x="0" y="0" width="40" height="0" fill="white"/>
 
-  <!-- Top bowl -->
-  <circle id="b-top" cx="55" cy="30" r="0" fill="white"/>
-
-  <!-- Bottom bowl -->
-  <circle id="b-bottom" cx="55" cy="75" r="0" fill="white"/>
-</mask>
+    <rect id="b-top" x="0" y="0" width="0" height="60" fill="white"/>
+    <rect id="b-bottom" x="0" y="60" width="0" height="60" fill="white"/>
+  </mask>
 </defs>
 
-<text x="0" y="75" font-size="80" fill="var(--navy)" mask="url(#maskB)">B</text>
+<path d="M10 5 H65 Q95 5 95 30 Q95 50 70 55 Q100 60 100 90 Q100 115 65 115 H10 Z"
+fill="var(--navy)" mask="url(#maskB)"/>
 </svg>
 
 <span class="name-part">yngaarden</span>
 
 <!-- W -->
-<svg viewBox="0 0 100 100">
+<svg viewBox="0 0 160 120">
 <defs>
-<mask id="maskW">
-  <rect width="100%" height="100%" fill="black"/>
+  <mask id="maskW">
+    <rect width="100%" height="100%" fill="black"/>
 
-  <!-- Left -->
-  <path id="w-left"
-    d="M0 0 L40 100 L60 40"
-    stroke="white"
-    stroke-width="35"
-    stroke-linecap="round"
-    fill="none"
-    stroke-dasharray="300"
-    stroke-dashoffset="300"/>
+    <path id="w-left"
+      d="M0 0 L60 120 L80 60"
+      stroke="white"
+      stroke-width="60"
+      fill="none"
+      stroke-linecap="round"
+      stroke-dasharray="400"
+      stroke-dashoffset="400"/>
 
-  <!-- Right -->
-  <path id="w-right"
-    d="M100 0 L60 100 L40 40"
-    stroke="white"
-    stroke-width="35"
-    stroke-linecap="round"
-    fill="none"
-    stroke-dasharray="300"
-    stroke-dashoffset="300"/>
-</mask>
+    <path id="w-right"
+      d="M160 0 L100 120 L80 60"
+      stroke="white"
+      stroke-width="60"
+      fill="none"
+      stroke-linecap="round"
+      stroke-dasharray="400"
+      stroke-dashoffset="400"/>
+  </mask>
 </defs>
 
-<text x="0" y="75" font-size="80" fill="var(--navy)" mask="url(#maskW)">W</text>
+<path d="M10 5 L40 115 L80 45 L120 115 L150 5 H120 L100 85 L80 35 L60 85 L40 5 Z"
+fill="var(--navy)" mask="url(#maskW)"/>
 </svg>
 
 <!-- III -->
-<svg viewBox="0 0 100 100">
+<svg viewBox="0 0 120 120">
 <defs>
-<mask id="maskIII">
-  <rect width="100%" height="100%" fill="black"/>
+  <mask id="maskIII">
+    <rect width="100%" height="100%" fill="black"/>
 
-  <rect class="i-bar" x="10" y="100" width="15" height="0" fill="white"/>
-  <rect class="i-bar" x="40" y="100" width="15" height="0" fill="white"/>
-  <rect class="i-bar" x="70" y="100" width="15" height="0" fill="white"/>
-</mask>
+    <rect class="i-bar" x="10" y="120" width="25" height="0" fill="white"/>
+    <rect class="i-bar" x="50" y="120" width="25" height="0" fill="white"/>
+    <rect class="i-bar" x="90" y="120" width="25" height="0" fill="white"/>
+  </mask>
 </defs>
 
-<text x="0" y="75" font-size="80" fill="var(--navy)" mask="url(#maskIII)">III</text>
+<path d="M10 5 H35 V115 H10 Z M50 5 H75 V115 H50 Z M90 5 H115 V115 H90 Z"
+fill="var(--navy)" mask="url(#maskIII)"/>
 </svg>
 
 </div>
@@ -164,48 +165,43 @@ const ease = 'cubic-bezier(0.25, 0.1, 0.25, 1)';
 function animate() {
 
   // J
-  document.getElementById('j-top').animate(
-    [{ width: 0 }, { width: 80 }],
-    { duration: 400, easing: ease, fill: 'forwards' }
-  );
-
-  document.getElementById('j-sweep').animate(
-    [{ strokeDashoffset: 300 }, { strokeDashoffset: 0 }],
-    { duration: 700, delay: 300, easing: ease, fill: 'forwards' }
+  document.getElementById('j-reveal').animate(
+    [{ strokeDashoffset: 400 }, { strokeDashoffset: 0 }],
+    { duration: 900, easing: ease, fill: 'forwards' }
   );
 
   // B
   document.getElementById('b-backbone').animate(
-    [{ height: 0 }, { height: 100 }],
+    [{ height: 0 }, { height: 120 }],
     { duration: 500, delay: 200, easing: ease, fill: 'forwards' }
   );
 
   document.getElementById('b-top').animate(
-    [{ r: 0 }, { r: 28 }],
+    [{ width: 0 }, { width: 120 }],
     { duration: 400, delay: 700, easing: ease, fill: 'forwards' }
   );
 
   document.getElementById('b-bottom').animate(
-    [{ r: 0 }, { r: 28 }],
+    [{ width: 0 }, { width: 120 }],
     { duration: 400, delay: 1000, easing: ease, fill: 'forwards' }
   );
 
   // W
   document.getElementById('w-left').animate(
-    [{ strokeDashoffset: 300 }, { strokeDashoffset: 0 }],
-    { duration: 700, delay: 300, easing: ease, fill: 'forwards' }
+    [{ strokeDashoffset: 400 }, { strokeDashoffset: 0 }],
+    { duration: 900, delay: 300, easing: ease, fill: 'forwards' }
   );
 
   document.getElementById('w-right').animate(
-    [{ strokeDashoffset: 300 }, { strokeDashoffset: 0 }],
-    { duration: 700, delay: 300, easing: ease, fill: 'forwards' }
+    [{ strokeDashoffset: 400 }, { strokeDashoffset: 0 }],
+    { duration: 900, delay: 300, easing: ease, fill: 'forwards' }
   );
 
   // III
   document.querySelectorAll('.i-bar').forEach(el => {
     el.animate(
-      [{ y: 100, height: 0 }, { y: 10, height: 90 }],
-      { duration: 600, delay: 500, easing: ease, fill: 'forwards' }
+      [{ y: 120, height: 0 }, { y: 5, height: 110 }],
+      { duration: 700, delay: 500, easing: ease, fill: 'forwards' }
     );
   });
 
