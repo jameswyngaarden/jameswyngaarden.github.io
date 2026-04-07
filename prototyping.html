@@ -1,532 +1,76 @@
 <!DOCTYPE html>
 <html lang="en">
-<script data-goatcounter="https://jameswyngaarden.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
-<link rel="icon" type="image/png" href="stimuli/favicon.png">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>James B. Wyngaarden III - Academic Portfolio</title>
+    <title>Header Animation Prototype</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,500;1,8..60,400&family=Sora:wght@300;400;500;600;700&display=swap');
+        /* Import the exact font from your site */
+        @import url('https://fonts.googleapis.com/css2?family=Sora:wght@600&display=swap');
 
         :root {
-            --color-text: #1e2d3d;
-            --color-text-light: #5a6a78;
             --color-navy: #1a3a5c;
-            --color-navy-light: #2a4f7a;
-            --color-gold: #b8860b;
-            --color-gold-muted: #c4973b;
-            --color-gold-subtle: rgba(184, 134, 11, 0.12);
-            --color-bg: #ffffff;
-            --color-bg-subtle: #f7f8f9;
-            --color-border: #dfe3e7;
-            --font-serif: 'Source Serif 4', 'Georgia', serif;
-            --font-display: 'Sora', 'Helvetica Neue', sans-serif;
+            --font-display: 'Sora', sans-serif;
             --expand-duration: 0.8s;
             --expand-easing: cubic-bezier(0.25, 0.1, 0.25, 1);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
         body {
-            font-family: var(--font-serif);
-            line-height: 1.7;
-            color: var(--color-text);
-            background: var(--color-bg);
-            min-height: 100vh;
-            font-size: 16px;
-            -webkit-font-smoothing: antialiased;
-        }
-
-        .container {
-            max-width: 1300px;
-            margin: 0 auto;
-            padding: 40px 30px;
+            background-color: #f7f8f9;
             display: flex;
-            gap: 50px;
-        }
-
-        /* ── Sidebar ── */
-        .sidebar {
-            width: 240px;
-            flex-shrink: 0;
-            position: sticky;
-            top: 40px;
-            height: fit-content;
-        }
-
-        .sidebar-profile {
-            padding: 0;
-            text-align: center;
-        }
-
-        .sidebar-profile-img {
-            width: 160px;
-            height: 160px;
-            border-radius: 50%;
-            margin: 0 auto 24px;
-            background-image: url('stimuli/headshot.jpg');
-            background-size: cover;
-            background-position: center;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-        }
-
-        .sidebar-name {
-            font-family: var(--font-display);
-            font-size: 1.15rem;
-            font-weight: 600;
-            color: var(--color-navy);
-            margin-bottom: 4px;
-        }
-
-        .sidebar-title {
-            font-family: var(--font-display);
-            font-size: 0.82rem;
-            color: var(--color-text-light);
-            margin-bottom: 28px;
-            font-weight: 400;
-        }
-
-        .sidebar-links {
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-        }
-
-        .sidebar-link {
-            display: flex;
+            justify-content: center;
             align-items: center;
-            padding: 9px 12px;
-            color: var(--color-text);
-            text-decoration: none;
-            transition: all 0.2s ease;
-            font-family: var(--font-display);
-            font-size: 0.85rem;
-            font-weight: 400;
-            gap: 10px;
-            border-radius: 6px;
+            height: 100vh;
+            margin: 0;
         }
 
-        .sidebar-link img {
-            width: 18px;
-            height: 18px;
-            object-fit: contain;
-            opacity: 0.55;
-            transition: opacity 0.2s ease;
-        }
-
-        .sidebar-link:hover {
-            background: var(--color-bg-subtle);
-            color: var(--color-navy);
-        }
-
-        .sidebar-link:hover img {
-            opacity: 0.85;
-        }
-
-        /* ── Main Content ── */
-        .main-content {
-            flex-grow: 1;
-            min-width: 0;
-        }
-
-        /* ── Header ── */
-        header {
-            padding: 0 0 28px 0;
-            margin-bottom: 0;
-            display: flex;
-            align-items: baseline;
-            justify-content: space-between;
-            gap: 30px;
-            border-bottom: 1px solid var(--color-border);
-        }
-
-        .header-center {
-            flex-grow: 1;
-        }
-
-        h1 {
-            font-family: var(--font-display);
-            font-size: 1.9rem;
-            margin-bottom: 5px;
-            color: var(--color-navy);
-            font-weight: 600;
-            letter-spacing: -0.02em;
-            white-space: nowrap;
-        }
-
-        .subtitle {
-            font-family: var(--font-display);
-            font-size: 0.88rem;
-            color: var(--color-text-light);
-            font-weight: 300;
-            letter-spacing: 0.03em;
-        }
-
-        /* ── Navigation ── */
-        .nav {
-            display: flex;
-            gap: 32px;
-            flex-shrink: 0;
-            align-items: baseline;
-        }
-
-        .nav-link {
-            font-family: var(--font-display);
-            font-size: 0.88rem;
-            font-weight: 400;
-            color: var(--color-text-light);
-            text-decoration: none;
-            padding-bottom: 4px;
-            border-bottom: 2px solid transparent;
-            transition: all 0.2s ease;
-        }
-
-        .nav-link:hover {
-            color: var(--color-navy);
-            border-bottom-color: var(--color-border);
-        }
-
-        .nav-link.active {
-            color: var(--color-navy);
-            border-bottom-color: var(--color-gold);
-            font-weight: 500;
-        }
-
-        /* ── Text-Clip Parallax Section Headers ── */
-        .section-header {
-            padding: 10px 0;
-            text-align: center;
-            margin: 40px 0 0 0;
-            position: relative;
-            background: var(--color-bg);
-        }
-
-        .section-header.alt-bg {
-            margin-top: 20px;
-        }
-
-        .section-header h2 {
-            font-family: var(--font-display);
-            font-size: 4.5rem;
-            font-weight: 700;
-            letter-spacing: -0.02em;
-            line-height: 1;
-            background-image: url('stimuli/schuylkill_river_trail.jpg');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            color: transparent;
-        }
-
-        /* Thin gold rule below the header text */
-        .section-header::after {
-            content: '';
-            display: block;
-            width: 60px;
-            height: 2px;
-            background: var(--color-gold);
-            margin: 24px auto 0;
-        }
-
-        /* ── About Content ── */
-        .headshot-wrapper {
-            float: right;
-            position: relative;
-            margin: 0 0 20px 28px;
-        }
-
-        .about-headshot {
-            width: 180px;
-            height: 180px;
-            border-radius: 50%;
-            object-fit: cover;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-            display: block;
-            transition: box-shadow 0.2s ease;
-        }
-
-        .headshot-wrapper:hover .about-headshot {
-            box-shadow: 0 6px 24px rgba(0, 0, 0, 0.12);
-        }
-
-        .headshot-tooltip {
-            position: absolute;
-            bottom: 100%;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #5a6a78;
-            color: white;
-            padding: 10px 14px;
+        /* Container to mimic your header layout */
+        .preview-box {
+            background: white;
+            padding: 60px;
             border-radius: 8px;
-            font-family: var(--font-display);
-            font-size: 0.8rem;
-            white-space: nowrap;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.2s ease, visibility 0.2s ease;
-            z-index: 10;
-            pointer-events: none;
-        }
-
-        .headshot-tooltip::after {
-            content: '';
-            position: absolute;
-            top: 100%;
-            left: 50%;
-            transform: translateX(-50%);
-            border: 6px solid transparent;
-            border-top-color: #5a6a78;
-        }
-
-        .headshot-wrapper:hover .headshot-tooltip {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .about-content {
-            font-size: 1.05rem;
-            line-height: 1.85;
-            max-width: 700px;
-            margin: 0 auto;
-            color: var(--color-text);
-            padding: 44px 20px 40px;
-        }
-
-        .about-content p {
-            margin-bottom: 22px;
-            text-align: left;
-        }
-
-        .about-content a {
-            color: var(--color-navy);
-            text-decoration: none;
-            border-bottom: 1px solid var(--color-gold-muted);
-            transition: border-color 0.2s ease;
-        }
-
-        .about-content a:hover {
-            border-bottom-color: var(--color-navy);
-        }
-
-        /* ── Link Preview Box ── */
-        .link-preview {
-            position: fixed;
-            width: 320px;
-            background: #5a6a78;
-            border-radius: 10px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
-            z-index: 1000;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.2s ease, visibility 0.2s ease;
-            pointer-events: none;
-            overflow: hidden;
-        }
-
-        .link-preview.visible {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .link-preview-image {
-            width: 100%;
-            height: 120px;
-            object-fit: cover;
-            display: block;
-        }
-
-        .link-preview-content {
-            padding: 14px 16px;
-        }
-
-        .link-preview-title {
-            font-family: var(--font-display);
-            font-size: 0.95rem;
-            font-weight: 600;
-            color: white;
-            margin-bottom: 6px;
-            line-height: 1.3;
-        }
-
-        .link-preview-description {
-            font-family: var(--font-serif);
-            font-size: 0.85rem;
-            color: rgba(255, 255, 255, 0.85);
-            line-height: 1.5;
-            margin-bottom: 8px;
-        }
-
-        .link-preview-source {
-            font-family: var(--font-display);
-            font-size: 0.75rem;
-            color: rgba(255, 255, 255, 0.6);
-        }
-
-        /* ── Research Section ── */
-        .research-section {
-            max-width: 700px;
-            margin: 0 auto;
-            padding: 44px 20px;
-        }
-
-        .research-section h3 {
-            font-family: var(--font-display);
-            color: var(--color-navy);
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-bottom: 12px;
-            margin-top: 32px;
-            padding-bottom: 6px;
-            border-bottom: 2px solid var(--color-gold);
-            display: inline-block;
-        }
-
-        .research-section h3:first-child {
-            margin-top: 0;
-        }
-
-        .research-section p {
-            color: var(--color-text);
-            line-height: 1.8;
-            margin-bottom: 10px;
-            font-size: 1.02rem;
-        }
-
-        .research-section a {
-            color: var(--color-navy);
-            text-decoration: none;
-            border-bottom: 1px solid var(--color-gold-muted);
-            transition: border-color 0.2s ease;
-        }
-
-        .research-section a:hover {
-            border-bottom-color: var(--color-navy);
-        }
-
-        /* ── Figures ── */
-        .figure-container {
-            margin: 20px 0 28px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
             text-align: center;
         }
 
-        .figure-container img {
-            max-width: 55%;
-            height: auto;
-            border-radius: 4px;
-        }
-
-        .figure-caption {
-            margin-top: 10px;
-            color: var(--color-text-light);
-            font-size: 0.85rem;
-            font-style: italic;
-            max-width: 500px;
-            margin-left: auto;
-            margin-right: auto;
-            line-height: 1.6;
-        }
-
-        /* ── Grants ── */
-        .grants-list {
-            max-width: 700px;
-            margin: 0 auto;
-            padding: 36px 20px 48px;
-        }
-
-        .grant-item {
-            display: flex;
-            align-items: flex-start;
-            padding: 16px 0;
-            border-bottom: 1px solid var(--color-border);
-            font-size: 0.96rem;
-        }
-
-        .grant-item:last-child {
-            border-bottom: none;
-        }
-
-        .grant-year {
-            min-width: 55px;
-            font-family: var(--font-display);
-            font-weight: 600;
-            color: var(--color-gold);
-            margin-right: 20px;
-            flex-shrink: 0;
-            font-size: 0.9rem;
-        }
-
-        .grant-description {
-            flex-grow: 1;
-            line-height: 1.65;
-        }
-
-        .grant-description a {
-            color: var(--color-navy);
-            text-decoration: none;
-            border-bottom: 1px solid var(--color-gold-muted);
-            transition: border-color 0.2s ease;
-        }
-
-        .grant-description a:hover {
-            border-bottom-color: var(--color-navy);
-        }
-
-        .funding-logos {
-            display: flex;
-            justify-content: space-evenly;
-            align-items: center;
-            gap: 50px;
-            margin: 10px auto 40px auto;
-            padding: 20px;
-            max-width: 900px;
-        }
-
-        .funding-logos img {
-            height: 95px;
-            width: auto;
-            max-width: 210px;
-            object-fit: contain;
-            opacity: 0.7;
-            transition: opacity 0.2s ease;
-        }
-
-        .funding-logos img:hover {
-            opacity: 1;
-        }
-
-        /* ── Animated Name (inline in header) ── */
         .name-animated {
             display: flex;
             align-items: baseline;
             white-space: nowrap;
             font-family: var(--font-display);
-            font-size: 1.9rem;
+            font-size: 2.5rem; /* Scaled up for prototyping visibility */
             font-weight: 600;
             color: var(--color-navy);
             letter-spacing: -0.02em;
-            margin-bottom: 5px;
         }
 
-        .name-animated .letter {
-            display: inline-block;
-            line-height: 1;
+        /* SVG Initial Styling */
+        .initial-svg {
+            height: 0.9em;
+            width: auto;
+            overflow: visible;
+            margin-right: 0.05em;
+            /* Fine-tune the vertical alignment to match the text baseline */
+            transform: translateY(0.12em); 
         }
 
-        .name-animated .letter.initial {
-            opacity: 0;
-            transform: translateY(6px);
-            transition: opacity 0.35s ease-out, transform 0.35s ease-out;
+        .draw-path {
+            fill: none;
+            stroke: var(--color-navy);
+            stroke-width: 65; /* Matches Sora Bold weight at this scale */
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            stroke-dasharray: 2000;
+            stroke-dashoffset: 2000;
+            transition: stroke-dashoffset 1.3s ease-in-out;
         }
 
-        .name-animated.show-initials .letter.initial {
-            opacity: 1;
-            transform: translateY(0);
+        /* Phase 1 Trigger */
+        .show-initials .draw-path {
+            stroke-dashoffset: 0;
         }
 
+        /* Phase 2: Hidden letters expand horizontally */
         .name-animated .letter.hidden {
             display: inline-block;
             max-width: 0;
@@ -541,431 +85,75 @@
             opacity: 1;
         }
 
+        /* Staggering the expansion */
         .name-animated.expanded .letter.hidden.g1 { transition-delay: 0.0s; }
         .name-animated.expanded .letter.hidden.g2 { transition-delay: 0.05s; }
         .name-animated.expanded .letter.hidden.g3 { transition-delay: 0.10s; }
         .name-animated.expanded .letter.hidden.g4 { transition-delay: 0.15s; }
-        .name-animated.expanded .letter.hidden.g5 { transition-delay: 0.20s; }
-        .name-animated.expanded .letter.hidden.g6 { transition-delay: 0.25s; }
-        .name-animated.expanded .letter.hidden.g7 { transition-delay: 0.30s; }
-        .name-animated.expanded .letter.hidden.g8 { transition-delay: 0.35s; }
-        .name-animated.expanded .letter.hidden.g9 { transition-delay: 0.40s; }
-        .name-animated.expanded .letter.hidden.g10 { transition-delay: 0.45s; }
-        .name-animated.expanded .letter.hidden.g11 { transition-delay: 0.50s; }
-        .name-animated.expanded .letter.hidden.g12 { transition-delay: 0.55s; }
-        .name-animated.expanded .letter.hidden.g13 { transition-delay: 0.60s; }
-        .name-animated.expanded .letter.hidden.g14 { transition-delay: 0.65s; }
-        .name-animated.expanded .letter.hidden.g15 { transition-delay: 0.70s; }
+        /* ... repeat for as many letters as needed */
 
-        .name-animated .letter.space {
-            width: 0.35em;
-            max-width: 0;
-            transition: max-width var(--expand-duration) var(--expand-easing);
-        }
-
-        .name-animated.expanded .letter.space {
-            max-width: 0.35em;
-        }
-
-        .name-animated .letter.period {
-            max-width: 0;
-            transition: max-width var(--expand-duration) var(--expand-easing),
-                        opacity 0.3s ease-out;
-        }
-
-        .name-animated.expanded .letter.period {
-            max-width: 0.3em;
-            opacity: 1;
-        }
-
-        /* ── Responsive ── */
-        @media (max-width: 900px) {
-            .container {
-                flex-direction: column;
-                padding: 20px 16px;
-                gap: 30px;
-            }
-
-            .sidebar {
-                width: 100%;
-                position: relative;
-                top: 0;
-            }
-
-            .sidebar-links {
-                flex-direction: row;
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: 4px;
-            }
-
-            header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 16px;
-                padding-bottom: 24px;
-            }
-
-            .nav { gap: 24px; }
-            h1 { font-size: 1.5rem; white-space: normal; }
-
-            .section-header {
-                padding: 36px 0;
-                margin: 28px 0 0 0;
-            }
-
-            .section-header h2 {
-                font-size: 2.8rem;
-                background-attachment: scroll;
-            }
-
-            .about-content {
-                padding: 30px 8px 30px;
-            }
-
-            .headshot-wrapper {
-                float: none;
-                margin: 0 auto 24px;
-                text-align: center;
-            }
-
-            .research-section {
-                padding: 30px 8px;
-            }
-
-            .grants-list {
-                padding: 20px 8px;
-            }
-
-            .grant-item {
-                flex-direction: column;
-            }
-
-            .grant-year {
-                margin-bottom: 4px;
-                margin-right: 0;
-            }
-
-            .funding-logos {
-                flex-direction: column;
-                gap: 20px;
-            }
-
-            .figure-container img {
-                max-width: 80%;
-            }
-        }
+        .name-animated .letter.space { width: 0.3em; max-width: 0; transition: max-width var(--expand-duration) var(--expand-easing); }
+        .name-animated.expanded .letter.space { max-width: 0.3em; }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <aside class="sidebar">
-            <div class="sidebar-profile">
-                <div class="sidebar-links">
-                    <a href="/cdn-cgi/l/email-protection#8fe5eee2eafca1f8f6e1e8eeeefdebeae1cffbeae2ffe3eaa1eaebfa" class="sidebar-link">
-                        <img src="stimuli/logos/Email.png" alt="">Email
-                    </a>
-                    <a href="https://www.linkedin.com/in/james-wyngaarden-iii" target="_blank" class="sidebar-link">
-                        <img src="stimuli/logos/Linkedin.png" alt="">LinkedIn
-                    </a>
-                    <a href="https://bsky.app/profile/jameswyngaarden.bsky.social" target="_blank" class="sidebar-link">
-                        <img src="stimuli/logos/Bluesky.png" alt="">Bluesky
-                    </a>
-                    <a href="https://github.com/jameswyngaarden" target="_blank" class="sidebar-link">
-                        <img src="stimuli/logos/Github.png" alt="">GitHub
-                    </a>
-                    <a href="https://scholar.google.com/citations?user=84faR-sAAAAJ&hl=en" target="_blank" class="sidebar-link">
-                        <img src="stimuli/logos/Google-Scholar.png" alt="">Google Scholar
-                    </a>
-                    <a href="https://orcid.org/0000-0002-0858-8721" target="_blank" class="sidebar-link">
-                        <img src="stimuli/logos/Orcid.png" alt="">ORCID
-                    </a>
-                </div>
-            </div>
-        </aside>
+    <div class="preview-box">
+        <div class="name-animated" id="nameAnimated">
+            
+            <svg class="initial-svg" viewBox="0 0 400 550">
+                <path class="draw-path" d="M 50 100 H 350 M 210 100 V 400 Q 210 500 80 500" />
+            </svg>
+            
+            <span class="letter hidden g1">a</span>
+            <span class="letter hidden g2">m</span>
+            <span class="letter hidden g3">e</span>
+            <span class="letter hidden g4">s</span>
+            <span class="letter space hidden"></span>
 
-        <div class="main-content">
-            <header>
-                <div class="header-center">
-                    <div class="name-animated" id="nameAnimated">
-                        <span class="letter initial">J</span>
-                        <span class="letter hidden g1">a</span>
-                        <span class="letter hidden g2">m</span>
-                        <span class="letter hidden g3">e</span>
-                        <span class="letter hidden g4">s</span>
-                        <span class="letter space hidden g5"></span>
-                        <span class="letter initial">B</span>
-                        <span class="letter period hidden g6">.</span>
-                        <span class="letter space hidden g7"></span>
-                        <span class="letter initial">W</span>
-                        <span class="letter hidden g8">y</span>
-                        <span class="letter hidden g9">n</span>
-                        <span class="letter hidden g10">g</span>
-                        <span class="letter hidden g11">a</span>
-                        <span class="letter hidden g11">a</span>
-                        <span class="letter hidden g12">r</span>
-                        <span class="letter hidden g13">d</span>
-                        <span class="letter hidden g14">e</span>
-                        <span class="letter hidden g15">n</span>
-                        <span class="letter space hidden g15"></span>
-                        <span class="letter initial">I</span>
-                        <span class="letter initial">I</span>
-                        <span class="letter initial">I</span>
-                    </div>
-                    <p class="subtitle">Neuroeconomics &ensp;·&ensp; Reward Processing &ensp;·&ensp; Decision Making</p>
-                </div>
-                <nav class="nav">
-                    <a href="index.html" class="nav-link active">About</a>
-                    <a href="current-work.html" class="nav-link">Current Work</a>
-                    <a href="publications.html" class="nav-link">Publications</a>
-                    <a href="art.html" class="nav-link">Artistry</a>
-                </nav>
-            </header>
+            <svg class="initial-svg" viewBox="0 0 420 550">
+                <path class="draw-path" d="M 100 500 V 100 C 380 100 380 300 100 300 C 400 300 400 500 100 500" />
+            </svg>
+            
+            <span class="letter hidden">.</span>
+            <span class="letter space hidden"></span>
 
-            <div class="section-header">
-                <h2>About Me</h2>
-            </div>
+            <svg class="initial-svg" viewBox="0 0 650 550">
+                <path class="draw-path" d="M 50 100 L 180 500 L 325 250" />
+                <path class="draw-path" d="M 600 100 L 470 500 L 325 250" />
+            </svg>
 
-            <div class="about-content">
-                <div class="headshot-wrapper">
-                    <img src="stimuli/headshot.jpg" alt="Jimmy Wyngaarden" class="about-headshot">
-                </div>
-                <!--<div class="headshot-wrapper">
-                    <a href="https://www.instagram.com/jimmywyngaarden/" target="_blank">
-                        <img src="stimuli/headshot.jpg" alt="Jimmy Wyngaarden" class="about-headshot">
-                    </a>
-                    <div class="headshot-tooltip">Click here to check out more cool photos of me on Instagram</div>
-                </div>-->
-                <p>I'm a PhD candidate in cognitive neuroscience at Temple University, working with David V. Smith in the <a href="https://sites.temple.edu/neuroeconlab/" target="_blank"
-                   data-preview-title="Temple Neuroeconomics Lab"
-                   data-preview-desc="Directed by Dr. David V. Smith, our lab investigates the neural and computational mechanisms underlying reward processing, social decision-making, and economic choice across the lifespan."
-                   data-preview-img="stimuli/placeholder-neuroeconlab.png"
-                   data-preview-source="Temple University">Neuroeconomics Lab</a>. Our work uses fMRI, noninvasive brain stimulation (tACS), and computational modeling to understand why people persist with unrewarding choices — and what it takes to shift those patterns. Our work spans reward processing, social decision-making, and economic games commonly used in neuroeconomics, including trust, fairness, and risky choice paradigms.</p>
-                
-                <p>My recent work, funded by an <a href="https://reporter.nih.gov/search/sS498jkSfUCBuRmKI-9XjA/project-details/10899057" target="_blank"
-                   data-preview-title="NIH NRSA Fellowship"
-                   data-preview-desc="Characterizing the role of confirmation bias in financial exploitation of older adults"
-                   data-preview-img="stimuli/nih-reporter.png"
-                   data-preview-source="NIH F31-AG085934, $106,000">NIH F31 fellowship</a> from the National Institute on Aging, focuses on older adults, who show marked declines in cognitive flexibility. Reversal learning — the ability to update behavior when reward contingencies change — is a useful behavioral probe for this kind of prefrontally-mediated reward processing, and I'm testing whether <a href="current-work.html#section-tacs"
-                   data-preview-title="Brain Stimulation: tACS"
-                   data-preview-desc="Transcranial alternating current stimulation (tACS) delivers weak oscillating electrical currents to modulate neural activity. My dissertation tests whether targeting the dorsolateral prefrontal cortex can improve reversal learning in older adults."
-                   data-preview-img="stimuli/placeholder-tacs.png"
-                   data-preview-source="Current Work">tACS targeting dorsolateral prefrontal cortex</a> can help restore that function. In the real world, the ability to adapt to new medication routines, adjust financial strategies, or shift social behaviors after life transitions are essential to successfully navigating through life.</p>
-                
-                <p>More broadly, I'm committed to open and reproducible science. I've contributed to three publicly released neuroimaging datasets on OpenNeuro totaling over 500 participants, with data drawing on methods spanning task-based and resting-state fMRI, diffusion imaging, and computational modeling. My goal is to deepen our understanding of how reward processing and decision-making change across the lifespan, and translate that knowledge into tools that help people achieve better outcomes.</p>
-            </div>
+            <span class="letter hidden g1">y</span>
+            <span class="letter hidden g2">n</span>
+            <span class="letter hidden g3">g</span>
+            <span class="letter hidden g4">a</span>
+            <span class="letter space hidden"></span>
 
-            <div class="section-header alt-bg">
-                <h2>Research</h2>
-            </div>
+            <svg class="initial-svg" viewBox="0 0 450 550">
+                <path class="draw-path" d="M 100 500 V 100 M 225 500 V 100 M 350 500 V 100" />
+            </svg>
 
-            <div class="research-section">
-                <h3>Reward Processing and Decision Making</h3>
-                <div class="figure-container">
-                    <img src="stimuli/figures/wyngaarden-et-al_CABN-2025_fig-5.png" alt="Behavioral motivation modulates reward sensitivity and brain connectivity">
-                    <p class="figure-caption">
-                        Behavioral motivation moderates the relationship between reward sensitivity and ventral striatum–default mode network connectivity. (Wyngaarden et al., 2026, <em>CABN</em>)
-                    </p>
-                </div>
-                <p>Stable traits like reward sensitivity manifest differently in the brain depending on motivational state — among highly motivated individuals, greater reward sensitivity enhances connectivity between the default mode network and ventral striatum, but this reverses among less motivated individuals (<a href="publications/reward-sensitivity-motivation.html" 
-                   data-preview-title="Reward sensitivity and motivation shape brain connectivity"
-                   data-preview-desc="Individual differences in reward sensitivity interact with motivational state to predict ventral striatum–DMN connectivity patterns."
-                   data-preview-img="publications/figures/cabn-2025_fig-3.png"
-                   data-preview-source="Cognitive, Affective, & Behavioral Neuroscience, 2026">Wyngaarden et al., 2026, <em>CABN</em></a>). These trait-level differences also shape social engagement and predict substance use behavior even in subclinical populations (<a href="publications/corticostriatal-social-reward.html"
-                   data-preview-title="Corticostriatal connectivity and social reward"
-                   data-preview-desc="How reward circuit connectivity relates to social behavior and substance use patterns in young adults."
-                   data-preview-img="publications/figures/scan-2024_fig-2.png"
-                   data-preview-source="Social Cognitive and Affective Neuroscience, 2024">Wyngaarden et al., 2024, <em>SCAN</em></a>). I've also contributed to work showing that ambiguity avoidance reflects imprecision in learned beliefs rather than a stable preference for certainty (<a href="publications/ambiguity-preferences-beliefs-risk.html"
-                   data-preview-title="Ambiguity preferences reflect belief precision"
-                   data-preview-desc="Ambiguity avoidance stems from imprecise learned beliefs about outcome probabilities, not stable risk preferences."
-                   data-preview-img="stimuli/shah-et-al_fig-4.png"
-                   data-preview-source="PsyArXiv, 2025">Shah et al., 2025, <em>PsyArXiv</em></a>).</p>
-
-                <h3>Aging, Cognitive Flexibility, and Brain Stimulation</h3>
-                <div class="figure-container">
-                    <img src="stimuli/tACS_setup.png" alt="tACS setup">
-                    <p class="figure-caption">
-                        HD-tACS montage targeting left DLPFC.
-                    </p>
-                </div>
-                <p>Cognitive flexibility declines with age, mapping onto real-world challenges like adjusting financial strategies or adapting routines after major life transitions. My dissertation uses reversal learning paired with tACS targeting prefrontal cortex to test whether stimulation can improve adaptive decision-making in older adults (<a href="publications/alpha-tacs-reward-pupil.html"
-                   data-preview-title="Alpha-tACS modulates reward processing"
-                   data-preview-desc="Transcranial alternating current stimulation targeting DLPFC affects reward-dependent pupil responses and corticostriatal connectivity."
-                   data-preview-img="publications/figures/alpha-tacs_alt.png"
-                   data-preview-source="bioRxiv, 2026">Smith, Wyngaarden et al., 2026, <em>bioRxiv</em></a>) — work framed by a broader theoretical focus on confirmation bias and financial exploitation (<a href="publications/confirmation-bias-exploitation.html"
-                   data-preview-title="Confirmation bias and financial exploitation"
-                   data-preview-desc="A theoretical framework connecting age-related changes in confirmatory processing to vulnerability to financial exploitation."
-                   data-preview-img="stimuli/chapter.png"
-                   data-preview-source="Neuroeconomics: Core Topics and Current Directions, Springer, 2026">Wyngaarden et al., 2026, <em>Springer</em></a>).</p>
-
-                <h3>Open Science and Research Infrastructure</h3>
-                <div class="figure-container">
-                    <img src="stimuli/openNeuro.png" alt="OpenNeuro">
-                </div>
-                <p>I've contributed to three publicly released neuroimaging datasets on OpenNeuro totaling over 500 participants: social and nonsocial reward processing in young adults (<a href="publications/neuroimaging-dataset-young-adults.html"
-                   data-preview-title="Neuroimaging dataset: Social reward in young adults"
-                   data-preview-desc="A publicly available fMRI dataset examining social and nonsocial reward processing in 200+ young adults."
-                   data-preview-img="stimuli/openneuro_smith-et-al-2023.png"
-                   data-preview-source="Data in Brief, 2023">Smith, Wyngaarden et al., 2023, <em>Data in Brief</em></a>), lifespan reward processing with multi-echo fMRI and diffusion imaging (<a href="publications/lifespan-reward-dataset.html"
-                   data-preview-title="Lifespan reward processing dataset"
-                   data-preview-desc="Multi-echo fMRI and diffusion imaging data spanning ages 18-85, examining reward processing across the adult lifespan."
-                   data-preview-img="stimuli/openneuro_smith-et-al-2024.png"
-                   data-preview-source="Data in Brief, 2024">Smith et al., 2024, <em>Data in Brief</em></a>), and risky/ambiguous decision-making using the Linked Colored Lottery Task (<a href="publications/linked-colored-lottery.html"
-                   data-preview-title="Linked Colored Lottery Task dataset"
-                   data-preview-desc="Behavioral and fMRI data from a novel task dissociating risk and ambiguity processing in decision-making."
-                   data-preview-img="stimuli/data-in-brief_2025.png"
-                   data-preview-source="Data in Brief, 2025">Wyngaarden et al., 2025, <em>Data in Brief</em></a>).</p>
-            </div>
-
-            <div class="section-header alt-bg">
-                <h2>Grants &amp; Awards</h2>
-            </div>
-
-            <div class="grants-list">
-                <div class="grant-item">
-                    <div class="grant-year">2025</div>
-                    <div class="grant-description"><a href="https://srndna.utdallas.edu/2025-pilot-grants/" target="_blank"
-                        data-preview-title="SRNDNA Pilot Grant"
-                        data-preview-desc="Modulating reward-based learning in older adults using transcranial alternating current stimulation."
-                        data-preview-img="stimuli/announcement_SRNDNA.png"
-                        data-preview-source="NIH R24-AG076847-04, $24,000">Scientific Research Network on Decision Neuroscience and Aging (SRNDNA) Pilot Grant</a>, NIH R24-AG076847-04, "Modulating reward-based learning in older adults using transcranial alternating current stimulation" ($24,000)
-                    </div>
-                </div>
-                <div class="grant-item">
-                    <div class="grant-year">2024</div>
-                    <div class="grant-description"><a href="https://reporter.nih.gov/search/sS498jkSfUCBuRmKI-9XjA/project-details/10899057" target="_blank"
-                        data-preview-title="NIH NRSA Fellowship"
-                        data-preview-desc="Characterizing the role of confirmation bias in financial exploitation of older adults"
-                        data-preview-img="stimuli/nih-reporter.png"
-                        data-preview-source="NIH F31-AG085934, $106,000">Ruth L. Kirschstein National Research Service Award (NRSA) Predoctoral Fellowship</a>, National Institute on Aging (NIA), F31-AG085934, "Characterizing the role of confirmation bias in financial exploitation of older adults" (3 years, $106,980)</div>
-                </div>
-                <div class="grant-item">
-                    <div class="grant-year">2020</div>
-                    <div class="grant-description"><a href="https://graduate.appstate.edu/events/three-minute-thesis-competition" target="_blank"
-                        data-preview-title="Three Minute Thesis Competition"
-                        data-preview-desc="1st Place presentation at Appalachian State University."
-                        data-preview-img="stimuli/3MT_appChancellor.png"
-                        data-preview-source="2020, $600">Three Minute Thesis (3MT) Competition</a>—Appalachian State University, 1st Place ($600)
-                    </div>
-                </div>
-                <div class="grant-item">
-                    <div class="grant-year">2019</div>
-                    <div class="grant-description">Wiley F. Smith Endowment (WiSE) Research Award ($300)</div>
-                </div>
-                <div class="grant-item">
-                    <div class="grant-year">2019</div>
-                    <div class="grant-description">Student and Faculty Excellence (SAFE) Fund Research Grant ($1,000)</div>
-                </div>
-            </div>
-
-            <div class="funding-logos">
-                <img src="stimuli/logos/NIA-Logo.jpg" alt="National Institute on Aging (NIA) Logo">
-                <img src="stimuli/logos/srndna_logo.png" alt="Scientific Research Network on Decision Neuroscience and Aging (SRNDNA) Logo">
-                <img src="stimuli/logos/3MT-logo.png" alt="Three Minute Thesis (3MT) Logo">
-            </div>
         </div>
+        
+        <p style="margin-top: 20px; font-family: sans-serif; color: #888; font-size: 0.8rem;">
+            Refresh page to re-run animation
+        </p>
     </div>
 
-    <!-- Link Preview Box -->
-    <div class="link-preview" id="linkPreview">
-        <img class="link-preview-image" id="previewImage" src="" alt="">
-        <div class="link-preview-content">
-            <div class="link-preview-title" id="previewTitle"></div>
-            <div class="link-preview-description" id="previewDesc"></div>
-            <div class="link-preview-source" id="previewSource"></div>
-        </div>
-    </div>
-
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-        // Headshot tooltip cursor tracking
-        const wrapper = document.querySelector('.headshot-wrapper');
-        const tooltip = document.querySelector('.headshot-tooltip');
-        
-        if (wrapper && tooltip) {
-            wrapper.addEventListener('mousemove', (e) => {
-                const rect = wrapper.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                
-                tooltip.style.left = x + 'px';
-                tooltip.style.bottom = (rect.height - y + 12) + 'px';
-                tooltip.style.transform = 'translateX(-50%)';
-            });
-        }
-
-        // Link preview functionality
-        const preview = document.getElementById('linkPreview');
-        const previewImage = document.getElementById('previewImage');
-        const previewTitle = document.getElementById('previewTitle');
-        const previewDesc = document.getElementById('previewDesc');
-        const previewSource = document.getElementById('previewSource');
-        
-        let hideTimeout;
-        
-        document.querySelectorAll('a[data-preview-title]').forEach(link => {
-            link.addEventListener('mouseenter', (e) => {
-                clearTimeout(hideTimeout);
-                
-                const title = link.dataset.previewTitle;
-                const desc = link.dataset.previewDesc;
-                const img = link.dataset.previewImg;
-                const source = link.dataset.previewSource;
-                
-                previewTitle.textContent = title;
-                previewDesc.textContent = desc;
-                previewSource.textContent = source;
-                
-                if (img) {
-                    previewImage.src = img;
-                    previewImage.style.display = 'block';
-                } else {
-                    previewImage.style.display = 'none';
-                }
-                
-                preview.classList.add('visible');
-            });
-            
-            link.addEventListener('mousemove', (e) => {
-                const previewWidth = 320;
-                const previewHeight = preview.offsetHeight;
-                const padding = 15;
-                
-                let x = e.clientX + padding;
-                let y = e.clientY + padding;
-                
-                // Keep preview within viewport
-                if (x + previewWidth > window.innerWidth) {
-                    x = e.clientX - previewWidth - padding;
-                }
-                if (y + previewHeight > window.innerHeight) {
-                    y = e.clientY - previewHeight - padding;
-                }
-                
-                preview.style.left = x + 'px';
-                preview.style.top = y + 'px';
-            });
-            
-            link.addEventListener('mouseleave', () => {
-                hideTimeout = setTimeout(() => {
-                    preview.classList.remove('visible');
-                }, 100);
-            });
-        });
-
-        // Name Animation (inline in header)
+    <script>
         (function() {
-            const nameAnimated = document.getElementById('nameAnimated');
+            const name = document.getElementById('nameAnimated');
 
-            // Phase 1: JBWIII appears all at once
+            // 100ms: Start Phase 1 (Drawing Initials)
             setTimeout(() => {
-                nameAnimated.classList.add('show-initials');
+                name.classList.add('show-initials');
             }, 100);
 
-            // Phase 2: Expand to full name
+            // 1600ms: Start Phase 2 (Expanding Name)
+            // We wait longer so the SVG drawing has time to complete
             setTimeout(() => {
-                nameAnimated.classList.add('expanded');
-            }, 600);
+                name.classList.add('expanded');
+            }, 1600);
         })();
     </script>
 </body>
