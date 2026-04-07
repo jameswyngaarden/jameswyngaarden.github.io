@@ -3,15 +3,13 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-
-<title>True Glyph Animation</title>
+<title>True Sora Glyph Animation</title>
 
 <style>
-    
 @font-face {
   font-family: 'Sora Local';
-  /* This path assumes index.html and the 'static' folder are together */
-  src: url('code/Sora/static/subset.woff22') format('woff2');
+  /* Fixed the .woff22 typo and confirmed path */
+  src: url('code/Sora/static/subset.woff2') format('woff2');
   font-weight: 600;
   font-style: normal;
   font-display: swap;
@@ -29,7 +27,6 @@ body {
   justify-content: center;
   align-items: center;
   background: white;
-  /* Now 'Sora Local' will actually trigger */
   font-family: 'Sora Local', sans-serif;
 }
 
@@ -41,8 +38,10 @@ body {
 }
 
 svg {
-  height: 1.9rem;
+  height: 1.9rem; /* Matches font size */
   overflow: visible;
+  /* Shift SVGs down slightly to align with text baseline */
+  transform: translateY(0.15em);
 }
 
 .name-part {
@@ -51,13 +50,11 @@ svg {
   opacity: 0;
   white-space: nowrap;
   display: inline-block;
-  transition:
-    max-width 0.9s var(--ease),
-    opacity 0.6s var(--ease);
+  transition: max-width 0.9s var(--ease), opacity 0.6s var(--ease);
 }
 
 .expand .name-part {
-  max-width: 220px;
+  max-width: 400px;
   opacity: 1;
 }
 </style>
@@ -67,94 +64,68 @@ svg {
 
 <div class="container" id="name">
 
-<!-- J -->
-<svg viewBox="0 0 120 120">
+<svg viewBox="0 0 700 1000">
 <defs>
   <mask id="maskJ">
-    <rect width="100%" height="100%" fill="black"/>
-
-    <!-- reveal sweep -->
+    <rect x="-100" y="-1000" width="1000" height="1500" fill="black"/>
     <path id="j-reveal"
-      d="M90 0 L90 100 Q90 120 50 120"
-      stroke="white"
-      stroke-width="60"
-      stroke-linecap="round"
-      fill="none"
-      stroke-dasharray="400"
-      stroke-dashoffset="400"/>
+      d="M500 -100 V600 Q500 900 200 900"
+      stroke="white" stroke-width="400" stroke-linecap="round" fill="none"
+      stroke-dasharray="2000" stroke-dashoffset="2000"/>
   </mask>
 </defs>
-
-<!-- REAL PATH -->
-<path d="M95 5 H20 V25 H70 V85 Q70 105 50 105 Q35 105 30 95 L15 105 Q25 120 50 120 Q90 120 90 85 V5 Z"
-fill="var(--navy)" mask="url(#maskJ)"/>
+<g transform="scale(1, -1) translate(0, -730)">
+  <path d="M300 -19Q221 -19 161.0 12.0Q101 43 68.0 103.0Q35 163 35 250V282H176V238Q176 180 210.0 146.5Q244 113 299 113Q355 113 388.5 146.5Q422 180 422 238V625H564V250Q564 163 531.0 103.0Q498 43 439.0 12.0Q380 -19 300 -19ZM124 605V730H564V605Z"
+  fill="var(--navy)" mask="url(#maskJ)"/>
+</g>
 </svg>
 
 <span class="name-part">ames</span>
 
-<!-- B -->
-<svg viewBox="0 0 120 120">
+<svg viewBox="0 0 750 1000">
 <defs>
   <mask id="maskB">
-    <rect width="100%" height="100%" fill="black"/>
-
-    <rect id="b-backbone" x="0" y="0" width="40" height="0" fill="white"/>
-
-    <rect id="b-top" x="0" y="0" width="0" height="60" fill="white"/>
-    <rect id="b-bottom" x="0" y="60" width="0" height="60" fill="white"/>
+    <rect x="-100" y="-1000" width="1000" height="1500" fill="black"/>
+    <rect id="b-backbone" x="0" y="-800" width="250" height="0" fill="white"/>
+    <rect id="b-top" x="0" y="-800" width="0" height="450" fill="white"/>
+    <rect id="b-bottom" x="0" y="-350" width="0" height="500" fill="white"/>
   </mask>
 </defs>
-
-<path d="M10 5 H65 Q95 5 95 30 Q95 50 70 55 Q100 60 100 90 Q100 115 65 115 H10 Z"
-fill="var(--navy)" mask="url(#maskB)"/>
+<g transform="scale(1, -1) translate(0, -730)">
+  <path d="M209 -5V109H392Q442 109 468.0 136.5Q494 164 494 212Q494 260 468.0 286.5Q442 313 392 313H209V400H382Q455 400 512.5 382.5Q570 365 602.5 324.0Q635 283 635 214V200Q635 135 606.5 89.5Q578 44 521.5 19.5Q465 -5 382 -5ZM90 -5V735H229V-5ZM209 336V423H365Q416 423 440.0 450.0Q464 477 464 522Q464 567 440.0 594.0Q416 621 365 621H209V735H352Q476 735 540.5 683.0Q605 631 605 534V520Q605 452 572.5 411.5Q540 371 483.0 353.5Q426 336 352 336Z"
+  fill="var(--navy)" mask="url(#maskB)"/>
+</g>
 </svg>
 
 <span class="name-part">yngaarden</span>
 
-<!-- W -->
-<svg viewBox="0 0 160 120">
+<svg viewBox="0 0 1100 1000">
 <defs>
   <mask id="maskW">
-    <rect width="100%" height="100%" fill="black"/>
-
-    <path id="w-left"
-      d="M0 0 L60 120 L80 60"
-      stroke="white"
-      stroke-width="60"
-      fill="none"
-      stroke-linecap="round"
-      stroke-dasharray="400"
-      stroke-dashoffset="400"/>
-
-    <path id="w-right"
-      d="M160 0 L100 120 L80 60"
-      stroke="white"
-      stroke-width="60"
-      fill="none"
-      stroke-linecap="round"
-      stroke-dasharray="400"
-      stroke-dashoffset="400"/>
+    <rect x="-100" y="-1000" width="1300" height="1500" fill="black"/>
+    <path id="w-left" d="M0 -800 L450 0 L600 -400" stroke="white" stroke-width="400" fill="none" stroke-dasharray="2000" stroke-dashoffset="2000"/>
+    <path id="w-right" d="M1100 -800 L650 0 L600 -400" stroke="white" stroke-width="400" fill="none" stroke-dasharray="2000" stroke-dashoffset="2000"/>
   </mask>
 </defs>
-
-<path d="M10 5 L40 115 L80 45 L120 115 L150 5 H120 L100 85 L80 35 L60 85 L40 5 Z"
-fill="var(--navy)" mask="url(#maskW)"/>
+<g transform="scale(1, -1) translate(0, -730)">
+  <path d="M210 0 24 730H171L322 95L283 118H383L339 95L458 702H580L432 0ZM646 0 485 702H612L749 95L706 118H804L766 95L899 730H1038L872 0Z"
+  fill="var(--navy)" mask="url(#maskW)"/>
+</g>
 </svg>
 
-<!-- III -->
-<svg viewBox="0 0 120 120">
+<svg viewBox="0 0 400 1000">
 <defs>
   <mask id="maskIII">
-    <rect width="100%" height="100%" fill="black"/>
-
-    <rect class="i-bar" x="10" y="120" width="25" height="0" fill="white"/>
-    <rect class="i-bar" x="50" y="120" width="25" height="0" fill="white"/>
-    <rect class="i-bar" x="90" y="120" width="25" height="0" fill="white"/>
+    <rect x="-100" y="-1000" width="1000" height="1500" fill="black"/>
+    <rect class="i-bar" x="0" y="0" width="100" height="0" fill="white"/>
+    <rect class="i-bar" x="140" y="0" width="100" height="0" fill="white"/>
+    <rect class="i-bar" x="280" y="0" width="100" height="0" fill="white"/>
   </mask>
 </defs>
-
-<path d="M10 5 H35 V115 H10 Z M50 5 H75 V115 H50 Z M90 5 H115 V115 H90 Z"
-fill="var(--navy)" mask="url(#maskIII)"/>
+<g transform="scale(1, -1) translate(0, -730)">
+  <path d="M92 0V730H234V0Z M232 0V730H374V0Z M372 0V730H514V0Z" 
+  fill="var(--navy)" mask="url(#maskIII)" transform="translate(-90,0)"/>
+</g>
 </svg>
 
 </div>
@@ -163,55 +134,52 @@ fill="var(--navy)" mask="url(#maskIII)"/>
 const ease = 'cubic-bezier(0.25, 0.1, 0.25, 1)';
 
 function animate() {
-
   // J
   document.getElementById('j-reveal').animate(
-    [{ strokeDashoffset: 400 }, { strokeDashoffset: 0 }],
+    [{ strokeDashoffset: 2000 }, { strokeDashoffset: 0 }],
     { duration: 900, easing: ease, fill: 'forwards' }
   );
 
   // B
   document.getElementById('b-backbone').animate(
-    [{ height: 0 }, { height: 120 }],
-    { duration: 500, delay: 200, easing: ease, fill: 'forwards' }
+    [{ height: 0, y: 0 }, { height: 1000, y: -800 }],
+    { duration: 600, delay: 200, easing: ease, fill: 'forwards' }
   );
-
   document.getElementById('b-top').animate(
-    [{ width: 0 }, { width: 120 }],
-    { duration: 400, delay: 700, easing: ease, fill: 'forwards' }
+    [{ width: 0 }, { width: 1000 }],
+    { duration: 500, delay: 700, easing: ease, fill: 'forwards' }
   );
-
   document.getElementById('b-bottom').animate(
-    [{ width: 0 }, { width: 120 }],
-    { duration: 400, delay: 1000, easing: ease, fill: 'forwards' }
+    [{ width: 0 }, { width: 1000 }],
+    { duration: 500, delay: 1000, easing: ease, fill: 'forwards' }
   );
 
   // W
   document.getElementById('w-left').animate(
-    [{ strokeDashoffset: 400 }, { strokeDashoffset: 0 }],
-    { duration: 900, delay: 300, easing: ease, fill: 'forwards' }
+    [{ strokeDashoffset: 2000 }, { strokeDashoffset: 0 }],
+    { duration: 1000, delay: 300, easing: ease, fill: 'forwards' }
   );
-
   document.getElementById('w-right').animate(
-    [{ strokeDashoffset: 400 }, { strokeDashoffset: 0 }],
-    { duration: 900, delay: 300, easing: ease, fill: 'forwards' }
+    [{ strokeDashoffset: 2000 }, { strokeDashoffset: 0 }],
+    { duration: 1000, delay: 300, easing: ease, fill: 'forwards' }
   );
 
   // III
-  document.querySelectorAll('.i-bar').forEach(el => {
+  document.querySelectorAll('.i-bar').forEach((el, i) => {
     el.animate(
-      [{ y: 120, height: 0 }, { y: 5, height: 110 }],
-      { duration: 700, delay: 500, easing: ease, fill: 'forwards' }
+      [{ height: 0, y: 0 }, { height: 1000, y: -800 }],
+      { duration: 800, delay: 600 + (i * 100), easing: ease, fill: 'forwards' }
     );
   });
 
-  // Phase 2
+  // Phase 2: Expand
   setTimeout(() => {
     document.getElementById('name').classList.add('expand');
-  }, 1500);
+  }, 1800);
 }
 
-animate();
+// Start
+window.onload = animate;
 </script>
 
 </body>
