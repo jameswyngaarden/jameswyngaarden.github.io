@@ -1,160 +1,228 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Header Animation Prototype</title>
-    <style>
-        /* Import the exact font from your site */
-        @import url('https://fonts.googleapis.com/css2?family=Sora:wght@600&display=swap');
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-        :root {
-            --color-navy: #1a3a5c;
-            --font-display: 'Sora', sans-serif;
-            --expand-duration: 0.8s;
-            --expand-easing: cubic-bezier(0.25, 0.1, 0.25, 1);
-        }
+<title>Initials Animation</title>
 
-        body {
-            background-color: #f7f8f9;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
+<!-- Sora Font -->
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600&display=swap" rel="stylesheet">
 
-        /* Container to mimic your header layout */
-        .preview-box {
-            background: white;
-            padding: 60px;
-            border-radius: 8px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-            text-align: center;
-        }
+<style>
+  :root {
+    --navy: #1a3a5c;
+    --ease: cubic-bezier(0.25, 0.1, 0.25, 1);
+  }
 
-        .name-animated {
-            display: flex;
-            align-items: baseline;
-            white-space: nowrap;
-            font-family: var(--font-display);
-            font-size: 2.5rem; /* Scaled up for prototyping visibility */
-            font-weight: 600;
-            color: var(--color-navy);
-            letter-spacing: -0.02em;
-        }
+  body {
+    font-family: 'Sora', sans-serif;
+    background: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
 
-        /* SVG Initial Styling */
-        .initial-svg {
-            height: 0.9em;
-            width: auto;
-            overflow: visible;
-            margin-right: 0.05em;
-            /* Fine-tune the vertical alignment to match the text baseline */
-            transform: translateY(0.12em); 
-        }
+  .container {
+    font-size: 1.9rem;
+    color: var(--navy);
+    display: flex;
+    align-items: baseline;
+    gap: 0.05em;
+  }
 
-        .draw-path {
-            fill: none;
-            stroke: var(--color-navy);
-            stroke-width: 65; /* Matches Sora Bold weight at this scale */
-            stroke-linecap: round;
-            stroke-linejoin: round;
-            stroke-dasharray: 2000;
-            stroke-dashoffset: 2000;
-            transition: stroke-dashoffset 1.3s ease-in-out;
-        }
+  svg {
+    height: 1.9rem;
+    overflow: visible;
+  }
 
-        /* Phase 1 Trigger */
-        .show-initials .draw-path {
-            stroke-dashoffset: 0;
-        }
+  .name-part {
+    overflow: hidden;
+    display: inline-block;
+    max-width: 0;
+    opacity: 0;
+    transition:
+      max-width 0.9s var(--ease),
+      opacity 0.6s var(--ease);
+    white-space: nowrap;
+  }
 
-        /* Phase 2: Hidden letters expand horizontally */
-        .name-animated .letter.hidden {
-            display: inline-block;
-            max-width: 0;
-            opacity: 0;
-            overflow: hidden;
-            transition: max-width var(--expand-duration) var(--expand-easing),
-                        opacity 0.3s ease-out;
-        }
+  .expand .name-part {
+    max-width: 200px;
+    opacity: 1;
+  }
 
-        .name-animated.expanded .letter.hidden {
-            max-width: 1em;
-            opacity: 1;
-        }
-
-        /* Staggering the expansion */
-        .name-animated.expanded .letter.hidden.g1 { transition-delay: 0.0s; }
-        .name-animated.expanded .letter.hidden.g2 { transition-delay: 0.05s; }
-        .name-animated.expanded .letter.hidden.g3 { transition-delay: 0.10s; }
-        .name-animated.expanded .letter.hidden.g4 { transition-delay: 0.15s; }
-        /* ... repeat for as many letters as needed */
-
-        .name-animated .letter.space { width: 0.3em; max-width: 0; transition: max-width var(--expand-duration) var(--expand-easing); }
-        .name-animated.expanded .letter.space { max-width: 0.3em; }
-    </style>
+</style>
 </head>
+
 <body>
 
-    <div class="preview-box">
-        <div class="name-animated" id="nameAnimated">
-            
-            <svg class="initial-svg" viewBox="0 0 400 550">
-                <path class="draw-path" d="M 50 100 H 350 M 210 100 V 400 Q 210 500 80 500" />
-            </svg>
-            
-            <span class="letter hidden g1">a</span>
-            <span class="letter hidden g2">m</span>
-            <span class="letter hidden g3">e</span>
-            <span class="letter hidden g4">s</span>
-            <span class="letter space hidden"></span>
+<div class="container" id="name">
 
-            <svg class="initial-svg" viewBox="0 0 420 550">
-                <path class="draw-path" d="M 100 500 V 100 C 380 100 380 300 100 300 C 400 300 400 500 100 500" />
-            </svg>
-            
-            <span class="letter hidden">.</span>
-            <span class="letter space hidden"></span>
+  <!-- J -->
+  <svg viewBox="0 0 80 60">
+    <defs>
+      <mask id="maskJ">
+        <rect width="100%" height="100%" fill="black"/>
 
-            <svg class="initial-svg" viewBox="0 0 650 550">
-                <path class="draw-path" d="M 50 100 L 180 500 L 325 250" />
-                <path class="draw-path" d="M 600 100 L 470 500 L 325 250" />
-            </svg>
+        <!-- Top bar -->
+        <rect id="j-top" x="10" y="5" width="0" height="6" fill="white"/>
 
-            <span class="letter hidden g1">y</span>
-            <span class="letter hidden g2">n</span>
-            <span class="letter hidden g3">g</span>
-            <span class="letter hidden g4">a</span>
-            <span class="letter space hidden"></span>
+        <!-- Stem + hook -->
+        <path id="j-stem" d="M60 5 L60 45 Q60 55 40 55"
+              stroke="white"
+              stroke-width="8"
+              fill="none"
+              stroke-dasharray="150"
+              stroke-dashoffset="150"/>
+      </mask>
+    </defs>
 
-            <svg class="initial-svg" viewBox="0 0 450 550">
-                <path class="draw-path" d="M 100 500 V 100 M 225 500 V 100 M 350 500 V 100" />
-            </svg>
+    <text x="0" y="50" font-size="60" fill="var(--navy)" mask="url(#maskJ)">J</text>
+  </svg>
 
-        </div>
-        
-        <p style="margin-top: 20px; font-family: sans-serif; color: #888; font-size: 0.8rem;">
-            Refresh page to re-run animation
-        </p>
-    </div>
+  <span class="name-part">ames</span>
 
-    <script>
-        (function() {
-            const name = document.getElementById('nameAnimated');
+  <!-- B -->
+  <svg viewBox="0 0 80 60">
+    <defs>
+      <mask id="maskB">
+        <rect width="100%" height="100%" fill="black"/>
 
-            // 100ms: Start Phase 1 (Drawing Initials)
-            setTimeout(() => {
-                name.classList.add('show-initials');
-            }, 100);
+        <!-- Backbone -->
+        <rect id="b-backbone" x="10" y="5" width="6" height="0" fill="white"/>
 
-            // 1600ms: Start Phase 2 (Expanding Name)
-            // We wait longer so the SVG drawing has time to complete
-            setTimeout(() => {
-                name.classList.add('expanded');
-            }, 1600);
-        })();
-    </script>
+        <!-- Top bump -->
+        <path id="b-top" d="M15 10 Q60 10 50 30 Q60 10 15 10"
+              stroke="white"
+              stroke-width="8"
+              fill="none"
+              stroke-dasharray="120"
+              stroke-dashoffset="120"/>
+
+        <!-- Bottom bump -->
+        <path id="b-bottom" d="M15 30 Q60 30 50 55 Q60 30 15 30"
+              stroke="white"
+              stroke-width="8"
+              fill="none"
+              stroke-dasharray="120"
+              stroke-dashoffset="120"/>
+      </mask>
+    </defs>
+
+    <text x="0" y="50" font-size="60" fill="var(--navy)" mask="url(#maskB)">B</text>
+  </svg>
+
+  <span class="name-part">yngaarden</span>
+
+  <!-- W -->
+  <svg viewBox="0 0 100 60">
+    <defs>
+      <mask id="maskW">
+        <rect width="100%" height="100%" fill="black"/>
+
+        <!-- Left stroke -->
+        <path id="w-left" d="M5 5 L35 55 L50 30"
+              stroke="white"
+              stroke-width="8"
+              fill="none"
+              stroke-dasharray="150"
+              stroke-dashoffset="150"/>
+
+        <!-- Right stroke -->
+        <path id="w-right" d="M95 5 L65 55 L50 30"
+              stroke="white"
+              stroke-width="8"
+              fill="none"
+              stroke-dasharray="150"
+              stroke-dashoffset="150"/>
+      </mask>
+    </defs>
+
+    <text x="0" y="50" font-size="60" fill="var(--navy)" mask="url(#maskW)">W</text>
+  </svg>
+
+  <!-- III -->
+  <svg viewBox="0 0 80 60">
+    <defs>
+      <mask id="maskIII">
+        <rect width="100%" height="100%" fill="black"/>
+
+        <rect class="i-bar" x="10" y="55" width="6" height="0" fill="white"/>
+        <rect class="i-bar" x="35" y="55" width="6" height="0" fill="white"/>
+        <rect class="i-bar" x="60" y="55" width="6" height="0" fill="white"/>
+      </mask>
+    </defs>
+
+    <text x="0" y="50" font-size="60" fill="var(--navy)" mask="url(#maskIII)">III</text>
+  </svg>
+
+</div>
+
+<script>
+const ease = 'cubic-bezier(0.25, 0.1, 0.25, 1)';
+
+function animate() {
+
+  // J
+  document.getElementById('j-top').animate([
+    { width: 0 },
+    { width: 50 }
+  ], { duration: 400, easing: ease, fill: 'forwards' });
+
+  document.getElementById('j-stem').animate([
+    { strokeDashoffset: 150 },
+    { strokeDashoffset: 0 }
+  ], { duration: 700, delay: 300, easing: ease, fill: 'forwards' });
+
+
+  // B
+  document.getElementById('b-backbone').animate([
+    { height: 0 },
+    { height: 50 }
+  ], { duration: 500, delay: 200, easing: ease, fill: 'forwards' });
+
+  document.getElementById('b-top').animate([
+    { strokeDashoffset: 120 },
+    { strokeDashoffset: 0 }
+  ], { duration: 400, delay: 700, easing: ease, fill: 'forwards' });
+
+  document.getElementById('b-bottom').animate([
+    { strokeDashoffset: 120 },
+    { strokeDashoffset: 0 }
+  ], { duration: 400, delay: 1000, easing: ease, fill: 'forwards' });
+
+
+  // W
+  document.getElementById('w-left').animate([
+    { strokeDashoffset: 150 },
+    { strokeDashoffset: 0 }
+  ], { duration: 700, delay: 300, easing: ease, fill: 'forwards' });
+
+  document.getElementById('w-right').animate([
+    { strokeDashoffset: 150 },
+    { strokeDashoffset: 0 }
+  ], { duration: 700, delay: 300, easing: ease, fill: 'forwards' });
+
+
+  // III
+  document.querySelectorAll('.i-bar').forEach(el => {
+    el.animate([
+      { y: 55, height: 0 },
+      { y: 5, height: 50 }
+    ], { duration: 600, delay: 500, easing: ease, fill: 'forwards' });
+  });
+
+
+  // Phase 2 (name expansion)
+  setTimeout(() => {
+    document.getElementById('name').classList.add('expand');
+  }, 1500);
+}
+
+animate();
+</script>
+
 </body>
 </html>
