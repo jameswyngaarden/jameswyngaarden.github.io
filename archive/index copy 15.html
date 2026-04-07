@@ -498,10 +498,11 @@
             opacity: 1;
         }
 
-        /* ── Animated Name (SVG-based) ── */
+        /* ── Animated Name (inline in header) ── */
         .name-animated {
             display: flex;
             align-items: baseline;
+            white-space: nowrap;
             font-family: var(--font-display);
             font-size: 1.9rem;
             font-weight: 600;
@@ -510,95 +511,72 @@
             margin-bottom: 5px;
         }
 
-        .glyph-svg {
-            height: 0.72em;
+        .name-animated .letter {
             display: inline-block;
-            overflow: visible;
-            transform: translateY(0.01em);
+            line-height: 1;
         }
 
-        .glyph-svg path {
-            fill: var(--color-navy);
+        .name-animated .letter.initial {
+            opacity: 0;
+            transform: translateY(6px);
+            transition: opacity 0.35s ease-out, transform 0.35s ease-out;
         }
 
-        /* III spacing */
-        .i-glyph { margin-right: -0.02em; }
-        .i-glyph.i1 { margin-left: 0.08em; }
-        .i-glyph.i2 { margin-left: 0.12em; }
-        .i-glyph.i3 { margin-left: 0.12em; margin-right: 0; }
-
-        /* J: appears first */
-        #svgJ { clip-path: inset(0 100% 100% 0); }
-        .animate #svgJ {
-            animation: revealJ 0.6s var(--expand-easing) forwards;
-            animation-delay: 0s;
-        }
-        @keyframes revealJ {
-            0% { clip-path: inset(0 100% 100% 0); }
-            40% { clip-path: inset(0 0 83% 0); }
-            100% { clip-path: inset(0 0 0 0); }
+        .name-animated.show-initials .letter.initial {
+            opacity: 1;
+            transform: translateY(0);
         }
 
-        /* B: appears after J */
-        #svgB { clip-path: inset(0 100% 0 0); }
-        .animate #svgB {
-            animation: revealB 0.65s var(--expand-easing) forwards;
-            animation-delay: 0.5s;
-        }
-        @keyframes revealB {
-            0% { clip-path: inset(0 100% 0 0); }
-            35% { clip-path: inset(0 80% 0 0); }
-            60% { clip-path: inset(50% 0 0 0); }
-            100% { clip-path: inset(0 0 0 0); }
-        }
-
-        /* W: appears after B */
-        #svgW { clip-path: inset(0 50% 0 50%); }
-        .animate #svgW {
-            animation: revealW 0.55s var(--expand-easing) forwards;
-            animation-delay: 1.0s;
-        }
-        @keyframes revealW {
-            0% { clip-path: inset(0 50% 0 50%); }
-            100% { clip-path: inset(0 0 0 0); }
-        }
-
-        /* III: appears after W, staggered */
-        .i-glyph { clip-path: inset(100% 0 0 0); }
-        .animate .i-glyph.i1 {
-            animation: revealI 0.35s var(--expand-easing) forwards;
-            animation-delay: 1.45s;
-        }
-        .animate .i-glyph.i2 {
-            animation: revealI 0.35s var(--expand-easing) forwards;
-            animation-delay: 1.52s;
-        }
-        .animate .i-glyph.i3 {
-            animation: revealI 0.35s var(--expand-easing) forwards;
-            animation-delay: 1.59s;
-        }
-        @keyframes revealI {
-            0% { clip-path: inset(100% 0 0 0); }
-            100% { clip-path: inset(0 0 0 0); }
-        }
-
-        /* Expanding text parts */
-        .expand-part {
+        .name-animated .letter.hidden {
             display: inline-block;
             max-width: 0;
-            overflow: hidden;
-            white-space: nowrap;
             opacity: 0;
-            transition: max-width 1.2s var(--expand-easing), opacity 0.7s var(--expand-easing);
+            overflow: hidden;
+            transition: max-width var(--expand-duration) var(--expand-easing),
+                        opacity 0.3s ease-out;
         }
-        .phase2 .expand-part {
-            max-width: 300px;
+
+        .name-animated.expanded .letter.hidden {
+            max-width: 1em;
             opacity: 1;
         }
-        .phase2 .expand-part.d1 { transition-delay: 0s; }
-        .phase2 .expand-part.d2 { transition-delay: 0.15s; }
 
-        .expand-space { width: 0.32em; }
+        .name-animated.expanded .letter.hidden.g1 { transition-delay: 0.0s; }
+        .name-animated.expanded .letter.hidden.g2 { transition-delay: 0.05s; }
+        .name-animated.expanded .letter.hidden.g3 { transition-delay: 0.10s; }
+        .name-animated.expanded .letter.hidden.g4 { transition-delay: 0.15s; }
+        .name-animated.expanded .letter.hidden.g5 { transition-delay: 0.20s; }
+        .name-animated.expanded .letter.hidden.g6 { transition-delay: 0.25s; }
+        .name-animated.expanded .letter.hidden.g7 { transition-delay: 0.30s; }
+        .name-animated.expanded .letter.hidden.g8 { transition-delay: 0.35s; }
+        .name-animated.expanded .letter.hidden.g9 { transition-delay: 0.40s; }
+        .name-animated.expanded .letter.hidden.g10 { transition-delay: 0.45s; }
+        .name-animated.expanded .letter.hidden.g11 { transition-delay: 0.50s; }
+        .name-animated.expanded .letter.hidden.g12 { transition-delay: 0.55s; }
+        .name-animated.expanded .letter.hidden.g13 { transition-delay: 0.60s; }
+        .name-animated.expanded .letter.hidden.g14 { transition-delay: 0.65s; }
+        .name-animated.expanded .letter.hidden.g15 { transition-delay: 0.70s; }
+
+        .name-animated .letter.space {
+            width: 0.35em;
+            max-width: 0;
+            transition: max-width var(--expand-duration) var(--expand-easing);
+        }
+
+        .name-animated.expanded .letter.space {
+            max-width: 0.35em;
+        }
+
+        .name-animated .letter.period {
+            max-width: 0;
+            transition: max-width var(--expand-duration) var(--expand-easing),
+                        opacity 0.3s ease-out;
+        }
+
+        .name-animated.expanded .letter.period {
+            max-width: 0.3em;
+            opacity: 1;
+        }
 
         /* ── Responsive ── */
         @media (max-width: 900px) {
@@ -711,49 +689,29 @@
             <header>
                 <div class="header-center">
                     <div class="name-animated" id="nameAnimated">
-                        <!-- J -->
-                        <svg class="glyph-svg" viewBox="35 0 529 730" id="svgJ">
-                            <g transform="translate(0, 730) scale(1, -1)">
-                                <path d="M300 -19Q221 -19 161.0 12.0Q101 43 68.0 103.0Q35 163 35 250V282H176V238Q176 180 210.0 146.5Q244 113 299 113Q355 113 388.5 146.5Q422 180 422 238V625H564V250Q564 163 531.0 103.0Q498 43 439.0 12.0Q380 -19 300 -19ZM124 605V730H564V605Z"/>
-                            </g>
-                        </svg>
-                        <span class="expand-part d1">ames</span>
-                        <span class="expand-part d1 expand-space">&nbsp;</span>
-
-                        <!-- B -->
-                        <svg class="glyph-svg" viewBox="90 0 545 740" id="svgB">
-                            <g transform="translate(0, 735) scale(1, -1)">
-                                <path d="M209 -5V109H392Q442 109 468.0 136.5Q494 164 494 212Q494 260 468.0 286.5Q442 313 392 313H209V400H382Q455 400 512.5 382.5Q570 365 602.5 324.0Q635 283 635 214V200Q635 135 606.5 89.5Q578 44 521.5 19.5Q465 -5 382 -5ZM90 -5V735H229V-5ZM209 336V423H365Q416 423 440.0 450.0Q464 477 464 522Q464 567 440.0 594.0Q416 621 365 621H209V735H352Q476 735 540.5 683.0Q605 631 605 534V520Q605 452 572.5 411.5Q540 371 483.0 353.5Q426 336 352 336Z"/>
-                            </g>
-                        </svg>
-                        <span class="expand-part d1">.</span>
-                        <span class="expand-part d1 expand-space">&nbsp;</span>
-
-                        <!-- W -->
-                        <svg class="glyph-svg" viewBox="24 0 1014 730" id="svgW">
-                            <g transform="translate(0, 730) scale(1, -1)">
-                                <path d="M210 0L24 730H171L322 95L283 118H383L339 95L458 702H580L432 0ZM646 0L485 702H612L749 95L706 118H804L766 95L899 730H1038L872 0Z"/>
-                            </g>
-                        </svg>
-                        <span class="expand-part d2">yngaarden</span>
-                        <span class="expand-part d2 expand-space">&nbsp;</span>
-
-                        <!-- III -->
-                        <svg class="glyph-svg i-glyph i1" viewBox="92 0 142 730">
-                            <g transform="translate(0, 730) scale(1, -1)">
-                                <path d="M92 0V730H234V0Z"/>
-                            </g>
-                        </svg>
-                        <svg class="glyph-svg i-glyph i2" viewBox="92 0 142 730">
-                            <g transform="translate(0, 730) scale(1, -1)">
-                                <path d="M92 0V730H234V0Z"/>
-                            </g>
-                        </svg>
-                        <svg class="glyph-svg i-glyph i3" viewBox="92 0 142 730">
-                            <g transform="translate(0, 730) scale(1, -1)">
-                                <path d="M92 0V730H234V0Z"/>
-                            </g>
-                        </svg>
+                        <span class="letter initial">J</span>
+                        <span class="letter hidden g1">a</span>
+                        <span class="letter hidden g2">m</span>
+                        <span class="letter hidden g3">e</span>
+                        <span class="letter hidden g4">s</span>
+                        <span class="letter space hidden g5"></span>
+                        <span class="letter initial">B</span>
+                        <span class="letter period hidden g6">.</span>
+                        <span class="letter space hidden g7"></span>
+                        <span class="letter initial">W</span>
+                        <span class="letter hidden g8">y</span>
+                        <span class="letter hidden g9">n</span>
+                        <span class="letter hidden g10">g</span>
+                        <span class="letter hidden g11">a</span>
+                        <span class="letter hidden g11">a</span>
+                        <span class="letter hidden g12">r</span>
+                        <span class="letter hidden g13">d</span>
+                        <span class="letter hidden g14">e</span>
+                        <span class="letter hidden g15">n</span>
+                        <span class="letter space hidden g15"></span>
+                        <span class="letter initial">I</span>
+                        <span class="letter initial">I</span>
+                        <span class="letter initial">I</span>
                     </div>
                     <p class="subtitle">Neuroeconomics &ensp;·&ensp; Reward Processing &ensp;·&ensp; Decision Making</p>
                 </div>
@@ -995,19 +953,19 @@
             });
         });
 
-        // Name Animation (SVG-based)
+        // Name Animation (inline in header)
         (function() {
             const nameAnimated = document.getElementById('nameAnimated');
-            
-            // Start the animation
+
+            // Phase 1: JBWIII appears all at once
             setTimeout(() => {
-                nameAnimated.classList.add('animate');
+                nameAnimated.classList.add('show-initials');
             }, 100);
 
-            // Phase 2: Expand to full name after initials complete
+            // Phase 2: Expand to full name
             setTimeout(() => {
-                nameAnimated.classList.add('phase2');
-            }, 2100);
+                nameAnimated.classList.add('expanded');
+            }, 600);
         })();
     </script>
 </body>
