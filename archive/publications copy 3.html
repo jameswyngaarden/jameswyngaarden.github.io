@@ -45,35 +45,6 @@
         .publication-citation { color:var(--color-text); line-height:1.6; font-size:0.9rem; }
         .publication-citation a { color:var(--color-navy); text-decoration:none; border-bottom:1px solid var(--color-gold-muted); transition:border-color 0.2s ease; }
         .publication-citation a:hover { border-bottom-color:var(--color-navy); }
-
-        /* ── Animated Name (SVG-based) ── */
-        .name-animated { display:flex; align-items:baseline; font-family:var(--font-display); font-size:1.9rem; font-weight:600; color:var(--color-navy); letter-spacing:-0.02em; margin-bottom:5px; }
-        .glyph-svg { height:0.72em; display:inline-block; overflow:visible; transform:translateY(0.01em); }
-        .glyph-svg path { fill:var(--color-navy); }
-        .i-glyph { margin-right:-0.02em; }
-        .i-glyph.i1 { margin-left:0.08em; }
-        .i-glyph.i2 { margin-left:0.12em; }
-        .i-glyph.i3 { margin-left:0.12em; margin-right:0; }
-        #svgJ { clip-path:inset(0 100% 100% 0); }
-        .animate #svgJ { animation:revealJ 0.6s cubic-bezier(0.25,0.1,0.25,1) forwards; animation-delay:0s; }
-        @keyframes revealJ { 0% { clip-path:inset(0 100% 100% 0); } 40% { clip-path:inset(0 0 83% 0); } 100% { clip-path:inset(0 0 0 0); } }
-        #svgB { clip-path:inset(0 100% 0 0); }
-        .animate #svgB { animation:revealB 0.65s cubic-bezier(0.25,0.1,0.25,1) forwards; animation-delay:0.5s; }
-        @keyframes revealB { 0% { clip-path:inset(0 100% 0 0); } 35% { clip-path:inset(0 80% 0 0); } 60% { clip-path:inset(50% 0 0 0); } 100% { clip-path:inset(0 0 0 0); } }
-        #svgW { clip-path:inset(0 50% 0 50%); }
-        .animate #svgW { animation:revealW 0.55s cubic-bezier(0.25,0.1,0.25,1) forwards; animation-delay:1.0s; }
-        @keyframes revealW { 0% { clip-path:inset(0 50% 0 50%); } 100% { clip-path:inset(0 0 0 0); } }
-        .i-glyph { clip-path:inset(100% 0 0 0); }
-        .animate .i-glyph.i1 { animation:revealI 0.35s cubic-bezier(0.25,0.1,0.25,1) forwards; animation-delay:1.45s; }
-        .animate .i-glyph.i2 { animation:revealI 0.35s cubic-bezier(0.25,0.1,0.25,1) forwards; animation-delay:1.52s; }
-        .animate .i-glyph.i3 { animation:revealI 0.35s cubic-bezier(0.25,0.1,0.25,1) forwards; animation-delay:1.59s; }
-        @keyframes revealI { 0% { clip-path:inset(100% 0 0 0); } 100% { clip-path:inset(0 0 0 0); } }
-        .expand-part { display:inline-block; max-width:0; overflow:hidden; white-space:nowrap; opacity:0; transition:max-width 1.2s cubic-bezier(0.25,0.1,0.25,1), opacity 0.7s cubic-bezier(0.25,0.1,0.25,1); }
-        .phase2 .expand-part { max-width:300px; opacity:1; }
-        .phase2 .expand-part.d1 { transition-delay:0s; }
-        .phase2 .expand-part.d2 { transition-delay:0.15s; }
-        .expand-space { width:0.32em; }
-
         @media (max-width:900px) { .container { flex-direction:column; padding:20px 16px; gap:30px; } .sidebar { width:100%; position:relative; top:0; } .sidebar-links { flex-direction:row; flex-wrap:wrap; justify-content:center; gap:4px; } header { flex-direction:column; align-items:flex-start; gap:16px; padding-bottom:24px; } .nav { gap:24px; } h1 { font-size:1.5rem; white-space:normal; } .section-header { padding:36px 0; margin:28px 0 0 0; } .section-header h2 { font-size:2.8rem; background-attachment:scroll; } .publication-list { padding:0 8px 40px; } }
     </style>
 </head>
@@ -85,7 +56,7 @@
                 
                 
                 <div class="sidebar-links">
-                    <a href="/cdn-cgi/l/email-protection#9ef4fff3fbedb0e9e7f0f9ffffecfafbf0deeafbf3eef2fbb0fbfaeb" class="sidebar-link"><img src="stimuli/logos/Email.png" alt="">Email</a>
+                    <a href="mailto:james.wyngaarden@temple.edu" class="sidebar-link"><img src="stimuli/logos/Email.png" alt="">Email</a>
                     <a href="https://www.linkedin.com/in/james-wyngaarden-iii" target="_blank" class="sidebar-link"><img src="stimuli/logos/Linkedin.png" alt="">LinkedIn</a>
                     <a href="https://bsky.app/profile/jameswyngaarden.bsky.social" target="_blank" class="sidebar-link"><img src="stimuli/logos/Bluesky.png" alt="">Bluesky</a>
                     <a href="https://github.com/jameswyngaarden" target="_blank" class="sidebar-link"><img src="stimuli/logos/Github.png" alt="">GitHub</a>
@@ -97,51 +68,7 @@
         <div class="main-content">
         <header>
                 <div class="header-center">
-                    <div class="name-animated" id="nameAnimated">
-                        <!-- J -->
-                        <svg class="glyph-svg" viewBox="35 0 529 730" id="svgJ">
-                            <g transform="translate(0, 730) scale(1, -1)">
-                                <path d="M300 -19Q221 -19 161.0 12.0Q101 43 68.0 103.0Q35 163 35 250V282H176V238Q176 180 210.0 146.5Q244 113 299 113Q355 113 388.5 146.5Q422 180 422 238V625H564V250Q564 163 531.0 103.0Q498 43 439.0 12.0Q380 -19 300 -19ZM124 605V730H564V605Z"/>
-                            </g>
-                        </svg>
-                        <span class="expand-part d1">ames</span>
-                        <span class="expand-part d1 expand-space">&nbsp;</span>
-
-                        <!-- B -->
-                        <svg class="glyph-svg" viewBox="90 0 545 740" id="svgB">
-                            <g transform="translate(0, 735) scale(1, -1)">
-                                <path d="M209 -5V109H392Q442 109 468.0 136.5Q494 164 494 212Q494 260 468.0 286.5Q442 313 392 313H209V400H382Q455 400 512.5 382.5Q570 365 602.5 324.0Q635 283 635 214V200Q635 135 606.5 89.5Q578 44 521.5 19.5Q465 -5 382 -5ZM90 -5V735H229V-5ZM209 336V423H365Q416 423 440.0 450.0Q464 477 464 522Q464 567 440.0 594.0Q416 621 365 621H209V735H352Q476 735 540.5 683.0Q605 631 605 534V520Q605 452 572.5 411.5Q540 371 483.0 353.5Q426 336 352 336Z"/>
-                            </g>
-                        </svg>
-                        <span class="expand-part d1">.</span>
-                        <span class="expand-part d1 expand-space">&nbsp;</span>
-
-                        <!-- W -->
-                        <svg class="glyph-svg" viewBox="24 0 1014 730" id="svgW">
-                            <g transform="translate(0, 730) scale(1, -1)">
-                                <path d="M210 0L24 730H171L322 95L283 118H383L339 95L458 702H580L432 0ZM646 0L485 702H612L749 95L706 118H804L766 95L899 730H1038L872 0Z"/>
-                            </g>
-                        </svg>
-                        <span class="expand-part d2">yngaarden</span>
-                        <span class="expand-part d2 expand-space">&nbsp;</span>
-
-                        <!-- III -->
-                        <svg class="glyph-svg i-glyph i1" viewBox="92 0 142 730">
-                            <g transform="translate(0, 730) scale(1, -1)">
-                                <path d="M92 0V730H234V0Z"/>
-                            </g>
-                        </svg>
-                        <svg class="glyph-svg i-glyph i2" viewBox="92 0 142 730">
-                            <g transform="translate(0, 730) scale(1, -1)">
-                                <path d="M92 0V730H234V0Z"/>
-                            </g>
-                        </svg>
-                        <svg class="glyph-svg i-glyph i3" viewBox="92 0 142 730">
-                            <g transform="translate(0, 730) scale(1, -1)">
-                                <path d="M92 0V730H234V0Z"/>
-                            </g>
-                        </svg>
-                    </div>
+                <h1>James B. Wyngaarden III</h1>
                 <p class="subtitle">Neuroeconomics &ensp;·&ensp; Reward Processing &ensp;·&ensp; Decision Making</p>
             </div>
                 <nav class="nav">
@@ -313,14 +240,5 @@
         </div>
     </div>
     </div>
-
-    <script>
-        // Name Animation (SVG-based)
-        (function() {
-            const nameAnimated = document.getElementById('nameAnimated');
-            setTimeout(() => nameAnimated.classList.add('animate'), 100);
-            setTimeout(() => nameAnimated.classList.add('phase2'), 2100);
-        })();
-    </script>
 </body>
 </html>
