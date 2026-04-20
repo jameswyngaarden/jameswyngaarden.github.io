@@ -970,7 +970,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: var(--color-bg-subtle);
+            background: white;
             border-radius: 4px;
             border: 1px solid var(--color-border);
         }
@@ -1081,7 +1081,7 @@
             left: 0;
             top: 0;
             height: 100%;
-            background: linear-gradient(90deg, #2a4f7a, var(--color-gold));
+            background: linear-gradient(90deg, #0000ff, #00ccff, #00ff00, #ffff00, #ff0000);
             border-radius: 3px 0 0 3px;
             transition: width 0.35s cubic-bezier(0.25, 0.1, 0.25, 1);
         }
@@ -1092,7 +1092,7 @@
             transform: translate(-50%, -50%);
             width: 12px;
             height: 12px;
-            background: var(--color-gold);
+            background: #333;
             border: 2px solid white;
             border-radius: 50%;
             box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
@@ -1132,7 +1132,7 @@
             justify-content: center;
             transition: all 0.2s ease;
             opacity: 0.4;
-            background: var(--color-bg-subtle);
+            background: white;
         }
 
         .efield-thumb img {
@@ -1892,7 +1892,7 @@
                         <div class="efield-featured-wrapper">
                             <button class="efield-nav efield-prev" id="efieldPrev">&#8592;</button>
                             <div class="efield-featured">
-                                <img id="efieldMain" src="stimuli/simnibs/efield_sub-10369.png" alt="E-field simulation">
+                                <img id="efieldMain" src="stimuli/simnibs/SimNIBS_Efield_sub-10369.png" alt="E-field simulation">
                             </div>
                             <button class="efield-nav efield-next" id="efieldNext">&#8594;</button>
                         </div>
@@ -3123,11 +3123,63 @@
         }
 
         prevBtn.addEventListener('click', function() {
+            stopAutoCycle();
             goTo((current - 1 + subjects.length) % subjects.length);
         });
         nextBtn.addEventListener('click', function() {
+            stopAutoCycle();
             goTo((current + 1) % subjects.length);
         });
+
+        // Auto-cycle every 3 seconds
+        var autoCycleInterval = null;
+        var autoCycleActive = true;
+
+        function startAutoCycle() {
+            if (autoCycleInterval) return;
+            autoCycleInterval = setInterval(function() {
+                goTo((current + 1) % subjects.length);
+            }, 3000);
+        }
+
+        function stopAutoCycle() {
+            autoCycleActive = false;
+            if (autoCycleInterval) {
+                clearInterval(autoCycleInterval);
+                autoCycleInterval = null;
+            }
+        }
+
+        function pauseAutoCycle() {
+            if (autoCycleInterval) {
+                clearInterval(autoCycleInterval);
+                autoCycleInterval = null;
+            }
+        }
+
+        function resumeAutoCycle() {
+            if (autoCycleActive) startAutoCycle();
+        }
+
+        // Stop auto-cycle permanently on thumbnail click
+        thumbsEl.addEventListener('click', function() { stopAutoCycle(); });
+
+        // Pause on hover, resume on leave (only if not manually stopped)
+        var gallery = document.getElementById('efieldGallery');
+        if (gallery) {
+            gallery.addEventListener('mouseenter', pauseAutoCycle);
+            gallery.addEventListener('mouseleave', resumeAutoCycle);
+        }
+
+        // Start auto-cycle only when gallery scrolls into view
+        var observer = new IntersectionObserver(function(entries) {
+            if (entries[0].isIntersecting && autoCycleActive) {
+                startAutoCycle();
+            } else {
+                pauseAutoCycle();
+            }
+        }, { threshold: 0.3 });
+        if (gallery) observer.observe(gallery);
 
         // Keyboard nav when gallery is in view
         document.addEventListener('keydown', function(e) {
@@ -3136,8 +3188,8 @@
             var rect = gallery.getBoundingClientRect();
             var inView = rect.top < window.innerHeight && rect.bottom > 0;
             if (!inView) return;
-            if (e.key === 'ArrowLeft') { prevBtn.click(); e.preventDefault(); }
-            if (e.key === 'ArrowRight') { nextBtn.click(); e.preventDefault(); }
+            if (e.key === 'ArrowLeft') { stopAutoCycle(); prevBtn.click(); e.preventDefault(); }
+            if (e.key === 'ArrowRight') { stopAutoCycle(); nextBtn.click(); e.preventDefault(); }
         });
 
         // Initialize
