@@ -949,87 +949,53 @@
             .tacs-legend { gap: 16px; }
         }
 
-        /* ── E-field Carousel ── */
-        .efield-carousel {
+        /* ── E-field Gallery ── */
+        .efield-gallery {
             display: flex;
             flex-direction: column;
-            gap: 16px;
+            gap: 10px;
         }
 
-        .efield-track-wrapper {
-            position: relative;
+        .efield-featured-wrapper {
             display: flex;
             align-items: center;
             gap: 8px;
         }
 
-        .efield-track {
-            display: flex;
-            gap: 12px;
-            overflow-x: auto;
-            overflow-y: hidden;
+        .efield-featured {
             flex: 1;
-            align-items: center;
-            padding: 8px 0;
-            scroll-behavior: smooth;
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
-
-        .efield-track::-webkit-scrollbar {
-            display: none;
-        }
-
-        .efield-slide {
-            flex-shrink: 0;
-            width: 220px;
-            border-radius: 6px;
+            max-width: 680px;
+            aspect-ratio: 4 / 3;
             overflow: hidden;
-            border: 2px solid transparent;
-            transition: all 0.35s cubic-bezier(0.25, 0.1, 0.25, 1);
-            cursor: pointer;
-            opacity: 0.35;
-            transform: scale(0.88);
-            filter: grayscale(0.3);
-        }
-
-        .efield-slide.active {
-            width: 340px;
-            opacity: 1;
-            transform: scale(1);
-            border-color: var(--color-gold);
-            filter: none;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
-        }
-
-        .efield-slide.adjacent {
-            opacity: 0.55;
-            transform: scale(0.92);
-            filter: grayscale(0.15);
-        }
-
-        .efield-slide img {
-            width: 100%;
-            height: auto;
-            display: block;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             background: var(--color-bg-subtle);
+            border-radius: 4px;
+            border: 1px solid var(--color-border);
+        }
+
+        .efield-featured img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            display: block;
         }
 
         .efield-nav {
-            width: 36px;
-            height: 36px;
+            width: 32px;
+            height: 32px;
             border-radius: 50%;
             border: 1px solid var(--color-border);
             background: white;
             color: var(--color-text-light);
-            font-size: 1rem;
+            font-size: 0.9rem;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
             flex-shrink: 0;
             transition: all 0.2s ease;
-            z-index: 2;
         }
 
         .efield-nav:hover {
@@ -1038,61 +1004,74 @@
             background: var(--color-bg-subtle);
         }
 
+        /* Info bar — horizontal layout */
         .efield-info {
+            display: flex;
+            align-items: center;
+            gap: 24px;
             background: white;
             border: 1px solid var(--color-border);
             border-radius: 6px;
-            padding: 16px 20px;
+            padding: 12px 16px;
+        }
+
+        .efield-info-left {
+            flex-shrink: 0;
         }
 
         .efield-subject-id {
             font-family: var(--font-display);
-            font-size: 0.78rem;
+            font-size: 0.72rem;
             font-weight: 600;
             color: var(--color-text-light);
             text-transform: uppercase;
             letter-spacing: 0.06em;
-            margin-bottom: 10px;
+            margin-bottom: 4px;
         }
 
         .efield-stat-row {
             display: flex;
-            gap: 32px;
-            margin-bottom: 14px;
+            gap: 16px;
+        }
+
+        .efield-stat {
+            display: flex;
+            align-items: baseline;
+            gap: 5px;
         }
 
         .efield-stat-label {
             font-family: var(--font-display);
-            font-size: 0.7rem;
+            font-size: 0.68rem;
             color: var(--color-text-light);
             text-transform: uppercase;
-            letter-spacing: 0.05em;
-            margin-bottom: 2px;
+            letter-spacing: 0.04em;
         }
 
         .efield-stat-value {
             font-family: var(--font-display);
-            font-size: 1.2rem;
+            font-size: 0.92rem;
             font-weight: 700;
             color: var(--color-navy);
         }
 
-        .efield-bar-container {
-            margin-top: 4px;
+        .efield-info-right {
+            flex: 1;
+            min-width: 0;
         }
 
         .efield-bar-label {
             font-family: var(--font-display);
-            font-size: 0.68rem;
+            font-size: 0.65rem;
             color: var(--color-text-light);
-            margin-bottom: 6px;
+            margin-bottom: 5px;
         }
 
         .efield-bar-track {
             position: relative;
-            height: 8px;
+            height: 6px;
             background: var(--color-bg-subtle);
-            border-radius: 4px;
+            border-radius: 3px;
             border: 1px solid var(--color-border);
             overflow: visible;
         }
@@ -1103,21 +1082,21 @@
             top: 0;
             height: 100%;
             background: linear-gradient(90deg, #2a4f7a, var(--color-gold));
-            border-radius: 4px 0 0 4px;
-            transition: width 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+            border-radius: 3px 0 0 3px;
+            transition: width 0.35s cubic-bezier(0.25, 0.1, 0.25, 1);
         }
 
         .efield-bar-marker {
             position: absolute;
             top: 50%;
             transform: translate(-50%, -50%);
-            width: 14px;
-            height: 14px;
+            width: 12px;
+            height: 12px;
             background: var(--color-gold);
             border: 2px solid white;
             border-radius: 50%;
             box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
-            transition: left 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+            transition: left 0.35s cubic-bezier(0.25, 0.1, 0.25, 1);
             z-index: 1;
         }
 
@@ -1125,43 +1104,62 @@
             display: flex;
             justify-content: space-between;
             font-family: var(--font-display);
-            font-size: 0.65rem;
+            font-size: 0.6rem;
             color: var(--color-text-light);
-            margin-top: 4px;
+            margin-top: 3px;
         }
 
         .efield-bar-range span:nth-child(2) {
             opacity: 0.5;
         }
 
-        .efield-dots {
-            display: flex;
-            justify-content: center;
+        /* Thumbnail strip — 5-wide grid matching publication figure pattern */
+        .efield-thumbs {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
             gap: 8px;
+            max-width: 680px;
         }
 
-        .efield-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: var(--color-border);
+        .efield-thumb {
+            aspect-ratio: 4 / 3;
+            border: 2px solid transparent;
+            border-radius: 4px;
+            overflow: hidden;
             cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             transition: all 0.2s ease;
+            opacity: 0.4;
+            background: var(--color-bg-subtle);
         }
 
-        .efield-dot.active {
-            background: var(--color-gold);
-            transform: scale(1.25);
+        .efield-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
         }
 
-        .efield-dot:hover:not(.active) {
-            background: var(--color-text-light);
+        .efield-thumb:hover {
+            opacity: 0.7;
+        }
+
+        .efield-thumb.active {
+            opacity: 1;
+            border-color: var(--color-gold);
         }
 
         @media (max-width: 900px) {
-            .efield-slide { width: 140px; }
-            .efield-slide.active { width: 240px; }
-            .efield-stat-row { gap: 20px; }
+            .efield-featured-wrapper { gap: 4px; }
+            .efield-info { flex-direction: column; align-items: flex-start; gap: 10px; }
+            .efield-thumbs { grid-template-columns: repeat(5, 1fr); gap: 6px; }
+            .efield-nav { width: 28px; height: 28px; font-size: 0.8rem; }
+        }
+
+        @media (max-width: 500px) {
+            .efield-thumbs { grid-template-columns: repeat(5, 1fr); gap: 4px; }
         }
 
         /* ── Section Navigation ── */
@@ -1889,29 +1887,33 @@
                 <div class="demo-container">
                     <div class="demo-title">Simulated E-Fields Across Participants</div>
 
-                    <div class="efield-carousel" id="efieldCarousel">
-                        <div class="efield-track-wrapper">
+                    <div class="efield-gallery" id="efieldGallery">
+                        <!-- Featured viewer with arrows -->
+                        <div class="efield-featured-wrapper">
                             <button class="efield-nav efield-prev" id="efieldPrev">&#8592;</button>
-                            <div class="efield-track" id="efieldTrack">
-                                <!-- Slides populated by JS -->
+                            <div class="efield-featured">
+                                <img id="efieldMain" src="stimuli/simnibs/efield_sub-10369.png" alt="E-field simulation">
                             </div>
                             <button class="efield-nav efield-next" id="efieldNext">&#8594;</button>
                         </div>
 
+                        <!-- Info bar -->
                         <div class="efield-info" id="efieldInfo">
-                            <div class="efield-subject-id" id="efieldSubject">sub-10369</div>
-                            <div class="efield-stat-row">
-                                <div class="efield-stat">
-                                    <div class="efield-stat-label">Mean E-field</div>
-                                    <div class="efield-stat-value" id="efieldMean">0.231 V/m</div>
-                                </div>
-                                <div class="efield-stat">
-                                    <div class="efield-stat-label">Peak E-field</div>
-                                    <div class="efield-stat-value" id="efieldPeak">0.342 V/m</div>
+                            <div class="efield-info-left">
+                                <div class="efield-subject-id" id="efieldSubject">sub-10369</div>
+                                <div class="efield-stat-row">
+                                    <div class="efield-stat">
+                                        <span class="efield-stat-label">Mean</span>
+                                        <span class="efield-stat-value" id="efieldMean">0.231 V/m</span>
+                                    </div>
+                                    <div class="efield-stat">
+                                        <span class="efield-stat-label">Peak</span>
+                                        <span class="efield-stat-value" id="efieldPeak">0.342 V/m</span>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="efield-bar-container">
-                                <div class="efield-bar-label">Position in sample distribution</div>
+                            <div class="efield-info-right">
+                                <div class="efield-bar-label">Sample distribution</div>
                                 <div class="efield-bar-track">
                                     <div class="efield-bar-fill" id="efieldBar"></div>
                                     <div class="efield-bar-marker" id="efieldMarker"></div>
@@ -1924,8 +1926,9 @@
                             </div>
                         </div>
 
-                        <div class="efield-dots" id="efieldDots">
-                            <!-- Dots populated by JS -->
+                        <!-- Thumbnail strip -->
+                        <div class="efield-thumbs" id="efieldThumbs">
+                            <!-- Populated by JS -->
                         </div>
                     </div>
                 </div>
@@ -3054,28 +3057,28 @@
         updateChart();
     })();
     // ═══════════════════════════════════════════════════════════════════════
-    // E-FIELD CAROUSEL
+    // E-FIELD GALLERY (featured image + thumbnail strip)
     // ═══════════════════════════════════════════════════════════════════════
     (function() {
         var subjects = [
-            { id: 'sub-10809', mean: 0.148, peak: 0.204, img: 'stimuli/simnibs/SimNIBS_Efield_sub-10809.png' },
-            { id: 'sub-10541', mean: 0.170, peak: 0.241, img: 'stimuli/simnibs/SimNIBS_Efield_sub-10541.png' },
-            { id: 'sub-10418', mean: 0.179, peak: 0.295, img: 'stimuli/simnibs/SimNIBS_Efield_sub-10418.png' },
-            { id: 'sub-10810', mean: 0.205, peak: 0.357, img: 'stimuli/simnibs/SimNIBS_Efield_sub-10810.png' },
-            { id: 'sub-10369', mean: 0.231, peak: 0.342, img: 'stimuli/simnibs/SimNIBS_Efield_sub-10369.png' },
-            { id: 'sub-11329', mean: 0.256, peak: 0.411, img: 'stimuli/simnibs/SimNIBS_Efield_sub-11329.png' },
-            { id: 'sub-11030', mean: 0.275, peak: 0.500, img: 'stimuli/simnibs/SimNIBS_Efield_sub-11030.png' },
-            { id: 'sub-10998', mean: 0.312, peak: 0.606, img: 'stimuli/simnibs/SimNIBS_Efield_sub-10998.png' },
-            { id: 'sub-11016', mean: 0.340, peak: 0.571, img: 'stimuli/simnibs/SimNIBS_Efield_sub-11016.png' },
-            { id: 'sub-10950', mean: 0.371, peak: 0.591, img: 'stimuli/simnibs/SimNIBS_Efield_sub-10950.png' }
+            { id: 'sub-10809', mean: 0.148, peak: 0.204, img: 'stimuli/simnibs/efield_sub-10809.png' },
+            { id: 'sub-10541', mean: 0.170, peak: 0.241, img: 'stimuli/simnibs/efield_sub-10541.png' },
+            { id: 'sub-10418', mean: 0.179, peak: 0.295, img: 'stimuli/simnibs/efield_sub-10418.png' },
+            { id: 'sub-10810', mean: 0.205, peak: 0.357, img: 'stimuli/simnibs/efield_sub-10810.png' },
+            { id: 'sub-10369', mean: 0.231, peak: 0.342, img: 'stimuli/simnibs/efield_sub-10369.png' },
+            { id: 'sub-11329', mean: 0.256, peak: 0.411, img: 'stimuli/simnibs/efield_sub-11329.png' },
+            { id: 'sub-11030', mean: 0.275, peak: 0.500, img: 'stimuli/simnibs/efield_sub-11030.png' },
+            { id: 'sub-10998', mean: 0.312, peak: 0.606, img: 'stimuli/simnibs/efield_sub-10998.png' },
+            { id: 'sub-11016', mean: 0.340, peak: 0.571, img: 'stimuli/simnibs/efield_sub-11016.png' },
+            { id: 'sub-10950', mean: 0.371, peak: 0.591, img: 'stimuli/simnibs/efield_sub-10950.png' }
         ];
 
         var minMean = 0.148;
         var maxMean = 0.371;
-        var current = 4; // Start on sub-10369 (middle of range)
+        var current = 0;
 
-        var track = document.getElementById('efieldTrack');
-        var dots = document.getElementById('efieldDots');
+        var mainImg = document.getElementById('efieldMain');
+        var thumbsEl = document.getElementById('efieldThumbs');
         var prevBtn = document.getElementById('efieldPrev');
         var nextBtn = document.getElementById('efieldNext');
         var subjectEl = document.getElementById('efieldSubject');
@@ -3084,48 +3087,30 @@
         var barEl = document.getElementById('efieldBar');
         var markerEl = document.getElementById('efieldMarker');
 
-        if (!track) return;
+        if (!mainImg || !thumbsEl) return;
 
-        // Build slides
+        // Build thumbnail strip
         subjects.forEach(function(s, i) {
-            var slide = document.createElement('div');
-            slide.className = 'efield-slide';
-            slide.dataset.index = i;
-            slide.innerHTML = '<img src="' + s.img + '" alt="E-field simulation for ' + s.id + '">';
-            slide.addEventListener('click', function() { goTo(i); });
-            track.appendChild(slide);
-
-            var dot = document.createElement('div');
-            dot.className = 'efield-dot';
-            dot.addEventListener('click', function() { goTo(i); });
-            dots.appendChild(dot);
+            var thumb = document.createElement('div');
+            thumb.className = 'efield-thumb';
+            thumb.innerHTML = '<img src="' + s.img + '" alt="' + s.id + '">';
+            thumb.addEventListener('click', function() { goTo(i); });
+            thumbsEl.appendChild(thumb);
         });
 
         function goTo(index) {
             current = index;
-            var slides = track.querySelectorAll('.efield-slide');
-            var dotEls = dots.querySelectorAll('.efield-dot');
             var s = subjects[current];
+            var thumbs = thumbsEl.querySelectorAll('.efield-thumb');
 
-            slides.forEach(function(slide, i) {
-                slide.classList.remove('active', 'adjacent');
-                if (i === current) {
-                    slide.classList.add('active');
-                } else if (Math.abs(i - current) === 1) {
-                    slide.classList.add('adjacent');
-                }
+            // Update featured image
+            mainImg.src = s.img;
+            mainImg.alt = 'E-field simulation for ' + s.id;
+
+            // Update active thumbnail
+            thumbs.forEach(function(t, i) {
+                t.classList.toggle('active', i === current);
             });
-
-            dotEls.forEach(function(d, i) {
-                d.classList.toggle('active', i === current);
-            });
-
-            // Scroll the active slide into center
-            var activeSlide = slides[current];
-            var trackRect = track.getBoundingClientRect();
-            var slideRect = activeSlide.getBoundingClientRect();
-            var scrollTarget = activeSlide.offsetLeft - (track.offsetWidth / 2) + (activeSlide.offsetWidth / 2);
-            track.scrollTo({ left: scrollTarget, behavior: 'smooth' });
 
             // Update info
             subjectEl.textContent = s.id;
@@ -3144,10 +3129,11 @@
             goTo((current + 1) % subjects.length);
         });
 
-        // Keyboard
+        // Keyboard nav when gallery is in view
         document.addEventListener('keydown', function(e) {
-            var carousel = document.getElementById('efieldCarousel');
-            var rect = carousel.getBoundingClientRect();
+            var gallery = document.getElementById('efieldGallery');
+            if (!gallery) return;
+            var rect = gallery.getBoundingClientRect();
             var inView = rect.top < window.innerHeight && rect.bottom > 0;
             if (!inView) return;
             if (e.key === 'ArrowLeft') { prevBtn.click(); e.preventDefault(); }
@@ -3155,7 +3141,7 @@
         });
 
         // Initialize
-        goTo(current);
+        goTo(0);
     })();
 
     </script>
