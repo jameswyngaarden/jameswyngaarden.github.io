@@ -601,23 +601,35 @@
         .expand-space { width: 0.32em; }
 
         /* ── Neural Network Animation ── */
-        .main-content {
+        .header-band {
             position: relative;
+            overflow: hidden;
         }
 
-        #networkCanvas {
+        .header-band canvas {
             position: absolute;
-            top: 0;
-            left: 0;
+            inset: 0;
             width: 100%;
             height: 100%;
             pointer-events: none;
-            z-index: 0;
         }
 
-        .main-content > *:not(#networkCanvas) {
+        /* Gradient fade at bottom edge */
+        .header-band::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 50px;
+            background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .header-band header {
             position: relative;
-            z-index: 1;
+            z-index: 3;
         }
 
         /* ── Responsive ── */
@@ -727,7 +739,8 @@
             </div>
         </aside>
 
-        <div class="main-content" id="mainContent">
+        <div class="main-content">
+            <div class="header-band" id="headerBand">
             <canvas id="networkCanvas"></canvas>
             <header>
                 <div class="header-center">
@@ -785,6 +798,7 @@
                     <a href="art.html" class="nav-link">Artistry</a>
                 </nav>
             </header>
+            </div>
 
             <div class="section-header">
                 <h2>About Me</h2>
@@ -1029,12 +1043,12 @@
             }, 2100);
         })();
 
-        // Neural Network Particle Animation (clustered, main-content background)
+        // Neural Network Particle Animation
         (function() {
             const canvas = document.getElementById('networkCanvas');
             if (!canvas) return;
             const ctx = canvas.getContext('2d');
-            const container = document.getElementById('mainContent');
+            const band = document.getElementById('headerBand');
 
             const PALETTE = [
                 { r: 106, g: 176, b: 212 },
@@ -1045,26 +1059,23 @@
                 { r: 194, g: 221, b: 230 },
             ];
 
-            var cfg = {
-                nodeCount: 40,
+            const cfg = {
+                nodeCount: 50,
                 linkDist: 140,
                 speed: 0.18,
                 nodeAlpha: 0.40,
                 edgeAlpha: 0.12,
-                clusterCount: 5,
-                clusterPull: 0.0004,
-                clusterSpread: 0.15,
             };
 
-            var nodes = [];
-            var clusters = [];
-            var W, H;
-            var paused = false;
+            let nodes = [];
+            let W, H;
+            let paused = false;
 
             function resize() {
-                var dpr = window.devicePixelRatio || 1;
-                W = container.offsetWidth;
-                H = container.offsetHeight;
+                const rect = band.getBoundingClientRect();
+                const dpr = window.devicePixelRatio || 1;
+                W = rect.width;
+                H = rect.height;
                 canvas.width = W * dpr;
                 canvas.height = H * dpr;
                 canvas.style.width = W + 'px';
@@ -1072,100 +1083,60 @@
                 ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
             }
 
-            // Box-Muller for gaussian scatter around cluster centers
-            function gaussRand() {
-                var u = 0, v = 0;
-                while (u === 0) u = Math.random();
-                while (v === 0) v = Math.random();
-                return Math.sqrt(-2.0 * Math.log(u)) * Math.cos(2.0 * Math.PI * v);
-            }
-
-            function generateClusters() {
-                clusters = [];
-                var margin = 0.15;
-                for (var i = 0; i < cfg.clusterCount; i++) {
-                    clusters.push({
-                        x: (margin + Math.random() * (1 - 2 * margin)) * W,
-                        y: (margin + Math.random() * (1 - 2 * margin)) * H,
-                    });
-                }
-            }
-
-            function createNode(clusterIdx) {
-                var ci = (clusterIdx !== undefined) ? clusterIdx : Math.floor(Math.random() * clusters.length);
-                var c = PALETTE[Math.floor(Math.random() * PALETTE.length)];
-                var cl = clusters[ci];
-                var spread = Math.min(W, H) * cfg.clusterSpread;
+            function createNode() {
+                const c = PALETTE[Math.floor(Math.random() * PALETTE.length)];
                 return {
-                    x: cl.x + gaussRand() * spread,
-                    y: cl.y + gaussRand() * spread,
-                    homeX: cl.x,
-                    homeY: cl.y,
+                    x: Math.random() * W,
+                    y: Math.random() * H,
                     vx: (Math.random() - 0.5) * cfg.speed,
                     vy: (Math.random() - 0.5) * cfg.speed,
                     r: 1.5 + Math.random() * 2,
                     color: c,
-                    cluster: ci,
                 };
             }
 
             function initNodes() {
-                generateClusters();
                 nodes = [];
-                for (var i = 0; i < cfg.nodeCount; i++) {
+                for (let i = 0; i < cfg.nodeCount; i++) {
                     nodes.push(createNode());
                 }
             }
 
             function updateNodes() {
-                for (var i = 0; i < nodes.length; i++) {
-                    var n = nodes[i];
-                    // Weak spring toward home (cluster center)
-                    n.vx += (n.homeX - n.x) * cfg.clusterPull;
-                    n.vy += (n.homeY - n.y) * cfg.clusterPull;
-
-                    // Random walk
-                    n.vx += (Math.random() - 0.5) * 0.014;
-                    n.vy += (Math.random() - 0.5) * 0.014;
-
-                    // Damping
-                    n.vx *= 0.994;
-                    n.vy *= 0.994;
-
-                    // Minimum drift
-                    var spd = Math.sqrt(n.vx * n.vx + n.vy * n.vy);
-                    var minV = cfg.speed * 0.25;
+                const pad = 20;
+                for (const n of nodes) {
+                    n.vx += (Math.random() - 0.5) * 0.012;
+                    n.vy += (Math.random() - 0.5) * 0.012;
+                    n.vx *= 0.995;
+                    n.vy *= 0.995;
+                    const spd = Math.sqrt(n.vx * n.vx + n.vy * n.vy);
+                    const minV = cfg.speed * 0.3;
                     if (spd < minV && spd > 0) {
                         n.vx = (n.vx / spd) * minV;
                         n.vy = (n.vy / spd) * minV;
                     }
-
                     n.x += n.vx;
                     n.y += n.vy;
-
-                    // Soft boundary — nudge back if straying too far
-                    if (n.x < 0) n.vx += 0.05;
-                    if (n.x > W) n.vx -= 0.05;
-                    if (n.y < 0) n.vy += 0.05;
-                    if (n.y > H) n.vy -= 0.05;
+                    if (n.x < -pad) n.x = W + pad;
+                    if (n.x > W + pad) n.x = -pad;
+                    if (n.y < -pad) n.y = H + pad;
+                    if (n.y > H + pad) n.y = -pad;
                 }
             }
 
             function draw() {
                 ctx.clearRect(0, 0, W, H);
-                var distSq = cfg.linkDist * cfg.linkDist;
-
-                // Edges
-                for (var i = 0; i < nodes.length; i++) {
-                    for (var j = i + 1; j < nodes.length; j++) {
-                        var a = nodes[i], b = nodes[j];
-                        var dx = a.x - b.x, dy = a.y - b.y;
-                        var d2 = dx * dx + dy * dy;
+                const distSq = cfg.linkDist * cfg.linkDist;
+                for (let i = 0; i < nodes.length; i++) {
+                    for (let j = i + 1; j < nodes.length; j++) {
+                        const a = nodes[i], b = nodes[j];
+                        const dx = a.x - b.x, dy = a.y - b.y;
+                        const d2 = dx * dx + dy * dy;
                         if (d2 < distSq) {
-                            var t = 1 - Math.sqrt(d2) / cfg.linkDist;
-                            var cr = (a.color.r + b.color.r) >> 1;
-                            var cg = (a.color.g + b.color.g) >> 1;
-                            var cb = (a.color.b + b.color.b) >> 1;
+                            const t = 1 - Math.sqrt(d2) / cfg.linkDist;
+                            const cr = (a.color.r + b.color.r) >> 1;
+                            const cg = (a.color.g + b.color.g) >> 1;
+                            const cb = (a.color.b + b.color.b) >> 1;
                             ctx.strokeStyle = 'rgba(' + cr + ',' + cg + ',' + cb + ',' + (t * cfg.edgeAlpha) + ')';
                             ctx.lineWidth = 0.6;
                             ctx.beginPath();
@@ -1175,10 +1146,7 @@
                         }
                     }
                 }
-
-                // Nodes
-                for (var k = 0; k < nodes.length; k++) {
-                    var n = nodes[k];
+                for (const n of nodes) {
                     ctx.fillStyle = 'rgba(' + n.color.r + ',' + n.color.g + ',' + n.color.b + ',' + cfg.nodeAlpha + ')';
                     ctx.beginPath();
                     ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
@@ -1191,32 +1159,16 @@
                 requestAnimationFrame(loop);
             }
 
-            // Pause when main content is off-screen
-            var observer = new IntersectionObserver(
+            const observer = new IntersectionObserver(
                 function(entries) { paused = !entries[0].isIntersecting; },
-                { threshold: 0.01 }
+                { threshold: 0.05 }
             );
-            observer.observe(container);
-
-            // Regenerate clusters on resize so they fit new dimensions
-            var resizeTimer;
-            window.addEventListener('resize', function() {
-                clearTimeout(resizeTimer);
-                resizeTimer = setTimeout(function() {
-                    resize();
-                    generateClusters();
-                    // Reassign home positions
-                    for (var i = 0; i < nodes.length; i++) {
-                        var cl = clusters[nodes[i].cluster % clusters.length];
-                        nodes[i].homeX = cl.x;
-                        nodes[i].homeY = cl.y;
-                    }
-                }, 150);
-            });
+            observer.observe(band);
 
             resize();
             initNodes();
             loop();
+            window.addEventListener('resize', resize);
         })();
     </script>
 </body>
