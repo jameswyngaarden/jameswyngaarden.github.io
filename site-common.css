@@ -1,0 +1,452 @@
+/* ═══════════════════════════════════════════════════════════════
+   site-common.css — Shared styles for jameswyngaarden.com
+   ═══════════════════════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,500;1,8..60,400&family=Sora:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --color-text: #1e2d3d;
+    --color-text-light: #5a6a78;
+    --color-navy: #1a3a5c;
+    --color-navy-light: #2a4f7a;
+    --color-gold: #b8860b;
+    --color-gold-muted: #c4973b;
+    --color-gold-subtle: rgba(184, 134, 11, 0.12);
+    --color-bg: #ffffff;
+    --color-bg-subtle: #f7f8f9;
+    --color-border: #dfe3e7;
+    --font-serif: 'Source Serif 4', 'Georgia', serif;
+    --font-display: 'Sora', 'Helvetica Neue', sans-serif;
+    --expand-duration: 0.8s;
+    --expand-easing: cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: var(--font-serif);
+    line-height: 1.7;
+    color: var(--color-text);
+    background: var(--color-bg);
+    min-height: 100vh;
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+}
+
+.container {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 40px 30px;
+    display: flex;
+    gap: 50px;
+}
+
+/* ── Sidebar ── */
+.sidebar {
+    width: 240px;
+    flex-shrink: 0;
+    position: sticky;
+    top: 40px;
+    height: fit-content;
+}
+
+.sidebar-profile {
+    padding: 0;
+    text-align: center;
+}
+
+.sidebar-profile-img {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    margin: 0 auto 24px;
+    background-image: url('stimuli/headshot.jpg');
+    background-size: cover;
+    background-position: center;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.sidebar-name {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--color-navy);
+    margin-bottom: 4px;
+}
+
+.sidebar-title {
+    font-family: var(--font-display);
+    font-size: 0.82rem;
+    color: var(--color-text-light);
+    margin-bottom: 28px;
+    font-weight: 400;
+}
+
+.sidebar-links {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.sidebar-link {
+    display: flex;
+    align-items: center;
+    padding: 9px 12px;
+    color: var(--color-text);
+    text-decoration: none;
+    transition: all 0.2s ease;
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+    font-weight: 400;
+    gap: 10px;
+    border-radius: 6px;
+}
+
+.sidebar-link img {
+    width: 18px;
+    height: 18px;
+    object-fit: contain;
+    opacity: 0.55;
+    transition: opacity 0.2s ease;
+}
+
+.sidebar-link:hover {
+    background: var(--color-bg-subtle);
+    color: var(--color-navy);
+}
+
+.sidebar-link:hover img {
+    opacity: 0.85;
+}
+
+/* ── Main Content ── */
+.main-content {
+    flex-grow: 1;
+    min-width: 0;
+    position: relative;
+}
+
+/* ── Header ── */
+header {
+    padding: 0 0 28px 0;
+    margin-bottom: 0;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 30px;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.header-center {
+    flex-grow: 1;
+}
+
+h1 {
+    font-family: var(--font-display);
+    font-size: 1.9rem;
+    margin-bottom: 5px;
+    color: var(--color-navy);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    white-space: nowrap;
+}
+
+.subtitle {
+    font-family: var(--font-display);
+    font-size: 0.88rem;
+    color: var(--color-text-light);
+    font-weight: 300;
+    letter-spacing: 0.03em;
+}
+
+/* ── Navigation ── */
+.nav {
+    display: flex;
+    gap: 32px;
+    flex-shrink: 0;
+    align-items: baseline;
+}
+
+.nav-link {
+    font-family: var(--font-display);
+    font-size: 0.88rem;
+    font-weight: 400;
+    color: var(--color-text-light);
+    text-decoration: none;
+    padding-bottom: 4px;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s ease;
+}
+
+.nav-link:hover {
+    color: var(--color-navy);
+    border-bottom-color: var(--color-border);
+}
+
+.nav-link.active {
+    color: var(--color-navy);
+    border-bottom-color: var(--color-gold);
+    font-weight: 500;
+}
+
+/* ── Text-Clip Parallax Section Headers ── */
+.section-header {
+    padding: 10px 0;
+    text-align: center;
+    margin: 40px 0 0 0;
+    position: relative;
+    background: var(--color-bg);
+}
+
+.section-header.alt-bg {
+    margin-top: 20px;
+}
+
+.section-header h2 {
+    font-family: var(--font-display);
+    font-size: 4.5rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    background-image: url('stimuli/schuylkill_river_trail.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+}
+
+.section-header::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 2px;
+    background: var(--color-gold);
+    margin: 24px auto 0;
+}
+
+/* ── Animated Name (SVG-based) ── */
+.name-animated {
+    display: flex;
+    align-items: baseline;
+    font-family: var(--font-display);
+    font-size: 1.9rem;
+    font-weight: 600;
+    color: var(--color-navy);
+    letter-spacing: -0.02em;
+    margin-bottom: 5px;
+}
+
+.glyph-svg {
+    height: 0.72em;
+    display: inline-block;
+    overflow: visible;
+    transform: translateY(0.01em);
+}
+
+.glyph-svg path {
+    fill: var(--color-navy);
+}
+
+/* III spacing */
+.i-glyph { margin-right: -0.02em; }
+.i-glyph.i1 { margin-left: 0.08em; }
+.i-glyph.i2 { margin-left: 0.12em; }
+.i-glyph.i3 { margin-left: 0.12em; margin-right: 0; }
+
+/* J: appears first */
+#svgJ { clip-path: inset(0 100% 100% 0); }
+.animate #svgJ {
+    animation: revealJ 0.6s var(--expand-easing) forwards;
+    animation-delay: 0s;
+}
+@keyframes revealJ {
+    0% { clip-path: inset(0 100% 100% 0); }
+    40% { clip-path: inset(0 0 83% 0); }
+    100% { clip-path: inset(0 0 0 0); }
+}
+
+/* B: appears after J */
+#svgB { clip-path: inset(0 100% 0 0); }
+.animate #svgB {
+    animation: revealB 0.65s var(--expand-easing) forwards;
+    animation-delay: 0.5s;
+}
+@keyframes revealB {
+    0% { clip-path: inset(0 100% 0 0); }
+    35% { clip-path: inset(0 80% 0 0); }
+    60% { clip-path: inset(50% 0 0 0); }
+    100% { clip-path: inset(0 0 0 0); }
+}
+
+/* W: appears after B */
+#svgW { clip-path: inset(0 50% 0 50%); }
+.animate #svgW {
+    animation: revealW 0.55s var(--expand-easing) forwards;
+    animation-delay: 1.0s;
+}
+@keyframes revealW {
+    0% { clip-path: inset(0 50% 0 50%); }
+    100% { clip-path: inset(0 0 0 0); }
+}
+
+/* III: appears after W, staggered */
+.i-glyph { clip-path: inset(100% 0 0 0); }
+.animate .i-glyph.i1 {
+    animation: revealI 0.35s var(--expand-easing) forwards;
+    animation-delay: 1.45s;
+}
+.animate .i-glyph.i2 {
+    animation: revealI 0.35s var(--expand-easing) forwards;
+    animation-delay: 1.52s;
+}
+.animate .i-glyph.i3 {
+    animation: revealI 0.35s var(--expand-easing) forwards;
+    animation-delay: 1.59s;
+}
+@keyframes revealI {
+    0% { clip-path: inset(100% 0 0 0); }
+    100% { clip-path: inset(0 0 0 0); }
+}
+
+/* Expanding text parts */
+.expand-part {
+    display: inline-block;
+    max-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    opacity: 0;
+    transition: max-width 1.2s var(--expand-easing), opacity 0.7s var(--expand-easing);
+}
+.phase2 .expand-part {
+    max-width: 300px;
+    opacity: 1;
+}
+.phase2 .expand-part.d1 { transition-delay: 0s; }
+.phase2 .expand-part.d2 { transition-delay: 0.15s; }
+
+.expand-space { width: 0.32em; }
+
+/* ── Neural Network Animation ── */
+#networkCanvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.main-content > *:not(#networkCanvas) {
+    position: relative;
+    z-index: 1;
+}
+
+/* ── Link Preview ── */
+.link-preview {
+    position: fixed;
+    width: 320px;
+    background: #5a6a78;
+    border-radius: 10px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.link-preview.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.link-preview-image {
+    width: 100%;
+    height: 120px;
+    object-fit: cover;
+    display: block;
+}
+
+.link-preview-content {
+    padding: 14px 16px;
+}
+
+.link-preview-title {
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: white;
+    margin-bottom: 6px;
+    line-height: 1.3;
+}
+
+.link-preview-description {
+    font-family: var(--font-serif);
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.85);
+    line-height: 1.5;
+    margin-bottom: 8px;
+}
+
+.link-preview-source {
+    font-family: var(--font-display);
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+/* ── Responsive (shared components) ── */
+@media (max-width: 900px) {
+    .container {
+        flex-direction: column;
+        padding: 20px 16px;
+        gap: 30px;
+    }
+
+    .sidebar {
+        width: 100%;
+        position: relative;
+        top: 0;
+    }
+
+    .sidebar-links {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 4px;
+    }
+
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+        padding-bottom: 24px;
+    }
+
+    .nav {
+        gap: 24px;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+        white-space: normal;
+    }
+
+    .section-header {
+        padding: 36px 0;
+        margin: 28px 0 0 0;
+    }
+
+    .section-header h2 {
+        font-size: 2.8rem;
+        background-attachment: scroll;
+    }
+
+    .name-animated {
+        font-size: 1.5rem;
+    }
+}
