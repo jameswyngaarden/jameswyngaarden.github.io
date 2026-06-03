@@ -600,38 +600,6 @@
 
         .expand-space { width: 0.32em; }
 
-        /* ── Neural Network Animation ── */
-        .header-band {
-            position: relative;
-            overflow: hidden;
-        }
-
-        .header-band canvas {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-        }
-
-        /* Gradient fade at bottom edge */
-        .header-band::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 50px;
-            background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);
-            pointer-events: none;
-            z-index: 2;
-        }
-
-        .header-band header {
-            position: relative;
-            z-index: 3;
-        }
-
         /* ── Responsive ── */
         @media (max-width: 900px) {
             .container {
@@ -740,8 +708,6 @@
         </aside>
 
         <div class="main-content">
-            <div class="header-band" id="headerBand">
-            <canvas id="networkCanvas"></canvas>
             <header>
                 <div class="header-center">
                     <div class="name-animated" id="nameAnimated">
@@ -798,7 +764,6 @@
                     <a href="art.html" class="nav-link">Artistry</a>
                 </nav>
             </header>
-            </div>
 
             <div class="section-header">
                 <h2>About Me</h2>
@@ -1041,134 +1006,6 @@
             setTimeout(() => {
                 nameAnimated.classList.add('phase2');
             }, 2100);
-        })();
-
-        // Neural Network Particle Animation
-        (function() {
-            const canvas = document.getElementById('networkCanvas');
-            if (!canvas) return;
-            const ctx = canvas.getContext('2d');
-            const band = document.getElementById('headerBand');
-
-            const PALETTE = [
-                { r: 106, g: 176, b: 212 },
-                { r: 126, g: 200, b: 164 },
-                { r: 160, g: 212, b: 207 },
-                { r:  74, g: 143, b: 168 },
-                { r: 139, g: 191, b: 122 },
-                { r: 194, g: 221, b: 230 },
-            ];
-
-            const cfg = {
-                nodeCount: 50,
-                linkDist: 140,
-                speed: 0.18,
-                nodeAlpha: 0.40,
-                edgeAlpha: 0.12,
-            };
-
-            let nodes = [];
-            let W, H;
-            let paused = false;
-
-            function resize() {
-                const rect = band.getBoundingClientRect();
-                const dpr = window.devicePixelRatio || 1;
-                W = rect.width;
-                H = rect.height;
-                canvas.width = W * dpr;
-                canvas.height = H * dpr;
-                canvas.style.width = W + 'px';
-                canvas.style.height = H + 'px';
-                ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-            }
-
-            function createNode() {
-                const c = PALETTE[Math.floor(Math.random() * PALETTE.length)];
-                return {
-                    x: Math.random() * W,
-                    y: Math.random() * H,
-                    vx: (Math.random() - 0.5) * cfg.speed,
-                    vy: (Math.random() - 0.5) * cfg.speed,
-                    r: 1.5 + Math.random() * 2,
-                    color: c,
-                };
-            }
-
-            function initNodes() {
-                nodes = [];
-                for (let i = 0; i < cfg.nodeCount; i++) {
-                    nodes.push(createNode());
-                }
-            }
-
-            function updateNodes() {
-                const pad = 20;
-                for (const n of nodes) {
-                    n.vx += (Math.random() - 0.5) * 0.012;
-                    n.vy += (Math.random() - 0.5) * 0.012;
-                    n.vx *= 0.995;
-                    n.vy *= 0.995;
-                    const spd = Math.sqrt(n.vx * n.vx + n.vy * n.vy);
-                    const minV = cfg.speed * 0.3;
-                    if (spd < minV && spd > 0) {
-                        n.vx = (n.vx / spd) * minV;
-                        n.vy = (n.vy / spd) * minV;
-                    }
-                    n.x += n.vx;
-                    n.y += n.vy;
-                    if (n.x < -pad) n.x = W + pad;
-                    if (n.x > W + pad) n.x = -pad;
-                    if (n.y < -pad) n.y = H + pad;
-                    if (n.y > H + pad) n.y = -pad;
-                }
-            }
-
-            function draw() {
-                ctx.clearRect(0, 0, W, H);
-                const distSq = cfg.linkDist * cfg.linkDist;
-                for (let i = 0; i < nodes.length; i++) {
-                    for (let j = i + 1; j < nodes.length; j++) {
-                        const a = nodes[i], b = nodes[j];
-                        const dx = a.x - b.x, dy = a.y - b.y;
-                        const d2 = dx * dx + dy * dy;
-                        if (d2 < distSq) {
-                            const t = 1 - Math.sqrt(d2) / cfg.linkDist;
-                            const cr = (a.color.r + b.color.r) >> 1;
-                            const cg = (a.color.g + b.color.g) >> 1;
-                            const cb = (a.color.b + b.color.b) >> 1;
-                            ctx.strokeStyle = 'rgba(' + cr + ',' + cg + ',' + cb + ',' + (t * cfg.edgeAlpha) + ')';
-                            ctx.lineWidth = 0.6;
-                            ctx.beginPath();
-                            ctx.moveTo(a.x, a.y);
-                            ctx.lineTo(b.x, b.y);
-                            ctx.stroke();
-                        }
-                    }
-                }
-                for (const n of nodes) {
-                    ctx.fillStyle = 'rgba(' + n.color.r + ',' + n.color.g + ',' + n.color.b + ',' + cfg.nodeAlpha + ')';
-                    ctx.beginPath();
-                    ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
-                    ctx.fill();
-                }
-            }
-
-            function loop() {
-                if (!paused) { updateNodes(); draw(); }
-                requestAnimationFrame(loop);
-            }
-
-            const observer = new IntersectionObserver(
-                function(entries) { paused = !entries[0].isIntersecting; },
-                { threshold: 0.05 }
-            );
-            observer.observe(band);
-
-            resize();
-            initNodes();
-            loop();
-            window.addEventListener('resize', resize);
         })();
     </script>
 </body>
