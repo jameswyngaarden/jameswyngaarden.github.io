@@ -212,12 +212,12 @@
         ];
 
         var cfg = {
-            nodeCount: 90,
+            nodeCount: 100,
             linkDist: 120,
             speed: 0.18,
             nodeAlpha: 0.35,
             edgeAlpha: 0.10,
-            driftTime: 14,
+            driftTime: 8,
             convergeTime: 3,
             holdTime: 2,
             curveScale: 0.30,
