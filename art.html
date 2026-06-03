@@ -6,72 +6,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Art - James B. Wyngaarden III</title>
+    <link rel="stylesheet" href="site-common.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,500;1,8..60,400&family=Sora:wght@300;400;500;600;700&display=swap');
-
-        :root {
-            --color-text: #1e2d3d;
-            --color-text-light: #5a6a78;
-            --color-navy: #1a3a5c;
-            --color-navy-light: #2a4f7a;
-            --color-gold: #b8860b;
-            --color-gold-muted: #c4973b;
-            --color-bg: #ffffff;
-            --color-bg-subtle: #f7f8f9;
-            --color-border: #dfe3e7;
-            --font-serif: 'Source Serif 4', 'Georgia', serif;
-            --font-display: 'Sora', 'Helvetica Neue', sans-serif;
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: var(--font-serif); line-height: 1.7; color: var(--color-text); background: var(--color-bg); min-height: 100vh; font-size: 16px; -webkit-font-smoothing: antialiased; }
-        .container { max-width: 1300px; margin: 0 auto; padding: 40px 30px; display: flex; gap: 50px; }
-
-        /* Sidebar */
-        .sidebar { width: 240px; flex-shrink: 0; position: sticky; top: 40px; height: fit-content; }
-        .sidebar-profile { padding: 0; text-align: center; }
-        .sidebar-profile-img { width: 160px; height: 160px; border-radius: 50%; margin: 0 auto 24px; background-image: url('stimuli/headshot.jpg'); background-size: cover; background-position: center; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08); }
-        .sidebar-name { font-family: var(--font-display); font-size: 1.15rem; font-weight: 600; color: var(--color-navy); margin-bottom: 4px; }
-        .sidebar-title { font-family: var(--font-display); font-size: 0.82rem; color: var(--color-text-light); margin-bottom: 28px; font-weight: 400; }
-        .sidebar-links { display: flex; flex-direction: column; gap: 2px; }
-        .sidebar-link { display: flex; align-items: center; padding: 9px 12px; color: var(--color-text); text-decoration: none; transition: all 0.2s ease; font-family: var(--font-display); font-size: 0.85rem; font-weight: 400; gap: 10px; border-radius: 6px; }
-        .sidebar-link img { width: 18px; height: 18px; object-fit: contain; opacity: 0.55; transition: opacity 0.2s ease; }
-        .sidebar-link:hover { background: var(--color-bg-subtle); color: var(--color-navy); }
-        .sidebar-link:hover img { opacity: 0.85; }
-
-        /* Main */
-        .main-content { flex-grow: 1; min-width: 0; }
-
-        /* Header */
-        header { padding: 0 0 28px 0; margin-bottom: 0; display: flex; align-items: baseline; justify-content: space-between; gap: 30px; border-bottom: 1px solid var(--color-border); }
-        .header-center { flex-grow: 1; }
-        h1 { font-family: var(--font-display); font-size: 1.9rem; margin-bottom: 5px; color: var(--color-navy); font-weight: 600; letter-spacing: -0.02em; white-space: nowrap; }
-        .subtitle { font-family: var(--font-display); font-size: 0.88rem; color: var(--color-text-light); font-weight: 300; letter-spacing: 0.03em; }
-
-        /* Nav */
-        .nav { display: flex; gap: 32px; flex-shrink: 0; align-items: baseline; }
-        .nav-link { font-family: var(--font-display); font-size: 0.88rem; font-weight: 400; color: var(--color-text-light); text-decoration: none; padding-bottom: 4px; border-bottom: 2px solid transparent; transition: all 0.2s ease; }
-        .nav-link:hover { color: var(--color-navy); border-bottom-color: var(--color-border); }
-        .nav-link.active { color: var(--color-navy); border-bottom-color: var(--color-gold); font-weight: 500; }
-
-        /* Text-Clip Parallax Header */
-        .section-header { padding: 10px 0; text-align: center; margin: 40px 0 0 0; background: var(--color-bg); }
-        .section-header h2 {
-            font-family: var(--font-display);
-            font-size: 4.5rem;
-            font-weight: 700;
-            letter-spacing: -0.02em;
-            line-height: 1;
-            background-image: url('stimuli/schuylkill_river_trail.jpg');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            color: transparent;
-        }
-        .section-header::after { content: ''; display: block; width: 60px; height: 2px; background: var(--color-gold); margin: 24px auto 0; }
+        /* ── Page-specific styles: art.html ── */
 
         /* Gallery */
         .gallery-intro { max-width: 700px; margin: 0 auto; padding: 44px 20px 20px; font-size: 1.05rem; line-height: 1.8; color: var(--color-text); text-align: center; }
@@ -80,7 +17,7 @@
         .gallery-grid { max-width: 1100px; margin: 0 auto; padding: 20px 20px 60px; column-count: 4; column-gap: 24px; }
         .gallery-item { break-inside: avoid; margin-bottom: 24px; overflow: hidden; cursor: pointer; }
         .gallery-item-img { width: 100%; border-radius: 0; display: flex; align-items: center; justify-content: center; }
-        .gallery-item-img img { width: 100%; height: auto; object-fit: contain; display: block; transition: opacity 0.3s ease; border-radius: 0; }        
+        .gallery-item-img img { width: 100%; height: auto; object-fit: contain; display: block; transition: opacity 0.3s ease; border-radius: 0; }
         .gallery-item:hover .gallery-item-img img { opacity: 0.7; }
         .gallery-title { margin-top: 10px; font-family: var(--font-display); font-size: 0.82rem; font-weight: 500; color: var(--color-text); text-decoration: none; }
         .gallery-item:hover .gallery-title { text-decoration: underline; text-underline-offset: 2px; }
@@ -88,194 +25,43 @@
 
         /* Lightbox */
         .lightbox-overlay {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(255, 255, 255, 0.98);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
-            padding: 40px;
-            opacity: 0;
-            transition: opacity 0.25s ease;
+            display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(255, 255, 255, 0.98); z-index: 1000;
+            align-items: center; justify-content: center; padding: 40px;
+            opacity: 0; transition: opacity 0.25s ease;
         }
         .lightbox-overlay.active { display: flex; }
         .lightbox-overlay.visible { opacity: 1; }
-
-        .lightbox-content {
-            display: flex;
-            align-items: center;
-            gap: 40px;
-            max-width: 1100px;
-            width: 100%;
-            max-height: 90vh;
-            position: relative;
-        }
-
-        .lightbox-img-wrap {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-width: 0;
-            max-height: 80vh;
-        }
-        .lightbox-img-wrap img {
-            max-width: 100%;
-            max-height: 80vh;
-            object-fit: contain;
-            border-radius: 0;
-            box-shadow: none;
-        }
-
-        .lightbox-info {
-            width: 260px;
-            flex-shrink: 0;
-            color: var(--color-text);
-        }
-        .lightbox-title {
-            font-family: var(--font-display);
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: var(--color-navy);
-            margin-bottom: 6px;
-        }
-        .lightbox-medium {
-            font-family: var(--font-display);
-            font-size: 0.85rem;
-            font-style: italic;
-            color: var(--color-text-light);
-            margin-bottom: 16px;
-        }
-        .lightbox-desc {
-            font-family: var(--font-serif);
-            font-size: 0.92rem;
-            line-height: 1.7;
-            color: var(--color-text);
-        }
-        .lightbox-desc a {
-            color: var(--color-navy);
-            text-decoration: underline;
-            text-underline-offset: 2px;
-        }
-
+        .lightbox-content { display: flex; align-items: center; gap: 40px; max-width: 1100px; width: 100%; max-height: 90vh; position: relative; }
+        .lightbox-img-wrap { flex: 1; display: flex; align-items: center; justify-content: center; min-width: 0; max-height: 80vh; }
+        .lightbox-img-wrap img { max-width: 100%; max-height: 80vh; object-fit: contain; border-radius: 0; box-shadow: none; }
+        .lightbox-info { width: 260px; flex-shrink: 0; color: var(--color-text); }
+        .lightbox-title { font-family: var(--font-display); font-size: 1.2rem; font-weight: 600; color: var(--color-navy); margin-bottom: 6px; }
+        .lightbox-medium { font-family: var(--font-display); font-size: 0.85rem; font-style: italic; color: var(--color-text-light); margin-bottom: 16px; }
+        .lightbox-desc { font-family: var(--font-serif); font-size: 0.92rem; line-height: 1.7; color: var(--color-text); }
+        .lightbox-desc a { color: var(--color-navy); text-decoration: underline; text-underline-offset: 2px; }
         .lightbox-nav {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: none;
-            border: 1px solid var(--color-border);
-            color: var(--color-text-light);
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 1.2rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s ease;
-            z-index: 10;
+            position: absolute; top: 50%; transform: translateY(-50%);
+            background: none; border: 1px solid var(--color-border); color: var(--color-text-light);
+            width: 44px; height: 44px; border-radius: 50%; cursor: pointer;
+            font-size: 1.2rem; display: flex; align-items: center; justify-content: center;
+            transition: all 0.2s ease; z-index: 10;
         }
-        .lightbox-nav:hover {
-            background: var(--color-bg-subtle);
-            color: var(--color-navy);
-            border-color: var(--color-text-light);
-        }
+        .lightbox-nav:hover { background: var(--color-bg-subtle); color: var(--color-navy); border-color: var(--color-text-light); }
         .lightbox-prev { left: -60px; }
         .lightbox-next { right: -60px; }
-
         .lightbox-close {
-            position: fixed;
-            top: 20px;
-            right: 24px;
-            background: none;
-            border: none;
-            color: var(--color-text-light);
-            font-size: 1.5rem;
-            cursor: pointer;
-            z-index: 1001;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            position: fixed; top: 20px; right: 24px; background: none; border: none;
+            color: var(--color-text-light); font-size: 1.5rem; cursor: pointer; z-index: 1001;
+            width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;
             transition: color 0.2s ease;
         }
         .lightbox-close:hover { color: var(--color-navy); }
+        .lightbox-counter { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); font-family: var(--font-display); font-size: 0.78rem; color: var(--color-text-light); z-index: 1001; }
 
-        .lightbox-counter {
-            position: fixed;
-            bottom: 24px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-family: var(--font-display);
-            font-size: 0.78rem;
-            color: var(--color-text-light);
-            z-index: 1001;
-        }
-
-        /* ── Animated Name (SVG-based) ── */
-        .name-animated { display: flex; align-items: baseline; font-family: var(--font-display); font-size: 1.9rem; font-weight: 600; color: var(--color-navy); letter-spacing: -0.02em; margin-bottom: 5px; }
-        .glyph-svg { height: 0.72em; display: inline-block; overflow: visible; transform: translateY(0.01em); }
-        .glyph-svg path { fill: var(--color-navy); }
-        .i-glyph { margin-right: -0.02em; }
-        .i-glyph.i1 { margin-left: 0.08em; }
-        .i-glyph.i2 { margin-left: 0.12em; }
-        .i-glyph.i3 { margin-left: 0.12em; margin-right: 0; }
-        #svgJ { clip-path: inset(0 100% 100% 0); }
-        .animate #svgJ { animation: revealJ 0.6s cubic-bezier(0.25, 0.1, 0.25, 1) forwards; animation-delay: 0s; }
-        @keyframes revealJ { 0% { clip-path: inset(0 100% 100% 0); } 40% { clip-path: inset(0 0 83% 0); } 100% { clip-path: inset(0 0 0 0); } }
-        #svgB { clip-path: inset(0 100% 0 0); }
-        .animate #svgB { animation: revealB 0.65s cubic-bezier(0.25, 0.1, 0.25, 1) forwards; animation-delay: 0.5s; }
-        @keyframes revealB { 0% { clip-path: inset(0 100% 0 0); } 35% { clip-path: inset(0 80% 0 0); } 60% { clip-path: inset(50% 0 0 0); } 100% { clip-path: inset(0 0 0 0); } }
-        #svgW { clip-path: inset(0 50% 0 50%); }
-        .animate #svgW { animation: revealW 0.55s cubic-bezier(0.25, 0.1, 0.25, 1) forwards; animation-delay: 1.0s; }
-        @keyframes revealW { 0% { clip-path: inset(0 50% 0 50%); } 100% { clip-path: inset(0 0 0 0); } }
-        .i-glyph { clip-path: inset(100% 0 0 0); }
-        .animate .i-glyph.i1 { animation: revealI 0.35s cubic-bezier(0.25, 0.1, 0.25, 1) forwards; animation-delay: 1.45s; }
-        .animate .i-glyph.i2 { animation: revealI 0.35s cubic-bezier(0.25, 0.1, 0.25, 1) forwards; animation-delay: 1.52s; }
-        .animate .i-glyph.i3 { animation: revealI 0.35s cubic-bezier(0.25, 0.1, 0.25, 1) forwards; animation-delay: 1.59s; }
-        @keyframes revealI { 0% { clip-path: inset(100% 0 0 0); } 100% { clip-path: inset(0 0 0 0); } }
-        .expand-part { display: inline-block; max-width: 0; overflow: hidden; white-space: nowrap; opacity: 0; transition: max-width 1.2s cubic-bezier(0.25, 0.1, 0.25, 1), opacity 0.7s cubic-bezier(0.25, 0.1, 0.25, 1); }
-        .phase2 .expand-part { max-width: 300px; opacity: 1; }
-        .phase2 .expand-part.d1 { transition-delay: 0s; }
-        .phase2 .expand-part.d2 { transition-delay: 0.15s; }
-        .expand-space { width: 0.32em; }
-
-        /* Link Preview */
-        .link-preview {
-            position: fixed;
-            width: 320px;
-            background: #5a6a78;
-            border-radius: 8px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-            z-index: 1000;
-            overflow: hidden;
-            pointer-events: none;
-            opacity: 0;
-            transition: opacity 0.15s ease;
-        }
-        .link-preview.visible { opacity: 1; }
-        .link-preview-img { width: 100%; height: 120px; object-fit: cover; display: block; }
-        .link-preview-content { padding: 12px 14px; }
-        .link-preview-title { font-family: var(--font-display); font-size: 0.95rem; font-weight: 600; color: #ffffff; margin-bottom: 4px; }
-        .link-preview-desc { font-family: var(--font-serif); font-size: 0.85rem; color: rgba(255,255,255,0.85); line-height: 1.5; }
-        .link-preview-source { font-family: var(--font-display); font-size: 0.75rem; color: rgba(255,255,255,0.6); margin-top: 8px; }
-
-        /* Responsive */
-        @media (max-width: 1000px) {
-            .gallery-grid { column-count: 3; }
-        }
+        /* Responsive (page-specific) */
+        @media (max-width: 1000px) { .gallery-grid { column-count: 3; } }
         @media (max-width: 900px) {
-            .container { flex-direction: column; padding: 20px 16px; gap: 30px; }
-            .sidebar { width: 100%; position: relative; top: 0; }
-            .sidebar-links { flex-direction: row; flex-wrap: wrap; justify-content: center; gap: 4px; }
-            header { flex-direction: column; align-items: flex-start; gap: 16px; padding-bottom: 24px; }
-            .nav { gap: 24px; }
-            h1 { font-size: 1.5rem; white-space: normal; }
-            .section-header { padding: 36px 0; margin: 28px 0 0 0; }
-            .section-header h2 { font-size: 2.8rem; background-attachment: scroll; }
             .gallery-grid { column-count: 2; padding: 20px 8px 40px; }
             .lightbox-overlay { padding: 20px; }
             .lightbox-content { flex-direction: column; gap: 20px; }
@@ -284,86 +70,15 @@
             .lightbox-next { right: 10px; }
             .lightbox-nav { width: 36px; height: 36px; font-size: 1rem; }
         }
-        @media (max-width: 550px) {
-            .gallery-grid { column-count: 1; }
-        }
+        @media (max-width: 550px) { .gallery-grid { column-count: 1; } }
     </style>
 </head>
 <body>
     <div class="container">
-        <aside class="sidebar">
-            <div class="sidebar-profile">
-                
-                
-                
-                <div class="sidebar-links">
-                    <a href="/cdn-cgi/l/email-protection#117b707c74623f66687f7670706375747f5165747c617d743f747564" class="sidebar-link"><img src="stimuli/logos/Email.png" alt="">Email</a>
-                    <a href="https://www.linkedin.com/in/james-wyngaarden-iii" target="_blank" class="sidebar-link"><img src="stimuli/logos/Linkedin.png" alt="">LinkedIn</a>
-                    <a href="https://bsky.app/profile/jameswyngaarden.bsky.social" target="_blank" class="sidebar-link"><img src="stimuli/logos/Bluesky.png" alt="">Bluesky</a>
-                    <a href="https://github.com/jameswyngaarden" target="_blank" class="sidebar-link"><img src="stimuli/logos/Github.png" alt="">GitHub</a>
-                    <a href="https://scholar.google.com/citations?user=84faR-sAAAAJ&hl=en" target="_blank" class="sidebar-link"><img src="stimuli/logos/Google-Scholar.png" alt="">Google Scholar</a>
-                    <a href="https://orcid.org/0000-0002-0858-8721" target="_blank" class="sidebar-link"><img src="stimuli/logos/Orcid.png" alt="">ORCID</a>
-                </div>
-            </div>
-        </aside>
+        <aside class="sidebar" id="sidebar"></aside>
 
-        <div class="main-content">
-            <header>
-                <div class="header-center">
-                    <div class="name-animated" id="nameAnimated">
-                        <!-- J -->
-                        <svg class="glyph-svg" viewBox="35 0 529 730" id="svgJ">
-                            <g transform="translate(0, 730) scale(1, -1)">
-                                <path d="M300 -19Q221 -19 161.0 12.0Q101 43 68.0 103.0Q35 163 35 250V282H176V238Q176 180 210.0 146.5Q244 113 299 113Q355 113 388.5 146.5Q422 180 422 238V625H564V250Q564 163 531.0 103.0Q498 43 439.0 12.0Q380 -19 300 -19ZM124 605V730H564V605Z"/>
-                            </g>
-                        </svg>
-                        <span class="expand-part d1">ames</span>
-                        <span class="expand-part d1 expand-space">&nbsp;</span>
-
-                        <!-- B -->
-                        <svg class="glyph-svg" viewBox="90 0 545 740" id="svgB">
-                            <g transform="translate(0, 735) scale(1, -1)">
-                                <path d="M209 -5V109H392Q442 109 468.0 136.5Q494 164 494 212Q494 260 468.0 286.5Q442 313 392 313H209V400H382Q455 400 512.5 382.5Q570 365 602.5 324.0Q635 283 635 214V200Q635 135 606.5 89.5Q578 44 521.5 19.5Q465 -5 382 -5ZM90 -5V735H229V-5ZM209 336V423H365Q416 423 440.0 450.0Q464 477 464 522Q464 567 440.0 594.0Q416 621 365 621H209V735H352Q476 735 540.5 683.0Q605 631 605 534V520Q605 452 572.5 411.5Q540 371 483.0 353.5Q426 336 352 336Z"/>
-                            </g>
-                        </svg>
-                        <span class="expand-part d1">.</span>
-                        <span class="expand-part d1 expand-space">&nbsp;</span>
-
-                        <!-- W -->
-                        <svg class="glyph-svg" viewBox="24 0 1014 730" id="svgW">
-                            <g transform="translate(0, 730) scale(1, -1)">
-                                <path d="M210 0L24 730H171L322 95L283 118H383L339 95L458 702H580L432 0ZM646 0L485 702H612L749 95L706 118H804L766 95L899 730H1038L872 0Z"/>
-                            </g>
-                        </svg>
-                        <span class="expand-part d2">yngaarden</span>
-                        <span class="expand-part d2 expand-space">&nbsp;</span>
-
-                        <!-- III -->
-                        <svg class="glyph-svg i-glyph i1" viewBox="92 0 142 730">
-                            <g transform="translate(0, 730) scale(1, -1)">
-                                <path d="M92 0V730H234V0Z"/>
-                            </g>
-                        </svg>
-                        <svg class="glyph-svg i-glyph i2" viewBox="92 0 142 730">
-                            <g transform="translate(0, 730) scale(1, -1)">
-                                <path d="M92 0V730H234V0Z"/>
-                            </g>
-                        </svg>
-                        <svg class="glyph-svg i-glyph i3" viewBox="92 0 142 730">
-                            <g transform="translate(0, 730) scale(1, -1)">
-                                <path d="M92 0V730H234V0Z"/>
-                            </g>
-                        </svg>
-                    </div>
-                    <p class="subtitle">Research Scientist &ensp;·&ensp; Decision Making &ensp;·&ensp; Computational Modeling</p>
-                </div>
-                <nav class="nav">
-                    <a href="index.html" class="nav-link">About</a>
-                    <a href="current-work.html" class="nav-link">Current Work</a>
-                    <a href="publications.html" class="nav-link">Publications</a>
-                    <a href="art.html" class="nav-link active">Artistry</a>
-                </nav>
-            </header>
+        <div class="main-content" id="mainContent">
+            <header id="siteHeader"></header>
 
             <div class="section-header">
                 <h2>Art</h2>
@@ -382,27 +97,12 @@
                     <div class="gallery-title">Religious Figures (Mary & Child and St. Christopher)</div>
                     <div class="gallery-medium">Oil paint, 11"x14", 2020 & 2023</div>
                 </div>
-                <!-- <div class="gallery-item" data-desc="Painted from reference images of Renaissance-era 'Madonna & Child' paintings during Covid in North Carolina. I grew up in a Catholic household and while I don't consider myself religious as an adult I have always been inspired by Christian religious imagery as a subject for painting!">
-                    <div class="gallery-item-img"><img src="art/IMG_mary.png" alt="Religious figure-Mary"></div>
-                    <div class="gallery-title">Religious Figure (Mary & Child)</div>
-                    <div class="gallery-medium">Oil paint, 11"x14", 2020</div>
-                </div>
-                <div class="gallery-item" data-desc="Primarily takes inspiration from imagery around St. Christopher (e.g., 'St. Christopher protect us' necklaces) but also has some Jesus vibes and as a companion piece to the Mary & Child painting kind of works as a Joseph as well. Painted while living in Philadelphia.">
-                    <div class="gallery-item-img"><img src="art/IMG_christopher.png" alt="Religious figure-Christopher"></div>
-                    <div class="gallery-title">Religious Figure (Christopher)</div>
-                    <div class="gallery-medium">Oil paint, 11"x14", 2023</div>
-                </div>
-                <div class="gallery-item" data-desc="Sort of abstract painting of two runners. This one has evolved a lot and current version doesn't look like this anymore but I think this was my favorite version...">
-                    <div class="gallery-item-img"><img src="art/IMG_two-runners.png" alt="Two Runners"></div>
-                    <div class="gallery-title">Two Runners</div>
-                    <div class="gallery-medium">Oil paint, 13"x18", 2018</div>
-                </div> -->
                 <div class="gallery-item">
                     <div class="gallery-item-img"><img src="art/IMG_stoneybrook-unfinished.png" alt="Stoneybrook"></div>
                     <div class="gallery-title">View from the Breakfast Table at Stoneybrook in the Fall</div>
                     <div class="gallery-medium">Oil pastels, 8.5"x11", 2024</div>
                 </div>
-                <div class="gallery-item" data-desc="A study after Monet's <em>Woman with a Parasol – Madame Monet and Her Son</em>, sometimes known as <em>The Stroll</em> (French: <em>La Promenade</em>). In a February 2025 trip to Paris, I unexpectedly came face-to-face with several of the original paintings in this series at the Musée d'Orsay—a surreal moment after having just recently worked on my own version. <br><br><img src='stimuli/with-monet-in-dorsay.png' alt='Me with the original Monet at Musée d&apos;Orsay' style='max-width: 100%; border-radius: 0; margin-top: 8px;'>">                    
+                <div class="gallery-item" data-desc="A study after Monet's <em>Woman with a Parasol – Madame Monet and Her Son</em>, sometimes known as <em>The Stroll</em> (French: <em>La Promenade</em>). In a February 2025 trip to Paris, I unexpectedly came face-to-face with several of the original paintings in this series at the Musée d'Orsay—a surreal moment after having just recently worked on my own version. <br><br><img src='stimuli/with-monet-in-dorsay.png' alt='Me with the original Monet at Musée d&apos;Orsay' style='max-width: 100%; border-radius: 0; margin-top: 8px;'>">
                     <div class="gallery-item-img"><img src="art/IMG_monet.png" alt="Monet"></div>
                     <div class="gallery-title">After Monet</div>
                     <div class="gallery-medium">Oil pastels, 8.5"x11", 2025</div>
@@ -441,16 +141,6 @@
         </div>
     </div>
 
-    <!-- Link Preview -->
-    <div class="link-preview" id="link-preview">
-        <img class="link-preview-img" id="preview-img" src="" alt="" style="display:none;">
-        <div class="link-preview-content">
-            <div class="link-preview-title" id="preview-title"></div>
-            <div class="link-preview-desc" id="preview-desc"></div>
-            <div class="link-preview-source" id="preview-source"></div>
-        </div>
-    </div>
-
     <!-- Lightbox -->
     <div class="lightbox-overlay" id="lightbox">
         <button class="lightbox-close" id="lb-close">&times;</button>
@@ -469,7 +159,9 @@
         <div class="lightbox-counter" id="lb-counter"></div>
     </div>
 
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    <script src="site-common.js"></script>
+    <script>
+    // Lightbox
     (function() {
         var items = document.querySelectorAll('.gallery-item');
         var overlay = document.getElementById('lightbox');
@@ -523,74 +215,19 @@
         function prev() { show((current - 1 + items.length) % items.length); }
 
         for (var i = 0; i < items.length; i++) {
-            (function(idx) {
-                items[idx].addEventListener('click', function() { show(idx); });
-            })(i);
+            (function(idx) { items[idx].addEventListener('click', function() { show(idx); }); })(i);
         }
 
         document.getElementById('lb-close').addEventListener('click', hide);
         document.getElementById('lb-next').addEventListener('click', next);
         document.getElementById('lb-prev').addEventListener('click', prev);
-
-        overlay.addEventListener('click', function(e) {
-            if (e.target === overlay) hide();
-        });
-
+        overlay.addEventListener('click', function(e) { if (e.target === overlay) hide(); });
         document.addEventListener('keydown', function(e) {
             if (!overlay.classList.contains('active')) return;
             if (e.key === 'Escape') hide();
             if (e.key === 'ArrowRight') next();
             if (e.key === 'ArrowLeft') prev();
         });
-    })();
-
-    // Link preview
-    (function() {
-        var preview = document.getElementById('link-preview');
-        var previewImg = document.getElementById('preview-img');
-        var previewTitle = document.getElementById('preview-title');
-        var previewDesc = document.getElementById('preview-desc');
-        var previewSource = document.getElementById('preview-source');
-        var hideTimeout;
-
-        document.querySelectorAll('a[data-preview-title]').forEach(function(link) {
-            link.addEventListener('mouseenter', function() {
-                clearTimeout(hideTimeout);
-                var img = this.getAttribute('data-preview-img');
-                previewTitle.textContent = this.getAttribute('data-preview-title') || '';
-                previewDesc.textContent = this.getAttribute('data-preview-desc') || '';
-                previewSource.textContent = this.getAttribute('data-preview-source') || '';
-                if (img) {
-                    previewImg.src = img;
-                    previewImg.style.display = 'block';
-                } else {
-                    previewImg.style.display = 'none';
-                }
-                preview.classList.add('visible');
-            });
-
-            link.addEventListener('mousemove', function(e) {
-                var x = e.clientX + 15;
-                var y = e.clientY + 15;
-                if (x + 330 > window.innerWidth) x = e.clientX - 335;
-                if (y + preview.offsetHeight > window.innerHeight) y = e.clientY - preview.offsetHeight - 10;
-                preview.style.left = x + 'px';
-                preview.style.top = y + 'px';
-            });
-
-            link.addEventListener('mouseleave', function() {
-                hideTimeout = setTimeout(function() {
-                    preview.classList.remove('visible');
-                }, 100);
-            });
-        });
-    })();
-
-    // Name Animation (SVG-based)
-    (function() {
-        const nameAnimated = document.getElementById('nameAnimated');
-        setTimeout(() => nameAnimated.classList.add('animate'), 100);
-        setTimeout(() => nameAnimated.classList.add('phase2'), 2100);
     })();
     </script>
 </body>

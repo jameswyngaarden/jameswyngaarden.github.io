@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<script data-goatcounter="https://jameswyngaarden.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<link rel="icon" type="image/png" href="stimuli/favicon.png">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Publications - James B. Wyngaarden III</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,500;1,8..60,400&family=Sora:wght@300;400;500;600;700&display=swap');
+        :root { --color-text:#1e2d3d; --color-text-light:#5a6a78; --color-navy:#1a3a5c; --color-navy-light:#2a4f7a; --color-gold:#b8860b; --color-gold-muted:#c4973b; --color-gold-subtle:rgba(184,134,11,0.12); --color-bg:#ffffff; --color-bg-subtle:#f7f8f9; --color-border:#dfe3e7; --font-serif:'Source Serif 4','Georgia',serif; --font-display:'Sora','Helvetica Neue',sans-serif; }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body { font-family:var(--font-serif); line-height:1.7; color:var(--color-text); background:var(--color-bg); min-height:100vh; font-size:16px; -webkit-font-smoothing:antialiased; }
+        .container { max-width:1300px; margin:0 auto; padding:40px 30px; display:flex; gap:50px; }
+        .sidebar { width:240px; flex-shrink:0; position:sticky; top:40px; height:fit-content; }
+        .sidebar-profile { padding:0; text-align:center; }
+        .sidebar-profile-img { width:160px; height:160px; border-radius:50%; margin:0 auto 24px; background-image:url('stimuli/headshot.jpg'); background-size:cover; background-position:center; box-shadow:0 4px 20px rgba(0,0,0,0.08); }
+        .sidebar-name { font-family:var(--font-display); font-size:1.15rem; font-weight:600; color:var(--color-navy); margin-bottom:4px; }
+        .sidebar-title { font-family:var(--font-display); font-size:0.82rem; color:var(--color-text-light); margin-bottom:28px; font-weight:400; }
+        .sidebar-links { display:flex; flex-direction:column; gap:2px; }
+        .sidebar-link { display:flex; align-items:center; padding:9px 12px; color:var(--color-text); text-decoration:none; transition:all 0.2s ease; font-family:var(--font-display); font-size:0.85rem; font-weight:400; gap:10px; border-radius:6px; }
+        .sidebar-link img { width:18px; height:18px; object-fit:contain; opacity:0.55; transition:opacity 0.2s ease; }
+        .sidebar-link:hover { background:var(--color-bg-subtle); color:var(--color-navy); }
+        .sidebar-link:hover img { opacity:0.85; }
+        .main-content { flex-grow:1; min-width:0; }
+        header { padding:0 0 28px 0; margin-bottom:0; display:flex; align-items:baseline; justify-content:space-between; gap:30px; border-bottom:1px solid var(--color-border); }
+        .header-center { flex-grow:1; }
+        h1 { font-family:var(--font-display); font-size:1.9rem; margin-bottom:5px; color:var(--color-navy); font-weight:600; letter-spacing:-0.02em; white-space:nowrap; }
+        .subtitle { font-family:var(--font-display); font-size:0.88rem; color:var(--color-text-light); font-weight:300; letter-spacing:0.03em; }
+        .nav { display:flex; gap:32px; flex-shrink:0; align-items:baseline; }
+        .nav-link { font-family:var(--font-display); font-size:0.88rem; font-weight:400; color:var(--color-text-light); text-decoration:none; padding-bottom:4px; border-bottom:2px solid transparent; transition:all 0.2s ease; }
+        .nav-link:hover { color:var(--color-navy); border-bottom-color:var(--color-border); }
+        .nav-link.active { color:var(--color-navy); border-bottom-color:var(--color-gold); font-weight:500; }
+        .section-header { padding:10px 0; text-align:center; margin:40px 0 0 0; background:var(--color-bg); }
+        .section-header h2 { font-family:var(--font-display); font-size:4.5rem; font-weight:700; letter-spacing:-0.02em; line-height:1; background-image:url('stimuli/schuylkill_river_trail.jpg'); background-size:cover; background-position:center; background-attachment:fixed; -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; color:transparent; }
+        .section-header::after { content:''; display:block; width:60px; height:2px; background:var(--color-gold); margin:24px auto 0; }
+        .publication-list { max-width:700px; margin:0 auto; padding:0 20px 48px; }
+        .section-label { font-family:var(--font-display); font-size:1.05rem; font-weight:600; color:var(--color-navy); margin-top:44px; margin-bottom:18px; padding-bottom:6px; border-bottom:2px solid var(--color-gold); display:inline-block; }
+        .publication-item { padding:20px 0; border-bottom:1px solid var(--color-border); }
+        .publication-item:last-child { border-bottom:none; }
+        .publication-title { margin-bottom:8px; }
+        .publication-title a { font-family:var(--font-serif); color:var(--color-navy); text-decoration:none; font-size:1.05rem; font-weight:500; line-height:1.45; border-bottom:1px solid transparent; transition:border-color 0.2s ease; }
+        .publication-title a:hover { border-bottom-color:var(--color-gold-muted); }
+        .preprint-flag { display:inline-block; font-family:var(--font-display); font-size:0.62rem; font-weight:600; color:var(--color-text-light); background:var(--color-bg-subtle); border:1px solid var(--color-border); padding:1px 7px; margin-left:8px; vertical-align:middle; letter-spacing:0.05em; text-transform:uppercase; border-radius:3px; }
+        .publication-citation { color:var(--color-text); line-height:1.6; font-size:0.9rem; }
+        .publication-citation a { color:var(--color-navy); text-decoration:none; border-bottom:1px solid var(--color-gold-muted); transition:border-color 0.2s ease; }
+        .publication-citation a:hover { border-bottom-color:var(--color-navy); }
+
+        /* ── Animated Name (SVG-based) ── */
+        .name-animated { display:flex; align-items:baseline; font-family:var(--font-display); font-size:1.9rem; font-weight:600; color:var(--color-navy); letter-spacing:-0.02em; margin-bottom:5px; }
+        .glyph-svg { height:0.72em; display:inline-block; overflow:visible; transform:translateY(0.01em); }
+        .glyph-svg path { fill:var(--color-navy); }
+        .i-glyph { margin-right:-0.02em; }
+        .i-glyph.i1 { margin-left:0.08em; }
+        .i-glyph.i2 { margin-left:0.12em; }
+        .i-glyph.i3 { margin-left:0.12em; margin-right:0; }
+        #svgJ { clip-path:inset(0 100% 100% 0); }
+        .animate #svgJ { animation:revealJ 0.6s cubic-bezier(0.25,0.1,0.25,1) forwards; animation-delay:0s; }
+        @keyframes revealJ { 0% { clip-path:inset(0 100% 100% 0); } 40% { clip-path:inset(0 0 83% 0); } 100% { clip-path:inset(0 0 0 0); } }
+        #svgB { clip-path:inset(0 100% 0 0); }
+        .animate #svgB { animation:revealB 0.65s cubic-bezier(0.25,0.1,0.25,1) forwards; animation-delay:0.5s; }
+        @keyframes revealB { 0% { clip-path:inset(0 100% 0 0); } 35% { clip-path:inset(0 80% 0 0); } 60% { clip-path:inset(50% 0 0 0); } 100% { clip-path:inset(0 0 0 0); } }
+        #svgW { clip-path:inset(0 50% 0 50%); }
+        .animate #svgW { animation:revealW 0.55s cubic-bezier(0.25,0.1,0.25,1) forwards; animation-delay:1.0s; }
+        @keyframes revealW { 0% { clip-path:inset(0 50% 0 50%); } 100% { clip-path:inset(0 0 0 0); } }
+        .i-glyph { clip-path:inset(100% 0 0 0); }
+        .animate .i-glyph.i1 { animation:revealI 0.35s cubic-bezier(0.25,0.1,0.25,1) forwards; animation-delay:1.45s; }
+        .animate .i-glyph.i2 { animation:revealI 0.35s cubic-bezier(0.25,0.1,0.25,1) forwards; animation-delay:1.52s; }
+        .animate .i-glyph.i3 { animation:revealI 0.35s cubic-bezier(0.25,0.1,0.25,1) forwards; animation-delay:1.59s; }
+        @keyframes revealI { 0% { clip-path:inset(100% 0 0 0); } 100% { clip-path:inset(0 0 0 0); } }
+        .expand-part { display:inline-block; max-width:0; overflow:hidden; white-space:nowrap; opacity:0; transition:max-width 1.2s cubic-bezier(0.25,0.1,0.25,1), opacity 0.7s cubic-bezier(0.25,0.1,0.25,1); }
+        .phase2 .expand-part { max-width:300px; opacity:1; }
+        .phase2 .expand-part.d1 { transition-delay:0s; }
+        .phase2 .expand-part.d2 { transition-delay:0.15s; }
+        .expand-space { width:0.32em; }
+
+        @media (max-width:900px) { .container { flex-direction:column; padding:20px 16px; gap:30px; } .sidebar { width:100%; position:relative; top:0; } .sidebar-links { flex-direction:row; flex-wrap:wrap; justify-content:center; gap:4px; } header { flex-direction:column; align-items:flex-start; gap:16px; padding-bottom:24px; } .nav { gap:24px; } h1 { font-size:1.5rem; white-space:normal; } .section-header { padding:36px 0; margin:28px 0 0 0; } .section-header h2 { font-size:2.8rem; background-attachment:scroll; } .publication-list { padding:0 8px 40px; } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <div class="sidebar-profile">
+                
+                
+                
+                <div class="sidebar-links">
+                    <a href="/cdn-cgi/l/email-protection#9ef4fff3fbedb0e9e7f0f9ffffecfafbf0deeafbf3eef2fbb0fbfaeb" class="sidebar-link"><img src="stimuli/logos/Email.png" alt="">Email</a>
+                    <a href="https://www.linkedin.com/in/james-wyngaarden-iii" target="_blank" class="sidebar-link"><img src="stimuli/logos/Linkedin.png" alt="">LinkedIn</a>
+                    <a href="https://bsky.app/profile/jameswyngaarden.bsky.social" target="_blank" class="sidebar-link"><img src="stimuli/logos/Bluesky.png" alt="">Bluesky</a>
+                    <a href="https://github.com/jameswyngaarden" target="_blank" class="sidebar-link"><img src="stimuli/logos/Github.png" alt="">GitHub</a>
+                    <a href="https://scholar.google.com/citations?user=84faR-sAAAAJ&hl=en" target="_blank" class="sidebar-link"><img src="stimuli/logos/Google-Scholar.png" alt="">Google Scholar</a>
+                    <a href="https://orcid.org/0000-0002-0858-8721" target="_blank" class="sidebar-link"><img src="stimuli/logos/Orcid.png" alt="">ORCID</a>
+                </div>
+            </div>
+        </aside>
+        <div class="main-content">
+        <header>
+                <div class="header-center">
+                    <div class="name-animated" id="nameAnimated">
+                        <!-- J -->
+                        <svg class="glyph-svg" viewBox="35 0 529 730" id="svgJ">
+                            <g transform="translate(0, 730) scale(1, -1)">
+                                <path d="M300 -19Q221 -19 161.0 12.0Q101 43 68.0 103.0Q35 163 35 250V282H176V238Q176 180 210.0 146.5Q244 113 299 113Q355 113 388.5 146.5Q422 180 422 238V625H564V250Q564 163 531.0 103.0Q498 43 439.0 12.0Q380 -19 300 -19ZM124 605V730H564V605Z"/>
+                            </g>
+                        </svg>
+                        <span class="expand-part d1">ames</span>
+                        <span class="expand-part d1 expand-space">&nbsp;</span>
+
+                        <!-- B -->
+                        <svg class="glyph-svg" viewBox="90 0 545 740" id="svgB">
+                            <g transform="translate(0, 735) scale(1, -1)">
+                                <path d="M209 -5V109H392Q442 109 468.0 136.5Q494 164 494 212Q494 260 468.0 286.5Q442 313 392 313H209V400H382Q455 400 512.5 382.5Q570 365 602.5 324.0Q635 283 635 214V200Q635 135 606.5 89.5Q578 44 521.5 19.5Q465 -5 382 -5ZM90 -5V735H229V-5ZM209 336V423H365Q416 423 440.0 450.0Q464 477 464 522Q464 567 440.0 594.0Q416 621 365 621H209V735H352Q476 735 540.5 683.0Q605 631 605 534V520Q605 452 572.5 411.5Q540 371 483.0 353.5Q426 336 352 336Z"/>
+                            </g>
+                        </svg>
+                        <span class="expand-part d1">.</span>
+                        <span class="expand-part d1 expand-space">&nbsp;</span>
+
+                        <!-- W -->
+                        <svg class="glyph-svg" viewBox="24 0 1014 730" id="svgW">
+                            <g transform="translate(0, 730) scale(1, -1)">
+                                <path d="M210 0L24 730H171L322 95L283 118H383L339 95L458 702H580L432 0ZM646 0L485 702H612L749 95L706 118H804L766 95L899 730H1038L872 0Z"/>
+                            </g>
+                        </svg>
+                        <span class="expand-part d2">yngaarden</span>
+                        <span class="expand-part d2 expand-space">&nbsp;</span>
+
+                        <!-- III -->
+                        <svg class="glyph-svg i-glyph i1" viewBox="92 0 142 730">
+                            <g transform="translate(0, 730) scale(1, -1)">
+                                <path d="M92 0V730H234V0Z"/>
+                            </g>
+                        </svg>
+                        <svg class="glyph-svg i-glyph i2" viewBox="92 0 142 730">
+                            <g transform="translate(0, 730) scale(1, -1)">
+                                <path d="M92 0V730H234V0Z"/>
+                            </g>
+                        </svg>
+                        <svg class="glyph-svg i-glyph i3" viewBox="92 0 142 730">
+                            <g transform="translate(0, 730) scale(1, -1)">
+                                <path d="M92 0V730H234V0Z"/>
+                            </g>
+                        </svg>
+                    </div>
+                <p class="subtitle">Research Scientist &ensp;·&ensp; Decision Making &ensp;·&ensp; Computational Modeling</p>
+            </div>
+                <nav class="nav">
+                    <a href="index.html" class="nav-link">About</a>
+                    <a href="current-work.html" class="nav-link">Current Work</a>
+                    <a href="publications.html" class="nav-link active">Publications</a>
+                    <a href="art.html" class="nav-link">Artistry</a>
+                </nav>
+            </header>
+        <div class="section-header">
+            <h2>Publications</h2>
+        </div>
+        <div class="publication-list">
+            <!-- ==================== SELECTED WORKS ==================== -->
+            <h3 class="section-label">Selected Works</h3>
+            <div class="publication-item">
+                <h3 class="publication-title">
+                    <a href="publications/confirmation-bias-exploitation.html">Maladaptive decision-making in older adults: Confirmation bias and financial exploitation</a>
+                </h3>
+                <div class="publication-citation">
+                    <strong>Wyngaarden, J.B., III</strong>, Giovannetti, T., Krekelberg, B., &amp; Smith, D.V. (2026). Maladaptive decision-making in older adults: Confirmation bias and financial exploitation. In: Smith, D.V., Lockwood, P.L., Fareri, D.S. (eds) <em>Neuroeconomics: Core Topics and Current Directions.</em> Springer, Cham. <a href="https://doi.org/10.1007/978-3-032-02925-6_30" target="_blank">https://doi.org/10.1007/978-3-032-02925-6_30</a>.
+                </div>
+            </div>
+            <div class="publication-item">
+                <h3 class="publication-title">
+                    <a href="publications/alpha-tacs-reward-pupil.html">&alpha;-tACS modulates reward-dependent pupil responses and corticostriatal connectivity</a>
+                    <span class="preprint-flag">Preprint</span>
+                </h3>
+                <div class="publication-citation">
+                    Smith, D.V., <strong>Wyngaarden, J.B., III</strong>, Weinstein, S.M., Illenberger, N., Liu, Y., Siegel, J., &amp; Krekelberg, B. (2026). &alpha;-tACS modulates reward-dependent pupil responses and corticostriatal connectivity. <em>bioRxiv.</em> <a href="https://doi.org/10.64898/2026.01.30.702963" target="_blank">https://doi.org/10.64898/2026.01.30.702963</a>.
+                </div>
+            </div>
+            <div class="publication-item">
+                <h3 class="publication-title">
+                    <a href="publications/reward-sensitivity-motivation.html">Trait reward sensitivity and behavioral motivation are associated with connectivity between the default mode network and the striatum during reward anticipation</a>
+                </h3>
+                <div class="publication-citation">
+                    <strong>Wyngaarden, J.B., III</strong>, Nambiar, A., Dennison, J.B., Alloy, L.B., Fareri, D.S., Jarcho, J.M., &amp; Smith, D.V. (2026). Trait reward sensitivity and behavioral motivation are associated with connectivity between the default mode network and the striatum during reward anticipation. <em>Cognitive, Affective, &amp; Behavioral Neuroscience.</em> <a href="https://doi.org/10.3758/s13415-025-01396-9" target="_blank">https://doi.org/10.3758/s13415-025-01396-9</a>.
+                </div>
+            </div>
+            <div class="publication-item">
+                <h3 class="publication-title">
+                    <a href="publications/corticostriatal-social-reward.html">Corticostriatal responses to social reward are linked to trait reward sensitivity and subclinical substance use in young adults</a>
+                </h3>
+                <div class="publication-citation">
+                    <strong>Wyngaarden, J.B., III*</strong>, Johnston, C.R.*, Sazhin, D., Dennison, J.B., Zaff, O., Fareri, D., McCloskey, M., Alloy, L.B., Smith, D.V., &amp; Jarcho, J.M. (2024). Corticostriatal responses to social reward are linked to trait reward sensitivity and subclinical substance use in young adults. <em>Social Cognitive and Affective Neuroscience.</em> <a href="https://doi.org/10.1093/scan/nsae033" target="_blank">https://doi.org/10.1093/scan/nsae033</a>.
+                </div>
+            </div>
+            <!-- ==================== PUBLISHED ==================== -->
+            <h3 class="section-label">Published</h3>
+            <div class="publication-item">
+                <h3 class="publication-title">
+                    <a href="publications/confirmation-bias-exploitation.html">Maladaptive decision-making in older adults: Confirmation bias and financial exploitation</a>
+                </h3>
+                <div class="publication-citation">
+                    <strong>Wyngaarden, J.B., III</strong>, Giovannetti, T., Krekelberg, B., &amp; Smith, D.V. (2026). Maladaptive decision-making in older adults: Confirmation bias and financial exploitation. In: Smith, D.V., Lockwood, P.L., Fareri, D.S. (eds) <em>Neuroeconomics: Core Topics and Current Directions.</em> Springer, Cham. <a href="https://doi.org/10.1007/978-3-032-02925-6_30" target="_blank">https://doi.org/10.1007/978-3-032-02925-6_30</a>.
+                </div>
+            </div>
+            <div class="publication-item">
+                <h3 class="publication-title">
+                    <a href="publications/social-context-shared-rewards.html">Social closeness and reward sensitivity enhance corticostriatal function during experiences of shared rewards</a>
+                </h3>
+                <div class="publication-citation">
+                    Smith, D.V., Zaff, O., <strong>Wyngaarden, J.B., III</strong>, Dennison, J.B., Sazhin, D., Chein, J., McCloskey, M., Alloy, L.B., Jarcho, J.M., &amp; Fareri, D.S. (2026). Social closeness and reward sensitivity enhance corticostriatal function during experiences of shared rewards. <em>Biological Psychology, 109209.</em> <a href="https://doi.org/10.1016/j.biopsycho.2026.109209" target="_blank">https://doi.org/10.1016/j.biopsycho.2026.109209</a>.
+                </div>
+            </div>
+            <div class="publication-item">
+                <h3 class="publication-title">
+                    <a href="publications/reward-sensitivity-motivation.html">Trait reward sensitivity and behavioral motivation are associated with connectivity between the default mode network and the striatum during reward anticipation</a>
+                </h3>
+                <div class="publication-citation">
+                    <strong>Wyngaarden, J.B., III</strong>, Nambiar, A., Dennison, J.B., Alloy, L.B., Fareri, D.S., Jarcho, J.M., &amp; Smith, D.V. (2026). Trait reward sensitivity and behavioral motivation are associated with connectivity between the default mode network and the striatum during reward anticipation. <em>Cognitive, Affective, &amp; Behavioral Neuroscience.</em> <a href="https://doi.org/10.3758/s13415-025-01396-9" target="_blank">https://doi.org/10.3758/s13415-025-01396-9</a>.
+                </div>
+            </div>
+            <div class="publication-item">
+                <h3 class="publication-title">
+                    <a href="publications/linked-colored-lottery.html">A dataset of risky and ambiguous decisions using a novel linked colored lottery task across two datasets</a>
+                </h3>
+                <div class="publication-citation">
+                    <strong>Wyngaarden, J.B., III*</strong>, Yang, Y.*, Dennison, J.B.*, &amp; Smith, D.V. (2025). A dataset of risky and ambiguous decisions using a novel linked colored lottery task across two datasets. <em>Data in Brief.</em> <a href="https://doi.org/10.1016/j.dib.2025.111844" target="_blank">https://doi.org/10.1016/j.dib.2025.111844</a>.
+                </div>
+            </div>
+            <div class="publication-item">
+                <h3 class="publication-title">
+                    <a href="publications/lifespan-reward-dataset.html">Social reward and nonsocial reward processing across the adult lifespan: An interim multi-echo fMRI and diffusion dataset</a>
+                </h3>
+                <div class="publication-citation">
+                    Smith, D.V., Sharp, C.J., Dachs, A., <strong>Wyngaarden, J.B., III</strong>, Sazhin, D., Yang, Y., Kos, M., Tropea, T., Kohli, I., Clithero, J.A., Olson, I., Giovannetti, T., Fareri, D., &amp; Jarcho, J.M. (2024). Social reward and nonsocial reward processing across the adult lifespan: An interim multi-echo fMRI and diffusion dataset. <em>Data in Brief.</em> <a href="https://doi.org/10.1016/j.dib.2024.110810" target="_blank">https://doi.org/10.1016/j.dib.2024.110810</a>.
+                </div>
+            </div>
+            <div class="publication-item">
+                <h3 class="publication-title">
+                    <a href="publications/corticostriatal-social-reward.html">Corticostriatal responses to social reward are linked to trait reward sensitivity and subclinical substance use in young adults</a>
+                </h3>
+                <div class="publication-citation">
+                    <strong>Wyngaarden, J.B., III*</strong>, Johnston, C.R.*, Sazhin, D., Dennison, J.B., Zaff, O., Fareri, D., McCloskey, M., Alloy, L.B., Smith, D.V., &amp; Jarcho, J.M. (2024). Corticostriatal responses to social reward are linked to trait reward sensitivity and subclinical substance use in young adults. <em>Social Cognitive and Affective Neuroscience.</em> <a href="https://doi.org/10.1093/scan/nsae033" target="_blank">https://doi.org/10.1093/scan/nsae033</a>.
+                </div>
+            </div>
+            <div class="publication-item">
+                <h3 class="publication-title">
+                    <a href="publications/reward-sensitivity-strategic-decision.html">Trait reward sensitivity modulates connectivity with the temporoparietal junction and anterior insula during strategic decision making</a>
+                </h3>
+                <div class="publication-citation">
+                    Sazhin, D., <strong>Wyngaarden, J.B., III</strong>, Dennison, J.B., Zaff, O., Fareri, D., McCloskey, M.S., Alloy, L.B., Jarcho, J.M., &amp; Smith, D.V. (2024). Trait reward sensitivity modulates connectivity with the temporoparietal junction and anterior insula during strategic decision making. <em>Biological Psychology, 192</em>, 108857. <a href="https://doi.org/10.1016/j.biopsycho.2024.108857" target="_blank">https://doi.org/10.1016/j.biopsycho.2024.108857</a>.
+                </div>
+            </div>
+            <div class="publication-item">
+                <h3 class="publication-title">
+                    <a href="publications/neuroimaging-dataset-young-adults.html">A neuroimaging dataset of social and nonsocial reward processing in young adults</a>
+                </h3>
+                <div class="publication-citation">
+                    Smith, D.V., <strong>Wyngaarden, J.B., III</strong>, Sharp, C.J., Sazhin, D., Zaff, O., Fareri, D., &amp; Jarcho, J.M. (2023). A neuroimaging dataset of social and nonsocial reward processing in young adults. <em>Data in Brief.</em> <a href="https://doi.org/10.1016/j.dib.2024.110197" target="_blank">https://doi.org/10.1016/j.dib.2024.110197</a>.
+                </div>
+            </div>
+            <div class="publication-item">
+                <h3 class="publication-title">
+                    <a href="publications/substance-abuse-neuromelanin.html">Substance abuse in emerging adults: The role of neuromelanin and ventral striatal response to social and monetary rewards</a>
+                </h3>
+                <div class="publication-citation">
+                    Jarcho, J.M., <strong>Wyngaarden, J.B., III</strong>, Johnston, C.J., Quarmley, M., Smith, D.V., &amp; Cassidy, C.M. (2022). Substance abuse in emerging adults: The role of neuromelanin and ventral striatal response to social and monetary rewards. <em>Brain Sciences, 12</em>, 352. <a href="https://doi.org/10.3390/brainsci12030352" target="_blank">https://doi.org/10.3390/brainsci12030352</a>.
+                </div>
+            </div>
+            <div class="publication-item">
+                <h3 class="publication-title">
+                    <a href="publications/fairness-authority-protests.html">"They should have followed the rules": Trade-offs between fairness and authority values predict judgments of social justice protests</a>
+                </h3>
+                <div class="publication-citation">
+                    Monroe, A.E., <strong>Wyngaarden, J.B., III</strong>, &amp; Plant, A.E. (2021). "They should have followed the rules": Trade-offs between fairness and authority values predict judgments of social justice protests. <em>Social Psychological and Personality Science, 12</em>(4), 471-478. <a href="https://doi.org/10.1177/1948550620923854" target="_blank">https://doi.org/10.1177/1948550620923854</a>.
+                </div>
+            </div>
+            <!-- ==================== PREPRINTS & UNDER REVIEW ==================== -->
+            <h3 class="section-label">Preprints &amp; Under Review</h3>
+            <div class="publication-item">
+                <h3 class="publication-title">
+                    <a href="publications/alpha-tacs-reward-pupil.html">&alpha;-tACS modulates reward-dependent pupil responses and corticostriatal connectivity</a>
+                    <span class="preprint-flag">Preprint</span>
+                </h3>
+                <div class="publication-citation">
+                    Smith, D.V., <strong>Wyngaarden, J.B., III</strong>, Weinstein, S.M., Illenberger, N., Liu, Y., Siegel, J., &amp; Krekelberg, B. (2026). &alpha;-tACS modulates reward-dependent pupil responses and corticostriatal connectivity. <em>bioRxiv.</em> <a href="https://doi.org/10.64898/2026.01.30.702963" target="_blank">https://doi.org/10.64898/2026.01.30.702963</a>.
+                </div>
+            </div>
+            <div class="publication-item">
+                <h3 class="publication-title">
+                    <a href="publications/neural-behavioral-social-norm-violations.html">Neural and behavioral responses to social norm violations across trust and fairness contexts</a>
+                    <span class="preprint-flag">Preprint</span>
+                </h3>
+                <div class="publication-citation">
+                    Dwamena, D., Stanley, J.M., <strong>Wyngaarden, J.B., III</strong>, Kos, M., Sharp, C., Yang, Y., Jarcho, J., Fareri, D., &amp; Smith, D. (2025). Neural and behavioral responses to social norm violations across trust and fairness contexts. <em>Under review.</em> <a href="https://doi.org/10.1101/2025.11.20.689349" target="_blank">Preprint available</a>.
+                </div>
+            </div>
+            <div class="publication-item">
+                <h3 class="publication-title">
+                    <a href="publications/ambiguity-preferences-beliefs-risk.html">Ambiguity preferences are distinct from beliefs about risk</a>
+                    <span class="preprint-flag">Preprint</span>
+                </h3>
+                <div class="publication-citation">
+                    Shah, S.F.A., Dennison, J.B., <strong>Wyngaarden, J.B., III</strong>, Clithero, J.A., &amp; Smith, D.V. (2025). Ambiguity preferences are distinct from beliefs about risk. <em>Under review.</em> <a href="https://osf.io/preprints/psyarxiv/wrej8_v1" target="_blank">Preprint available</a>.
+                </div>
+            </div>
+            <div class="publication-item">
+                <h3 class="publication-title">
+                    <a href="publications/older-adults-fairness-connectivity.html">Older adults show altered network connectivity during fairness decisions with similar and dissimilar partners</a>
+                    <span class="preprint-flag">Preprint</span>
+                </h3>
+                <div class="publication-citation">
+                    Yang, Y., Ludwig, R.M., <strong>Wyngaarden, J.B., III</strong>, Dwamena, D., Hackett, K., Giovannetti, T., Fareri, D., &amp; Smith, D.V. (2025). Older adults show altered network connectivity during fairness decisions with similar and dissimilar partners. <em>Under review.</em> <a href="https://www.biorxiv.org/content/10.1101/2025.08.13.670194v1" target="_blank">Preprint available</a>.
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <script>
+        // Name Animation (SVG-based)
+        (function() {
+            const nameAnimated = document.getElementById('nameAnimated');
+            setTimeout(() => nameAnimated.classList.add('animate'), 100);
+            setTimeout(() => nameAnimated.classList.add('phase2'), 2100);
+        })();
+    </script>
+</body>
+</html>
