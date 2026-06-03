@@ -1029,7 +1029,7 @@
             }, 2100);
         })();
 
-        // Neural Network Particle Animation (free drift, main-content background)
+        // Neural Network Particle Animation with Lissajous Resonance
         (function() {
             var canvas = document.getElementById('networkCanvas');
             if (!canvas) return;
@@ -1046,16 +1046,38 @@
             ];
 
             var cfg = {
-                nodeCount: 60,
-                linkDist: 140,
+                nodeCount: 90,
+                linkDist: 120,
                 speed: 0.18,
-                nodeAlpha: 0.40,
-                edgeAlpha: 0.12,
+                nodeAlpha: 0.35,
+                edgeAlpha: 0.10,
+                driftTime: 14,
+                convergeTime: 3,
+                holdTime: 2,
+                curveScale: 0.30,
             };
 
             var nodes = [];
             var W, H;
             var paused = false;
+
+            // Lissajous presets: [freqA, freqB, delta]
+            var LISSAJOUS_PRESETS = [
+                [1, 2, Math.PI / 4],
+                [3, 2, Math.PI / 2],
+                [3, 4, Math.PI / 3],
+                [5, 4, Math.PI / 6],
+                [2, 3, Math.PI / 4],
+                [1, 3, Math.PI / 2],
+                [3, 5, Math.PI / 3],
+                [4, 5, Math.PI / 4],
+            ];
+
+            var currentPreset = 0;
+            var curveRotation = 0;
+            var phase = 'drift';
+            var phaseTimer = 0;
+            var blendFactor = 0;
 
             function resize() {
                 var dpr = window.devicePixelRatio || 1;
@@ -1077,42 +1099,148 @@
                     vy: (Math.random() - 0.5) * cfg.speed,
                     r: 1.5 + Math.random() * 2,
                     color: c,
+                    t: Math.random() * Math.PI * 2,
                 };
             }
 
             function initNodes() {
                 nodes = [];
                 for (var i = 0; i < cfg.nodeCount; i++) {
-                    nodes.push(createNode());
+                    var n = createNode();
+                    n.t = (i / cfg.nodeCount) * Math.PI * 2;
+                    nodes.push(n);
+                }
+            }
+
+            function lissajousTarget(t, preset, scrollY) {
+                var freqA = preset[0];
+                var freqB = preset[1];
+                var delta = preset[2];
+                var scaleX = W * cfg.curveScale;
+                var scaleY = Math.min(W, 600) * cfg.curveScale * 0.7;
+
+                var rawX = Math.sin(freqA * t + delta);
+                var rawY = Math.sin(freqB * t);
+
+                var cosR = Math.cos(curveRotation);
+                var sinR = Math.sin(curveRotation);
+                var rx = rawX * cosR - rawY * sinR;
+                var ry = rawX * sinR + rawY * cosR;
+
+                var centerX = W / 2;
+                var centerY = scrollY + window.innerHeight / 2;
+                centerY = Math.max(window.innerHeight * 0.4, Math.min(H - window.innerHeight * 0.4, centerY));
+
+                return { x: centerX + rx * scaleX, y: centerY + ry * scaleY };
+            }
+
+            function easeInOutCubic(t) {
+                return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+            }
+
+            function startConverging() {
+                phase = 'converging';
+                phaseTimer = 0;
+                currentPreset = (currentPreset + 1) % LISSAJOUS_PRESETS.length;
+                curveRotation = Math.random() * Math.PI * 2;
+            }
+
+            var dt = 1 / 60;
+
+            function updatePhase() {
+                phaseTimer += dt;
+
+                if (phase === 'drift') {
+                    blendFactor = 0;
+                    if (phaseTimer >= cfg.driftTime) {
+                        startConverging();
+                    }
+                } else if (phase === 'converging') {
+                    blendFactor = easeInOutCubic(Math.min(phaseTimer / cfg.convergeTime, 1));
+                    if (phaseTimer >= cfg.convergeTime) {
+                        phase = 'holding';
+                        phaseTimer = 0;
+                        blendFactor = 1;
+                    }
+                } else if (phase === 'holding') {
+                    blendFactor = 1;
+                    if (phaseTimer >= cfg.holdTime) {
+                        phase = 'releasing';
+                        phaseTimer = 0;
+                    }
+                } else if (phase === 'releasing') {
+                    blendFactor = 1 - easeInOutCubic(Math.min(phaseTimer / cfg.convergeTime, 1));
+                    if (phaseTimer >= cfg.convergeTime) {
+                        phase = 'drift';
+                        phaseTimer = 0;
+                        blendFactor = 0;
+                    }
                 }
             }
 
             function updateNodes() {
                 var pad = 20;
+                var scrollY = window.scrollY || window.pageYOffset;
+                var windowH = window.innerHeight;
+                var preset = LISSAJOUS_PRESETS[currentPreset];
+
                 for (var i = 0; i < nodes.length; i++) {
                     var n = nodes[i];
+
+                    // Free-drift physics
                     n.vx += (Math.random() - 0.5) * 0.012;
                     n.vy += (Math.random() - 0.5) * 0.012;
                     n.vx *= 0.995;
                     n.vy *= 0.995;
+
                     var spd = Math.sqrt(n.vx * n.vx + n.vy * n.vy);
                     var minV = cfg.speed * 0.3;
                     if (spd < minV && spd > 0) {
                         n.vx = (n.vx / spd) * minV;
                         n.vy = (n.vy / spd) * minV;
                     }
-                    n.x += n.vx;
-                    n.y += n.vy;
-                    if (n.x < -pad) n.x = W + pad;
-                    if (n.x > W + pad) n.x = -pad;
-                    if (n.y < -pad) n.y = H + pad;
-                    if (n.y > H + pad) n.y = -pad;
+
+                    var freeX = n.x + n.vx;
+                    var freeY = n.y + n.vy;
+
+                    // Wrap
+                    if (freeX < -pad) freeX = W + pad;
+                    if (freeX > W + pad) freeX = -pad;
+                    if (freeY < -pad) freeY = H + pad;
+                    if (freeY > H + pad) freeY = -pad;
+
+                    if (blendFactor > 0.001) {
+                        // Only converge nodes near the viewport
+                        var viewTop = scrollY - windowH;
+                        var viewBot = scrollY + windowH * 2;
+                        var nearViewport = (n.y > viewTop && n.y < viewBot);
+
+                        if (nearViewport) {
+                            var target = lissajousTarget(n.t, preset, scrollY);
+                            n.x = freeX * (1 - blendFactor) + target.x * blendFactor;
+                            n.y = freeY * (1 - blendFactor) + target.y * blendFactor;
+                            if (blendFactor > 0.5) {
+                                n.t += 0.003 * blendFactor;
+                            }
+                        } else {
+                            n.x = freeX;
+                            n.y = freeY;
+                        }
+                    } else {
+                        n.x = freeX;
+                        n.y = freeY;
+                    }
+
+                    if (blendFactor < 0.99) {
+                        n.vx = n.x - (n.x - n.vx);
+                    }
                 }
             }
 
             function draw() {
                 ctx.clearRect(0, 0, W, H);
                 var distSq = cfg.linkDist * cfg.linkDist;
+
                 for (var i = 0; i < nodes.length; i++) {
                     for (var j = i + 1; j < nodes.length; j++) {
                         var a = nodes[i], b = nodes[j];
@@ -1132,6 +1260,7 @@
                         }
                     }
                 }
+
                 for (var k = 0; k < nodes.length; k++) {
                     var n = nodes[k];
                     ctx.fillStyle = 'rgba(' + n.color.r + ',' + n.color.g + ',' + n.color.b + ',' + cfg.nodeAlpha + ')';
@@ -1142,7 +1271,7 @@
             }
 
             function loop() {
-                if (!paused) { updateNodes(); draw(); }
+                if (!paused) { updatePhase(); updateNodes(); draw(); }
                 requestAnimationFrame(loop);
             }
 
