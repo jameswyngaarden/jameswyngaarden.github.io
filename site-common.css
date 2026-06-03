@@ -311,23 +311,85 @@ h1 {
     100% { clip-path: inset(0 0 0 0); }
 }
 
-/* Expanding text parts */
-.expand-part {
-    display: inline-block;
-    max-width: 0;
+/* Phase 2: Clip-path hybrid reveal */
+.clip-word {
+    display: inline-flex;
     overflow: hidden;
-    white-space: nowrap;
-    opacity: 0;
-    transition: max-width 1.2s var(--expand-easing), opacity 0.7s var(--expand-easing);
+    max-width: 0;
+    transition: max-width 0.7s var(--expand-easing);
 }
-.phase2 .expand-part {
-    max-width: 300px;
-    opacity: 1;
-}
-.phase2 .expand-part.d1 { transition-delay: 0s; }
-.phase2 .expand-part.d2 { transition-delay: 0.15s; }
+.phase2 .clip-word { max-width: 300px; }
+.phase2 .clip-word.cw1 { transition-delay: 0s; }
+.phase2 .clip-word.cw2 { transition-delay: 0.15s; }
 
-.expand-space { width: 0.32em; }
+.clip-space {
+    display: inline-block;
+    width: 0;
+    transition: width 0.5s var(--expand-easing);
+}
+.phase2 .clip-space { width: 0.32em; }
+.phase2 .clip-space.cs1 { transition-delay: 0s; }
+.phase2 .clip-space.cs2 { transition-delay: 0.15s; }
+
+/* Default: left-to-right wipe */
+.cl {
+    display: inline-block;
+    clip-path: inset(0 100% 0 0);
+    opacity: 0;
+}
+.phase2 .cl {
+    animation: clipLR 0.45s var(--expand-easing) forwards;
+}
+@keyframes clipLR {
+    0%   { clip-path: inset(0 100% 0 0); opacity: 0; }
+    30%  { opacity: 1; }
+    100% { clip-path: inset(0 0 0 0); opacity: 1; }
+}
+
+/* Variant: bottom-up (echoes III reveal) */
+.phase2 .cl.from-bottom {
+    animation-name: clipBU;
+    animation-duration: 0.5s;
+}
+@keyframes clipBU {
+    0%   { clip-path: inset(100% 0 0 0); opacity: 0; }
+    25%  { opacity: 1; }
+    100% { clip-path: inset(0 0 0 0); opacity: 1; }
+}
+
+/* Variant: center-out (echoes W reveal) */
+.phase2 .cl.from-center {
+    animation-name: clipCenter;
+    animation-duration: 0.5s;
+}
+@keyframes clipCenter {
+    0%   { clip-path: inset(0 50% 0 50%); opacity: 0; }
+    25%  { opacity: 1; }
+    100% { clip-path: inset(0 0 0 0); opacity: 1; }
+}
+
+/* Variant: top-down (echoes J crossbar) */
+.phase2 .cl.from-top {
+    animation-name: clipTD;
+    animation-duration: 0.5s;
+}
+@keyframes clipTD {
+    0%   { clip-path: inset(0 0 100% 0); opacity: 0; }
+    25%  { opacity: 1; }
+    100% { clip-path: inset(0 0 0 0); opacity: 1; }
+}
+
+/* Signature letter: two-stage reveal with pause */
+.phase2 .cl.signature {
+    animation-name: clipSignature;
+    animation-duration: 0.65s;
+}
+@keyframes clipSignature {
+    0%   { clip-path: inset(0 100% 0 0); opacity: 0; }
+    20%  { clip-path: inset(0 60% 0 0); opacity: 0.7; }
+    45%  { clip-path: inset(0 60% 0 0); opacity: 0.7; }
+    100% { clip-path: inset(0 0 0 0); opacity: 1; }
+}
 
 /* ── Neural Network Animation ── */
 #networkCanvas {

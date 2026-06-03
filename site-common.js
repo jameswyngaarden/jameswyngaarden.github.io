@@ -60,22 +60,22 @@
         + '                <path d="M300 -19Q221 -19 161.0 12.0Q101 43 68.0 103.0Q35 163 35 250V282H176V238Q176 180 210.0 146.5Q244 113 299 113Q355 113 388.5 146.5Q422 180 422 238V625H564V250Q564 163 531.0 103.0Q498 43 439.0 12.0Q380 -19 300 -19ZM124 605V730H564V605Z"/>'
         + '            </g>'
         + '        </svg>'
-        + '        <span class="expand-part d1">ames</span>'
-        + '        <span class="expand-part d1 expand-space">&nbsp;</span>'
+        + '        <span class="clip-word cw1"><span class="cl">a</span><span class="cl">m</span><span class="cl from-bottom">e</span><span class="cl">s</span></span>'
+        + '        <span class="clip-space cs1"></span>'
         + '        <svg class="glyph-svg" viewBox="90 0 545 740" id="svgB">'
         + '            <g transform="translate(0, 735) scale(1, -1)">'
         + '                <path d="M209 -5V109H392Q442 109 468.0 136.5Q494 164 494 212Q494 260 468.0 286.5Q442 313 392 313H209V400H382Q455 400 512.5 382.5Q570 365 602.5 324.0Q635 283 635 214V200Q635 135 606.5 89.5Q578 44 521.5 19.5Q465 -5 382 -5ZM90 -5V735H229V-5ZM209 336V423H365Q416 423 440.0 450.0Q464 477 464 522Q464 567 440.0 594.0Q416 621 365 621H209V735H352Q476 735 540.5 683.0Q605 631 605 534V520Q605 452 572.5 411.5Q540 371 483.0 353.5Q426 336 352 336Z"/>'
         + '            </g>'
         + '        </svg>'
-        + '        <span class="expand-part d1">.</span>'
-        + '        <span class="expand-part d1 expand-space">&nbsp;</span>'
+        + '        <span class="clip-word cw1"><span class="cl from-center">.</span></span>'
+        + '        <span class="clip-space cs1"></span>'
         + '        <svg class="glyph-svg" viewBox="24 0 1014 730" id="svgW">'
         + '            <g transform="translate(0, 730) scale(1, -1)">'
         + '                <path d="M210 0L24 730H171L322 95L283 118H383L339 95L458 702H580L432 0ZM646 0L485 702H612L749 95L706 118H804L766 95L899 730H1038L872 0Z"/>'
         + '            </g>'
         + '        </svg>'
-        + '        <span class="expand-part d2">yngaarden</span>'
-        + '        <span class="expand-part d2 expand-space">&nbsp;</span>'
+        + '        <span class="clip-word cw2"><span class="cl from-top">y</span><span class="cl">n</span><span class="cl from-bottom">g</span><span class="cl">a</span><span class="cl">a</span><span class="cl signature">r</span><span class="cl">d</span><span class="cl from-bottom">e</span><span class="cl">n</span></span>'
+        + '        <span class="clip-space cs2"></span>'
         + '        <svg class="glyph-svg i-glyph i1" viewBox="92 0 142 730">'
         + '            <g transform="translate(0, 730) scale(1, -1)"><path d="M92 0V730H234V0Z"/></g>'
         + '        </svg>'
@@ -134,7 +134,19 @@
     var nameAnimated = document.getElementById('nameAnimated');
     if (nameAnimated) {
         setTimeout(function() { nameAnimated.classList.add('animate'); }, 100);
-        setTimeout(function() { nameAnimated.classList.add('phase2'); }, 2100);
+        setTimeout(function() {
+            nameAnimated.classList.add('phase2');
+            // Rhythmic stagger: sine curve timing for clip-path letters
+            var letters = nameAnimated.querySelectorAll('.cl');
+            var total = letters.length;
+            var baseDelay = 100;
+            for (var i = 0; i < total; i++) {
+                var t = total > 1 ? i / (total - 1) : 0;
+                var eased = (1 - Math.cos(t * Math.PI)) / 2;
+                var delay = baseDelay + eased * 680;
+                letters[i].style.animationDelay = Math.round(delay) + 'ms';
+            }
+        }, 2100);
     }
 
     // ── Link Preview Functionality ──
