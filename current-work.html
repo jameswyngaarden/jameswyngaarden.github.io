@@ -1516,6 +1516,165 @@
             </div>
 
             <!-- ════════════════════════════════════════════════════════════ -->
+            <!-- HOW STIMULATION WORKS (entrainment)                            -->
+            <!-- Paste this whole block into current-work.html, immediately     -->
+            <!-- AFTER the closing </div> of  <div ... id="section-tacs"> and    -->
+            <!-- BEFORE  <div ... id="section-neuroanatomy">.                    -->
+            <!-- Optional, for seamless scroll flow: in the section-tacs         -->
+            <!-- section-nav, change  href="#section-neuroanatomy"  to           -->
+            <!-- href="#section-oscillations"  (and its label to "How           -->
+            <!-- Stimulation Works").                                            -->
+            <!-- ════════════════════════════════════════════════════════════ -->
+
+            <style>
+            .osc-embed .stage { position:relative; border:1px solid var(--color-border); border-radius:8px; overflow:hidden; margin:0 0 12px; background:#fff; }
+            .osc-embed canvas { display:block; width:100%; }
+            .osc-embed .inset { position:absolute; top:8px; right:8px; width:90px; height:90px; border:1px solid var(--color-border); border-radius:6px; overflow:hidden; background:#fff; }
+            .osc-embed .inset span { position:absolute; bottom:2px; left:5px; font-size:9px; color:var(--color-text-light); font-family:var(--font-display); }
+            .osc-embed .legend { position:absolute; top:9px; left:11px; font-size:11px; font-family:var(--font-display); line-height:1.5; }
+            .osc-embed .readout { display:flex; gap:20px; align-items:baseline; flex-wrap:wrap; margin:12px 2px; }
+            .osc-embed .big { font-family:var(--font-display); font-size:1.4rem; font-weight:500; }
+            .osc-embed .label { font-family:var(--font-display); font-size:0.7rem; color:var(--color-text-light); text-transform:uppercase; letter-spacing:0.04em; }
+            .osc-embed .controls { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:12px 20px; }
+            .osc-embed .group { border-left:2px solid var(--color-border); padding-left:13px; }
+            .osc-embed .group h4 { margin:0 0 9px; font-family:var(--font-display); font-size:0.78rem; font-weight:600; letter-spacing:0.04em; }
+            .osc-embed .ctl .row { display:flex; justify-content:space-between; font-family:var(--font-display); font-size:0.78rem; margin-bottom:4px; color:var(--color-text); }
+            .osc-embed .ctl .row .v { color:var(--color-navy); font-weight:500; }
+            .osc-embed input[type=range] { width:100%; accent-color:var(--color-navy); }
+            .osc-embed .obtn { font-family:var(--font-display); font-size:0.8rem; cursor:pointer; background:#fff; color:var(--color-text); border:1px solid var(--color-border); border-radius:5px; padding:7px 14px; margin-top:8px; }
+            .osc-embed .obtn:hover { border-color:var(--color-navy); color:var(--color-navy); }
+            .osc-embed .note { font-family:var(--font-serif); font-size:0.92rem; color:var(--color-text); line-height:1.65; margin-top:14px; }
+            .osc-cta { display:flex; justify-content:center; margin:22px 0 8px; }
+            </style>
+
+            <div class="content-section" id="section-oscillations">
+                <h3 class="subsection-header">How Stimulation Works: Engaging a Rhythm</h3>
+
+                <p>The montage shows <em>what</em> the stimulation is. This shows <strong>why</strong> it might do anything. The brain already runs a theta-band rhythm in prefrontal cortex during this kind of feedback-driven learning. The bet behind tACS is that a weak current oscillating near that same frequency can <strong>capture</strong> the ongoing rhythm, pulling its timing into step with the drive, rather than simply adding a second wave on top of it.</p>
+
+                <p>That capture is called entrainment, and it only happens under the right conditions. In the demo below, the green trace is an endogenous rhythm with its own natural frequency and its own jitter; the amber trace is the stimulation. Match the frequencies and raise the intensity, and the rhythm locks to the drive. Detune them, and it slips no matter how hard you push.</p>
+
+                <div class="demo-container">
+                    <div class="demo-title">Capturing a Rhythm</div>
+                    <div class="osc-embed">
+                        <div class="stage">
+                            <canvas id="scopeCw" data-h="200"></canvas>
+                            <div class="legend">
+                                <div style="color:#b8860b">&mdash; stim drive</div>
+                                <div style="color:#2e7d32">&mdash; endogenous</div>
+                            </div>
+                            <div class="inset"><canvas id="phasorCw"></canvas><span>rel. phase</span></div>
+                        </div>
+                        <div class="readout">
+                            <div><div class="label">state</div><div class="big" id="stateCw">&mdash;</div></div>
+                            <div><div class="label">phase concentration R</div><div class="big" id="rCw">0.00</div></div>
+                            <div><div class="label">detuning</div><div class="big" id="detCw" style="font-size:1rem">&mdash;</div></div>
+                        </div>
+                        <div class="controls">
+                            <div class="group" style="border-color:#2e7d32">
+                                <h4 style="color:#2e7d32">ENDOGENOUS RHYTHM</h4>
+                                <div class="ctl"><div class="row"><span>natural freq</span><span class="v" id="vf0Cw">6.0 Hz</span></div><input type="range" id="f0Cw" min="4" max="8" step="0.1" value="6"></div>
+                                <div class="ctl"><div class="row"><span>phase noise</span><span class="v" id="vnoiseCw">1.2</span></div><input type="range" id="noiseCw" min="0" max="6" step="0.1" value="1.2"></div>
+                            </div>
+                            <div class="group" style="border-color:#b8860b">
+                                <h4 style="color:#b8860b">STIM</h4>
+                                <div class="ctl"><div class="row"><span>frequency</span><span class="v" id="vfStimCw">6.0 Hz</span></div><input type="range" id="fStimCw" min="4" max="8" step="0.1" value="6"></div>
+                                <div class="ctl"><div class="row"><span>intensity</span><span class="v" id="vintCw">0.55</span></div><input type="range" id="intCw" min="0" max="1" step="0.02" value="0.55"></div>
+                                <button class="obtn" id="togCw">stim is ON</button>
+                            </div>
+                        </div>
+                        <p class="note">Matched frequency plus enough intensity and the rhythm locks: its phase stops drifting and the dial freezes. Detune it and the dial spins again. That is the difference between two waves overlapping and stimulation actually taking hold of a rhythm.</p>
+                    </div>
+                </div>
+
+                <div class="osc-cta">
+                    <a href="oscillations.html" class="section-nav-btn">
+                        Explore the full module: Understanding Oscillations <span class="arrow">&rarr;</span>
+                    </a>
+                </div>
+
+                <div class="section-nav">
+                    <a href="#section-neuroanatomy" class="section-nav-btn">
+                        Individual Differences <span class="arrow">&darr;</span>
+                    </a>
+                </div>
+            </div>
+
+            <script>
+            (function(){
+            "use strict";
+            var container = document.getElementById('scopeCw');
+            if (!container) return;
+            var TWO_PI = Math.PI*2, K_GAIN = 4*Math.PI;
+            var C = { bg:'#ffffff', grid:'#e9edf1', gridMajor:'#d3dae2', endo:'#2e7d32', drive:'#b8860b', slip:'#c62828', dim:'#5a6a78' };
+            var FONT = "'Sora','Helvetica Neue',sans-serif";
+            function randn(){ var u=0,v=0; while(u===0)u=Math.random(); while(v===0)v=Math.random(); return Math.sqrt(-2*Math.log(u))*Math.cos(TWO_PI*v); }
+            function wrap(a){ a=(a+Math.PI)%TWO_PI; if(a<0)a+=TWO_PI; return a-Math.PI; }
+            function fit(cv,h){ var dpr=window.devicePixelRatio||1; var r=cv.getBoundingClientRect(); cv.width=Math.max(1,r.width*dpr); cv.height=Math.max(1,(h||parseFloat(cv.dataset.h)||200)*dpr); return dpr; }
+
+            var p = { f0:6, fStim:6, intensity:0.55, noise:1.2, stimOn:true };
+            var cv = container, ctx = cv.getContext('2d');
+            var ph = document.getElementById('phasorCw'), pctx = ph.getContext('2d');
+            var stEl=document.getElementById('stateCw'), rEl=document.getElementById('rCw'), detEl=document.getElementById('detCw');
+
+            function bind(id,key,fmt){ var inp=document.getElementById(id),out=document.getElementById('v'+id); inp.addEventListener('input',function(){ p[key]=parseFloat(inp.value); out.textContent=fmt(p[key]); }); }
+            bind('f0Cw','f0',function(v){return v.toFixed(1)+' Hz';});
+            bind('noiseCw','noise',function(v){return v.toFixed(1);});
+            bind('fStimCw','fStim',function(v){return v.toFixed(1)+' Hz';});
+            bind('intCw','intensity',function(v){return v.toFixed(2);});
+            var tog=document.getElementById('togCw');
+            tog.addEventListener('click',function(){ p.stimOn=!p.stimOn; tog.textContent=p.stimOn?'stim is ON':'stim is OFF'; });
+
+            var N=600, windowSec=1.5, dtDisp=windowSec/N, sub=4, h=dtDisp/sub;
+            var endo=new Float32Array(N), drv=new Float32Array(N), dphi=new Float32Array(N);
+            var head=0, filled=0, theta=Math.random()*TWO_PI, phiDrive=0, inst=0, last=0;
+            var paused=false;
+            var obs = new IntersectionObserver(function(e){ paused = !e[0].isIntersecting; }, { threshold:0.01 });
+            obs.observe(cv);
+
+            function frame(ts){
+                requestAnimationFrame(frame);
+                if(!last) last=ts; var wall=(ts-last)/1000; last=ts; wall=Math.min(wall,0.1);
+                if(paused) return;
+                var newS=Math.max(0,Math.round(wall/dtDisp));
+                var K=p.stimOn?K_GAIN*p.intensity:0;
+                for(var n=0;n<newS;n++){
+                for(var k=0;k<sub;k++){
+                    var coup=p.stimOn?K*Math.sin(phiDrive-theta):0;
+                    theta+=(TWO_PI*p.f0+coup)*h + p.noise*Math.sqrt(h)*randn();
+                    phiDrive+=TWO_PI*p.fStim*h;
+                }
+                inst=wrap(theta-phiDrive);
+                endo[head]=Math.sin(theta); drv[head]=p.stimOn?p.intensity*Math.sin(phiDrive):0; dphi[head]=inst;
+                head=(head+1)%N; filled=Math.min(filled+1,N);
+                }
+                var dpr=fit(cv), W=cv.width, Hh=cv.height, mid=Hh/2, amp=Hh*0.3;
+                ctx.fillStyle=C.bg; ctx.fillRect(0,0,W,Hh); ctx.lineWidth=dpr;
+                for(var i=0;i<=8;i++){ var x=W*i/8; ctx.strokeStyle=i===4?C.gridMajor:C.grid; ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,Hh); ctx.stroke(); }
+                ctx.strokeStyle=C.gridMajor; ctx.beginPath(); ctx.moveTo(0,mid); ctx.lineTo(W,mid); ctx.stroke();
+                function trace(buf,color,w){ ctx.beginPath(); for(var i=0;i<filled;i++){ var idx=(head-filled+i+N)%N, x=(i/(N-1))*W, y=mid-buf[idx]*amp; i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);} ctx.strokeStyle=color; ctx.lineWidth=w*dpr; ctx.stroke(); }
+                trace(drv,C.drive,1.5); trace(endo,C.endo,2.6);
+
+                var sc=0,ss=0; for(var i2=0;i2<filled;i2++){ sc+=Math.cos(dphi[i2]); ss+=Math.sin(dphi[i2]); }
+                var R=filled?Math.hypot(sc,ss)/filled:0, meanDir=Math.atan2(ss,sc);
+                var locked=R>0.9 && p.stimOn;
+
+                var pd=fit(ph,90), PW=ph.width, PH=ph.height, cx=PW/2, cy=PH/2, rad=Math.min(PW,PH)*0.34;
+                pctx.fillStyle=C.bg; pctx.fillRect(0,0,PW,PH);
+                pctx.strokeStyle=C.grid; pctx.lineWidth=pd; pctx.beginPath(); pctx.arc(cx,cy,rad,0,TWO_PI); pctx.stroke();
+                var col=!p.stimOn?C.dim:locked?C.endo:C.slip;
+                pctx.fillStyle=col; pctx.beginPath(); pctx.arc(cx+rad*Math.cos(inst),cy-rad*Math.sin(inst),3*pd,0,TWO_PI); pctx.fill();
+                pctx.strokeStyle=col; pctx.lineWidth=2.2*pd; pctx.beginPath(); pctx.moveTo(cx,cy); pctx.lineTo(cx+rad*R*Math.cos(meanDir),cy-rad*R*Math.sin(meanDir)); pctx.stroke();
+
+                stEl.textContent=!p.stimOn?'free-running':locked?'LOCKED':'slipping'; stEl.style.color=col;
+                rEl.textContent=R.toFixed(2); rEl.style.color=col;
+                detEl.textContent=(p.fStim-p.f0).toFixed(1)+' Hz';
+            }
+            requestAnimationFrame(frame);
+            })();
+            </script>
+
+            <!-- ════════════════════════════════════════════════════════════ -->
             <!-- INDIVIDUAL DIFFERENCES IN NEUROANATOMY -->
             <!-- ════════════════════════════════════════════════════════════ -->
             <div class="content-section" id="section-neuroanatomy">
