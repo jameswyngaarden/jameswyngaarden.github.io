@@ -60,6 +60,8 @@
   .osc .skip { font-family:var(--font-display); font-size:0.78rem; color:var(--dim); background:none; border:none; cursor:pointer; text-decoration:underline; }
   .osc .caveat { font-family:var(--font-serif); font-size:0.85rem; color:var(--dim); line-height:1.6; margin-top:16px; border-left:2px solid var(--drive); padding-left:12px; max-width:68ch; }
   .osc .stub { padding:44px 16px; text-align:center; color:var(--dim); font-size:0.92rem; line-height:1.6; }
+  .osc .refs { font-family:var(--font-serif); font-size:0.82rem; color:var(--dim); line-height:1.6; margin-top:22px; padding-top:13px; border-top:1px solid var(--border); max-width:68ch; }
+  .osc .refs-label { font-family:var(--font-display); font-size:0.68rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--dim); margin-right:9px; }
 
 </style>
 </head>
@@ -171,26 +173,30 @@ const state = { current: 0, passed: new Set(), unlockedAll: false };
 const chapters = [
   {
     no: "01", title: "Complexity is cheap",
-    blurb: `A single sine wave carries three numbers: amplitude, frequency, phase. Add a few sine waves and you can build almost any repeating shape. Earl Miller's point is that brains exploit exactly this, since a handful of overlapping waves encodes a great deal of structure for almost nothing. Stack harmonics onto the fundamental and watch a plain sine turn into a <em>square wave</em>. The whole signal you build is specified by just the slider values.`,
+    blurb: `A single sine wave carries three numbers: amplitude, frequency, phase. Add a few sine waves and you can build almost any repeating shape. That cheapness is the draw: a handful of overlapping waves encodes a lot of structure for almost nothing. Earl Miller, a neuroscientist at MIT who studies how the prefrontal cortex controls behavior, argues the cortex runs on exactly this kind of economy, using rhythms to organize computation flexibly. Stack harmonics onto the fundamental and watch a plain sine turn into a <em>square wave</em>. The whole signal you build is specified by just the slider values.`,
     checkpoint: "Match the target shape to 96% or better. The harmonics fall off in amplitude, so smaller is right as you go up.",
+    refs: `Buzs&aacute;ki &amp; Draguhn (2004); Buzs&aacute;ki (2006).`,
     build: buildChapter1,
   },
   {
     no: "02", title: "Properties: amplitude, frequency, phase",
     blurb: `Now two waves at once. Each has its own amplitude, frequency, and phase, and the scope shows both plus their sum. When the frequencies match, sliding the relative phase walks the sum between full reinforcement and full cancellation. That is addition and subtraction carried out by the waves themselves. The phasor inset shows the same thing as two vectors: in phase they stack, out of phase they cancel. Detune the two frequencies and the clean arithmetic breaks into a slow <em>beat</em>.`,
     checkpoint: "Same frequency required. Drive the sum to full cancellation, then to full reinforcement.",
+    refs: `Pikovsky, Rosenblum &amp; Kurths (2001).`,
     build: buildChapter2,
   },
   {
     no: "03", title: "What stimulation actually is",
     blurb: `Here is the turn. So far the second wave was just added to the first, and neither changed the other. Real stimulation does something different: the applied current <em>couples into</em> the brain's own rhythm and pulls its timing. So the green trace is no longer a wave you add. It is an oscillator with its own natural frequency and its own jitter, and the amber stim tugs on it. Turn the stim off and it free-runs at its own pace. Turn it on and raise the intensity, and the coupling can capture it, so the rhythm locks to the drive. That capture is entrainment, and it is not the same thing as two waves overlapping.`,
     checkpoint: "Match the stim frequency to the rhythm, then raise intensity until the rhythm locks (concentration R above 0.90).",
+    refs: `Herrmann et al. (2013); V&ouml;r&ouml;slakos et al. (2018).`,
     build: buildChapter3,
   },
   {
     no: "04", title: "What makes stimulation work",
     blurb: `Capture is not guaranteed. Three things decide whether the drive locks the rhythm: how far the stim frequency sits from the rhythm's own (<em>detuning</em>), how hard you drive it (<em>intensity</em>), and how much the rhythm jitters (<em>noise</em>). The map on the right is the Arnold tongue: the shaded wedge is where locking is possible. Sitting at zero detuning, almost any drive locks. As you detune, you need more intensity to stay inside the wedge, and past its edge no amount of intensity will do. Noise blurs the boundary, so near the edge the lock flickers.`,
     checkpoint: "Lock the rhythm while detuned by raising intensity to compensate. Then find a detuning that no intensity can rescue.",
+    refs: `Adler (1946); Pikovsky et al. (2001).`,
     build: buildChapter4,
   },
   {
@@ -198,12 +204,14 @@ const chapters = [
     blurb: `Now apply one fixed stimulation frequency to a whole population. Seven virtual subjects span ages 25 to 85, and aging changes their rhythms in three ways that pull against each other. Rhythms <em>slow</em> with age, so a fixed drive best matches whoever's own frequency sits closest to it, and that person need not be the youngest. Rhythms also <em>weaken</em> with age, and a weaker rhythm is easier for the same drive to capture. And they grow <em>noisier</em>, which resists locking. Because these push in different directions, the best-entrained subject can land in the middle of the age range. The tidy story that says "older brains are worse, so stimulation helps them most" hides all three of these.`,
     checkpoint: "Tune the aging trends and the stim frequency so entrainability peaks in the middle of the age range, not at either end.",
     caveat: `The "weaker rhythm is easier to capture" effect is modeled by treating a weaker rhythm as a larger relative coupling. That is a defensible idealization, but it is the assumption doing the counterintuitive work, and in real tissue atrophy also reduces the field that reaches the target, which pushes the other way.`,
+    refs: `Reinhart &amp; Nguyen (2019); Indahlastari et al. (2020).`,
     build: buildChapter5,
   },
   {
     no: "06", title: "Behavior (illustrative)", fenced: true,
     blurb: `The final step links the rhythm to a choice. A simple reinforcement-learning agent plays a two-armed task where the better option flips every so often, and it must notice the reversal and switch. Here the rhythm's quality sets how strongly each outcome updates the agent's beliefs: a locked rhythm lets feedback land hard, so the agent recovers quickly after a flip, while a slipping rhythm dulls the update, so it lags. Toggle the stim and watch the agent's recovery speed and its lose-shift behavior change. This is the payoff of the whole arc, behavior falling out of the rhythm, but read the fence above: the rhythm-to-learning-rate link is drawn for intuition, not asserted as the mechanism.`,
     checkpoint: "Run the task with the rhythm locked, then with it slipping. Watch the recovery lag after reversals differ between the two.",
+    refs: `Rescorla &amp; Wagner (1972); Daw (2011).`,
     build: buildChapter6,
   },
 ];
@@ -1046,7 +1054,8 @@ function renderChapter() {
     <div class="chapTitle">${ch.title}</div>
     <div class="blurb">${ch.blurb || ''}</div>
     ${ch.caveat ? '<div class="caveat">' + ch.caveat + '</div>' : (ch.fenced ? '<div class="caveat">This chapter illustrates a relationship between rhythm phase and behavior that is a useful intuition, not an established mechanism. It is walled off from the rest of the module deliberately.</div>' : '')}
-    <div id="root"></div>`;
+    <div id="root"></div>
+    ${ch.refs ? '<div class="refs"><span class="refs-label">Sources</span>' + ch.refs + '</div>' : ''}`;
   const root = document.getElementById('root');
   if (ch.stub) {
     root.innerHTML = `<div class="stub">Chapter under construction.<br>The shell, checkpoint gating, and shared engine are in place, so this slots in next.</div>`;
