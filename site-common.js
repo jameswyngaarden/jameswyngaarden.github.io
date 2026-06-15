@@ -18,30 +18,21 @@
         { href: 'art.html', label: 'Artistry' },
     ];
 
-    // ── Build sidebar HTML ──
-    var sidebarHTML = ''
-        + '<div class="sidebar-profile">'
-        + '    <div class="sidebar-links icons-only">'
-        + '        <a href="mailto:james.wyngaarden@temple.edu" class="sidebar-link" aria-label="Email" title="Email">'
-        + '            <img src="stimuli/logos/Email.png" alt="Email">'
-        + '        </a>'
-        + '        <a href="https://www.linkedin.com/in/james-wyngaarden-iii" target="_blank" class="sidebar-link" aria-label="LinkedIn" title="LinkedIn">'
-        + '            <img src="stimuli/logos/Linkedin.png" alt="LinkedIn">'
-        + '        </a>'
-        + '        <a href="https://bsky.app/profile/jameswyngaarden.bsky.social" target="_blank" class="sidebar-link" aria-label="Bluesky" title="Bluesky">'
-        + '            <img src="stimuli/logos/Bluesky.png" alt="Bluesky">'
-        + '        </a>'
-        + '        <a href="https://github.com/jameswyngaarden" target="_blank" class="sidebar-link" aria-label="GitHub" title="GitHub">'
-        + '            <img src="stimuli/logos/Github.png" alt="GitHub">'
-        + '        </a>'
-        + '        <a href="https://scholar.google.com/citations?user=84faR-sAAAAJ&hl=en" target="_blank" class="sidebar-link" aria-label="Google Scholar" title="Google Scholar">'
-        + '            <img src="stimuli/logos/Google-Scholar.png" alt="Google Scholar">'
-        + '        </a>'
-        + '        <a href="https://orcid.org/0000-0002-0858-8721" target="_blank" class="sidebar-link" aria-label="ORCID" title="ORCID">'
-        + '            <img src="stimuli/logos/Orcid.png" alt="ORCID">'
-        + '        </a>'
+    // ── Sidebar emptied; social links now live in the footer ──
+    var sidebarHTML = '';
+
+    // ── Build footer HTML (icon-only social links) ──
+    var footerHTML = ''
+        + '<footer class="site-footer">'
+        + '    <div class="footer-links">'
+        + '        <a href="mailto:james.wyngaarden@temple.edu" class="footer-link" aria-label="Email" title="Email"><img src="stimuli/logos/Email.png" alt="Email"></a>'
+        + '        <a href="https://www.linkedin.com/in/james-wyngaarden-iii" target="_blank" class="footer-link" aria-label="LinkedIn" title="LinkedIn"><img src="stimuli/logos/Linkedin.png" alt="LinkedIn"></a>'
+        + '        <a href="https://bsky.app/profile/jameswyngaarden.bsky.social" target="_blank" class="footer-link" aria-label="Bluesky" title="Bluesky"><img src="stimuli/logos/Bluesky.png" alt="Bluesky"></a>'
+        + '        <a href="https://github.com/jameswyngaarden" target="_blank" class="footer-link" aria-label="GitHub" title="GitHub"><img src="stimuli/logos/Github.png" alt="GitHub"></a>'
+        + '        <a href="https://scholar.google.com/citations?user=84faR-sAAAAJ&hl=en" target="_blank" class="footer-link" aria-label="Google Scholar" title="Google Scholar"><img src="stimuli/logos/Google-Scholar.png" alt="Google Scholar"></a>'
+        + '        <a href="https://orcid.org/0000-0002-0858-8721" target="_blank" class="footer-link" aria-label="ORCID" title="ORCID"><img src="stimuli/logos/Orcid.png" alt="ORCID"></a>'
         + '    </div>'
-        + '</div>';
+        + '</footer>';
 
     // ── Build nav HTML with active state ──
     var navHTML = '<nav class="nav">';
@@ -54,6 +45,7 @@
 
     // ── Build header HTML (SVG name animation + subtitle + nav) ──
     var headerHTML = ''
+        + navHTML
         + '<div class="header-center">'
         + '    <a href="index.html" class="name-home" aria-label="Home" style="text-decoration:none;color:inherit;display:inline-block;">'
         + '    <div class="name-animated" id="nameAnimated">'
@@ -89,8 +81,7 @@
         + '        </svg>'
         + '    </div>'
         + '    </a>'
-        + '</div>'
-        + navHTML;
+        + '</div>';
 
     // ── Link preview HTML ──
     var linkPreviewHTML = ''
@@ -120,6 +111,14 @@
     if (siteHeader) siteHeader.innerHTML = headerHTML;
 
     // Background network canvas intentionally not injected (removed site-wide).
+
+    // Inject footer (social icons) at end of main-content
+    var mainContentEl = document.getElementById('mainContent');
+    if (mainContentEl) {
+        var footerWrap = document.createElement('div');
+        footerWrap.innerHTML = footerHTML;
+        mainContentEl.appendChild(footerWrap.firstChild);
+    }
 
     // Inject link preview at end of body
     var previewDiv = document.createElement('div');
