@@ -11,7 +11,7 @@
     var page = path.substring(path.lastIndexOf('/') + 1) || 'index.html';
 
     var NAV_ITEMS = [
-        { href: 'index.html', label: 'About' },
+        { href: 'about.html', label: 'About' },
         { href: 'current-work.html', label: 'Current Work' },
         { href: 'publications.html', label: 'Publications' },
         { href: 'art.html', label: 'Artistry' },
@@ -20,24 +20,24 @@
     // ── Build sidebar HTML ──
     var sidebarHTML = ''
         + '<div class="sidebar-profile">'
-        + '    <div class="sidebar-links">'
-        + '        <a href="mailto:james.wyngaarden@temple.edu" class="sidebar-link">'
-        + '            <img src="stimuli/logos/Email.png" alt="">Email'
+        + '    <div class="sidebar-links icons-only">'
+        + '        <a href="mailto:james.wyngaarden@temple.edu" class="sidebar-link" aria-label="Email" title="Email">'
+        + '            <img src="stimuli/logos/Email.png" alt="Email">'
         + '        </a>'
-        + '        <a href="https://www.linkedin.com/in/james-wyngaarden-iii" target="_blank" class="sidebar-link">'
-        + '            <img src="stimuli/logos/Linkedin.png" alt="">LinkedIn'
+        + '        <a href="https://www.linkedin.com/in/james-wyngaarden-iii" target="_blank" class="sidebar-link" aria-label="LinkedIn" title="LinkedIn">'
+        + '            <img src="stimuli/logos/Linkedin.png" alt="LinkedIn">'
         + '        </a>'
-        + '        <a href="https://bsky.app/profile/jameswyngaarden.bsky.social" target="_blank" class="sidebar-link">'
-        + '            <img src="stimuli/logos/Bluesky.png" alt="">Bluesky'
+        + '        <a href="https://bsky.app/profile/jameswyngaarden.bsky.social" target="_blank" class="sidebar-link" aria-label="Bluesky" title="Bluesky">'
+        + '            <img src="stimuli/logos/Bluesky.png" alt="Bluesky">'
         + '        </a>'
-        + '        <a href="https://github.com/jameswyngaarden" target="_blank" class="sidebar-link">'
-        + '            <img src="stimuli/logos/Github.png" alt="">GitHub'
+        + '        <a href="https://github.com/jameswyngaarden" target="_blank" class="sidebar-link" aria-label="GitHub" title="GitHub">'
+        + '            <img src="stimuli/logos/Github.png" alt="GitHub">'
         + '        </a>'
-        + '        <a href="https://scholar.google.com/citations?user=84faR-sAAAAJ&hl=en" target="_blank" class="sidebar-link">'
-        + '            <img src="stimuli/logos/Google-Scholar.png" alt="">Google Scholar'
+        + '        <a href="https://scholar.google.com/citations?user=84faR-sAAAAJ&hl=en" target="_blank" class="sidebar-link" aria-label="Google Scholar" title="Google Scholar">'
+        + '            <img src="stimuli/logos/Google-Scholar.png" alt="Google Scholar">'
         + '        </a>'
-        + '        <a href="https://orcid.org/0000-0002-0858-8721" target="_blank" class="sidebar-link">'
-        + '            <img src="stimuli/logos/Orcid.png" alt="">ORCID'
+        + '        <a href="https://orcid.org/0000-0002-0858-8721" target="_blank" class="sidebar-link" aria-label="ORCID" title="ORCID">'
+        + '            <img src="stimuli/logos/Orcid.png" alt="ORCID">'
         + '        </a>'
         + '    </div>'
         + '</div>';
@@ -54,6 +54,7 @@
     // ── Build header HTML (SVG name animation + subtitle + nav) ──
     var headerHTML = ''
         + '<div class="header-center">'
+        + '    <a href="index.html" class="name-home" aria-label="Home" style="text-decoration:none;color:inherit;display:inline-block;">'
         + '    <div class="name-animated" id="nameAnimated">'
         + '        <svg class="glyph-svg" viewBox="35 0 529 730" id="svgJ">'
         + '            <g transform="translate(0, 730) scale(1, -1)">'
@@ -86,7 +87,7 @@
         + '            <g transform="translate(0, 730) scale(1, -1)"><path d="M92 0V730H234V0Z"/></g>'
         + '        </svg>'
         + '    </div>'
-        + '    <p class="subtitle">Research Scientist &ensp;&middot;&ensp; Decision Making &ensp;&middot;&ensp; Computational Modeling</p>'
+        + '    </a>'
         + '</div>'
         + navHTML;
 

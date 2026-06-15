@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<script data-goatcounter="https://jameswyngaarden.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<link rel="icon" type="image/png" href="stimuli/favicon.png">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - James B. Wyngaarden III</title>
+    <link rel="stylesheet" href="site-common.css">
+    <style>
+        /* ── Page-specific styles: about.html ── */
+        .about-content {
+            font-size: 1.05rem;
+            line-height: 1.9;
+            max-width: 720px;
+            margin: 0 auto;
+            color: var(--color-text);
+            padding: 40px 20px 32px;
+        }
+
+        .about-content p { margin-bottom: 22px; }
+
+        .about-content a {
+            color: var(--color-navy);
+            text-decoration: none;
+            border-bottom: 1px solid var(--color-gold-muted);
+            transition: border-color 0.2s ease;
+        }
+
+        .about-content a:hover { border-bottom-color: var(--color-navy); }
+
+        .headshot-wrapper {
+            float: right;
+            margin: 4px 0 18px 28px;
+        }
+
+        .about-headshot {
+            width: 168px;
+            height: 168px;
+            border-radius: 50%;
+            object-fit: cover;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            display: block;
+        }
+
+        .about-contact {
+            font-family: var(--font-display);
+            font-size: 0.95rem;
+            color: var(--color-text-light);
+        }
+
+        /* ── Grants ── */
+        .grants-list {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 8px 20px 48px;
+        }
+
+        .grant-item {
+            display: flex;
+            align-items: flex-start;
+            padding: 16px 0;
+            border-bottom: 1px solid var(--color-border);
+            font-size: 0.96rem;
+            line-height: 1.65;
+        }
+
+        .grant-item:last-child { border-bottom: none; }
+
+        .grant-year {
+            min-width: 55px;
+            font-family: var(--font-display);
+            font-weight: 600;
+            color: var(--color-gold);
+            margin-right: 20px;
+            flex-shrink: 0;
+            font-size: 0.9rem;
+        }
+
+        .grant-description { flex-grow: 1; }
+
+        .grant-description a {
+            color: var(--color-navy);
+            text-decoration: none;
+            border-bottom: 1px solid var(--color-gold-muted);
+            transition: border-color 0.2s ease;
+        }
+
+        .grant-description a:hover { border-bottom-color: var(--color-navy); }
+
+        .cv-line {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 0 20px 8px;
+        }
+
+        .cv-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: var(--font-display);
+            font-size: 0.92rem;
+            color: var(--color-navy);
+            text-decoration: none;
+            border: 1px solid var(--color-border);
+            border-radius: 6px;
+            padding: 9px 16px;
+            transition: border-color 0.2s ease;
+        }
+
+        .cv-link:hover { border-color: var(--color-gold); }
+
+        @media (max-width: 900px) {
+            .about-content { padding: 30px 8px 24px; }
+            .headshot-wrapper { float: none; margin: 0 auto 22px; text-align: center; }
+            .grants-list { padding: 8px 8px 36px; }
+            .cv-line { padding: 0 8px 8px; }
+            .grant-item { flex-direction: column; }
+            .grant-year { margin-bottom: 4px; margin-right: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar" id="sidebar"></aside>
+
+        <div class="main-content" id="mainContent">
+            <header id="siteHeader"></header>
+
+            <div class="section-header">
+                <h2>About</h2>
+            </div>
+
+            <div class="about-content">
+                <div class="headshot-wrapper">
+                    <img src="stimuli/headshot.jpg" alt="James Wyngaarden" class="about-headshot">
+                </div>
+                <p>I am a PhD candidate in the Department of Psychology at Temple University, where I work with Dr. David V. Smith in the <a href="https://sites.temple.edu/neuroeconlab/" target="_blank">Neuroeconomics Lab</a>, supported by an NIH F31 fellowship from the National Institute on Aging. My work uses fMRI, transcranial alternating current stimulation, and computational modeling to ask how people learn from rewards, how they adapt when the rules change, and why that flexibility declines with age. I am especially interested in corticostriatal reward processing, reversal learning, and decision-making across the lifespan.</p>
+
+                <p>I completed my undergraduate work in Psychology and Neuroscience at the University of North Carolina at Chapel Hill, where I worked with Dr. Charlotte A. Boettiger, and a master's in Experimental Psychology at Appalachian State University, where I worked with Dr. Andrew Monroe.</p>
+
+                <p>An overview of what I'm working on is in the pages above, with a fuller record on my CV. I can be reached at <span class="about-contact">james[dot]wyngaarden[at]temple[dot]edu</span>.</p>
+            </div>
+
+            <div class="cv-line">
+                <a href="stimuli/Wyngaarden_CV.pdf" target="_blank" class="cv-link">Download CV (PDF)</a>
+            </div>
+
+            <div class="section-header alt-bg">
+                <h2>Grants &amp; Awards</h2>
+            </div>
+
+            <div class="grants-list">
+                <div class="grant-item">
+                    <div class="grant-year">2025</div>
+                    <div class="grant-description"><a href="https://srndna.utdallas.edu/2025-pilot-grants/" target="_blank">Scientific Research Network on Decision Neuroscience and Aging (SRNDNA) Pilot Grant</a>, NIH R24-AG076847-04, "Modulating reward-based learning in older adults using transcranial alternating current stimulation" ($24,000)</div>
+                </div>
+                <div class="grant-item">
+                    <div class="grant-year">2024</div>
+                    <div class="grant-description"><a href="https://reporter.nih.gov/search/sS498jkSfUCBuRmKI-9XjA/project-details/10899057" target="_blank">Ruth L. Kirschstein National Research Service Award (NRSA) Predoctoral Fellowship</a>, National Institute on Aging (NIA), F31-AG085934, "Characterizing the role of confirmation bias in financial exploitation of older adults" (3 years, $106,980)</div>
+                </div>
+                <div class="grant-item">
+                    <div class="grant-year">2020</div>
+                    <div class="grant-description"><a href="https://graduate.appstate.edu/events/three-minute-thesis-competition" target="_blank">Three Minute Thesis (3MT) Competition</a>, Appalachian State University, 1st Place ($600)</div>
+                </div>
+                <div class="grant-item">
+                    <div class="grant-year">2019</div>
+                    <div class="grant-description">Wiley F. Smith Endowment (WiSE) Research Award ($300)</div>
+                </div>
+                <div class="grant-item">
+                    <div class="grant-year">2019</div>
+                    <div class="grant-description">Student and Faculty Excellence (SAFE) Fund Research Grant ($1,000)</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="site-common.js"></script>
+</body>
+</html>
