@@ -1233,9 +1233,11 @@
                    data-preview-title="NIH NRSA Fellowship"
                    data-preview-desc="Characterizing the role of confirmation bias in financial exploitation of older adults"
                    data-preview-img="stimuli/nih-reporter.png"
-                   data-preview-source="NIH F31-AG085934, $106,000">NIH F31 fellowship</a> from the National Institute on Aging, asks how cognitive flexibility declines with age, and whether noninvasive brain stimulation can help restore it.</p>
+                   data-preview-source="NIH F31-AG085934, $106,000">NIH F31 fellowship</a> from the National Institute on Aging, investigates how cognitive flexibility declines with age — and whether noninvasive brain stimulation can help restore it.</p>
 
-                <p>The paradigm is <strong>reversal learning</strong>, which engages the prefrontal-striatal circuits behind flexible decision-making, the same circuits that decline with age. What follows are the behavioral and computational methods we use to quantify it, and the stimulation approach we are testing.</p>
+                <p>The core paradigm is <strong>reversal learning</strong>: participants learn which of two options is more rewarding, then the contingencies flip and they must adapt. This deceptively simple task engages prefrontal-striatal circuits critical for flexible decision-making — circuits that show pronounced age-related decline.</p>
+
+                <p>Below, I walk through the behavioral and computational methods used to quantify learning and flexibility, along with the brain stimulation approach we're testing. These interactive explainers are designed to make the methods accessible without requiring prior expertise.</p>
 
                 <div class="section-nav">
                     <a href="#section-task" class="section-nav-btn">
@@ -1250,9 +1252,11 @@
             <div class="content-section" id="section-task">
                 <h3 class="subsection-header">The Task</h3>
 
-                <p>In the <strong>two-armed bandit</strong> task, you choose between two options, here shown as flowers. One rewards you 75% of the time, the other 25%. Your job is to work out which is which.</p>
+                <p>In the <strong>two-armed bandit</strong> task, you repeatedly choose between two options — here represented as flowers. One flower is "better" — it rewards you 75% of the time, while the other only rewards 25% of the time. Your job is to figure out which is which.</p>
 
-                <p>Partway through, the contingencies <strong>reverse</strong>: the good flower goes bad and the bad one good. Detecting that shift and adapting quickly is the hallmark of cognitive flexibility, and it is exactly what declines with age.</p>
+                <p>The twist: partway through, the contingencies <strong>reverse</strong>. The previously good flower becomes bad, and vice versa. Detecting this shift and adapting quickly is the hallmark of cognitive flexibility — and it's exactly what declines with age.</p>
+
+                <p>Try it yourself below. You'll play 30 trials with one reversal midway through.</p>
 
                 <div class="demo-container">
                     <div class="demo-title">Play the Reversal Learning Task</div>
@@ -1342,11 +1346,12 @@
             <div class="content-section" id="section-wsls">
                 <h3 class="subsection-header">Measuring Behavior: Win-Stay, Lose-Shift</h3>
 
-                <p>One simple way to characterize learning is to ask how someone responds to feedback. The <strong>Win-Stay, Lose-Shift</strong> (WSLS) framework splits this into two probabilities:</p>
+                <p>One simple but powerful way to characterize learning is to ask: <em>How does someone respond to feedback?</em> The <strong>Win-Stay, Lose-Shift</strong> (WSLS) framework breaks this down into two probabilities:</p>
 
-                <p><strong>p(stay | win)</strong>: after a win, how often does the person pick the same flower again?<br>
-                <strong>p(shift | lose)</strong>: after a loss, how often do they switch?<br>
-                Higher values mean more feedback-driven behavior: high p(stay|win) exploits what works, high p(shift|lose) drops what does not.</p>
+                <p><strong>p(stay | win)</strong> — After a rewarded choice, how often does the person pick the same flower again?<br>
+                <strong>p(shift | lose)</strong> — After an unrewarded choice, how often do they switch to the other flower?</p>
+
+                <p>Higher values indicate more feedback-driven behavior. Someone with high p(stay|win) exploits what works; someone with high p(shift|lose) quickly abandons what doesn't. Use the demo below to see how these metrics are calculated from a trial sequence.</p>
 
                 <div class="demo-container">
                     <div class="demo-title">Interactive WSLS Calculator</div>
@@ -1393,9 +1398,12 @@
             <div class="content-section" id="section-rw">
                 <h3 class="subsection-header">Computational Modeling: Rescorla-Wagner</h3>
 
-                <p>WSLS captures the immediate response to feedback, but not how people integrate information over time. For that we fit <strong>reinforcement learning models</strong> to the trial-by-trial choices.</p>
+                <p>WSLS captures the immediate response to feedback, but it doesn't tell us <em>how</em> people integrate information over time. For that, we fit <strong>reinforcement learning models</strong> to the trial-by-trial choice data.</p>
 
-                <p>The <strong>Rescorla-Wagner</strong> model keeps a running estimate of each option's value (Q), updating it after every outcome. Two parameters govern learning: the learning rate (α) sets how much the latest outcome shifts the estimate, and the inverse temperature (β) sets how closely choices follow it. Adjust them below.</p>
+                <p>The <strong>Rescorla-Wagner</strong> model tracks an internal estimate of each option's value (Q), updating it after every outcome. Two parameters control learning:</p>
+
+                <p><strong>α (learning rate)</strong> — How much weight is given to the most recent outcome? High α means fast learning but high volatility; low α means slow, stable learning.<br>
+                <strong>β (inverse temperature)</strong> — How deterministically does the person exploit learned values? High β means choices closely track value estimates; low β means more random exploration.</p>
 
                 <div class="demo-container">
                     <div class="demo-title">Interactive R-W Parameter Explorer</div>
@@ -1440,9 +1448,11 @@
             <div class="content-section" id="section-tacs">
                 <h3 class="subsection-header">Brain Stimulation: tACS</h3>
 
-                <p><strong>Transcranial alternating current stimulation (tACS)</strong> delivers weak oscillating currents through scalp electrodes to modulate neural oscillations in a target region. We apply theta (6 Hz) stimulation over left dorsolateral prefrontal cortex (DLPFC), a hub for cognitive control and flexibility.</p>
+                <p><strong>Transcranial alternating current stimulation (tACS)</strong> delivers weak oscillating electrical currents through scalp electrodes, modulating neural oscillations in targeted regions. We apply theta-frequency (6 Hz) stimulation over left dorsolateral prefrontal cortex (DLPFC) — a region critical for cognitive control and flexibility.</p>
 
-                <p>The logic is direct: if age-related reversal-learning deficits stem from weakened prefrontal function, boosting prefrontal oscillations during the task may improve performance. The HD-tACS montage below shapes the current toward left DLPFC and records EEG during stimulation.</p>
+                <p>The logic: if age-related reversal learning deficits stem from weakened prefrontal function, then boosting prefrontal oscillations during the task might improve performance.</p>
+
+                <p>Below is our HD-tACS montage. The central electrode (F3) delivers the stimulating current, surrounded by return electrodes that shape the current flow toward left DLPFC. Additional electrodes record EEG during stimulation.</p>
 
                 <div class="demo-container">
                     <div class="demo-title">HD-tACS Electrode Montage</div>
@@ -1540,9 +1550,9 @@
             <div class="content-section" id="section-oscillations">
                 <h3 class="subsection-header">How Stimulation Works: Engaging a Rhythm</h3>
 
-                <p>The montage shows <em>what</em> the stimulation is. This shows <strong>why</strong> it might do anything. Prefrontal cortex already runs a theta rhythm during feedback-driven learning. The bet behind tACS is that a weak current oscillating near that frequency can <strong>capture</strong> the ongoing rhythm, pulling its timing into step rather than just adding a wave on top.</p>
+                <p>The montage shows <em>what</em> the stimulation is. This shows <strong>why</strong> it might do anything. The brain already runs a theta-band rhythm in prefrontal cortex during this kind of feedback-driven learning. The bet behind tACS is that a weak current oscillating near that same frequency can <strong>capture</strong> the ongoing rhythm, pulling its timing into step with the drive, rather than simply adding a second wave on top of it.</p>
 
-                <p>That capture is entrainment, and it only happens under the right conditions. In the demo, the green trace is an endogenous rhythm with its own frequency and jitter, and the amber trace is the stimulation. Match the frequencies and raise the intensity and the rhythm locks. Detune them and it slips no matter how hard you push.</p>
+                <p>That capture is called entrainment, and it only happens under the right conditions. In the demo below, the green trace is an endogenous rhythm with its own natural frequency and its own jitter; the amber trace is the stimulation. Match the frequencies and raise the intensity, and the rhythm locks to the drive. Detune them, and it slips no matter how hard you push.</p>
 
                 <div class="demo-container">
                     <div class="demo-title">Capturing a Rhythm</div>
@@ -1573,7 +1583,7 @@
                                 <button class="obtn" id="togCw">stim is ON</button>
                             </div>
                         </div>
-                        <p class="note">Watch the relative-phase dial: it freezes when the rhythm locks and spins when it slips.</p>
+                        <p class="note">Matched frequency plus enough intensity and the rhythm locks: its phase stops drifting and the dial freezes. Detune it and the dial spins again. That is the difference between two waves overlapping and stimulation actually taking hold of a rhythm.</p>
                     </div>
                 </div>
 
@@ -1670,9 +1680,11 @@
             <div class="content-section" id="section-neuroanatomy">
                 <h3 class="subsection-header">Individual Differences in Neuroanatomy</h3>
 
-                <p>Does the same montage deliver the same dose to every brain? Using <a href="https://simnibs.github.io/simnibs/build/html/index.html" target="_blank">SimNIBS</a>, we modeled the E-field our HD-tACS montage produces on each participant's anatomy, from their T1-weighted MRI.</p>
+                <p>A critical question in brain stimulation research is whether the same montage actually delivers the same dose to every brain. Using <a href="https://simnibs.github.io/simnibs/build/html/index.html" target="_blank">SimNIBS</a>, we modeled the electric field (E-field) produced by our HD-tACS montage on each participant's individual anatomy, derived from their T1-weighted MRI.</p>
 
-                <p>The pattern holds: the field concentrates over left DLPFC under F3 and falls off toward the returns, so the montage hits its target in every participant. The magnitude does not. Mean intensity runs from 0.148 to 0.371 V/m, a 2.5:1 spread under identical settings, driven by skull thickness, CSF depth, and cortical folding. That spread is the point. It gives an individual dose variable: if E-field intensity predicts the tACS effect on reversal learning, that is a dose-response test beyond group-level effects.</p>
+                <p>The spatial pattern is consistent: peak field intensity concentrates over left prefrontal cortex under the F3 electrode, falling off concentrically toward the surround returns. But the <em>magnitude</em> varies substantially — mean E-field intensity ranges from 0.148 to 0.371 V/m across participants, a 2.5:1 ratio despite identical stimulation parameters. That variability is driven by individual anatomy: skull thickness, CSF layer depth, and cortical folding patterns all shape how much current reaches the brain.</p>
+
+                <p>This matters in two ways. First, it validates the montage — every participant shows the field concentrated over left DLPFC, confirming that stimulation hits the intended target regardless of anatomy. Second, it provides an individual dose variable: if tACS effects on reversal learning are real but variable, E-field intensity may explain some of that variability — a mechanistic dose-response test that goes beyond group-level effects.</p>
 
                 <div class="demo-container">
                     <div class="demo-title">Simulated E-Fields Across Participants</div>
@@ -1729,7 +1741,7 @@
             <!-- ════════════════════════════════════════════════════════════ -->
             <div class="closing-cta" id="section-cta">
                 <p class="closing-cta-text">
-                    Curious how age, reward sensitivity, and cognitive flexibility shape these parameters, and whether tACS can shift them? Our preregistered hypotheses and analysis plan are public.
+                    Curious how factors like age, reward sensitivity, and cognitive flexibility influence these parameters — and whether tACS can shift them? Our preregistered hypotheses and analysis plan are publicly available.
                 </p>
                 <a href="https://osf.io/s9k64" target="_blank" class="closing-cta-link">
                     View Preregistration on OSF →
