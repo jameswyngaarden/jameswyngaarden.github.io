@@ -73,6 +73,28 @@
             .gallery-wrap { padding: 10px 8px 40px; }
             .gallery-wall { column-width: 150px; column-gap: 16px; }
             .gallery-intro { font-size: 1rem; }
+            .gallery-wall .gtile:nth-child(n+9) { display: none; }
+            .gallery-wall.expanded .gtile:nth-child(n+9) { display: block; }
+        }
+
+        .show-more-btn {
+            display: none;
+            margin: 20px auto 0;
+            font-family: var(--font-display);
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--color-navy);
+            background: none;
+            border: 1px solid var(--color-border);
+            border-radius: 6px;
+            padding: 10px 24px;
+            cursor: pointer;
+            transition: border-color 0.2s ease;
+        }
+        .show-more-btn:hover { border-color: var(--color-gold); }
+        @media (max-width: 900px) {
+            .show-more-btn { display: block; }
+            .gallery-wall.expanded ~ .show-more-btn { display: none; }
         }
     </style>
 </head>
@@ -86,49 +108,156 @@
             <div class="gallery-wrap">
                 <p class="gallery-intro">I study why people persist with choices that no longer pay off, and whether we can shift those patterns.</p>
 
-                <div class="gallery-wall">
+                <div class="gallery-wall" id="galleryWall">
 
+                    <!-- 1. PUB: Reward sensitivity & motivation (CABN) -->
                     <a class="gtile" href="publications/reward-sensitivity-motivation.html">
                         <img src="stimuli/pub-cabn.png" alt="Reward sensitivity and motivation paper">
                         <div class="gov"><span>Reward sensitivity meets motivation</span></div>
                     </a>
 
+                    <!-- 2. CURRENT WORK: Oscillations scope -->
                     <a class="gtile" href="oscillations.html">
                         <div class="scope-wrap"><canvas id="gScope"></canvas></div>
                         <div class="gov"><span>Understanding oscillations</span></div>
                     </a>
 
+                    <!-- 3. PUB: Corticostriatal social reward (SCAN) -->
                     <a class="gtile" href="publications/corticostriatal-social-reward.html">
                         <img src="stimuli/pub-scan.png" alt="Corticostriatal social reward paper">
                         <div class="gov"><span>Corticostriatal social reward</span></div>
                     </a>
 
+                    <!-- 4. CURRENT WORK: HD-tACS montage -->
                     <a class="gtile" href="current-work.html#section-tacs">
                         <img class="gpulse" src="stimuli/DLPFC_tacs.png" alt="HD-tACS montage">
                         <div class="gov"><span>HD-tACS montage</span></div>
                     </a>
 
+                    <!-- 5. ART: After Monet -->
                     <a class="gtile" href="art.html">
                         <img src="art/IMG_monet.png" alt="After Monet, oil pastel">
                         <div class="gov"><span>After Monet</span></div>
                     </a>
 
+                    <!-- 6. PUB: Alpha-tACS and reward (preprint) -->
                     <a class="gtile" href="publications/alpha-tacs-reward-pupil.html">
                         <img src="stimuli/pub-alpha-tacs.png" alt="Alpha-tACS and reward paper">
                         <div class="gov"><span>Alpha-tACS and reward</span></div>
                     </a>
 
+                    <!-- 7. PUB: Confirmation bias & exploitation (Springer) -->
                     <a class="gtile" href="publications/confirmation-bias-exploitation.html">
                         <img src="stimuli/pub-neuroecon.png" alt="Confirmation bias and exploitation chapter">
                         <div class="gov"><span>Confirmation bias and exploitation</span></div>
                     </a>
 
+                    <!-- 8. CURRENT WORK: E-field gallery -->
                     <a class="gtile" href="current-work.html#section-neuroanatomy">
                         <img id="gEfield" src="stimuli/simnibs/SimNIBS_Efield_sub-10809.png" alt="Simulated E-field across participants">
                         <div class="gov"><span>Stimulation across brains</span></div>
                     </a>
 
+                    <!-- ── below here: new tiles ── -->
+
+                    <!-- 9. CURRENT WORK: The reversal learning task -->
+                    <a class="gtile" href="current-work.html#section-task">
+                        <img src="stimuli/placeholder-tile-task.png" alt="Reversal learning task">
+                        <div class="gov"><span>The reversal learning task</span></div>
+                    </a>
+
+                    <!-- 10. ART: Self-portrait -->
+                    <a class="gtile" href="art.html">
+                        <img src="art/IMG_self-portrait_2017.png" alt="Self-portrait, 2017">
+                        <div class="gov"><span>Self-portrait</span></div>
+                    </a>
+
+                    <!-- 11. PUB: Social closeness & shared rewards -->
+                    <a class="gtile" href="publications/social-context-shared-rewards.html">
+                        <img src="stimuli/placeholder-tile-social-context.png" alt="Social closeness and shared rewards">
+                        <div class="gov"><span>Social closeness and shared rewards</span></div>
+                    </a>
+
+                    <!-- 12. CURRENT WORK: Win-Stay, Lose-Shift -->
+                    <a class="gtile" href="current-work.html#section-wsls">
+                        <img src="stimuli/placeholder-tile-wsls.png" alt="Win-Stay, Lose-Shift behavior">
+                        <div class="gov"><span>Measuring behavior: Win-Stay, Lose-Shift</span></div>
+                    </a>
+
+                    <!-- 13. OTHER: Chess accuracy analyzer -->
+                    <a class="gtile" href="chess.html">
+                        <img src="stimuli/chess.png" alt="Chess accuracy analyzer">
+                        <div class="gov"><span>Chess accuracy analyzer</span></div>
+                    </a>
+
+                    <!-- 14. PUB: Linked colored lottery dataset -->
+                    <a class="gtile" href="publications/linked-colored-lottery.html">
+                        <img src="stimuli/placeholder-tile-lottery.png" alt="Linked colored lottery dataset">
+                        <div class="gov"><span>Risky and ambiguous decisions dataset</span></div>
+                    </a>
+
+                    <!-- 15. PUB: Reward sensitivity & strategic decision -->
+                    <a class="gtile" href="publications/reward-sensitivity-strategic-decision.html">
+                        <img src="stimuli/placeholder-tile-strategic.png" alt="Reward sensitivity and strategic decision making">
+                        <div class="gov"><span>Reward sensitivity and strategic decisions</span></div>
+                    </a>
+
+                    <!-- 16. CURRENT WORK: Rescorla-Wagner modeling -->
+                    <a class="gtile" href="current-work.html#section-rw">
+                        <img src="stimuli/placeholder-tile-rw.png" alt="Rescorla-Wagner computational model">
+                        <div class="gov"><span>Computational modeling: Rescorla-Wagner</span></div>
+                    </a>
+
+                    <!-- 17. ART: Park sketch -->
+                    <a class="gtile" href="art.html">
+                        <img src="art/IMG_park.png" alt="Park scene sketch">
+                        <div class="gov"><span>Prospect Park</span></div>
+                    </a>
+
+                    <!-- 18. PUB: Substance abuse & neuromelanin -->
+                    <a class="gtile" href="publications/substance-abuse-neuromelanin.html">
+                        <img src="stimuli/placeholder-tile-neuromelanin.png" alt="Substance abuse and neuromelanin">
+                        <div class="gov"><span>Neuromelanin and substance use</span></div>
+                    </a>
+
+                    <!-- 19. PUB: Lifespan reward dataset -->
+                    <a class="gtile" href="publications/lifespan-reward-dataset.html">
+                        <img src="stimuli/placeholder-tile-lifespan.png" alt="Lifespan reward dataset">
+                        <div class="gov"><span>Lifespan reward processing dataset</span></div>
+                    </a>
+
+                    <!-- 20. PUB: Neural & behavioral social norm violations -->
+                    <a class="gtile" href="publications/neural-behavioral-social-norm-violations.html">
+                        <img src="stimuli/placeholder-tile-norm-violations.png" alt="Social norm violations">
+                        <div class="gov"><span>Social norm violations</span></div>
+                    </a>
+
+                    <!-- 21. PUB: Neuroimaging dataset young adults -->
+                    <a class="gtile" href="publications/neuroimaging-dataset-young-adults.html">
+                        <img src="stimuli/placeholder-tile-neuroimaging.png" alt="Neuroimaging dataset young adults">
+                        <div class="gov"><span>Neuroimaging dataset: young adults</span></div>
+                    </a>
+
+                    <!-- 22. PUB: Fairness & authority and protests -->
+                    <a class="gtile" href="publications/fairness-authority-protests.html">
+                        <img src="stimuli/placeholder-tile-fairness.png" alt="Fairness and authority values">
+                        <div class="gov"><span>Fairness, authority, and social justice</span></div>
+                    </a>
+
+                    <!-- 23. PUB: Ambiguity preferences vs risk -->
+                    <a class="gtile" href="publications/ambiguity-preferences-beliefs-risk.html">
+                        <img src="stimuli/placeholder-tile-ambiguity.png" alt="Ambiguity preferences and risk">
+                        <div class="gov"><span>Ambiguity preferences and risk</span></div>
+                    </a>
+
+                    <!-- 24. PUB: Older adults fairness connectivity -->
+                    <a class="gtile" href="publications/older-adults-fairness-connectivity.html">
+                        <img src="stimuli/placeholder-tile-older-fairness.png" alt="Older adults fairness connectivity">
+                        <div class="gov"><span>Older adults and fairness decisions</span></div>
+                    </a>
+
                 </div>
+                <button class="show-more-btn" id="showMoreBtn">Show all</button>
             </div>
         </div>
     </div>
@@ -179,6 +308,17 @@
             if (reduce) return;
             var io = new IntersectionObserver(function(e){ e[0].isIntersecting ? start() : stop(); }, { threshold: 0.2 });
             io.observe(img);
+        })();
+
+        // Show-more toggle for mobile
+        (function(){
+            var btn = document.getElementById('showMoreBtn');
+            var wall = document.getElementById('galleryWall');
+            if (!btn || !wall) return;
+            btn.addEventListener('click', function() {
+                wall.classList.add('expanded');
+                btn.style.display = 'none';
+            });
         })();
     })();
     </script>
