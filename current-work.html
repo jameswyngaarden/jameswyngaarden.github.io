@@ -1100,6 +1100,20 @@
             letter-spacing: 0.05em;
         }
 
+        /* ── Defense Video ── */
+        .defense-video-container {
+            border: 1px solid var(--color-border);
+            border-radius: 8px;
+            overflow: hidden;
+            background: #000;
+            margin: 20px 0;
+        }
+
+        .defense-video-container video {
+            display: block;
+            width: 100%;
+        }
+
         /* ── Animated Name (SVG-based) ── */
         .name-animated {
             display: flex;
@@ -1714,6 +1728,28 @@
                             <!-- Populated by JS -->
                         </div>
                     </div>
+                </div>
+
+                <div class="section-nav">
+                    <a href="#section-defense" class="section-nav-btn">
+                        Dissertation Defense <span class="arrow">↓</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- ════════════════════════════════════════════════════════════ -->
+            <!-- DISSERTATION DEFENSE -->
+            <!-- ════════════════════════════════════════════════════════════ -->
+            <div class="content-section" id="section-defense">
+                <h3 class="subsection-header">Dissertation Defense</h3>
+
+                <p>The talk below presents the theoretical framework, methods, and initial findings from this project, defended on July 8, 2026 before Drs. David V. Smith, Tania Giovannetti, Bart Krekelberg, Ingrid Olson, and Vinay Parikh.</p>
+
+                <div class="defense-video-container">
+                    <video controls preload="metadata">
+                        <source src="stimuli/Wyngaarden_Dissertation_Defense_20260708.mp4" type="video/mp4">
+                        Your browser does not support the video element.
+                    </video>
                 </div>
             </div>
 
