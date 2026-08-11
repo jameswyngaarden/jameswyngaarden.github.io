@@ -25,7 +25,7 @@
     var footerHTML = ''
         + '<footer class="site-footer">'
         + '    <div class="footer-links">'
-        + '        <a href="mailto:james.wyngaarden@temple.edu" class="footer-link" aria-label="Email" title="Email"><img src="stimuli/logos/Email.png" alt="Email"></a>'
+        + '        <a href="mailto:james.wyngaarden@mssm.edu" class="footer-link" aria-label="Email" title="Email"><img src="stimuli/logos/Email.png" alt="Email"></a>'
         + '        <a href="https://www.linkedin.com/in/james-wyngaarden-iii" target="_blank" class="footer-link" aria-label="LinkedIn" title="LinkedIn"><img src="stimuli/logos/Linkedin.png" alt="LinkedIn"></a>'
         + '        <a href="https://bsky.app/profile/jameswyngaarden.bsky.social" target="_blank" class="footer-link" aria-label="Bluesky" title="Bluesky"><img src="stimuli/logos/Bluesky.png" alt="Bluesky"></a>'
         + '        <a href="https://github.com/jameswyngaarden" target="_blank" class="footer-link" aria-label="GitHub" title="GitHub"><img src="stimuli/logos/Github.png" alt="GitHub"></a>'
