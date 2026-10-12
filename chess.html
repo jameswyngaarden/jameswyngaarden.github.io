@@ -3,42 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chess Accuracy Analyzer - James B. Wyngaarden III</title>
+    <title>Chess - James B. Wyngaarden III</title>
+    <script data-goatcounter="https://jameswyngaarden.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
     <link rel="icon" type="image/png" href="stimuli/favicon.png">
-    <link rel="stylesheet" href="https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.css">
+    <link rel="stylesheet" href="site-common.css?v=2">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,500;1,8..60,400&family=Sora:wght@300;400;500;600;700&display=swap');
+        /* ── Page-specific styles: chess.html ── */
 
-        :root {
-            --color-text: #1e2d3d;
-            --color-text-light: #5a6a78;
-            --color-navy: #1a3a5c;
-            --color-navy-light: #2a4f7a;
-            --color-gold: #b8860b;
-            --color-gold-muted: #c4973b;
-            --color-bg: #ffffff;
-            --color-bg-subtle: #f7f8f9;
-            --color-border: #dfe3e7;
-            --font-serif: 'Source Serif 4', 'Georgia', serif;
-            --font-display: 'Sora', 'Helvetica Neue', sans-serif;
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        body {
-            font-family: var(--font-display);
-            line-height: 1.7;
-            color: var(--color-text);
-            background: var(--color-bg);
-            min-height: 100vh;
-            font-size: 16px;
-            -webkit-font-smoothing: antialiased;
-        }
-
-        .page-header {
+        .chess-intro {
             max-width: 900px;
             margin: 0 auto;
-            padding: 40px 24px 20px;
+            padding: 44px 24px 0;
+            text-align: center;
+            font-family: var(--font-display);
         }
 
         .back-link {
@@ -73,6 +50,7 @@
             max-width: 900px;
             margin: 0 auto;
             padding: 24px;
+            font-family: var(--font-display);
         }
 
         /* Featured Game Section */
@@ -209,13 +187,22 @@
         }
 
         .board-wrapper {
-            flex: 1;
+            flex: 1 1 520px;
             min-width: 300px;
-            max-width: 450px;
+            max-width: 600px;
         }
 
         #featured-board {
             width: 100%;
+            background: #c8c1b4;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        #featured-board canvas {
+            display: block;
+            width: 100%;
+            image-rendering: pixelated;
         }
 
         .board-controls {
@@ -258,8 +245,8 @@
 
         /* Move List */
         .move-list-container {
-            flex: 1;
-            min-width: 200px;
+            flex: 1 1 180px;
+            min-width: 180px;
             max-width: 300px;
         }
 
@@ -587,11 +574,21 @@
     </style>
 </head>
 <body>
-    <header class="page-header">
-        <a href="art.html" class="back-link">← Back to Art</a>
-        <h1 class="page-title">♟️ Chess Accuracy Analyzer</h1>
+    <div class="container">
+        <aside class="sidebar" id="sidebar"></aside>
+
+        <div class="main-content" id="mainContent">
+            <header id="siteHeader"></header>
+
+            <div class="section-header">
+                <h2>Chess</h2>
+            </div>
+
+    <div class="chess-intro">
+        <a href="projects.html" class="back-link">← Back to Projects</a>
+        <div class="page-title">♟️ Chess Accuracy Analyzer</div>
         <p class="page-subtitle">Analyzing my Chess.com games by accuracy, not just wins and losses.</p>
-    </header>
+    </div>
 
     <div id="chess-app">
         <!-- Featured Game Section -->
@@ -702,9 +699,12 @@
         </div>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script src="https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.js"></script>
+        </div>
+    </div>
+
+    <script src="site-common.js?v=2"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.3/chess.min.js"></script>
+    <script src="lewis-board.js"></script>
     <script>
         (function() {
             const DEFAULT_USERNAME = 'babyboyjw';
@@ -749,18 +749,15 @@
                 btnEnd: document.getElementById('btn-end')
             };
 
-            // Initialize board
-            function initBoard() {
-                // Delay initialization to ensure container has rendered with proper dimensions
-                setTimeout(function() {
-                    board = Chessboard('featured-board', {
-                        position: 'start',
-                        pieceTheme: 'stimuli/chess-pieces/{piece}.svg'
+            const SPRITE_PATH = 'stimuli/lewis-pixel/';
+
+            function getBoard() {
+                if (!board) {
+                    board = new LewisBoard(document.getElementById('featured-board'), {
+                        spritePath: SPRITE_PATH
                     });
-                    $(window).resize(function() {
-                        if (board) board.resize();
-                    });
-                }, 100);
+                }
+                return board;
             }
 
             // Featured type buttons
@@ -819,11 +816,14 @@
 
                 // Validate and play moves
                 for (const move of moves) {
+                    const prevFen = chess.fen();
                     const result = chess.move(move, { sloppy: true });
                     if (result) {
                         moveHistory.push({
                             san: result.san,
-                            fen: chess.fen()
+                            fen: chess.fen(),
+                            prevFen,
+                            move: result
                         });
                     }
                 }
@@ -835,12 +835,19 @@
                 if (index < -1) index = -1;
                 if (index >= moveHistory.length) index = moveHistory.length - 1;
 
+                const prevIndex = currentMoveIndex;
                 currentMoveIndex = index;
+                const b = getBoard();
 
                 if (index === -1) {
-                    board.position('start');
+                    b.show(LewisBoard.START_FEN);
+                } else if (index === prevIndex + 1) {
+                    // Stepping forward one move: animate it
+                    const h = moveHistory[index];
+                    b.play(h.prevFen, h.fen, h.move);
                 } else {
-                    board.position(moveHistory[index].fen);
+                    const h = moveHistory[index];
+                    b.show(h.fen, { lastMove: h.move });
                 }
 
                 updateMoveCounter();
@@ -1044,18 +1051,12 @@
                     parsePGN(game.pgn);
                     renderMoveList();
 
-                    // Initialize or reinitialize board now that container is visible
-                    setTimeout(function() {
-                        if (board) {
-                            board.destroy();
-                        }
-                        board = Chessboard('featured-board', {
-                            position: 'start',
-                            pieceTheme: 'stimuli/chess-pieces/{piece}.svg',
-                            orientation: game.color
-                        });
-                        goToMove(-1);
-                    }, 50);
+                    // Board is viewed from my side of the table
+                    const b = getBoard();
+                    b.setOrientation(game.color);
+                    currentMoveIndex = -1;
+                    b.show(LewisBoard.START_FEN);
+                    goToMove(-1);
                 }
             }
 
@@ -1173,7 +1174,6 @@
             }
 
             // Initialize
-            // initBoard();
             fetchGames(false); // Auto-fetch on page load
         })();
     </script>

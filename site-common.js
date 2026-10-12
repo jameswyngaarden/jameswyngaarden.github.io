@@ -13,9 +13,13 @@
     var NAV_ITEMS = [
         { href: 'index.html', label: 'Home' },
         { href: 'about.html', label: 'About' },
-        { href: 'current-work.html', label: 'Current Work' },
+        { href: 'projects.html', label: 'Projects', children: [
+            { href: 'current-work.html', label: 'Current Work' },
+            { href: 'oscillations.html', label: 'Understanding Oscillations' },
+            { href: 'chess.html', label: 'Chess Analyzer' },
+            { href: 'art.html', label: 'Art' },
+        ] },
         { href: 'publications.html', label: 'Publications' },
-        { href: 'art.html', label: 'Artistry' },
     ];
 
     // ── Sidebar emptied; social links now live in the footer ──
@@ -35,11 +39,30 @@
         + '</footer>';
 
     // ── Build nav HTML with active state ──
+    // Items with children render as a link plus a dropdown menu; the parent
+    // is active on its own page or on any child page.
     var navHTML = '<nav class="nav">';
     for (var i = 0; i < NAV_ITEMS.length; i++) {
         var item = NAV_ITEMS[i];
         var isActive = (page === item.href) || (page === '' && item.href === 'index.html');
-        navHTML += '<a href="' + item.href + '" class="nav-link' + (isActive ? ' active' : '') + '">' + item.label + '</a>';
+        if (!item.children) {
+            navHTML += '<a href="' + item.href + '" class="nav-link' + (isActive ? ' active' : '') + '">' + item.label + '</a>';
+            continue;
+        }
+        var menuHTML = '';
+        for (var j = 0; j < item.children.length; j++) {
+            var child = item.children[j];
+            var childActive = page === child.href;
+            if (childActive) isActive = true;
+            menuHTML += '<a href="' + child.href + '" class="nav-menu-link' + (childActive ? ' active' : '') + '">' + child.label + '</a>';
+        }
+        navHTML += '<div class="nav-dropdown">'
+            + '<a href="' + item.href + '" class="nav-link' + (isActive ? ' active' : '') + '">' + item.label + '</a>'
+            + '<button type="button" class="nav-caret" aria-expanded="false" aria-label="Show ' + item.label + ' pages">'
+            + '<svg viewBox="0 0 10 6" width="9" height="6" aria-hidden="true"><path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.4"/></svg>'
+            + '</button>'
+            + '<div class="nav-menu">' + menuHTML + '</div>'
+            + '</div>';
     }
     navHTML += '</nav>';
 
@@ -109,6 +132,31 @@
 
     if (sidebar) sidebar.innerHTML = sidebarHTML;
     if (siteHeader) siteHeader.innerHTML = headerHTML;
+
+    // ── Nav dropdowns: hover/focus open via CSS; caret toggles for touch ──
+    var dropdowns = document.querySelectorAll('.nav-dropdown');
+    function closeDropdowns(except) {
+        for (var d = 0; d < dropdowns.length; d++) {
+            if (dropdowns[d] === except) continue;
+            dropdowns[d].classList.remove('open');
+            dropdowns[d].querySelector('.nav-caret').setAttribute('aria-expanded', 'false');
+        }
+    }
+    for (var d = 0; d < dropdowns.length; d++) {
+        dropdowns[d].querySelector('.nav-caret').addEventListener('click', function(e) {
+            var dd = e.currentTarget.parentNode;
+            var open = !dd.classList.contains('open');
+            closeDropdowns(dd);
+            dd.classList.toggle('open', open);
+            e.currentTarget.setAttribute('aria-expanded', open ? 'true' : 'false');
+        });
+    }
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.nav-dropdown')) closeDropdowns();
+    });
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') closeDropdowns();
+    });
 
     // Background network canvas intentionally not injected (removed site-wide).
 
