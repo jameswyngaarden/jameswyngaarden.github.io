@@ -10,6 +10,22 @@
     <style>
         /* ── Page-specific styles: chess.html ── */
 
+        /* Board palette, reused for stats and results (text colors ≥ 4.5:1 on this page's light backgrounds) */
+        :root {
+            --chess-green: #1f6b2e;     /* accuracy, wins, excellent */
+            --chess-oxblood: #6b1f24;   /* losses, poor */
+            --chess-amber: #9a5a0a;     /* draws, average (orange itself is too light for text) */
+            --chess-orange: #e8962a;    /* fills only */
+        }
+
+        .title-king {
+            height: 1.1em;
+            width: auto;
+            vertical-align: baseline;
+            image-rendering: pixelated;
+            margin-right: 0.15em;
+        }
+
         .chess-intro {
             max-width: 900px;
             margin: 0 auto;
@@ -159,10 +175,10 @@
             font-weight: 700;
         }
 
-        .featured-stat-value.accuracy { color: #22c55e; }
-        .featured-stat-value.win { color: #22c55e; }
-        .featured-stat-value.loss { color: #ef4444; }
-        .featured-stat-value.draw { color: #eab308; }
+        .featured-stat-value.accuracy { color: var(--chess-green); }
+        .featured-stat-value.win { color: var(--chess-green); }
+        .featured-stat-value.loss { color: var(--chess-oxblood); }
+        .featured-stat-value.draw { color: var(--chess-amber); }
 
         .featured-stat-label {
             font-size: 12px;
@@ -431,8 +447,8 @@
         }
 
         .move.active {
-            background: var(--color-navy);
-            color: white;
+            background: var(--chess-orange);    /* echoes the board's move highlight */
+            color: var(--color-text);
         }
 
         .move.white-move {
@@ -519,8 +535,8 @@
 
         .error-msg {
             padding: 12px 16px;
-            background: #fef2f2;
-            color: #dc2626;
+            background: #f6e9ea;
+            color: var(--chess-oxblood);
             border-radius: 8px;
             margin-bottom: 20px;
         }
@@ -551,7 +567,7 @@
             color: var(--color-text);
         }
 
-        .stat-value.success { color: #22c55e; }
+        .stat-value.success { color: var(--chess-green); }
         .stat-value.accent { color: var(--color-navy); }
 
         .filters {
@@ -582,21 +598,63 @@
             gap: 8px;
         }
 
+        /* Each row: a button that loads the game, plus a ↗ link to Chess.com */
         .game-row {
-            display: grid;
-            grid-template-columns: 60px 70px 1fr 80px;
-            gap: 12px;
-            align-items: center;
-            padding: 12px 16px;
+            display: flex;
+            align-items: stretch;
             background: var(--color-bg-subtle);
             border-radius: 8px;
-            text-decoration: none;
-            color: inherit;
+            border-left: 3px solid transparent;
             transition: background 0.15s;
         }
 
         .game-row:hover {
-            background: var(--color-border);
+            background: #e9ecef;    /* lighter than --color-border so amber and grey text keep 4.5:1 */
+        }
+
+        .game-row.current {
+            background: #fbeedb;                     /* orange tint of the board highlight */
+            border-left-color: var(--chess-orange);
+        }
+
+        .game-row-main {
+            flex: 1;
+            min-width: 0;
+            display: grid;
+            grid-template-columns: 60px 70px 1fr 80px;
+            gap: 12px;
+            align-items: center;
+            padding: 12px 8px 12px 13px;
+            background: none;
+            border: none;
+            border-radius: 8px 0 0 8px;
+            font: inherit;
+            color: inherit;
+            text-align: left;
+            cursor: pointer;
+        }
+
+        .game-details > span { display: block; }
+
+        .game-row-main:focus-visible,
+        .game-row-link:focus-visible {
+            outline: 2px solid var(--color-navy);
+            outline-offset: -2px;
+        }
+
+        .game-row-link {
+            flex: none;
+            display: flex;
+            align-items: center;
+            padding: 0 14px;
+            color: var(--color-text-light);
+            text-decoration: none;
+            font-size: 15px;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .game-row-link:hover {
+            color: var(--color-navy);
         }
 
         .game-accuracy {
@@ -604,10 +662,10 @@
             font-weight: 700;
         }
 
-        .game-accuracy.excellent { color: #22c55e; }
+        .game-accuracy.excellent { color: var(--chess-green); }
         .game-accuracy.good { color: var(--color-navy); }
-        .game-accuracy.average { color: #eab308; }
-        .game-accuracy.poor { color: #ef4444; }
+        .game-accuracy.average { color: var(--chess-amber); }
+        .game-accuracy.poor { color: var(--chess-oxblood); }
 
         .game-result {
             display: flex;
@@ -615,9 +673,9 @@
             gap: 6px;
         }
 
-        .game-result.win { color: #22c55e; }
-        .game-result.draw { color: #eab308; }
-        .game-result.loss { color: #ef4444; }
+        .game-result.win { color: var(--chess-green); }
+        .game-result.draw { color: var(--chess-amber); }
+        .game-result.loss { color: var(--chess-oxblood); }
 
         .game-result-icon {
             font-size: 16px;
@@ -688,8 +746,24 @@
         }
 
         @media (max-width: 600px) {
-            .game-row {
-                grid-template-columns: 50px 60px 1fr;
+            .game-row-main {
+                grid-template-columns: auto auto minmax(0, 1fr);
+                gap: 10px;
+                padding: 10px 4px 10px 11px;
+            }
+            .game-accuracy {
+                font-size: 16px;
+            }
+            .game-result-text {        /* icon only on phones; the word stays for screen readers */
+                position: absolute;
+                width: 1px;
+                height: 1px;
+                overflow: hidden;
+                clip: rect(0 0 0 0);
+                white-space: nowrap;
+            }
+            .game-row-link {
+                padding: 0 10px;
             }
             .game-rating {
                 display: none;
@@ -747,15 +821,15 @@
 
     <div class="chess-intro">
         <a href="projects.html" class="back-link">← Back to Projects</a>
-        <div class="page-title">♟️ Chess Accuracy Analyzer</div>
+        <div class="page-title"><img class="title-king" src="stimuli/lewis-pixel/white-king.png" alt="">Chess Accuracy Analyzer</div>
         <p class="page-subtitle">Analyzing my Chess.com games by accuracy, not just wins and losses.</p>
     </div>
 
     <div id="chess-app">
         <!-- Featured Game Section -->
-        <div class="featured-section">
+        <div class="featured-section" id="featured-section">
             <div class="featured-header">
-                <div class="featured-title">⭐ Featured Game (Last 3 Months)</div>
+                <div class="featured-title" id="featured-title">Featured Game (Last 3 Months)</div>
                 <div class="featured-selector">
                     <button class="featured-btn active" data-type="accuracy" disabled>Most Accurate</button>
                     <button class="featured-btn" data-type="upset" disabled>Biggest Upset</button>
@@ -844,7 +918,7 @@
 
         <!-- Analyzer Section -->
         <div class="analyzer-section">
-            <div class="analyzer-title">📊 Full Game Analysis</div>
+            <div class="analyzer-title">Full Game Analysis</div>
             <div class="controls">
                 <div class="control-group">
                     <label for="username">Username</label>
@@ -905,6 +979,7 @@
             let allGames = [];
             let featuredType = 'accuracy';
             let currentGame = null;
+            let currentGameSource = 'featured';   // 'featured' (buttons) or 'list' (analyzer row)
             let board = null;
             let chess = new Chess();
             let moveHistory = [];
@@ -954,8 +1029,12 @@
                 speedSelect: document.getElementById('speed-select'),
                 barTop: document.getElementById('bar-top'),
                 barBottom: document.getElementById('bar-bottom'),
-                openingName: document.getElementById('opening-name')
+                openingName: document.getElementById('opening-name'),
+                featuredTitle: document.getElementById('featured-title'),
+                featuredSection: document.getElementById('featured-section')
             };
+
+            const FEATURED_TITLE = elements.featuredTitle.textContent;
 
             // Sound effects (LewisSounds is optional: the board works without it)
             const sounds = window.LewisSounds || null;
@@ -996,10 +1075,8 @@
             document.querySelectorAll('.featured-btn').forEach(btn => {
                 btn.addEventListener('click', () => {
                     if (btn.disabled) return;
-                    document.querySelectorAll('.featured-btn').forEach(b => b.classList.remove('active'));
-                    btn.classList.add('active');
                     featuredType = btn.dataset.type;
-                    renderFeaturedGame();
+                    loadFeaturedGame({ updateHash: true });
                 });
             });
 
@@ -1090,7 +1167,11 @@
                 if (e.key === 'ArrowRight') { stopAutoplay(); stepForward(); }
 
                 if ((e.key === ' ' || e.code === 'Space') && moveHistory.length) {
-                    e.preventDefault();        // no page scroll, no click on a focused button
+                    // Space still activates a focused button or link elsewhere (game rows,
+                    // featured buttons, ↗ links); only the board controls hand it to autoplay
+                    const control = e.target instanceof Element && e.target.closest('button, a[href]');
+                    if (control && !control.closest('.board-controls')) return;
+                    e.preventDefault();        // no page scroll, no click on a focused board button
                     if (!e.repeat) toggleAutoplay();
                 }
 
@@ -1100,6 +1181,14 @@
             });
 
             elements.analyzeBtn.addEventListener('click', () => fetchGames(true));
+
+            // A game row loads that game onto the board (the ↗ link sits outside the button)
+            elements.gamesList.addEventListener('click', (e) => {
+                const btn = e.target.closest('.game-row-main');
+                if (!btn) return;
+                const game = allGames.find(g => g.id === btn.dataset.id);
+                loadGame(game, { source: 'list', scroll: true });
+            });
             elements.sortBy.addEventListener('change', renderGames);
             elements.filterTime.addEventListener('change', renderGames);
             elements.username.addEventListener('keypress', (e) => {
@@ -1261,7 +1350,7 @@
                 const name = pgnHeaders[isWhite ? 'White' : 'Black'];
                 const elo = pgnHeaders[isWhite ? 'WhiteElo' : 'BlackElo'];
                 const mine = currentGame && (currentGame.color === 'white') === isWhite;
-                const fallbackName = mine ? (elements.username.value.trim() || DEFAULT_USERNAME) : (currentGame && currentGame.opponent);
+                const fallbackName = currentGame && (mine ? currentGame.player : currentGame.opponent);
                 const fallbackElo = currentGame && (mine ? currentGame.yourRating : currentGame.opponentRating);
 
                 const swatch = bar.querySelector('.pb-swatch');
@@ -1414,8 +1503,11 @@
                             const playerData = isWhite ? game.white : game.black;
                             const opponentData = isWhite ? game.black : game.white;
                             const accuracy = isWhite ? game.accuracies.white : game.accuracies.black;
+                            const idMatch = /\/game\/(?:live|daily)\/(\d+)/.exec(game.url || '');
 
                             return {
+                                id: idMatch ? idMatch[1] : (game.uuid || game.url),
+                                player: playerData.username,     // whose side the board is viewed from
                                 accuracy,
                                 result: playerData.result,
                                 color: isWhite ? 'white' : 'black',
@@ -1441,12 +1533,24 @@
                         btn.disabled = false;
                     });
 
-                    // Show featured game
+                    // Show the board
                     elements.featuredLoading.style.display = 'none';
                     elements.featuredError.style.display = 'none';
                     elements.featuredContent.style.display = 'block';
 
-                    renderFeaturedGame();
+                    // Keep the game on the board if it's still in the results; otherwise a
+                    // #game= link, otherwise the featured game
+                    const still = currentGame && allGames.find(g => g.id === currentGame.id);
+                    const fromHash = !currentGame && allGames.find(g => g.id === gameIdFromHash());
+                    if (still && still.color === currentGame.color) {
+                        currentGame = still;                     // same game, same side: leave the board alone
+                    } else if (still) {
+                        loadGame(still, { source: currentGameSource });   // new username: re-orient
+                    } else if (fromHash) {
+                        loadGame(fromHash, { source: 'list', scroll: true, updateHash: false });
+                    } else {
+                        loadFeaturedGame({ updateHash: !!currentGame });  // first load keeps the URL clean
+                    }
 
                     if (isManualTrigger) {
                         renderStats();
@@ -1492,12 +1596,47 @@
                 }
             }
 
-            function renderFeaturedGame() {
+            function gameIdFromHash() {
+                const m = /^#game=([\w-]+)$/.exec(location.hash);
+                return m ? m[1] : null;
+            }
+
+            function setGameHash(id) {
+                const url = location.pathname + location.search + (id ? '#game=' + id : '');
+                history.replaceState(null, '', url);
+            }
+
+            function loadFeaturedGame(opts = {}) {
                 const game = getFeaturedGame();
+                if (game) loadGame(game, Object.assign({ source: 'featured' }, opts));
+            }
+
+            // Mark the list row whose game is on the board
+            function highlightGameRow() {
+                elements.gamesList.querySelectorAll('.game-row').forEach(row => {
+                    const on = !!currentGame && row.dataset.id === currentGame.id;
+                    row.classList.toggle('current', on);
+                    const btn = row.querySelector('.game-row-main');
+                    if (on) btn.setAttribute('aria-current', 'true'); else btn.removeAttribute('aria-current');
+                });
+            }
+
+            // Put any game on the board: stats, players, PGN, moves, clocks, trays,
+            // orientation, back to move 0. source 'featured' (the buttons) or 'list' (a row).
+            function loadGame(game, { source = 'featured', scroll = false, updateHash = true } = {}) {
                 if (!game) return;
 
                 stopAutoplay();
                 currentGame = game;
+                currentGameSource = source;
+
+                // Heading and featured buttons
+                document.querySelectorAll('.featured-btn').forEach(b => {
+                    b.classList.toggle('active', source === 'featured' && b.dataset.type === featuredType);
+                });
+                elements.featuredTitle.textContent = source === 'list' ? `Game vs ${game.opponent}` : FEATURED_TITLE;
+                highlightGameRow();
+                if (updateHash) setGameHash(game.id);
 
                 elements.featuredAccuracy.textContent = game.accuracy.toFixed(1) + '%';
 
@@ -1526,12 +1665,17 @@
                     elements.openingName.textContent = opening;
                     elements.openingName.hidden = !opening;
 
-                    // Board is viewed from my side of the table
+                    // Board is viewed from the analyzed player's side of the table
                     const b = getBoard();
                     b.setOrientation(game.color);
                     currentMoveIndex = -1;
                     b.show(LewisBoard.START_FEN);
                     goToMove(-1);
+                }
+
+                if (scroll) {
+                    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+                    elements.featuredSection.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
                 }
             }
 
@@ -1620,23 +1764,29 @@
                     const resultText = game.result === 'win' ? 'Win' :
                                        (game.result === 'draw' || game.result === 'stalemate') ? 'Draw' : 'Loss';
 
+                    // The row button loads the game onto the board; ↗ opens it on Chess.com
                     return `
-                        <a href="${game.url}" target="_blank" rel="noopener noreferrer" class="game-row">
-                            <div class="game-accuracy ${accClass}">${game.accuracy.toFixed(1)}%</div>
-                            <div class="game-result ${resultClass}">
-                                <span class="game-result-icon">${resultIcon}</span>
-                                <span class="game-result-text">${resultText}</span>
-                            </div>
-                            <div class="game-details">
-                                <div class="game-opponent">vs ${game.opponent} (${game.opponentRating})</div>
-                                <div class="game-meta">${game.color} • ${game.timeClass} • ${game.date.toLocaleDateString()}</div>
-                            </div>
-                            <div class="game-rating">${game.yourRating}</div>
-                        </a>
+                        <div class="game-row" data-id="${game.id}">
+                            <button type="button" class="game-row-main" data-id="${game.id}">
+                                <span class="game-accuracy ${accClass}">${game.accuracy.toFixed(1)}%</span>
+                                <span class="game-result ${resultClass}">
+                                    <span class="game-result-icon">${resultIcon}</span>
+                                    <span class="game-result-text">${resultText}</span>
+                                </span>
+                                <span class="game-details">
+                                    <span class="game-opponent">vs ${game.opponent} (${game.opponentRating})</span>
+                                    <span class="game-meta">${game.color} • ${game.timeClass} • ${game.date.toLocaleDateString()}</span>
+                                </span>
+                                <span class="game-rating">${game.yourRating}</span>
+                            </button>
+                            <a class="game-row-link" href="${game.url}" target="_blank" rel="noopener noreferrer"
+                               title="Open on Chess.com" aria-label="Open game vs ${game.opponent} on Chess.com">↗</a>
+                        </div>
                     `;
                 }).join('');
 
                 elements.gamesList.innerHTML = gamesHtml;
+                highlightGameRow();
 
                 if (filtered.length > 50) {
                     elements.moreGames.textContent = `Showing top 50 of ${filtered.length} games`;
