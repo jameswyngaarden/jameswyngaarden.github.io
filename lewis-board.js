@@ -327,8 +327,9 @@
           if (!it.mover && it.p.type === 'k' && it.p.color === this.topple.color) it.tilt = this.topple.deg;
         }
       }
-      // far to near; a toppled king goes last so it is never hidden behind another piece
-      items.sort((a, b) => (!!a.tilt - !!b.tilt) || b.d - a.d || (a.mover ? 1 : -1));
+      // far to near; within its own rank a toppled king goes last, so it lies over its
+      // neighbors on that rank but still behind pieces on nearer ranks
+      items.sort((a, b) => b.d - a.d || (!!a.tilt - !!b.tilt) || (a.mover ? 1 : -1));
       for (const it of items) if (!it.skip) this._drawPiece(it.p, it.fx, it.d, it.hop, it.tilt);
     }
   }
