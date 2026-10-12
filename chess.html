@@ -192,12 +192,129 @@
             max-width: 600px;
         }
 
-        #featured-board {
-            width: 100%;
-            background: #c8c1b4;
+        /* Board frame: player bar · board · player bar, in the board's palette */
+        .board-frame {
+            --tan: #c8c1b4;
+            --ink: #2b2620;
+            --orange: #e8962a;
+            --green: #1f6b2e;
+            --oxblood: #6b1f24;
+            background: var(--tan);
             border-radius: 8px;
             overflow: hidden;
         }
+
+        #featured-board {
+            width: 100%;
+            background: #c8c1b4;
+        }
+
+        .player-bar {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 6px 10px;
+            min-height: 46px;
+            color: var(--ink);
+        }
+
+        #bar-top { border-bottom: 1px solid rgba(43, 38, 32, 0.12); }
+        #bar-bottom { border-top: 1px solid rgba(43, 38, 32, 0.12); }
+
+        .pb-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .pb-id {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            line-height: 1.3;
+            white-space: nowrap;
+        }
+
+        .pb-swatch {
+            flex: none;
+            width: 10px;
+            height: 10px;
+            border: 1px solid rgba(43, 38, 32, 0.4);
+        }
+        .pb-swatch.w { background: var(--green); }
+        .pb-swatch.b { background: var(--oxblood); }
+
+        .pb-name {
+            font-weight: 600;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .pb-rating {
+            color: rgba(43, 38, 32, 0.7);
+        }
+
+        .pb-captures {
+            display: flex;
+            align-items: flex-end;
+            gap: 6px;
+            min-height: 18px;
+            margin-top: 2px;
+        }
+
+        .pb-tray {
+            display: flex;
+            align-items: flex-end;
+            gap: 4px;
+            flex-wrap: wrap;
+        }
+
+        .pb-tray-group {
+            display: flex;
+            align-items: flex-end;
+        }
+
+        .pb-tray img {
+            display: block;
+            width: auto;
+            image-rendering: pixelated;
+        }
+
+        .pb-adv {
+            font-size: 12px;
+            font-weight: 600;
+            line-height: 1;
+            color: rgba(43, 38, 32, 0.75);
+        }
+
+        .pb-clock {
+            flex: none;
+            font-family: 'SF Mono', 'Monaco', 'Consolas', monospace;
+            font-size: 15px;
+            font-variant-numeric: tabular-nums;
+            line-height: 1;
+            padding: 6px 8px;
+            min-width: 68px;
+            text-align: right;
+            background: #fff;
+            border: 1px solid rgba(43, 38, 32, 0.3);
+            border-radius: 3px;
+        }
+        .pb-clock.to-move {
+            background: var(--orange);
+            border-color: var(--ink);
+            font-weight: 700;
+        }
+        .pb-clock.low { color: var(--oxblood); font-weight: 700; }
+        .pb-clock[hidden] { display: none; }
+
+        .opening-name {
+            margin-top: 8px;
+            font-size: 12.5px;
+            color: var(--color-text-light);
+            text-align: center;
+        }
+        .opening-name[hidden] { display: none; }
 
         #featured-board canvas {
             display: block;
@@ -210,6 +327,24 @@
             justify-content: center;
             gap: 8px;
             margin-top: 12px;
+            flex-wrap: wrap;
+        }
+
+        .ctrl-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .speed-select {
+            padding: 8px 6px;
+            border-radius: 6px;
+            border: 1px solid var(--color-border);
+            background: var(--color-bg);
+            font-size: 13px;
+            font-family: var(--font-display);
+            color: var(--color-text);
+            cursor: pointer;
         }
 
         .board-btn {
@@ -573,14 +708,28 @@
                 gap: 16px;
             }
             .board-controls {
+                gap: 6px 4px;
+            }
+            .ctrl-group {
                 gap: 4px;
-                flex-wrap: wrap;
             }
             .board-btn {
                 padding: 8px 10px;
             }
             .move-counter {
                 min-width: 52px;
+            }
+            .player-bar {
+                gap: 8px;
+                padding: 5px 8px;
+            }
+            .pb-id {
+                font-size: 12px;
+            }
+            .pb-clock {
+                font-size: 14px;
+                min-width: 60px;
+                padding: 5px 6px;
             }
         }
     </style>
@@ -645,14 +794,42 @@
                     </div>
                     <div class="board-container">
                         <div class="board-wrapper">
-                            <div id="featured-board"></div>
+                            <div class="board-frame">
+                                <!-- Opponent on top (far side), me on the bottom -->
+                                <div class="player-bar" id="bar-top">
+                                    <span class="pb-info">
+                                        <span class="pb-id"><span class="pb-swatch"></span><span class="pb-name"></span><span class="pb-rating"></span></span>
+                                        <span class="pb-captures"><span class="pb-tray"></span><span class="pb-adv"></span></span>
+                                    </span>
+                                    <span class="pb-clock" hidden></span>
+                                </div>
+                                <div id="featured-board"></div>
+                                <div class="player-bar" id="bar-bottom">
+                                    <span class="pb-info">
+                                        <span class="pb-id"><span class="pb-swatch"></span><span class="pb-name"></span><span class="pb-rating"></span></span>
+                                        <span class="pb-captures"><span class="pb-tray"></span><span class="pb-adv"></span></span>
+                                    </span>
+                                    <span class="pb-clock" hidden></span>
+                                </div>
+                            </div>
+                            <div class="opening-name" id="opening-name" hidden></div>
                             <div class="board-controls">
-                                <button class="board-btn" id="btn-start">⏮</button>
-                                <button class="board-btn" id="btn-prev">←</button>
-                                <span class="move-counter" id="move-counter">0 / 0</span>
-                                <button class="board-btn" id="btn-next">→</button>
-                                <button class="board-btn" id="btn-end">⏭</button>
-                                <button class="board-btn" id="btn-sound" title="Mute sound (M)" aria-label="Mute sound">🔊</button>
+                                <div class="ctrl-group">
+                                    <button class="board-btn" id="btn-start">⏮</button>
+                                    <button class="board-btn" id="btn-prev">←</button>
+                                    <span class="move-counter" id="move-counter">0 / 0</span>
+                                    <button class="board-btn" id="btn-next">→</button>
+                                    <button class="board-btn" id="btn-end">⏭</button>
+                                </div>
+                                <div class="ctrl-group">
+                                    <button class="board-btn" id="btn-play" title="Play (Space)" aria-label="Play">▶&#xFE0E;</button>
+                                    <select class="speed-select" id="speed-select" aria-label="Playback speed">
+                                        <option value="slow">Slow</option>
+                                        <option value="normal">Normal</option>
+                                        <option value="fast">Fast</option>
+                                    </select>
+                                    <button class="board-btn" id="btn-sound" title="Mute sound (M)" aria-label="Mute sound">🔊</button>
+                                </div>
                             </div>
                         </div>
                         <div class="move-list-container">
@@ -732,6 +909,16 @@
             let chess = new Chess();
             let moveHistory = [];
             let currentMoveIndex = -1;
+            let pgnHeaders = {};
+            let clockInfo = { enabled: false, base: 0 };
+            let gameEnding = null;   // { color: 'w'|'b', mode: 'mate'|'resign' } — king to topple
+
+            const PIECE_VALUES = { p: 1, n: 3, b: 3, r: 5, q: 9 };
+            const TRAY_ORDER = ['q', 'r', 'b', 'n', 'p'];
+            const TRAY_QUEEN_PX = 22;          // tray sprites are scaled so a queen is ~22px tall
+            const MATE_TOPPLE_MS = 600;
+            const RESIGN_TOPPLE_MS = 1400;     // resignation: a slow, deliberate topple
+            const AUTOPLAY_SPEEDS = { slow: 1600, normal: 1000, fast: 500 };
 
             const elements = {
                 username: document.getElementById('username'),
@@ -762,7 +949,12 @@
                 btnPrev: document.getElementById('btn-prev'),
                 btnNext: document.getElementById('btn-next'),
                 btnEnd: document.getElementById('btn-end'),
-                btnSound: document.getElementById('btn-sound')
+                btnSound: document.getElementById('btn-sound'),
+                btnPlay: document.getElementById('btn-play'),
+                speedSelect: document.getElementById('speed-select'),
+                barTop: document.getElementById('bar-top'),
+                barBottom: document.getElementById('bar-bottom'),
+                openingName: document.getElementById('opening-name')
             };
 
             // Sound effects (LewisSounds is optional: the board works without it)
@@ -789,6 +981,7 @@
             }
 
             const SPRITE_PATH = 'stimuli/lewis-pixel/';
+            const LEWIS_NAMES = { k: 'king', q: 'queen', r: 'rook', b: 'bishop', n: 'knight', p: 'pawn' };
 
             function getBoard() {
                 if (!board) {
@@ -810,22 +1003,98 @@
                 });
             });
 
+            // The one single-step-forward path: → button, → key and autoplay all use it
+            function stepForward() {
+                goToMove(currentMoveIndex + 1);
+            }
+
+            // Manual navigation always pauses autoplay first
+            function manual(fn) {
+                return () => { stopAutoplay(); fn(); };
+            }
+
             // Board controls
-            elements.btnStart.addEventListener('click', () => goToMove(-1));
-            elements.btnPrev.addEventListener('click', () => goToMove(currentMoveIndex - 1));
-            elements.btnNext.addEventListener('click', () => goToMove(currentMoveIndex + 1));
-            elements.btnEnd.addEventListener('click', () => goToMove(moveHistory.length - 1));
+            elements.btnStart.addEventListener('click', manual(() => goToMove(-1)));
+            elements.btnPrev.addEventListener('click', manual(() => goToMove(currentMoveIndex - 1)));
+            elements.btnNext.addEventListener('click', manual(stepForward));
+            elements.btnEnd.addEventListener('click', manual(() => goToMove(moveHistory.length - 1, { jump: true })));
 
-            // Keyboard navigation
+            // ── Autoplay ──
+            let autoplaySpeed = 'normal';
+            try {
+                const saved = localStorage.getItem('chessAutoplaySpeed');
+                if (AUTOPLAY_SPEEDS[saved]) autoplaySpeed = saved;
+            } catch (e) {}
+            elements.speedSelect.value = autoplaySpeed;
+
+            let autoplayTimer = null;
+            let autoplaying = false;
+
+            function updatePlayButton() {
+                const label = autoplaying ? 'Pause' : 'Play';
+                elements.btnPlay.textContent = autoplaying ? '⏸︎' : '▶︎';
+                elements.btnPlay.title = label + ' (Space)';
+                elements.btnPlay.setAttribute('aria-label', label);
+            }
+
+            function scheduleAutoplay() {
+                clearTimeout(autoplayTimer);
+                autoplayTimer = setTimeout(autoplayTick, AUTOPLAY_SPEEDS[autoplaySpeed]);
+            }
+
+            function autoplayTick() {
+                if (!autoplaying) return;
+                stepForward();
+                if (currentMoveIndex >= moveHistory.length - 1) stopAutoplay();
+                else scheduleAutoplay();
+            }
+
+            function startAutoplay() {
+                if (!moveHistory.length) return;
+                autoplaying = true;
+                updatePlayButton();
+                if (currentMoveIndex >= moveHistory.length - 1) {
+                    goToMove(-1);              // at the end: restart from move 0
+                    scheduleAutoplay();
+                } else {
+                    autoplayTick();
+                }
+            }
+
+            function stopAutoplay() {
+                clearTimeout(autoplayTimer);
+                autoplayTimer = null;
+                if (!autoplaying) return;
+                autoplaying = false;
+                updatePlayButton();
+            }
+
+            function toggleAutoplay() {
+                if (autoplaying) stopAutoplay(); else startAutoplay();
+            }
+
+            elements.btnPlay.addEventListener('click', toggleAutoplay);
+            elements.speedSelect.addEventListener('change', () => {
+                autoplaySpeed = AUTOPLAY_SPEEDS[elements.speedSelect.value] ? elements.speedSelect.value : 'normal';
+                try { localStorage.setItem('chessAutoplaySpeed', autoplaySpeed); } catch (e) {}
+                if (autoplaying) scheduleAutoplay();
+            });
+
+            // Keyboard: ←/→ step, Space plays/pauses, M mutes — none of them while typing
             document.addEventListener('keydown', (e) => {
-                if (e.key === 'ArrowLeft') goToMove(currentMoveIndex - 1);
-                if (e.key === 'ArrowRight') goToMove(currentMoveIndex + 1);
-
-                // M toggles sound, except while typing in a form field or using a shortcut
                 const typing = e.target instanceof Element &&
                     e.target.closest('input, select, textarea, [contenteditable]');
-                if ((e.key === 'm' || e.key === 'M') && sounds && !typing &&
-                    !e.metaKey && !e.ctrlKey && !e.altKey) {
+                if (typing || e.metaKey || e.ctrlKey || e.altKey) return;
+
+                if (e.key === 'ArrowLeft') { stopAutoplay(); goToMove(currentMoveIndex - 1); }
+                if (e.key === 'ArrowRight') { stopAutoplay(); stepForward(); }
+
+                if ((e.key === ' ' || e.code === 'Space') && moveHistory.length) {
+                    e.preventDefault();        // no page scroll, no click on a focused button
+                    if (!e.repeat) toggleAutoplay();
+                }
+
+                if ((e.key === 'm' || e.key === 'M') && sounds && !e.repeat) {
                     toggleSound();
                 }
             });
@@ -837,48 +1106,96 @@
                 if (e.key === 'Enter') fetchGames(true);
             });
 
-            // Parse PGN moves from Chess.com format
+            // "0:09:58.5" → 598.5 seconds
+            function parseClock(text) {
+                return text.split(':').reduce((sum, part) => sum * 60 + parseFloat(part), 0);
+            }
+
+            // Parse a Chess.com PGN: headers, then movetext walked token by token so each
+            // {[%clk ...]} comment attaches to the move it follows.
             function parsePGN(pgn) {
                 chess.reset();
                 moveHistory = [];
+                pgnHeaders = {};
 
-                // Extract moves section (after headers)
-                const movesMatch = pgn.match(/\n\n([\s\S]+)$/);
-                if (!movesMatch) return [];
+                const headerRe = /^\s*\[(\w+)\s+"((?:[^"\\]|\\.)*)"\]\s*$/gm;
+                let m;
+                while ((m = headerRe.exec(pgn)) !== null) pgnHeaders[m[1]] = m[2];
+                const movetext = pgn.replace(headerRe, '');
 
-                let movesText = movesMatch[1];
-                // Remove comments, variations, and result
-                movesText = movesText.replace(/\{[^}]*\}/g, '');
-                movesText = movesText.replace(/\([^)]*\)/g, '');
-                movesText = movesText.replace(/1-0|0-1|1\/2-1\/2|\*/g, '');
+                // comment | line comment | variation brackets | NAG | result | anything else
+                const tokenRe = /\{([^}]*)\}|;[^\n]*|[()]|\$\d+|1-0|0-1|1\/2-1\/2|\*|[^\s{}();]+/g;
+                let depth = 0;
+                while ((m = tokenRe.exec(movetext)) !== null) {
+                    const tok = m[0];
+                    if (tok === '(') { depth++; continue; }
+                    if (tok === ')') { depth = Math.max(0, depth - 1); continue; }
+                    if (depth > 0) continue;                       // skip variations
 
-                // Extract individual moves
-                const moveRegex = /([KQRBN]?[a-h]?[1-8]?x?[a-h][1-8](=[QRBN])?|O-O-O|O-O)[+#]?/g;
-                let match;
-                const moves = [];
+                    if (m[1] !== undefined) {                      // {comment}
+                        const clk = /\[%clk\s+([\d:.]+)\]/.exec(m[1]);
+                        const last = moveHistory[moveHistory.length - 1];
+                        if (clk && last) last.clock = parseClock(clk[1]);
+                        continue;
+                    }
+                    if (/^(;|\$|1-0$|0-1$|1\/2-1\/2$|\*$)/.test(tok)) continue;
 
-                while ((match = moveRegex.exec(movesText)) !== null) {
-                    moves.push(match[1]);
-                }
-
-                // Validate and play moves
-                for (const move of moves) {
+                    const san = tok.replace(/^\d+\.+/, '').replace(/[!?]+$/, '');   // "12...Nf6" → "Nf6"
+                    if (!san) continue;                            // bare move number
                     const prevFen = chess.fen();
-                    const result = chess.move(move, { sloppy: true });
+                    const result = chess.move(san, { sloppy: true });
                     if (result) {
                         moveHistory.push({
                             san: result.san,
                             fen: chess.fen(),
                             prevFen,
-                            move: result
+                            move: result,                          // full chess.js move (captured, flags, ...)
+                            clock: null
                         });
+                    }
+                }
+
+                // Clocks: real-time games only ("600", "180+2"); daily ("1/86400") or no %clk → hidden
+                const tc = /^(\d+)(?:\+(\d+))?$/.exec(pgnHeaders.TimeControl || (currentGame && currentGame.timeControl) || '');
+                clockInfo = {
+                    enabled: !!tc && moveHistory.some(h => h.clock !== null),
+                    base: tc ? +tc[1] : 0
+                };
+
+                // Which king topples at the final move (chess is now at the final position)
+                gameEnding = null;
+                if (moveHistory.length) {
+                    const termination = (pgnHeaders.Termination || '').toLowerCase();
+                    if (chess.in_checkmate()) {
+                        gameEnding = { color: chess.turn(), mode: 'mate' };
+                    } else if (termination.includes('resignation')) {
+                        if (pgnHeaders.Result === '1-0') gameEnding = { color: 'b', mode: 'resign' };
+                        if (pgnHeaders.Result === '0-1') gameEnding = { color: 'w', mode: 'resign' };
                     }
                 }
 
                 return moveHistory;
             }
 
-            // opts.silent: animate without sound (used by move-list clicks)
+            // "C57 · Italian Game Two Knights Defense" from the ECOUrl header (or the API's eco URL)
+            function openingLabel(game) {
+                const url = pgnHeaders.ECOUrl || (game && game.eco) || '';
+                let name = '';
+                if (/\/openings\//.test(url)) {
+                    const segment = url.split(/[?#]/)[0].split('/').filter(Boolean).pop() || '';
+                    name = decodeURIComponent(segment)
+                        .replace(/\.\.\..*$/, '')        // "...4.Bd3-Bxd3"
+                        .replace(/-\d+\..*$/, '')        // "-4.Ng5"
+                        .replace(/-\d+$/, '')            // a move number left behind ("-1...d5")
+                        .replace(/-+/g, ' ')
+                        .trim();
+                }
+                const eco = /^[A-E]\d\d$/.test(pgnHeaders.ECO || '') ? pgnHeaders.ECO : '';
+                return [eco, name].filter(Boolean).join(' · ');
+            }
+
+            // Only a single step forward animates (with sound, and the king topple on the
+            // final move). opts.jump: go straight to the position (End button, move list).
             function goToMove(index, opts = {}) {
                 if (index < -1) index = -1;
                 if (index >= moveHistory.length) index = moveHistory.length - 1;
@@ -886,22 +1203,121 @@
                 const prevIndex = currentMoveIndex;
                 currentMoveIndex = index;
                 const b = getBoard();
+                const ending = (index >= 0 && index === moveHistory.length - 1) ? gameEnding : null;
 
                 if (index === -1) {
                     b.show(LewisBoard.START_FEN);
-                } else if (index === prevIndex + 1) {
+                } else if (index === prevIndex + 1 && !opts.jump) {
                     // Stepping forward one move: animate it
                     const h = moveHistory[index];
-                    b.play(h.prevFen, h.fen, h.move);
-                    if (sounds && !opts.silent) sounds.move(h.move);
+                    b.play(h.prevFen, h.fen, h.move, ending ? {
+                        topple: ending.color,
+                        toppleMs: ending.mode === 'resign' ? RESIGN_TOPPLE_MS : MATE_TOPPLE_MS
+                    } : {});
+                    if (sounds) sounds.move(h.move);
                 } else {
                     const h = moveHistory[index];
-                    b.show(h.fen, { lastMove: h.move });
+                    b.show(h.fen, { lastMove: h.move, toppled: ending ? ending.color : null });
                 }
 
                 updateMoveCounter();
                 highlightCurrentMove();
                 updateButtonStates();
+                updatePlayerBars();
+            }
+
+            // ── Player bars: name, rating, captured pieces, material, clock ──
+            function formatClock(seconds) {
+                const s = Math.max(0, seconds);
+                if (s < 20) return '0:' + s.toFixed(1).padStart(4, '0');      // 0:09.4
+                const whole = Math.floor(s);
+                const h = Math.floor(whole / 3600), mm = Math.floor(whole / 60) % 60, ss = whole % 60;
+                const pad = n => String(n).padStart(2, '0');
+                return h ? `${h}:${pad(mm)}:${pad(ss)}` : `${mm}:${pad(ss)}`;
+            }
+
+            // That side's time after their most recent move at or before `index`
+            function clockAt(color, index) {
+                for (let i = index; i >= 0; i--) {
+                    const h = moveHistory[i];
+                    if (h.move.color === color && h.clock !== null) return h.clock;
+                }
+                return clockInfo.base;
+            }
+
+            function trayImage(type, capturedColor) {
+                const img = document.createElement('img');
+                const sprite = board && board.sprites && board.sprites[`${capturedColor}-${type}`];
+                const queen = board && board.sprites && board.sprites[`${capturedColor}-q`];
+                const ratio = sprite && queen && queen.naturalHeight ? sprite.naturalHeight / queen.naturalHeight : 0.8;
+                img.src = `${SPRITE_PATH}${capturedColor === 'w' ? 'white' : 'black'}-${LEWIS_NAMES[type]}.png`;
+                img.alt = '';
+                img.style.height = Math.round(TRAY_QUEEN_PX * ratio) + 'px';
+                return img;
+            }
+
+            function renderBar(bar, color, captured, advantage) {
+                const isWhite = color === 'w';
+                const name = pgnHeaders[isWhite ? 'White' : 'Black'];
+                const elo = pgnHeaders[isWhite ? 'WhiteElo' : 'BlackElo'];
+                const mine = currentGame && (currentGame.color === 'white') === isWhite;
+                const fallbackName = mine ? (elements.username.value.trim() || DEFAULT_USERNAME) : (currentGame && currentGame.opponent);
+                const fallbackElo = currentGame && (mine ? currentGame.yourRating : currentGame.opponentRating);
+
+                const swatch = bar.querySelector('.pb-swatch');
+                swatch.className = 'pb-swatch ' + color;
+                swatch.title = isWhite ? 'White' : 'Black';
+                bar.querySelector('.pb-name').textContent = name || fallbackName || (isWhite ? 'White' : 'Black');
+                bar.querySelector('.pb-rating').textContent = (elo || fallbackElo) ? `(${elo || fallbackElo})` : '';
+
+                // Captured pieces (the opponent's color), queen → pawn, same types overlapping
+                const tray = bar.querySelector('.pb-tray');
+                tray.innerHTML = '';
+                const capturedColor = isWhite ? 'b' : 'w';
+                for (const type of TRAY_ORDER) {
+                    const count = captured.filter(t => t === type).length;
+                    if (!count) continue;
+                    const group = document.createElement('span');
+                    group.className = 'pb-tray-group';
+                    for (let i = 0; i < count; i++) {
+                        const img = trayImage(type, capturedColor);
+                        if (i > 0) img.style.marginLeft = type === 'p' ? '-4px' : '-6px';
+                        group.appendChild(img);
+                    }
+                    tray.appendChild(group);
+                }
+                bar.querySelector('.pb-adv').textContent = advantage > 0 ? `+${advantage}` : '';
+
+                // Clock
+                const clock = bar.querySelector('.pb-clock');
+                clock.hidden = !clockInfo.enabled;
+                if (!clockInfo.enabled) return;
+                const t = clockAt(color, currentMoveIndex);
+                const atEnd = currentMoveIndex === moveHistory.length - 1 && pgnHeaders.Result && pgnHeaders.Result !== '*';
+                const sideToMove = currentMoveIndex < 0 ? 'w' : moveHistory[currentMoveIndex].fen.split(' ')[1];
+                clock.textContent = formatClock(t);
+                clock.classList.toggle('to-move', !atEnd && sideToMove === color);
+                clock.classList.toggle('low', t < 20 || t < clockInfo.base * 0.1);
+            }
+
+            function updatePlayerBars() {
+                // Captures from each move's `captured` field (en passant reports a pawn);
+                // promotions add (new piece − pawn) to that side's material.
+                const captured = { w: [], b: [] };
+                const material = { w: 0, b: 0 };
+                for (let i = 0; i <= currentMoveIndex; i++) {
+                    const mv = moveHistory[i].move;
+                    if (mv.captured) {
+                        captured[mv.color].push(mv.captured);
+                        material[mv.color] += PIECE_VALUES[mv.captured];
+                    }
+                    if (mv.promotion) material[mv.color] += PIECE_VALUES[mv.promotion] - 1;
+                }
+                const diff = material.w - material.b;
+                const myColor = currentGame && currentGame.color === 'black' ? 'b' : 'w';
+                const oppColor = myColor === 'w' ? 'b' : 'w';
+                renderBar(elements.barBottom, myColor, captured[myColor], myColor === 'w' ? diff : -diff);
+                renderBar(elements.barTop, oppColor, captured[oppColor], oppColor === 'w' ? diff : -diff);
             }
 
             function updateMoveCounter() {
@@ -921,11 +1337,14 @@
                     el.classList.toggle('active', i === currentMoveIndex);
                 });
 
-                // Scroll active move into view
-                const activeMove = document.querySelector('.move.active');
-                if (activeMove) {
-                    activeMove.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
-                }
+                // Keep the active move visible by scrolling the list only (never the page,
+                // which would fight the reader during autoplay)
+                const list = elements.moveList;
+                const activeMove = list.querySelector('.move.active');
+                if (!activeMove) { list.scrollTop = 0; return; }
+                const lr = list.getBoundingClientRect(), ar = activeMove.getBoundingClientRect();
+                if (ar.top < lr.top) list.scrollTop += ar.top - lr.top - 8;
+                else if (ar.bottom > lr.bottom) list.scrollTop += ar.bottom - lr.bottom + 8;
             }
 
             function renderMoveList() {
@@ -948,9 +1367,9 @@
 
                 // Add click handlers to moves
                 document.querySelectorAll('.move').forEach(el => {
-                    el.addEventListener('click', () => {
-                        goToMove(parseInt(el.dataset.index), { silent: true });
-                    });
+                    el.addEventListener('click', manual(() => {
+                        goToMove(parseInt(el.dataset.index), { jump: true });
+                    }));
                 });
             }
 
@@ -1005,6 +1424,8 @@
                                 opponentRating: opponentData.rating,
                                 ratingDiff: opponentData.rating - playerData.rating,
                                 timeClass: game.time_class,
+                                timeControl: game.time_control,
+                                eco: game.eco,
                                 url: game.url,
                                 pgn: game.pgn,
                                 date: new Date(game.end_time * 1000)
@@ -1075,6 +1496,7 @@
                 const game = getFeaturedGame();
                 if (!game) return;
 
+                stopAutoplay();
                 currentGame = game;
 
                 elements.featuredAccuracy.textContent = game.accuracy.toFixed(1) + '%';
@@ -1099,6 +1521,10 @@
                 if (game.pgn) {
                     parsePGN(game.pgn);
                     renderMoveList();
+
+                    const opening = openingLabel(game);
+                    elements.openingName.textContent = opening;
+                    elements.openingName.hidden = !opening;
 
                     // Board is viewed from my side of the table
                     const b = getBoard();

@@ -6,6 +6,11 @@
  *   board.show(fen, { lastMove });                 // static position, optional highlight
  *   board.play(prevFen, fen, move);                // animate one move (chess.js move object)
  *
+ *   // End of game: lay one king on its side (toward the board's center)
+ *   board.show(fen, { lastMove, toppled: 'b' });   // already toppled, no animation
+ *   board.play(prevFen, fen, move, { topple: 'b', toppleMs: 600 });  // topple once the move lands
+ *   board.toppleKing('b', { ms: 600 });            // topple on the current position
+ *
  * Sprites: <spritePath>{white|black}-{king|queen|rook|bishop|knight|pawn}.png
  */
 (function (root) {
@@ -28,6 +33,8 @@
   const KING_SPRITE_H = 120;  // native king sprite height, used as the size reference
   const ANIM_MS = 380;
   const ANIM_STEPS = 12;      // quantized frames for a stepped, early-Mac feel
+  const TOPPLE_MS = 600;
+  const TOPPLE_FRAMES = [15, 35, 60, 90, 82, 90];   // degrees per stepped frame; last two settle
 
   function parseFen(fen) {
     const out = [];
@@ -57,6 +64,9 @@
       this.pieces = [];
       this.lastMove = null;
       this.anim = null;
+      this.topple = null;           // { color, deg } — king drawn rotated onto its side
+      this.toppleAnim = null;
+      this._pendingTopple = null;   // topple to start when the current move lands
       this.sprites = opts.sprites || null;   // { 'w-k': Image, ... } may be injected
       this.canvas = opts.canvas || document.createElement('canvas');
       this.ctx = this.canvas.getContext('2d');
@@ -110,16 +120,23 @@
       if (o !== this.orientation) { this.orientation = o; this._boardCache = null; }
     }
 
-    show(fen, { lastMove = null } = {}) {
+    show(fen, { lastMove = null, toppled = null } = {}) {
+      this._pendingTopple = null;
+      this._stopTopple();
       this._finishAnim();
       this.pieces = parseFen(fen);
       this.lastMove = lastMove;
+      this.topple = toppled ? { color: toppled, deg: 90 } : null;
       this._boardCache = null;
       this.draw();
     }
 
-    play(prevFen, fen, move) {
+    play(prevFen, fen, move, { topple = null, toppleMs = TOPPLE_MS } = {}) {
+      this._pendingTopple = null;
+      this._stopTopple();
       this._finishAnim();
+      this.topple = null;
+      this._pendingTopple = topple ? { color: topple, ms: toppleMs } : null;
       const before = parseFen(prevFen);
       const after = parseFen(fen);
       const movers = [];
@@ -132,19 +149,52 @@
       }
       const moving = new Set(movers.map((m) => m.from.file + ',' + m.from.rank));
       const statics = before.filter((p) => !moving.has(p.file + ',' + p.rank));
+      // squares whose piece disappears when the mover lands (en passant: the passed pawn)
+      const victims = movers.map((m) => m.to.file + ',' + m.to.rank);
+      if (move.flags && move.flags.includes('e')) victims.push(to.file + ',' + from.rank);
       this.lastMove = move;
       this._boardCache = null;
-      this.anim = { start: null, movers, statics, after };
+      this.anim = { start: null, movers, statics, after, victims };
       const step = (ts) => {
         if (!this.anim) return;
         if (this.anim.start === null) this.anim.start = ts;
         const raw = Math.min(1, (ts - this.anim.start) / ANIM_MS);
         this.anim.t = Math.round(raw * ANIM_STEPS) / ANIM_STEPS;
-        if (raw >= 1) { this._finishAnim(); return; }
+        if (raw >= 1) {
+          const pending = this._pendingTopple;
+          this._pendingTopple = null;
+          this._finishAnim();
+          if (pending) this.toppleKing(pending.color, { ms: pending.ms });
+          return;
+        }
         this.draw();
         this.anim.raf = requestAnimationFrame(step);
       };
       this.anim.raf = requestAnimationFrame(step);
+    }
+
+    // Lay `color`'s king on its side in stepped frames, with a small settle at the end.
+    toppleKing(color, { ms = TOPPLE_MS } = {}) {
+      this._stopTopple();
+      this._finishAnim();
+      this.topple = { color, deg: 0 };
+      const frameMs = ms / TOPPLE_FRAMES.length;
+      const ta = this.toppleAnim = { start: null, raf: null };
+      const step = (ts) => {
+        if (this.toppleAnim !== ta) return;
+        if (ta.start === null) ta.start = ts;
+        const i = Math.min(TOPPLE_FRAMES.length - 1, Math.floor((ts - ta.start) / frameMs));
+        if (this.topple.deg !== TOPPLE_FRAMES[i]) { this.topple.deg = TOPPLE_FRAMES[i]; this.draw(); }
+        if (ts - ta.start >= ms) { this.toppleAnim = null; this.topple.deg = 90; this.draw(); return; }
+        ta.raf = requestAnimationFrame(step);
+      };
+      ta.raf = requestAnimationFrame(step);
+    }
+
+    _stopTopple() {
+      if (!this.toppleAnim) return;
+      if (this.toppleAnim.raf && typeof cancelAnimationFrame !== 'undefined') cancelAnimationFrame(this.toppleAnim.raf);
+      this.toppleAnim = null;
     }
 
     _finishAnim() {
@@ -217,7 +267,7 @@
       return img;
     }
 
-    _drawPiece(p, fx, d, hop = 0) {
+    _drawPiece(p, fx, d, hop = 0, tiltDeg = 0) {
       const img = this.sprites && this.sprites[`${p.color}-${p.type}`];
       if (!img || !img.width) return;
       const W = this.canvas.width;
@@ -227,7 +277,22 @@
       const w = Math.round(img.width * scale), h = Math.round(img.height * scale);
       const x = Math.round(c.x - w / 2);
       const y = Math.round(c.y - h + squareW * 0.12 - hop * squareW);
-      this.ctx.drawImage(img, x, y, w, h);
+      if (!tiltDeg) { this.ctx.drawImage(img, x, y, w, h); return; }
+
+      // Toppling: rotate about the center of the pedestal base, falling toward the
+      // board's center, and lift by half the width so it comes to rest on its side.
+      const dir = fx < 4 ? 1 : -1;                 // left half falls right, and vice versa
+      const half = Math.round(w / 2);
+      const px = x + half, py = y + h;             // integer pivot keeps 90° pixel-exact
+      const rad = tiltDeg * Math.PI / 180;
+      const lift = Math.round(half * Math.sin(rad));
+      const ctx = this.ctx;
+      ctx.save();
+      if (tiltDeg === 90) ctx.setTransform(0, dir, -dir, 0, px, py - lift);   // exact quarter turn
+      else { ctx.translate(px, py - lift); ctx.rotate(dir * rad); }
+      ctx.imageSmoothingEnabled = false;
+      ctx.drawImage(img, -half, -h, w, h);
+      ctx.restore();
     }
 
     draw() {
@@ -253,13 +318,17 @@
           items.push({ p: { color: m.color, type: t >= 1 ? m.endType : m.type }, fx, d, hop, mover: true });
         }
         // a piece being captured stays until the mover lands on it
-        const landing = this.anim.movers.map((m) => m.to.file + ',' + m.to.rank);
         for (const it of items) {
-          if (!it.mover && t > 0.85 && landing.includes(it.p.file + ',' + it.p.rank)) it.skip = true;
+          if (!it.mover && t > 0.85 && this.anim.victims.includes(it.p.file + ',' + it.p.rank)) it.skip = true;
+        }
+      }
+      if (this.topple && this.topple.deg) {
+        for (const it of items) {
+          if (!it.mover && it.p.type === 'k' && it.p.color === this.topple.color) it.tilt = this.topple.deg;
         }
       }
       items.sort((a, b) => b.d - a.d || (a.mover ? 1 : -1));
-      for (const it of items) if (!it.skip) this._drawPiece(it.p, it.fx, it.d, it.hop);
+      for (const it of items) if (!it.skip) this._drawPiece(it.p, it.fx, it.d, it.hop, it.tilt);
     }
   }
 
