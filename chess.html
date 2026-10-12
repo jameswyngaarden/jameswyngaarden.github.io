@@ -540,6 +540,8 @@
                 flex-direction: column;
             }
             .board-wrapper {
+                flex-basis: auto;
+                min-width: 0;
                 max-width: 100%;
             }
             .move-list-container {
@@ -569,6 +571,16 @@
             }
             .featured-game-stats {
                 gap: 16px;
+            }
+            .board-controls {
+                gap: 4px;
+                flex-wrap: wrap;
+            }
+            .board-btn {
+                padding: 8px 10px;
+            }
+            .move-counter {
+                min-width: 52px;
             }
         }
     </style>
@@ -640,6 +652,7 @@
                                 <span class="move-counter" id="move-counter">0 / 0</span>
                                 <button class="board-btn" id="btn-next">→</button>
                                 <button class="board-btn" id="btn-end">⏭</button>
+                                <button class="board-btn" id="btn-sound" title="Mute sound (M)" aria-label="Mute sound">🔊</button>
                             </div>
                         </div>
                         <div class="move-list-container">
@@ -705,6 +718,8 @@
     <script src="site-common.js?v=3"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.3/chess.min.js"></script>
     <script src="lewis-board.js"></script>
+    <!-- Sound set. Alternate (simpler, same API): lewis-sounds.js -->
+    <script src="lewis-sounds-legend.js"></script>
     <script>
         (function() {
             const DEFAULT_USERNAME = 'babyboyjw';
@@ -746,8 +761,32 @@
                 btnStart: document.getElementById('btn-start'),
                 btnPrev: document.getElementById('btn-prev'),
                 btnNext: document.getElementById('btn-next'),
-                btnEnd: document.getElementById('btn-end')
+                btnEnd: document.getElementById('btn-end'),
+                btnSound: document.getElementById('btn-sound')
             };
+
+            // Sound effects (LewisSounds is optional: the board works without it)
+            const sounds = window.LewisSounds || null;
+
+            function updateSoundButton() {
+                const muted = sounds.isMuted();
+                const label = muted ? 'Unmute sound' : 'Mute sound';
+                elements.btnSound.textContent = muted ? '🔇' : '🔊';
+                elements.btnSound.title = label + ' (M)';
+                elements.btnSound.setAttribute('aria-label', label);
+            }
+
+            function toggleSound() {
+                sounds.toggleMuted();
+                updateSoundButton();
+            }
+
+            if (sounds) {
+                updateSoundButton();
+                elements.btnSound.addEventListener('click', toggleSound);
+            } else {
+                elements.btnSound.hidden = true;
+            }
 
             const SPRITE_PATH = 'stimuli/lewis-pixel/';
 
@@ -781,6 +820,14 @@
             document.addEventListener('keydown', (e) => {
                 if (e.key === 'ArrowLeft') goToMove(currentMoveIndex - 1);
                 if (e.key === 'ArrowRight') goToMove(currentMoveIndex + 1);
+
+                // M toggles sound, except while typing in a form field or using a shortcut
+                const typing = e.target instanceof Element &&
+                    e.target.closest('input, select, textarea, [contenteditable]');
+                if ((e.key === 'm' || e.key === 'M') && sounds && !typing &&
+                    !e.metaKey && !e.ctrlKey && !e.altKey) {
+                    toggleSound();
+                }
             });
 
             elements.analyzeBtn.addEventListener('click', () => fetchGames(true));
@@ -831,7 +878,8 @@
                 return moveHistory;
             }
 
-            function goToMove(index) {
+            // opts.silent: animate without sound (used by move-list clicks)
+            function goToMove(index, opts = {}) {
                 if (index < -1) index = -1;
                 if (index >= moveHistory.length) index = moveHistory.length - 1;
 
@@ -845,6 +893,7 @@
                     // Stepping forward one move: animate it
                     const h = moveHistory[index];
                     b.play(h.prevFen, h.fen, h.move);
+                    if (sounds && !opts.silent) sounds.move(h.move);
                 } else {
                     const h = moveHistory[index];
                     b.show(h.fen, { lastMove: h.move });
@@ -900,7 +949,7 @@
                 // Add click handlers to moves
                 document.querySelectorAll('.move').forEach(el => {
                     el.addEventListener('click', () => {
-                        goToMove(parseInt(el.dataset.index));
+                        goToMove(parseInt(el.dataset.index), { silent: true });
                     });
                 });
             }
