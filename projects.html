@@ -20,6 +20,16 @@
         .project-card:hover .project-title { text-decoration: underline; text-decoration-color: var(--color-gold-muted); text-underline-offset: 3px; }
         .project-desc { margin-top: 4px; font-size: 0.95rem; line-height: 1.6; color: var(--color-text-light); }
 
+        /* Compact replay of Morphy's Opera Game in the Chess card */
+        .opera-thumb { position: relative; background: #29251f; overflow: hidden; }
+        #operaGameCanvas { display: block; width: 100%; height: 100%; }
+        .opera-caption { position: absolute; right: 4%; top: 50%; width: 35%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 8px; color: #f4eee3; pointer-events: none; }
+        .opera-kicker { font-size: clamp(7px, 1.15vw, 10px); letter-spacing: .12em; line-height: 1.4; color: #d8b77c; font-weight: 700; }
+        .opera-caption strong { font-family: var(--font-serif); font-size: clamp(17px, 3vw, 27px); line-height: 1.05; font-weight: 600; }
+        .opera-caption span:last-child { font-size: clamp(8px, 1.3vw, 11px); line-height: 1.45; color: rgba(244,238,227,.78); }
+        .opera-mate { position: absolute; left: 4%; bottom: 5%; padding: 4px 7px; background: #d8b77c; color: #29251f; font-size: 9px; letter-spacing: .1em; font-weight: 800; }
+        .opera-mate[hidden] { display: none; }
+
 
         /* Compact interactive tACS viewer in the Projects thumbnail */
         .tacs-card-viewer { position: relative; width: 100%; height: 100%; min-height: 0; overflow: hidden; background: linear-gradient(180deg, #f7f8f9 0%, #ffffff 100%); cursor: grab; touch-action: pan-y; }
@@ -89,9 +99,17 @@
                 </a>
 
                 <a class="project-card" href="chess.html">
-                    <div class="project-thumb"><img src="stimuli/chess.png" alt="Chess accuracy analyzer"></div>
+                    <div class="project-thumb opera-thumb">
+                        <canvas id="operaGameCanvas" role="img" aria-label="Animated replay of Paul Morphy's 1858 Opera Game against the Duke of Brunswick and Count Isouard, ending in checkmate"></canvas>
+                        <div class="opera-caption">
+                            <span class="opera-kicker">LOOKING-GLASS CHESS ARCHIVE</span>
+                            <strong id="operaMoveText">1. e4</strong>
+                            <span id="operaMoveNote">The Opera Game · Morphy, 1858</span>
+                        </div>
+                        <span class="opera-mate" id="operaMate" hidden>CHECKMATE · 1–0</span>
+                    </div>
                     <div class="project-title">Chess Analyzer</div>
-                    <p class="project-desc">My Chess.com games ranked by accuracy, not just wins and losses, with a featured game you can step through.</p>
+                    <p class="project-desc">Chess games, ideas, and analysis — featuring Morphy’s famous Opera Game.</p>
                 </a>
 
                 <a class="project-card" href="art.html">
@@ -695,6 +713,212 @@
         });
     })();
     </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.3/chess.min.js"></script>
+    <script>
+    // A compact, looping replay of the complete Opera Game.
+    (function() {
+        const canvas = document.getElementById('operaGameCanvas');
+        if (!canvas || typeof Chess === 'undefined') return;
+        const ctx = canvas.getContext('2d');
+        const moveText = document.getElementById('operaMoveText');
+        const mateLabel = document.getElementById('operaMate');
+        const TWO_PI = Math.PI * 2;
+        const sanMoves = [
+            'e4','e5','Nf3','d6','d4','Bg4','dxe5','Bxf3','Qxf3','dxe5',
+            'Bc4','Nf6','Qb3','Qe7','Nc3','c6','Bg5','b5','Nxb5','cxb5',
+            'Bxb5+','Nbd7','O-O-O','Rd8','Rxd7','Rxd7','Rd1','Qe6',
+            'Bxd7+','Nxd7','Qb8+','Nxb8','Rd8#'
+        ];
+        const game = new Chess();
+        const positions = [game.board()];
+        const moves = [];
+        for (const san of sanMoves) {
+            const move = game.move(san);
+            if (!move) {
+                console.error('Opera Game replay stopped: invalid move', san);
+                return;
+            }
+            moves.push(move);
+            positions.push(game.board());
+        }
+
+        const spriteNames = { k:'king', q:'queen', r:'rook', b:'bishop', n:'knight', p:'pawn' };
+        const sprites = {};
+        let loadedSprites = 0;
+        const spriteTotal = 12;
+        for (const color of ['white','black']) {
+            for (const type of Object.keys(spriteNames)) {
+                const img = new Image();
+                img.src = 'stimuli/lewis-pixel/' + color + '-' + spriteNames[type] + '.png';
+                img.onload = () => { loadedSprites++; draw(performance.now()); };
+                sprites[(color === 'white' ? 'w' : 'b') + type] = img;
+            }
+        }
+
+        const light = '#f0d9b5', dark = '#b58863';
+        const reducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        let active = false, raf = 0, moveIndex = 0, phase = 'intro', phaseStart = 0;
+        let lastW = 0, lastH = 0, dpr = 1;
+
+        function fit() {
+            const rect = canvas.getBoundingClientRect();
+            if (!rect.width || !rect.height) return;
+            dpr = Math.min(window.devicePixelRatio || 1, 2);
+            const w = Math.round(rect.width * dpr), h = Math.round(rect.height * dpr);
+            if (canvas.width !== w || canvas.height !== h) {
+                canvas.width = w; canvas.height = h;
+                lastW = rect.width; lastH = rect.height;
+            }
+        }
+        function squareXY(square, boardX, boardY, cell) {
+            const file = square.charCodeAt(0) - 97;
+            const rank = Number(square[1]);
+            return { x: boardX + file * cell, y: boardY + (8 - rank) * cell };
+        }
+        function pieceImage(piece) {
+            return sprites[piece.color + piece.type];
+        }
+        function drawPiece(piece, x, y, cell) {
+            if (!piece) return;
+            const img = pieceImage(piece);
+            if (img && img.complete && img.naturalWidth) {
+                ctx.imageSmoothingEnabled = false;
+                const inset = cell * 0.055;
+                ctx.drawImage(img, x + inset, y + inset, cell - inset * 2, cell - inset * 2);
+            } else {
+                const glyphs = { wk:'♔', wq:'♕', wr:'♖', wb:'♗', wn:'♘', wp:'♙', bk:'♚', bq:'♛', br:'♜', bb:'♝', bn:'♞', bp:'♟︎' };
+                ctx.font = `${cell * .78}px "Segoe UI Symbol", serif`;
+                ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+                ctx.fillStyle = piece.color === 'w' ? '#fffdf4' : '#171717';
+                ctx.strokeStyle = piece.color === 'w' ? '#282828' : '#eee8dc';
+                ctx.lineWidth = Math.max(1, cell * .018);
+                const g = glyphs[piece.color + piece.type];
+                ctx.strokeText(g, x + cell/2, y + cell/2 + cell*.025);
+                ctx.fillText(g, x + cell/2, y + cell/2 + cell*.025);
+            }
+        }
+        function boardLayout() {
+            const w = canvas.width / dpr, h = canvas.height / dpr;
+            const cell = Math.min(h * .86 / 8, w * .55 / 8);
+            const size = cell * 8;
+            return { w, h, cell, x: w * .37 - size / 2, y: (h - size) / 2 };
+        }
+        function paintPosition(position, layout, skipSquare) {
+            const {x,y,cell} = layout;
+            for (let r=0; r<8; r++) for (let f=0; f<8; f++) {
+                const px=x+f*cell, py=y+r*cell;
+                ctx.fillStyle = (r+f)%2 ? dark : light;
+                ctx.fillRect(px,py,cell,cell);
+                const piece = position[r][f];
+                const square = 'abcdefgh'[f] + (8-r);
+                if (piece && square !== skipSquare) drawPiece(piece,px,py,cell);
+            }
+        }
+        function draw(now) {
+            fit();
+            const layout = boardLayout();
+            const {w,h,cell,x,y} = layout;
+            ctx.setTransform(dpr,0,0,dpr,0,0);
+            ctx.clearRect(0,0,w,h);
+            ctx.fillStyle = '#29251f';
+            ctx.fillRect(0,0,w,h);
+
+            let shown = positions[moveIndex];
+            let moving = null, progress = 1, rookMove = null;
+            if (phase === 'move' && moveIndex < moves.length) {
+                const mv = moves[moveIndex];
+                shown = positions[moveIndex + 1];
+                const elapsed = Math.max(0, now - phaseStart);
+                progress = Math.min(1, elapsed / 620);
+                moving = { piece: positions[moveIndex][8-Number(mv.from[1])][mv.from.charCodeAt(0)-97], from: mv.from, to: mv.to };
+                if (mv.flags.includes('k') || mv.flags.includes('q')) {
+                    const rank = mv.color === 'w' ? '1' : '8';
+                    rookMove = mv.flags.includes('k')
+                        ? { from:'h'+rank, to:'f'+rank, piece:{type:'r',color:mv.color} }
+                        : { from:'a'+rank, to:'d'+rank, piece:{type:'r',color:mv.color} };
+                }
+                paintPosition(shown, layout, mv.to);
+                const a = squareXY(mv.from,x,y,cell), b = squareXY(mv.to,x,y,cell);
+                drawPiece(moving.piece, a.x+(b.x-a.x)*progress, a.y+(b.y-a.y)*progress, cell);
+                if (rookMove) {
+                    const ra=squareXY(rookMove.from,x,y,cell), rb=squareXY(rookMove.to,x,y,cell);
+                    // Hide the rook at its destination in the post-castle position.
+                    const rf=rookMove.to.charCodeAt(0)-97, rr=8-Number(rookMove.to[1]);
+                    ctx.fillStyle=(rf+rr)%2?dark:light; ctx.fillRect(x+rf*cell,y+rr*cell,cell,cell);
+                    drawPiece(rookMove.piece,ra.x+(rb.x-ra.x)*progress,ra.y+(rb.y-ra.y)*progress,cell);
+                }
+                if (progress >= 1) {
+                    moveIndex++;
+                    phase = 'pause';
+                    phaseStart = now;
+                    updateCaption();
+                }
+            } else {
+                paintPosition(shown,layout,null);
+            }
+
+            // Quiet coordinate labels and board frame.
+            ctx.strokeStyle = 'rgba(238,225,204,.5)';
+            ctx.lineWidth = 1;
+            ctx.strokeRect(x-.5,y-.5,cell*8+1,cell*8+1);
+            ctx.fillStyle = 'rgba(244,238,227,.65)';
+            ctx.font = '9px sans-serif';
+            ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+            for(let f=0;f<8;f++) ctx.fillText('abcdefgh'[f],x+(f+.5)*cell,y+cell*8+3);
+            ctx.textAlign = 'right'; ctx.textBaseline = 'middle';
+            for(let r=0;r<8;r++) ctx.fillText(String(8-r),x-4,y+(r+.5)*cell);
+
+            if (phase === 'move' && progress < 1) {
+                // next frame continues the current piece animation
+            } else if (phase === 'intro' && now - phaseStart > 950) {
+                phase='move'; phaseStart=now;
+            } else if (phase === 'pause' && now - phaseStart > 430) {
+                if (moveIndex >= moves.length) {
+                    phase='final'; phaseStart=now; mateLabel.hidden=false;
+                } else {
+                    phase='move'; phaseStart=now;
+                }
+            } else if (phase === 'final' && now - phaseStart > 3200) {
+                moveIndex=0; phase='intro'; phaseStart=now; mateLabel.hidden=true; updateCaption();
+            }
+            if (active && !reducedMotion) raf=requestAnimationFrame(draw);
+        }
+        function updateCaption() {
+            if (moveIndex === 0) moveText.textContent = '1. e4';
+            else {
+                const last = moves[moveIndex-1];
+                const moveNo = Math.ceil(moveIndex/2);
+                moveText.textContent = (moveIndex%2===1 ? moveNo+'. ' : moveNo+'… ') + last.san;
+            }
+        }
+        function start() {
+            if (active || reducedMotion) return;
+            active=true; phaseStart=performance.now();
+            raf=requestAnimationFrame(draw);
+        }
+        function stop() {
+            active=false; cancelAnimationFrame(raf);
+        }
+        if (reducedMotion) {
+            moveIndex=moves.length; phase='final'; mateLabel.hidden=false;
+            draw(performance.now());
+            moveText.textContent='17. Rd8#';
+        } else {
+            const observer = new IntersectionObserver(entries => {
+                if (entries[0].isIntersecting) start(); else stop();
+            }, {threshold:0.15});
+            observer.observe(canvas);
+            document.addEventListener('visibilitychange', () => {
+                if (document.hidden) stop();
+                else if (canvas.getBoundingClientRect().bottom>0 && canvas.getBoundingClientRect().top<innerHeight) start();
+            });
+            window.addEventListener('resize', () => { fit(); if (!active) draw(performance.now()); });
+            start();
+        }
+    })();
+    </script>
+
     <script src="site-common.js?v=3"></script>
 </body>
 </html>
