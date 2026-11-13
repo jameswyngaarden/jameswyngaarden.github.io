@@ -158,7 +158,7 @@
             let sc = 0, ss = 0;
             for (let i = 0; i < filled; i++) { sc += Math.cos(phases[i]); ss += Math.sin(phases[i]); }
             const R = filled ? Math.hypot(sc, ss) / filled : 0;
-            const intensity = .08 + .82 * (.5 - .5 * Math.cos(TWO_PI * (elapsed % 12) / 12));
+            const intensity = .08 + .82 * (.5 - .5 * Math.cos(TWO_PI * (elapsed % 24) / 24));
             const locked = R > .82 && intensity > .18;
             stateEl.textContent = locked ? 'ENTRAINED' : 'SLIPPING';
             stateEl.style.color = locked ? '#2e7d32' : '#c62828';
@@ -168,7 +168,7 @@
             if (!previous) previous = ts;
             let wall = Math.min((ts - previous) / 1000, .1); previous = ts;
             if (!reducedMotion) elapsed += wall;
-            const intensity = .08 + .82 * (.5 - .5 * Math.cos(TWO_PI * (elapsed % 12) / 12));
+            const intensity = .08 + .82 * (.5 - .5 * Math.cos(TWO_PI * (elapsed % 24) / 24));
             const steps = Math.max(0, Math.round(wall / dt));
             const K = K_GAIN * intensity;
             for (let n = 0; n < steps; n++) {
