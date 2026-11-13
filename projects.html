@@ -51,6 +51,13 @@
             .tacs-card-viewer .tacs-instructions { display: none; }
         }
 
+        .art-thumb { position: relative; background: #f7f8f9; }
+        .art-thumb .art-slide { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 1s ease; }
+        .art-thumb .art-slide-active { opacity: 1; }
+        @media (prefers-reduced-motion: reduce) {
+            .art-thumb .art-slide { transition: none; }
+        }
+
         @media (max-width: 700px) {
             .projects-grid { grid-template-columns: 1fr; gap: 28px; }
         }
@@ -106,7 +113,10 @@
                 </a>
 
                 <a class="project-card" href="art.html">
-                    <div class="project-thumb"><img src="art/IMG_srt-pastel.png" alt="Schuylkill River Trail, oil pastel"></div>
+                    <div class="project-thumb art-thumb" id="artProjectThumb" aria-label="Rotating selection of artwork">
+                        <img class="art-slide art-slide-active" src="art/IMG_srt-pastel.png" alt="Schuylkill River Trail, oil pastel">
+                        <img class="art-slide" src="art/IMG_srt-pastel.png" alt="" aria-hidden="true">
+                    </div>
                     <div class="project-title">Art</div>
                     <p class="project-desc">Drawings and paintings, mostly oil and pastel, with a bias toward favorites from the last few years.</p>
                 </a>
@@ -115,6 +125,75 @@
     </div>
 
     <script>
+    // Rotating art preview: always opens on the Schuylkill River Trail painting,
+    // then chooses a random different work every three seconds.
+    (function() {
+        const thumb = document.getElementById('artProjectThumb');
+        if (!thumb) return;
+        const slides = thumb.querySelectorAll('.art-slide');
+        const images = [
+            'art/IMG_self-portrait_2017.png',
+            'art/IMG_religious.png',
+            'art/IMG_stoneybrook-unfinished.png',
+            'art/IMG_monet.png',
+            'art/IMG_bust.png',
+            'art/IMG_gandhi.png',
+            'art/IMG_louvre.png',
+            'art/IMG_boathouse.png',
+            'art/study-of-petit-cheval.png',
+            'art/IMG_park.png',
+            'art/IMG_torso.png'
+        ];
+        const reducedMotion = window.matchMedia &&
+            window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (reducedMotion || !images.length) return;
+
+        let active = 0;
+        let timer = null;
+        let lastIndex = -1;
+
+        function chooseNext() {
+            let next;
+            do { next = Math.floor(Math.random() * images.length); }
+            while (images.length > 1 && next === lastIndex);
+            lastIndex = next;
+            return next;
+        }
+
+        function advance() {
+            const next = chooseNext();
+            const incoming = slides[1 - active];
+            const outgoing = slides[active];
+            const preload = new Image();
+            preload.onload = function() {
+                incoming.src = images[next];
+                incoming.alt = '';
+                incoming.setAttribute('aria-hidden', 'true');
+                incoming.classList.add('art-slide-active');
+                outgoing.classList.remove('art-slide-active');
+                active = 1 - active;
+            };
+            preload.src = images[next];
+        }
+
+        function start() {
+            if (!timer) timer = window.setInterval(advance, 3000);
+        }
+        function stop() {
+            if (timer) { window.clearInterval(timer); timer = null; }
+        }
+
+        if ('IntersectionObserver' in window) {
+            const observer = new IntersectionObserver(entries => {
+                if (entries.some(entry => entry.isIntersecting)) start();
+                else stop();
+            }, { threshold: 0.1 });
+            observer.observe(thumb);
+        } else {
+            start();
+        }
+    })();
+
     // Compact, self-running adaptation of Chapter 3's driven-oscillator model.
     (function() {
         const canvas = document.getElementById('oscillationCardCanvas');
