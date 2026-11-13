@@ -20,6 +20,17 @@
         .project-card:hover .project-title { text-decoration: underline; text-decoration-color: var(--color-gold-muted); text-underline-offset: 3px; }
         .project-desc { margin-top: 4px; font-size: 0.95rem; line-height: 1.6; color: var(--color-text-light); }
 
+
+        /* Compact interactive tACS viewer in the Projects thumbnail */
+        .tacs-card-viewer { position: relative; width: 100%; height: 100%; min-height: 0; overflow: hidden; background: linear-gradient(180deg, #f7f8f9 0%, #ffffff 100%); cursor: grab; touch-action: pan-y; }
+        .tacs-card-viewer:active { cursor: grabbing; }
+        .tacs-card-viewer canvas { display: block; width: 100%; height: 100%; }
+        .tacs-card-viewer .tacs-instructions { bottom: 7px; font-size: 0.62rem; padding: 4px 8px; white-space: nowrap; }
+        .tacs-card-viewer .tacs-tooltip { max-width: 190px; font-size: 0.7rem; padding: 8px 10px; }
+        .tacs-card-viewer .tacs-tooltip-desc { font-size: 0.66rem; }
+        .project-thumb { position: relative; }
+        @media (prefers-reduced-motion: reduce) { .tacs-card-viewer .tacs-instructions { display: none; } }
+
         @media (max-width: 700px) {
             .projects-grid { grid-template-columns: 1fr; gap: 28px; }
         }
@@ -40,9 +51,17 @@
 
             <div class="projects-grid">
                 <a class="project-card" href="current-work.html">
-                    <div class="project-thumb"><img src="stimuli/DLPFC_tacs.png" alt="HD-tACS montage over the DLPFC"></div>
-                    <div class="project-title">Current Work</div>
-                    <p class="project-desc">My dissertation: how cognitive flexibility declines with age, and whether noninvasive brain stimulation can help restore it.</p>
+                    <div class="project-thumb">
+                        <div class="tacs-card-viewer" id="tacsViewer" aria-label="Interactive 3D brain and HD-tACS electrode montage">
+                            <div class="tacs-instructions">Drag to rotate · Scroll to zoom · Hover electrodes for details</div>
+                            <div class="tacs-tooltip" id="tacsTooltip" role="status" aria-live="polite">
+                                <div class="tacs-tooltip-title"></div>
+                                <div class="tacs-tooltip-desc"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-title">Brain Stimulation in Aging</div>
+                    <p class="project-desc">How theta-frequency brain stimulation may influence cognitive flexibility across adulthood.</p>
                 </a>
 
                 <a class="project-card" href="oscillations.html">
@@ -72,6 +91,506 @@
         </div>
     </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+    (function() {
+        const container = document.getElementById('tacsViewer');
+        const tooltip = document.getElementById('tacsTooltip');
+        const tooltipTitle = tooltip.querySelector('.tacs-tooltip-title');
+        const tooltipDesc = tooltip.querySelector('.tacs-tooltip-desc');
+        const pauseBtn = document.getElementById('tacsPauseBtn');
+        let didDrag = false;
+        let dragStart = { x: 0, y: 0 };
+
+        if (!container) return;
+
+        // Visualization frequency (slowed for display; actual is 6 Hz)
+        const VIS_FREQ = 0.5; // Hz - 2 second cycle
+        let oscillationPaused = false;
+
+        // Scene setup
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        
+        renderer.setSize(container.clientWidth, container.clientHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        renderer.setClearColor(0xf7f8f9, 1);
+        container.insertBefore(renderer.domElement, container.firstChild);
+
+        // Lighting (adjusted for white background)
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
+        scene.add(ambientLight);
+
+        const frontLight = new THREE.DirectionalLight(0xffffff, 0.6);
+        frontLight.position.set(0, 50, 100);
+        scene.add(frontLight);
+
+        const backLight = new THREE.DirectionalLight(0x8899bb, 0.25);
+        backLight.position.set(0, 50, -100);
+        scene.add(backLight);
+
+        const leftLight = new THREE.DirectionalLight(0xffffff, 0.4);
+        leftLight.position.set(-100, 30, 50);
+        scene.add(leftLight);
+
+        // Groups for rotation
+        const headGroup = new THREE.Group();
+        scene.add(headGroup);
+
+        // Electrode data from SimNIBS
+        const electrodeData = {
+            "F3": {
+                position: [-51.64, 57.48, 24.37],
+                type: "center",
+                label: "F3 — Center Electrode",
+                desc: "Primary stimulation site over left DLPFC. Delivers 1.5 mA peak-to-peak at 6 Hz theta frequency."
+            },
+            "Fp1": {
+                position: [-34.67, 91.06, -14.31],
+                type: "return",
+                label: "Fp1 — Return Electrode",
+                desc: "Part of the HD-tACS ring. Helps focus current flow toward DLPFC."
+            },
+            "FCz": {
+                position: [-3.72, 24.78, 56.72],
+                type: "return",
+                label: "FCz — Return Electrode",
+                desc: "Midline return electrode. Part of the ring shaping the electric field."
+            },
+            "FT7": {
+                position: [-76.15, 26.03, -27.88],
+                type: "return",
+                label: "FT7 — Return Electrode",
+                desc: "Left temporal return electrode. Completes the HD ring."
+            }
+        };
+
+        const electrodeMeshes = [];
+        let cortexMesh = null;
+        let baseColors = null; // Store original E-field colors
+        let meshCenter = new THREE.Vector3();
+        let meshScale = 1;
+        
+        // Store cortex rotation for electrode alignment
+        let cortexRotationX = 0;
+        let cortexRotationZ = 0;
+
+        // PLY Loader
+        function parsePLY(text) {
+            const lines = text.split('\n');
+            let vertexCount = 0;
+            let faceCount = 0;
+            let headerEnd = 0;
+            let hasColors = false;
+            let hasNormals = false;
+
+            for (let i = 0; i < lines.length; i++) {
+                const line = lines[i].trim();
+                if (line.startsWith('element vertex')) {
+                    vertexCount = parseInt(line.split(' ')[2]);
+                } else if (line.startsWith('element face')) {
+                    faceCount = parseInt(line.split(' ')[2]);
+                } else if (line === 'property uchar red') {
+                    hasColors = true;
+                } else if (line === 'property float nx') {
+                    hasNormals = true;
+                } else if (line === 'end_header') {
+                    headerEnd = i + 1;
+                    break;
+                }
+            }
+
+            const vertices = [];
+            const normals = [];
+            const colors = [];
+            const faces = [];
+
+            for (let i = 0; i < vertexCount; i++) {
+                const parts = lines[headerEnd + i].trim().split(/\s+/);
+                vertices.push(parseFloat(parts[0]), parseFloat(parts[1]), parseFloat(parts[2]));
+                
+                let idx = 3;
+                if (hasNormals) {
+                    normals.push(parseFloat(parts[idx]), parseFloat(parts[idx+1]), parseFloat(parts[idx+2]));
+                    idx += 3;
+                }
+                if (hasColors) {
+                    colors.push(parseInt(parts[idx])/255, parseInt(parts[idx+1])/255, parseInt(parts[idx+2])/255);
+                }
+            }
+
+            for (let i = 0; i < faceCount; i++) {
+                const parts = lines[headerEnd + vertexCount + i].trim().split(/\s+/);
+                faces.push(parseInt(parts[1]), parseInt(parts[2]), parseInt(parts[3]));
+            }
+
+            return { vertices, normals, colors, faces, hasColors, hasNormals };
+        }
+
+        function createMeshFromPLY(plyData, material) {
+            const geometry = new THREE.BufferGeometry();
+            geometry.setAttribute('position', new THREE.Float32BufferAttribute(plyData.vertices, 3));
+            
+            if (plyData.hasNormals && plyData.normals.length > 0) {
+                geometry.setAttribute('normal', new THREE.Float32BufferAttribute(plyData.normals, 3));
+            } else {
+                geometry.computeVertexNormals();
+            }
+            
+            if (plyData.hasColors && plyData.colors.length > 0) {
+                geometry.setAttribute('color', new THREE.Float32BufferAttribute(plyData.colors, 3));
+            }
+            
+            geometry.setIndex(plyData.faces);
+            geometry.computeBoundingSphere();
+            
+            return new THREE.Mesh(geometry, material);
+        }
+
+        // Load cortex mesh with E-field (skip skin mesh)
+        fetch('stimuli/simnibs/cortex_efield.ply')
+            .then(r => r.text())
+            .then(text => {
+                const plyData = parsePLY(text);
+                
+                // Store base colors for oscillation
+                baseColors = new Float32Array(plyData.colors);
+                
+                const material = new THREE.MeshStandardMaterial({
+                    vertexColors: true,
+                    roughness: 0.5,
+                    metalness: 0.1,
+                    side: THREE.DoubleSide,
+                });
+                
+                cortexMesh = createMeshFromPLY(plyData, material);
+                
+                // Center and scale
+                cortexMesh.geometry.computeBoundingBox();
+                const box = cortexMesh.geometry.boundingBox;
+                meshCenter = box.getCenter(new THREE.Vector3());
+                const size = box.getSize(new THREE.Vector3());
+                meshScale = 150 / Math.max(size.x, size.y, size.z);
+                
+                cortexMesh.geometry.translate(-meshCenter.x, -meshCenter.y, -meshCenter.z);
+                cortexMesh.scale.set(meshScale, meshScale, meshScale);
+                
+                // Rotate to face viewer (Y is up in SimNIBS, but mesh faces "up")
+                // Store rotation values for electrode alignment
+                cortexRotationX = -Math.PI / 2;
+                cortexRotationZ = Math.PI; // Face forward
+                
+                cortexMesh.rotation.x = cortexRotationX;
+                cortexMesh.rotation.z = cortexRotationZ;
+                
+                headGroup.add(cortexMesh);
+                
+                // Add electrodes
+                addElectrodes();
+            })
+            .catch(err => {
+                console.log('Cortex mesh not found, using fallback');
+                createFallbackBrain();
+                addElectrodes();
+            });
+
+        function createFallbackBrain() {
+            const geometry = new THREE.SphereGeometry(60, 64, 48);
+            geometry.scale(0.9, 1, 0.85);
+            
+            const material = new THREE.MeshStandardMaterial({
+                color: 0xcc8866,
+                roughness: 0.6,
+                metalness: 0.1,
+            });
+            
+            cortexMesh = new THREE.Mesh(geometry, material);
+            meshScale = 1;
+            meshCenter = new THREE.Vector3();
+            headGroup.add(cortexMesh);
+        }
+
+        function addElectrodes() {
+            Object.entries(electrodeData).forEach(([name, data]) => {
+                const size = data.type === 'center' ? 6 : 4;
+                const geometry = new THREE.CylinderGeometry(size, size, 2, 32);
+                
+                const color = data.type === 'center' ? 0x2e7d32 : 0x2e7d32;
+                const material = new THREE.MeshStandardMaterial({
+                    color: color,
+                    roughness: 0.3,
+                    metalness: 0.6,
+                    emissive: color,
+                    emissiveIntensity: data.type === 'center' ? 0.5 : 0.2,
+                });
+                
+                const electrode = new THREE.Mesh(geometry, material);
+                
+                // Transform position: subtract center, scale
+                let pos = new THREE.Vector3(...data.position);
+                pos.sub(meshCenter);
+                pos.multiplyScalar(meshScale);
+                
+                // Apply the same rotations as cortex mesh (X then Z)
+                // Create rotation matrix matching cortex
+                const rotMatrix = new THREE.Matrix4();
+                rotMatrix.makeRotationX(cortexRotationX);
+                const rotMatrixZ = new THREE.Matrix4();
+                rotMatrixZ.makeRotationZ(cortexRotationZ);
+                rotMatrix.multiply(rotMatrixZ);
+                
+                pos.applyMatrix4(rotMatrix);
+                
+                // Push slightly outward from center (reduced distance)
+                const dir = pos.clone().normalize();
+                pos.add(dir.multiplyScalar(3));
+                
+                electrode.position.copy(pos);
+                
+                // Orient electrode to face outward
+                electrode.lookAt(pos.clone().add(dir));
+                electrode.rotateX(Math.PI / 2);
+                
+                electrode.userData = { name, ...data };
+                headGroup.add(electrode);
+                electrodeMeshes.push(electrode);
+
+                // Glow ring for center electrode
+                if (data.type === 'center') {
+                    const ringGeometry = new THREE.RingGeometry(size + 1, size + 3, 32);
+                    const ringMaterial = new THREE.MeshBasicMaterial({
+                        color: 0x2e7d32,
+                        transparent: true,
+                        opacity: 0.5,
+                        side: THREE.DoubleSide,
+                    });
+                    const ring = new THREE.Mesh(ringGeometry, ringMaterial);
+                    ring.position.copy(electrode.position);
+                    ring.lookAt(ring.position.clone().add(dir));
+                    headGroup.add(ring);
+                }
+            });
+        }
+
+        // Camera: position to see face
+        camera.position.set(0, 20, 220);
+        camera.lookAt(0, 0, 0);
+
+        // Controls
+        let isDragging = false;
+        let previousMousePosition = { x: 0, y: 0 };
+        let targetRotationY = -0.5; // Start rotated to show left hemisphere (F3 side)
+        let targetRotationX = 0.1; // Slight downward tilt
+        let rotationY = targetRotationY;
+        let rotationX = targetRotationX;
+        let autoRotate = true;
+        let zoom = 220;
+
+        container.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            didDrag = false;
+            dragStart = { x: e.clientX, y: e.clientY };
+            autoRotate = false;
+            previousMousePosition = { x: e.clientX, y: e.clientY };
+        });
+
+        container.addEventListener('mousemove', (e) => {
+            const rect = container.getBoundingClientRect();
+            const mouse = new THREE.Vector2(
+                ((e.clientX - rect.left) / rect.width) * 2 - 1,
+                -((e.clientY - rect.top) / rect.height) * 2 + 1
+            );
+            
+            const raycaster = new THREE.Raycaster();
+            raycaster.setFromCamera(mouse, camera);
+            const intersects = raycaster.intersectObjects(electrodeMeshes);
+            
+            if (intersects.length > 0) {
+                const electrode = intersects[0].object;
+                tooltipTitle.textContent = electrode.userData.label;
+                tooltipDesc.textContent = electrode.userData.desc;
+                tooltip.style.left = (e.clientX - rect.left + 15) + 'px';
+                tooltip.style.top = (e.clientY - rect.top - 10) + 'px';
+                tooltip.classList.add('visible');
+                container.style.cursor = 'pointer';
+            } else {
+                tooltip.classList.remove('visible');
+                container.style.cursor = isDragging ? 'grabbing' : 'grab';
+            }
+
+            if (isDragging) {
+                const deltaX = e.clientX - previousMousePosition.x;
+                const deltaY = e.clientY - previousMousePosition.y;
+                if (Math.hypot(e.clientX - dragStart.x, e.clientY - dragStart.y) > 4) didDrag = true;
+                
+                targetRotationY += deltaX * 0.005;
+                targetRotationX += deltaY * 0.005;
+                targetRotationX = Math.max(-0.8, Math.min(0.8, targetRotationX));
+                
+                previousMousePosition = { x: e.clientX, y: e.clientY };
+            }
+        });
+
+        container.addEventListener('mouseup', () => { isDragging = false; });
+        container.addEventListener('click', (e) => {
+            if (didDrag) { e.preventDefault(); e.stopPropagation(); didDrag = false; }
+        }, true);
+        container.addEventListener('mouseleave', () => { 
+            isDragging = false; 
+            tooltip.classList.remove('visible');
+        });
+
+        container.addEventListener('wheel', (e) => {
+            e.preventDefault();
+            zoom += e.deltaY * 0.3;
+            zoom = Math.max(120, Math.min(350, zoom));
+        }, { passive: false });
+
+        // Touch support
+        container.addEventListener('touchstart', (e) => {
+            if (e.touches.length === 1) {
+                isDragging = true;
+                didDrag = false;
+                dragStart = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+                autoRotate = false;
+                previousMousePosition = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+            }
+        });
+
+        container.addEventListener('touchmove', (e) => {
+            if (isDragging && e.touches.length === 1) {
+                const deltaX = e.touches[0].clientX - previousMousePosition.x;
+                const deltaY = e.touches[0].clientY - previousMousePosition.y;
+                
+                targetRotationY += deltaX * 0.005;
+                targetRotationX += deltaY * 0.005;
+                targetRotationX = Math.max(-0.8, Math.min(0.8, targetRotationX));
+                
+                previousMousePosition = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+            }
+        });
+
+        container.addEventListener('touchend', () => { isDragging = false; });
+
+        // Animation with slowed oscillation for visualization
+        let time = 0;
+        let frozenPhase = 0;
+        
+        // Pause button handler
+        if (pauseBtn) {
+            pauseBtn.addEventListener('click', () => {
+                oscillationPaused = !oscillationPaused;
+                pauseBtn.textContent = oscillationPaused ? '▶ Play' : '❚❚ Pause';
+            });
+        }
+        
+        function animate() {
+            requestAnimationFrame(animate);
+            
+            if (!oscillationPaused) {
+                time += 0.016; // ~60fps
+            }
+
+            if (autoRotate) {
+                targetRotationY += 0.001;
+            }
+
+            rotationY += (targetRotationY - rotationY) * 0.08;
+            rotationX += (targetRotationX - rotationX) * 0.08;
+
+            headGroup.rotation.y = rotationY;
+            headGroup.rotation.x = rotationX;
+
+            // Slowed oscillation for visualization (0.5 Hz instead of 6 Hz)
+            const phase = oscillationPaused ? frozenPhase : Math.sin(time * 2 * Math.PI * VIS_FREQ);
+            if (!oscillationPaused) frozenPhase = phase;
+            
+            // Normalized phase: 0 = full negative, 0.5 = neutral, 1 = full positive
+            const normalizedPhase = (phase + 1) / 2;
+            
+            if (cortexMesh && baseColors) {
+                const colors = cortexMesh.geometry.attributes.color;
+                
+                for (let i = 0; i < baseColors.length; i += 3) {
+                    // Base color is hot colormap (black->red->yellow->white)
+                    const r = baseColors[i];
+                    const g = baseColors[i + 1];
+                    const b = baseColors[i + 2];
+                    
+                    // Calculate intensity from original color (brightness)
+                    const intensity = Math.max(r, g, b);
+                    
+                    if (intensity > 0.1) {
+                        // Smooth interpolation between blue (phase=0) and warm (phase=1)
+                        // At normalizedPhase=0: cool blue tint
+                        // At normalizedPhase=0.5: neutral (base colors)
+                        // At normalizedPhase=1: warm orange/red enhancement
+                        
+                        // Red channel: lower when cool, higher when warm
+                        colors.array[i] = r * (0.4 + 0.6 * normalizedPhase);
+                        
+                        // Green channel: slightly reduced at extremes
+                        colors.array[i + 1] = g * (0.6 + 0.4 * normalizedPhase);
+                        
+                        // Blue channel: higher when cool, lower when warm
+                        colors.array[i + 2] = Math.min(1, b * 0.3 + intensity * 0.7 * (1 - normalizedPhase));
+                    } else {
+                        // Keep dark areas dark
+                        colors.array[i] = r;
+                        colors.array[i + 1] = g;
+                        colors.array[i + 2] = b;
+                    }
+                }
+                colors.needsUpdate = true;
+            }
+
+            // Smooth electrode pulsing - interpolate colors instead of switching
+            electrodeMeshes.forEach(mesh => {
+                if (mesh.userData.type === 'center') {
+                    // Center electrode: interpolate between blue (negative) and orange (positive)
+                    // Use normalizedPhase for smooth transition
+                    const orangeR = 0.9, orangeG = 0.32, orangeB = 0;
+                    const blueR = 0.08, blueG = 0.4, blueB = 0.75;
+                    
+                    mesh.material.emissive.setRGB(
+                        blueR + (orangeR - blueR) * normalizedPhase,
+                        blueG + (orangeG - blueG) * normalizedPhase,
+                        blueB + (orangeB - blueB) * normalizedPhase
+                    );
+                    mesh.material.emissiveIntensity = 0.4 + Math.abs(phase) * 0.4;
+                } else {
+                    // Return electrodes: opposite phase (inverted)
+                    const invertedPhase = 1 - normalizedPhase;
+                    const purpleR = 0.48, purpleG = 0.12, purpleB = 0.64;
+                    const indigoR = 0.19, indigoG = 0.25, indigoB = 0.62;
+                    
+                    mesh.material.emissive.setRGB(
+                        indigoR + (purpleR - indigoR) * invertedPhase,
+                        indigoG + (purpleG - indigoG) * invertedPhase,
+                        indigoB + (purpleB - indigoB) * invertedPhase
+                    );
+                    mesh.material.emissiveIntensity = 0.25 + Math.abs(phase) * 0.25;
+                }
+            });
+
+            camera.position.z += (zoom - camera.position.z) * 0.08;
+
+            renderer.render(scene, camera);
+        }
+
+        animate();
+
+        // Resize
+        window.addEventListener('resize', () => {
+            const width = container.clientWidth;
+            const height = container.clientHeight;
+            camera.aspect = width / height;
+            camera.updateProjectionMatrix();
+            renderer.setSize(width, height);
+        });
+    })();
+    </script>
     <script src="site-common.js?v=3"></script>
 </body>
 </html>
