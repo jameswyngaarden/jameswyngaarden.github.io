@@ -29,7 +29,18 @@
         .tacs-card-viewer .tacs-tooltip { max-width: 190px; font-size: 0.7rem; padding: 8px 10px; }
         .tacs-card-viewer .tacs-tooltip-desc { font-size: 0.66rem; }
         .project-thumb { position: relative; }
-        @media (prefers-reduced-motion: reduce) { .tacs-card-viewer .tacs-instructions { display: none; } }
+        .oscillation-thumb { background: #f7f8f9; overflow: hidden; }
+        .oscillation-thumb canvas { display: block; width: 100%; height: 100%; }
+        .oscillation-overlay { position: absolute; top: 9px; left: 11px; right: 11px; display: flex; justify-content: space-between; align-items: center; pointer-events: none; font: 600 0.62rem var(--font-display); letter-spacing: 0.07em; color: #5a6a78; }
+        .oscillation-state { color: #c62828; transition: color .2s ease; }
+        .oscillation-intensity { background: rgba(255,255,255,.82); padding: 4px 7px; border-radius: 3px; }
+        .oscillation-legend { position: absolute; bottom: 8px; right: 10px; display: flex; gap: 11px; pointer-events: none; color: #5a6a78; font: 500 0.58rem var(--font-display); }
+        .oscillation-legend span { display: inline-flex; align-items: center; gap: 4px; }
+        .oscillation-legend i { display: inline-block; width: 7px; height: 7px; border-radius: 50%; }
+        .drive-dot { background: #b8860b; } .endo-dot { background: #2e7d32; }
+        @media (prefers-reduced-motion: reduce) {
+            .tacs-card-viewer .tacs-instructions { display: none; }
+        }
 
         @media (max-width: 700px) {
             .projects-grid { grid-template-columns: 1fr; gap: 28px; }
@@ -65,12 +76,13 @@
                 </a>
 
                 <a class="project-card" href="oscillations.html">
-                    <div class="project-thumb">
-                        <svg viewBox="0 0 320 200" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Two oscillations falling into phase">
-                            <rect width="320" height="200" fill="#f7f8f9"/>
-                            <path d="M0 100 Q20 55 40 100 T80 100 T120 100 T160 100 T200 100 T240 100 T280 100 T320 100" fill="none" stroke="#1a3a5c" stroke-width="2.5"/>
-                            <path d="M0 100 Q14 140 28 100 T56 100 T84 100 T112 100 T140 100 Q160 60 180 100 T220 100 T260 100 T300 100 T340 100" fill="none" stroke="#c4973b" stroke-width="2" opacity="0.9"/>
-                        </svg>
+                    <div class="project-thumb oscillation-thumb">
+                        <canvas id="oscillationCardCanvas" role="img" aria-label="Stimulation intensity rises until a brain rhythm entrains, then falls and rises again"></canvas>
+                        <div class="oscillation-overlay">
+                            <span class="oscillation-state" id="oscillationState">SLIPPING</span>
+                            <span class="oscillation-intensity">STIM <b id="oscillationIntensity">0.10</b></span>
+                        </div>
+                        <div class="oscillation-legend"><span><i class="drive-dot"></i> stimulation</span><span><i class="endo-dot"></i> endogenous rhythm</span></div>
                     </div>
                     <div class="project-title">Understanding Oscillations</div>
                     <p class="project-desc">An interactive module on how a weak oscillating current can capture a brain rhythm that's already there.</p>
@@ -91,6 +103,98 @@
         </div>
     </div>
 
+    <script>
+    // Compact, self-running adaptation of Chapter 3's driven-oscillator model.
+    (function() {
+        const canvas = document.getElementById('oscillationCardCanvas');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        const stateEl = document.getElementById('oscillationState');
+        const intensityEl = document.getElementById('oscillationIntensity');
+        const TWO_PI = Math.PI * 2, K_GAIN = 4 * Math.PI;
+        const N = 480, windowSec = 1.5, dt = windowSec / N, sub = 4, h = dt / sub;
+        const endogenous = new Float32Array(N), drive = new Float32Array(N), phases = new Float32Array(N);
+        let head = 0, filled = 0, theta = Math.random() * TWO_PI, phiDrive = 0;
+        let previous = 0, elapsed = 0, frame = 0, lastWidth = 0, lastHeight = 0;
+        const f0 = 6, fStim = 6, noise = 1.5;
+        const reducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        function randn() {
+            let u = 0, v = 0;
+            while (!u) u = Math.random();
+            while (!v) v = Math.random();
+            return Math.sqrt(-2 * Math.log(u)) * Math.cos(TWO_PI * v);
+        }
+        function wrap(a) {
+            a = (a + Math.PI) % TWO_PI;
+            if (a < 0) a += TWO_PI;
+            return a - Math.PI;
+        }
+        function resize() {
+            const r = canvas.getBoundingClientRect(), dpr = Math.min(window.devicePixelRatio || 1, 2);
+            const w = Math.max(1, Math.round(r.width * dpr)), hgt = Math.max(1, Math.round(r.height * dpr));
+            if (w !== canvas.width || hgt !== canvas.height) { canvas.width = w; canvas.height = hgt; }
+            return dpr;
+        }
+        function render() {
+            const dpr = resize(), W = canvas.width, H = canvas.height, mid = H * .53, amp = H * .27;
+            ctx.fillStyle = '#f7f8f9'; ctx.fillRect(0, 0, W, H);
+            ctx.strokeStyle = '#e9edf1'; ctx.lineWidth = dpr;
+            for (let i = 0; i <= 8; i++) {
+                const x = W * i / 8; ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke();
+            }
+            ctx.strokeStyle = '#d3dae2'; ctx.beginPath(); ctx.moveTo(0, mid); ctx.lineTo(W, mid); ctx.stroke();
+            const trace = (buf, color, width) => {
+                ctx.beginPath();
+                for (let i = 0; i < filled; i++) {
+                    const idx = (head - filled + i + N) % N, x = (i / (N - 1)) * W, y = mid - buf[idx] * amp;
+                    if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+                }
+                ctx.strokeStyle = color; ctx.lineWidth = width * dpr; ctx.stroke();
+            };
+            trace(drive, '#b8860b', 1.8);
+            trace(endogenous, '#2e7d32', 2.5);
+
+            let sc = 0, ss = 0;
+            for (let i = 0; i < filled; i++) { sc += Math.cos(phases[i]); ss += Math.sin(phases[i]); }
+            const R = filled ? Math.hypot(sc, ss) / filled : 0;
+            const intensity = .08 + .82 * (.5 - .5 * Math.cos(TWO_PI * (elapsed % 12) / 12));
+            const locked = R > .82 && intensity > .18;
+            stateEl.textContent = locked ? 'ENTRAINED' : 'SLIPPING';
+            stateEl.style.color = locked ? '#2e7d32' : '#c62828';
+            intensityEl.textContent = intensity.toFixed(2);
+        }
+        function tick(ts) {
+            if (!previous) previous = ts;
+            let wall = Math.min((ts - previous) / 1000, .1); previous = ts;
+            if (!reducedMotion) elapsed += wall;
+            const intensity = .08 + .82 * (.5 - .5 * Math.cos(TWO_PI * (elapsed % 12) / 12));
+            const steps = Math.max(0, Math.round(wall / dt));
+            const K = K_GAIN * intensity;
+            for (let n = 0; n < steps; n++) {
+                for (let k = 0; k < sub; k++) {
+                    const coupling = K * Math.sin(phiDrive - theta);
+                    theta += (TWO_PI * f0 + coupling) * h + noise * Math.sqrt(h) * randn();
+                    phiDrive += TWO_PI * fStim * h;
+                }
+                endogenous[head] = Math.sin(theta);
+                drive[head] = intensity * Math.sin(phiDrive);
+                phases[head] = wrap(theta - phiDrive);
+                head = (head + 1) % N; filled = Math.min(filled + 1, N);
+            }
+            render();
+            frame = requestAnimationFrame(tick);
+        }
+        if ('IntersectionObserver' in window) {
+            const observer = new IntersectionObserver(entries => {
+                if (entries.some(e => e.isIntersecting) && !frame) frame = requestAnimationFrame(tick);
+                if (entries.every(e => !e.isIntersecting) && frame) { cancelAnimationFrame(frame); frame = 0; previous = 0; }
+            });
+            observer.observe(canvas);
+        } else frame = requestAnimationFrame(tick);
+        window.addEventListener('resize', render, { passive: true });
+    })();
+    </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script>
     (function() {
